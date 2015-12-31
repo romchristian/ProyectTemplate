@@ -1,0 +1,9 @@
+package com.ideaspymes.proyecttemplate;
+import com.ideaspymes.proyecttemplate.model.*;
+ 
+rule "Cuanto vendi"
+  when
+    $p: Producto(  cantidadVendida > 900 )
+  then
+    System.out.println($p.getNombre() + ", se vendio hoy : " + $p.getCantidadVendida());
+end

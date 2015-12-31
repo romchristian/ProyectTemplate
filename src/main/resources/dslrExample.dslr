@@ -1,0 +1,12 @@
+package com.ideaspymes.proyecttemplate;
+import com.ideaspymes.proyecttemplate.model.*;
+
+expander dslExample.dsl
+ 
+rule "Cuanto vendi"
+  when
+     Cuantos Palermo vendi hoy
+     devuelve resultado
+  then
+    Traer resumen Palermo
+end

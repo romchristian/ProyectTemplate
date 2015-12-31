@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="subheader">
+        Page Header
+    </ui:define>
+
+    <ui:define name="content">
+
+        <style>
+            .ui-inputfield {
+                width: 70%;
+            }
+
+        </style>
+        <div class="Container100">
+            <div class="Card TexAlCenter ">
+                <h:form>
+                    <div class="CardTopic Blue">¿Que quieres saber?</div>
+                    <div class="Separator"></div>
+                    <p:inputText value="#{rulesBean.oracion}" styleClass="Wid70"/>
+                    <p:commandButton value="Ejecutar" action="#{rulesBean.ejecutar()}" update="resultado"/>
+                    <br/>
+                    <br/>
+                    <span class="Leaden">Use this page to start from scratch and place your custom content.</span>
+
+                    <br/><br/>
+
+                    <p:outputPanel id="resultado">
+                        <h:outputText value="#{rulesBean.resultado}" style="font-size: 18pt; font-weight: bold"/>
+                    </p:outputPanel>
+                </h:form>
+
+
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>
