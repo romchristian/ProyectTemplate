@@ -16,21 +16,32 @@
         <junit.version>4.11</junit.version>
         <cdi.version>1.2</cdi.version>
         <libs.dir>C:/Users/cromero/Documents/libs</libs.dir>
+        <version.picketlink.javaee.bom>2.7.0.Final</version.picketlink.javaee.bom>
     </properties>
     
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.picketlink</groupId>
+                <artifactId>picketlink-javaee-7.0</artifactId>
+                <version>${version.picketlink.javaee.bom}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.picketlink</groupId>
+            <artifactId>picketlink</artifactId>
+        </dependency>
+        
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>5.3</version>
         </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>volt-theme</artifactId>
-            <version>2.0.1</version>
-            <scope>system</scope>
-            <systemPath>${libs.dir}/volt-layout-2.0.1/volt-theme-2.0.1.jar</systemPath>
-        </dependency>
+       
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
@@ -44,13 +55,18 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>volt-theme</artifactId>
+            <version>2.01</version>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
         
-         <dependency>
+        <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-api</artifactId>
             <version>${kie.version}</version>
@@ -70,7 +86,7 @@
             <artifactId>cdi-api</artifactId>
             <version>${cdi.version}</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
@@ -127,5 +143,12 @@
             </plugin>
         </plugins>
     </build>
-    
+    <repositories>
+        <repository>
+            <url>http://repository.primefaces.org/</url>
+            <id>PrimeFaces-maven-lib</id>
+            <layout>default</layout>
+            <name>Repository for library PrimeFaces-maven-lib</name>
+        </repository>
+    </repositories>
 </project>
