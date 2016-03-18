@@ -40,7 +40,7 @@
 
         <ui:repeat value="#{menuController.modulos}" var="m">
             <li>
-                <a href="#{m.defaultpage}" class="menuSeleccionado"><i class="#{m.iconFont}"></i><span class="Fs16">#{m.nombre}</span></a>
+                <a href="#{request.contextPath}#{m.defaultpage}" class="menuSeleccionado"><i class="#{m.iconFont}"></i><span class="Fs16">#{m.nombre}</span></a>
             </li>
         </ui:repeat>
 

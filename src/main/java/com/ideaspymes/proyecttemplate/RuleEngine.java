@@ -6,8 +6,8 @@
 package com.ideaspymes.proyecttemplate;
 
 
-import com.ideaspymes.proyecttemplate.model.Producto;
-import com.ideaspymes.proyecttemplate.model.Resultado;
+import com.ideaspymes.proyecttemplate.configuracion.Producto;
+import com.ideaspymes.proyecttemplate.configuracion.Resultado;
 import java.io.UnsupportedEncodingException;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;

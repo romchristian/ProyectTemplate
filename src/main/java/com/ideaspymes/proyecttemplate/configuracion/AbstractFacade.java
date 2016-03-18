@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ideaspymes.proyecttemplate.model;
+package com.ideaspymes.proyecttemplate.configuracion;
 
 import java.util.List;
 import javax.persistence.EntityManager;

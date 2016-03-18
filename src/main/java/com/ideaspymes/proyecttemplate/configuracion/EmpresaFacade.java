@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ideaspymes.proyecttemplate.model;
+package com.ideaspymes.proyecttemplate.configuracion;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
