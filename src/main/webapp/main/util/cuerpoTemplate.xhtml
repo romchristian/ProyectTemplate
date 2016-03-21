@@ -4,22 +4,17 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <f:metadata>
-        <f:viewParam name="idMenu" value="#{menuController.idMenu}"/>
-        <f:viewAction action="#{menuController.cargaModulos()}"/>
-    </f:metadata>
 
     <ui:decorate template="/main/util/principal.xhtml">
         <ui:define name="content">
-            <div class="Container100">
-                <div class="Card TexAlCenter ">
-                    <div class="CardTopic Blue">Confirguración</div>
-                    <div class="Separator"></div>
-                    <br/>
+            <div class="Container100 ui-fluid">
+                <div class="Card">
+                    <ui:insert name="content"></ui:insert>
                 </div>
             </div>
         </ui:define>
 
     </ui:decorate>
+
 
 </ui:composition>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
+        <ui:define name="content">
+            <ui:include src="cuerpo.xhtml">
+                <ui:param name="contexto" value="creacion"/>
+                <ui:param name="titulo" value="CREACIÓN DE EMPRESA"/>
+            </ui:include>
+        </ui:define>
+    </ui:decorate>
+</ui:composition>
+

@@ -15,7 +15,7 @@
         <kie.version>6.3.0.Final</kie.version>
         <junit.version>4.11</junit.version>
         <cdi.version>1.2</cdi.version>
-        <libs.dir>C:/Users/Acer/Documents/libs</libs.dir>
+        <libs.dir>C:/libs</libs.dir>
         <version.picketlink.javaee.bom>2.7.0.Final</version.picketlink.javaee.bom>
     </properties>
     
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>volt-theme</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -130,7 +130,7 @@
                             <goal>copy</goal>
                         </goals>
                         <configuration>
-                            <packagingIncludes>${libs.dir}/volt-layout-2.0.1/volt-theme.jar</packagingIncludes>
+                            <packagingIncludes>${libs.dir}/volt-layout-2.0.2/volt-theme.jar</packagingIncludes>
                            
                             <outputDirectory>${endorsed.dir}</outputDirectory>
                             <includeScope>system</includeScope>
