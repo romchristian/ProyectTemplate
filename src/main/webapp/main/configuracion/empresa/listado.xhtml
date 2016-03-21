@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <ui:decorate template="/main/util/principal.xhtml">
+        <ui:define name="content">
+
+            <h:form id="formList">
+                <div class="Container100 Responsive100">
+                    <div class="ContainerIndent">
+                        <div class="Card ShadowEffect HeiAutoOnMobile">
+                            <h2 class="CardTopic"><i class="icon-google132 Fs20 Fleft MarRight10"></i>LISTADO DE EMPRESAS
+                                <p:button id="createButton" value="Nuevo" outcome="nuevo" styleClass="GreenButton Fright"/>
+                                <p:button id="viewButton"   value="Ver" outcome="vista" disabled="#{empty empresaBean.actual.id}" styleClass="Button Fright">
+                                    <f:param name="id" value="#{empresaBean.actual.id}"/>
+                                </p:button>
+                            </h2>
+
+                            <div class="Separator"/>
+
+
+                            <p:dataTable value="#{empresaBean.findAll()}" var="b" paginator="true" rows="20" paginatorPosition="bottom" reflow="true"
+                                         selection="#{empresaBean.actual}"
+                                         rowKey="#{b.id}"
+                                         selectionMode="single">
+
+                                <p:ajax event="rowSelect"   update=":formList:createButton :formList:viewButton"/>
+                                <p:ajax event="rowUnselect" update=":formList:createButton :formList:viewButton"/>
+
+
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{b.nombre}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+
+
+        </ui:define>
+    </ui:decorate>
+
+
+</ui:composition>
+
