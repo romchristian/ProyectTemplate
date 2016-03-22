@@ -32,6 +32,8 @@ public class MenuController implements Serializable {
     private List<Modulo> modulos;
     private Modulo moduloActual;
     private MenuModel menuModel;
+    private MenuModel breadcrumb;
+    
     private long idMenu;
 
     public long getIdMenu() {
@@ -87,7 +89,8 @@ public class MenuController implements Serializable {
             for (SubMenu s : moduloActual.getMenus()) {
                 DefaultSubMenu submenu = new DefaultSubMenu(s.getLabel(), s.getIcon());
                 for (MenuItem mi : s.getItems()) {
-                    submenu.addElement(new DefaultMenuItem(mi.getValor(), mi.getIcon(), mi.getUrl()));
+                    DefaultMenuItem item = new DefaultMenuItem(mi.getValor(), mi.getIcon(), mi.getUrl());
+                    submenu.addElement(item);
                 }
 
                 menuModel.addElement(submenu);
