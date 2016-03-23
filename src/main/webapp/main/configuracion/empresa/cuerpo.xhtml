@@ -15,7 +15,7 @@
             <h:outputText value="#{empresaBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
             <p:inputText value="#{empresaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
-            <p:outputLabel value="RUC" for="nombre" />
+            <p:outputLabel value="RUC" for="ruc" />
             <h:outputText value="#{empresaBean.actual.ruc}" rendered="#{(contexto == 'vista')}"/>
             <p:inputText value="#{empresaBean.actual.ruc}" required="true" id="ruc" rendered="#{not(contexto == 'vista')}"/>
 
@@ -24,7 +24,7 @@
             <p:inputText value="#{empresaBean.actual.contactoDireccion}" required="true" id="direccion" rendered="#{not(contexto == 'vista')}"/>
 
 
-            <p:outputLabel value="Dirección Contacto" for="telefono" />
+            <p:outputLabel value="Télefono Contacto" for="telefono" />
             <h:outputText value="#{empresaBean.actual.contactoTelefono}" rendered="#{(contexto == 'vista')}"/>
             <p:inputText value="#{empresaBean.actual.contactoTelefono}" required="true" id="telefono" rendered="#{not(contexto == 'vista')}"/>
         </p:panelGrid>
