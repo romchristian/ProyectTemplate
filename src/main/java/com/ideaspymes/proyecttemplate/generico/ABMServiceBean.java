@@ -44,7 +44,7 @@ public class ABMServiceBean implements ABMService {
             IAuditable obj = (IAuditable) t;
             obj.setEstado(Estado.ACTIVO);
             obj.setFechaRegitro(new Date());
-            obj.setUsuarioUltimaModificacion(usuario);
+            //obj.setUsuarioUltimaModificacion(usuario);
             this.em.persist(obj);
             this.em.flush();
             this.em.refresh(obj);
@@ -64,7 +64,7 @@ public class ABMServiceBean implements ABMService {
             IAuditable obj = (IAuditable) t;
             obj.setEstado(Estado.BORRADO);
             obj.setFechaUltimaModificacion(new Date());
-            obj.setUsuarioUltimaModificacion(usuario);
+            //obj.setUsuarioUltimaModificacion(usuario);
             this.em.merge(obj);
         } else {
             this.em.remove(this.em.merge(t));
@@ -80,7 +80,7 @@ public class ABMServiceBean implements ABMService {
 
                 obj.setEstado(Estado.ACTIVO);
                 obj.setFechaRegitro(new Date());
-                obj.setUsuarioUltimaModificacion(usuario);
+                //obj.setUsuarioUltimaModificacion(usuario);
                 obj = this.em.merge(obj);
                 this.em.flush();
                 this.em.refresh(obj);
