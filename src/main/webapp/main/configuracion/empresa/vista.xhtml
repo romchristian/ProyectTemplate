@@ -12,9 +12,18 @@
 
     <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
         <ui:define name="content">
+            <div class="Container50 Responsive100">
+                <p:breadCrumb homeDisplay="icon">
+                    <p:menuitem outcome="/main/configuracion/home"/>
+                    <p:menuitem outcome="listado" value="Listado de empresas"/>
+                    <p:menuitem outcome="vista" value="#{empresaBean.actual.nombre}">
+                        <f:param name="id" value="#{empresaBean.actual.id}"/>
+                    </p:menuitem>
+                </p:breadCrumb>
+            </div>
+            <div class="Separator"/>
             <ui:include src="cuerpo.xhtml">
                 <ui:param name="contexto" value="vista"/>
-                <ui:param name="titulo" value="VISTA DE EMPRESA"/>
             </ui:include>
         </ui:define>
     </ui:decorate>

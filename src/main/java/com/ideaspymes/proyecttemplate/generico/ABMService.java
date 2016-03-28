@@ -17,16 +17,16 @@ import javax.persistence.EntityManager;
 @Local
 public interface ABMService {
 
-    <T> T create(T t,Usuario usuario);
+    <T> T create(T t, Usuario usuario);
 
-    void delete(Object t,Usuario usuario);
+    void delete(Object t, Usuario usuario);
 
-    <T> T update(T t,Usuario usuario);
-    
+    <T> T update(T t, Usuario usuario);
+
     <T> T find(Object id, Class<T> type);
 
-    <T> T findByNamedQuerySingleResult(String queryName,Map<String, Object> params);
-    
+    <T> T findByNamedQuerySingleResult(String queryName, Map<String, Object> params);
+
     List findByNamedQuery(String queryName);
 
     List findByNamedQuery(String queryName, int resultLimit);
@@ -34,17 +34,19 @@ public interface ABMService {
     List findByNamedQuery(String queryName, Map<String, Object> params);
 
     List findByNamedQuery(String queryName, Map<String, Object> params, int resultLimit);
-    
+
     Long count(String nativeQuery);
-    
+
     List findByQuery(String query, int resultLimit);
 
     List findByQuery(String query, Map<String, Object> params);
-    
+
     List findByQuery(String query, Map<String, Object> params, int resultLimit);
 
+    List findByQuery(String query, Map<String, Object> params, int first, int resultLimit);
+
     EntityManager getEM();
-    
+
     Double findTotal(String query, Map<String, Object> params);
-    
+
 }

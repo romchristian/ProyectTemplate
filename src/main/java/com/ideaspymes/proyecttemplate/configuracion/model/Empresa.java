@@ -8,6 +8,8 @@ package com.ideaspymes.proyecttemplate.configuracion.model;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.TipoCosteo;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
+import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -36,7 +38,11 @@ public class Empresa implements Serializable, IAuditable {
     private Long id;
 
     //Informacion principal
+    @Listado(descripcion = "Nombre", mostrar = true, link = true)
+    @Filtro(campo = "nombre", tipo = "like", descripcion = "Nombre")
     private String nombre;
+    @Filtro(campo = "ruc", tipo = "like", descripcion = "RUC")
+    @Listado(descripcion = "RUC", mostrar = true)
     private String ruc;
 
     // Información de contacto
@@ -70,7 +76,6 @@ public class Empresa implements Serializable, IAuditable {
     private Double tasaRetencionIva;
     private Double tasaRetencionRenta;
 
-    
     //Auditoria
     @Enumerated(EnumType.STRING)
     private Estado estado;

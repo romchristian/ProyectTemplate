@@ -189,6 +189,24 @@ public class ABMServiceBean implements ABMService {
         }
         return query.getResultList();
     }
+    
+    
+    @Override
+    public List findByQuery(String consulta, Map<String, Object> params, int first,int pageSize) {
+        Set<Entry<String, Object>> rawParameters = params.entrySet();
+        Query query = this.em.createQuery(consulta);
+        if(first > 0){
+            query.setFirstResult(first);
+        }
+        if (pageSize > 0) {
+            query.setMaxResults(pageSize);
+        }
+
+        for (Entry<String, Object> entry : rawParameters) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+        return query.getResultList();
+    }
 
     @Override
     public Double findTotal(String consulta, Map<String, Object> params) {

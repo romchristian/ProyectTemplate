@@ -10,11 +10,13 @@ import com.ideaspymes.proyecttemplate.configuracion.model.MenuItem;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.Query;
 
 /*
  * @author christian
@@ -58,4 +60,41 @@ public class MenuItemDAO implements IMenuItemDAO {
         return abmService.findByQuery(query, params.parameters());
     }
 
+    @Override
+    public List<MenuItem> findAll(String query, QueryParameter params, int firt, int pageSize) {
+        return abmService.findByQuery(query, params.parameters(), firt, pageSize);
+    }
+
+    @Override
+    public List<MenuItem> findFilter(String consulta, int first, int pageSize) {
+        List<MenuItem> items = new ArrayList<>();
+        if (consulta != null) {
+            Query query = abmService.getEM().createNativeQuery(consulta, MenuItem.class);
+            if (first > 0) {
+                query.setFirstResult(first);
+            }
+
+            if (pageSize > 0) {
+                query.setMaxResults(pageSize);
+            }
+
+            items = (List<MenuItem>) query.getResultList();
+
+        }
+        return items;
+    }
+
+    @Override
+    public int countFilter(String consulta) {
+        int R = 0;
+
+        try {
+            Query query = abmService.getEM().createNativeQuery(consulta, Long.class);
+            R = ((Long) query.getSingleResult()).intValue();
+
+        } catch (Exception e) {
+        }
+
+        return R;
+    }
 }

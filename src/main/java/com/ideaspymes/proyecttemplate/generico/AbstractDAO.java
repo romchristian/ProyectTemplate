@@ -24,4 +24,10 @@ public interface AbstractDAO<T> {
     public abstract List<T> findAll();
 
     public abstract List<T> findAll(String query, QueryParameter params);
+
+    public abstract List<T> findAll(String query, QueryParameter params, int first, int pageSize);
+    
+    public abstract List<T> findFilter(String query, int first, int pageSize);
+    
+    public abstract int countFilter(String query);
 }

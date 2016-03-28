@@ -10,11 +10,13 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.Query;
 
 /*
  * @author christian
@@ -48,9 +50,11 @@ public class SucursalDAO implements ISucursalDAO {
 
     @Override
     public List<Sucursal> findAll() {
+
         return abmService.getEM().createQuery("select obj from Sucursal obj where obj.estado <> :estado")
                 .setParameter("estado", Estado.BORRADO)
                 .getResultList();
+
     }
 
     @Override
@@ -58,4 +62,41 @@ public class SucursalDAO implements ISucursalDAO {
         return abmService.findByQuery(query, params.parameters());
     }
 
+    @Override
+    public List<Sucursal> findAll(String query, QueryParameter params, int firt, int pageSize) {
+        return abmService.findByQuery(query, params.parameters(), firt, pageSize);
+    }
+
+    @Override
+    public List<Sucursal> findFilter(String consulta, int first, int pageSize) {
+        List<Sucursal> items = new ArrayList<>();
+        if (consulta != null) {
+            Query query = abmService.getEM().createNativeQuery(consulta, Sucursal.class);
+            if (first > 0) {
+                query.setFirstResult(first);
+            }
+
+            if (pageSize > 0) {
+                query.setMaxResults(pageSize);
+            }
+
+            items = (List<Sucursal>) query.getResultList();
+
+        }
+        return items;
+    }
+
+    @Override
+    public int countFilter(String consulta) {
+        int R = 0;
+
+        try {
+            Query query = abmService.getEM().createNativeQuery(consulta, Long.class);
+            R = ((Long) query.getSingleResult()).intValue();
+
+        } catch (Exception e) {
+        }
+
+        return R;
+    }
 }

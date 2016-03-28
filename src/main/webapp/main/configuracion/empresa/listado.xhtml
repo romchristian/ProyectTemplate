@@ -1,47 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:h="http://java.sun.com/jsf/html">
 
     <ui:decorate template="/main/util/principal.xhtml">
         <ui:define name="content">
 
             <h:form id="formList">
-                <div class="Container100 Responsive100">
-                    <div class="ContainerIndent">
-                        <div class="Card ShadowEffect HeiAutoOnMobile">
-                            <h2 class="CardTopic"><i class="icon-google132 Fs20 Fleft MarRight10"></i>LISTADO DE EMPRESAS
-                                <p:button id="createButton" value="Crear" outcome="nuevo" styleClass="BlueButton Fright"/>
-
-                            </h2>
-
-                            <div class="Separator"/>
-
-
-                            <p:dataTable value="#{empresaBean.findAll()}" var="b" paginator="true" rows="20" paginatorPosition="bottom" reflow="true"
-                                         selection="#{empresaBean.actual}"
-                                         rowKey="#{b.id}"
-                                         selectionMode="single">
-
-                                <p:ajax event="rowSelect"   update=":formList:createButton"/>
-                                <p:ajax event="rowUnselect" update=":formList:createButton"/>
-
-
-
-                                <p:column headerText="Nombre">
-                                    <p:link   value="#{b.nombre}" outcome="vista">
-                                        <f:param name="id" value="#{b.id}"/>
-                                    </p:link>
-
-                                </p:column>
-
-                            </p:dataTable>
-
-                        </div>
-                    </div>
-                </div>
+                <ui:include src="/main/util/listadoGenerico.xhtml">
+                    <ui:param name="titulo" value="LISTADO DE EMPRESAS"/>
+                    <ui:param name="bean" value="#{empresaConsultaBean}"/>
+                </ui:include>
             </h:form>
 
 

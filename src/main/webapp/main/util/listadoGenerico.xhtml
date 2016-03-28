@@ -1,0 +1,151 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+
+    <div class="Container100 Responsive100">
+        <div class="ContainerIndent">
+            <div class="Card ShadowEffect HeiAutoOnMobile" style="padding-top: 0px">
+
+                <div class="Container50 Responsive100">
+                    <p:breadCrumb homeDisplay="icon">
+                        <p:menuitem outcome="/main/configuracion/home"/>
+                        <p:menuitem outcome="listado" value="#{titulo}"/>
+                    </p:breadCrumb>
+                    
+                </div>
+                <div class="Container50 Responsive100">
+                    <div class="Container20 Responsive100">
+
+                    </div>
+                    <div class="Container20 Responsive100">
+                        <i class="fa fa-plus Fs16 Green MarRight10"></i><p:link id="createButton" outcome="nuevo" value="Crear nuevo" styleClass="Fs14 FontVoltLight"></p:link>
+                    </div>
+                    <div class="Container20 Responsive100">
+                        <i class="fa fa-filter Fs20 MarRight10"></i>
+                        <p:commandLink value="Filtros" styleClass="Fs14 FontVoltLight"
+                                       onclick="PF('panelfiltro').toggle()"/>
+                    </div>
+                    <div class="Container20 Responsive100">
+                        <i class="fa fa-file-excel-o Fs20 MarRight10"></i>
+                        <p:link value="Exp. Excel" styleClass="Fs14 FontVoltLight"
+                                onclick="PF('panelfiltro').toggle()"/>
+                    </div>
+                    <div class="Container20 Responsive100">
+                        <i class="fa fa-file-pdf-o Fs20 MarRight10"></i>
+                        <p:commandLink value="Exp. PDF" styleClass="Fs14 FontVoltLight"
+                                       onclick="PF('panelfiltro').toggle()"/>
+                    </div>
+
+                </div>
+
+
+
+
+
+                
+
+
+
+                <div class="Container100 Responsive100">
+                    <div class="NoIndent">
+
+
+                        <p:panel collapsed="true" widgetVar="panelfiltro"  toggleable="true"
+                                 styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;padding: 0;margin: 0">
+                            <div class="Container80 Responsive100" style="margin: 0;padding: 0">
+
+                                <p:dataGrid columns="2"  layout="grid" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;padding: 0;margin: 0"
+                                            value="#{bean.filterOptions}" var="f">
+                                    <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;">
+                                        <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha')}" styleClass="Responsive100"/>
+                                        <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}" styleClass="Responsive100"/>
+                                        <h:outputText value="#{f.descripcion} hasta" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}" styleClass="Responsive100"/>
+
+                                        <p:inputText value="#{f.valorString}" rendered="#{f.tipo == 'like'}"  styleClass="Responsive100"/>
+                                        <p:inputText value="#{f.valorInteger}" rendered="#{f.tipoCampo == 'java.lang.Integer' and f.tipoCampo == 'numero'}" styleClass="Responsive100"/>
+                                        <p:inputText value="#{f.valorLong}" rendered="#{f.tipoCampo == 'java.lang.Long'  and f.tipoCampo == 'numero'}" styleClass="Responsive100"/>
+                                        <p:inputText value="#{f.valorDouble}" rendered="#{f.tipoCampo == 'java.lang.Double'  and f.tipoCampo == 'numero'}" styleClass="Responsive100"/>
+                                        <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipoCampo == 'numero'}" styleClass="Responsive100"/>
+                                        <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}" styleClass="Responsive100"/>
+                                        <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}" styleClass="Responsive100"/>
+                                    </p:panelGrid>
+                                </p:dataGrid>
+
+                            </div>
+
+
+                            <div class="Container20 Responsive100">
+
+                                <div><i class="fa fa-save Blue"></i> <span class="FontNormal Fs12 Blue">Guardar consulta actual</span></div>
+                                <div class="Separator"></div>
+                                <p:inputText/>
+
+                                <div class="EmptyBox10"></div>
+                                <div><i class="fa fa-star Blue"></i> <span class="FontNormal Fs12 Blue">Favoritos</span></div>
+                                <div class="Separator"></div>
+                                <ul style="margin: 0;padding: 0"> 
+                                    <li style="border:none;"><i class="fa fa-search Blue Fs10" style="margin-right: 5px"/><p:link value="Empresa del Grupo" styleClass="FontNormal Fs12 Blue"/></li>
+                                    <li style="border:none;"><i class="fa fa-search Blue Fs10" style="margin-right: 5px"/><p:link value="Empresa del Grupo" styleClass="FontNormal Fs12 Blue"/></li>
+                                    <li style="border:none;"><i class="fa fa-search Blue Fs10" style="margin-right: 5px"/><p:link value="Empresa del Grupo" styleClass="FontNormal Fs12 Blue"/></li>
+                                    <li style="border:none;"><i class="fa fa-search Blue Fs10" style="margin-right: 5px"/><p:link value="Empresa del Grupo" styleClass="FontNormal Fs12 Blue"/></li>
+                                </ul>
+
+
+
+
+                            </div>
+
+                            <div class="Container100 Responsive100">
+
+
+                                <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla" icon="fa fa-search" styleClass="BlueButton"/>
+
+
+                            </div>
+                            <div class="Separator"></div>
+                        </p:panel>
+                    </div>
+                </div>
+
+
+                <div class="Container100 Responsive100">
+                    <div class="NoIndent">
+                        <p:dataTable id="tabla" var="o" value="#{bean}"
+                                     lazy="true" paginator="true" 
+                                     rows="10"
+                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="10,15,20,30"
+                                     paginatorPosition="bottom">  
+
+                            <p:ajax event="rowSelect"   update=":formList:createButton"/>
+                            <p:ajax event="rowUnselect" update=":formList:createButton"/>
+
+                            <p:columns value="#{bean.columnas}" var="column" sortBy="#{o[column.campo]}" sortable="true">
+                                <f:facet name="header">
+                                    <h:outputText value="#{column.descripcion}" />
+                                </f:facet>
+                                <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link)}"/>
+
+                                <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link)}">
+                                    <f:param name="id" value="#{o['id']}"/>
+                                </p:link>
+
+                            </p:columns>
+                        </p:dataTable>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</ui:composition>
