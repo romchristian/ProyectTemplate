@@ -6,12 +6,12 @@
     <ui:decorate template="/main/util/principal.xhtml">
         <ui:define name="content">
 
-            <h:form id="formList">
-                <ui:include src="/main/util/listadoGenerico.xhtml">
-                    <ui:param name="titulo" value="LISTADO DE EMPRESAS"/>
-                    <ui:param name="bean" value="#{empresaConsultaBean}"/>
-                </ui:include>
-            </h:form>
+
+            <ui:include src="/main/util/listadoGenerico.xhtml">
+                <ui:param name="titulo" value="Listado de Empresas"/>
+                <ui:param name="bean" value="#{empresaConsultaBean}"/>
+            </ui:include>
+
 
 
         </ui:define>

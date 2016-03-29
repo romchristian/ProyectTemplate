@@ -6,59 +6,124 @@
     xmlns:p="http://primefaces.org/ui">
 
 
+    <style type="text/css">
+        .btn{
+            display: inline-block;
 
-    <div class="Container100 Responsive100">
-        <div class="ContainerIndent">
-            <div class="Card ShadowEffect HeiAutoOnMobile" style="padding-top: 0px">
+            margin-bottom: 0;
+            font-weight: normal;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            padding: 6px 12px;
+            font-size: 12px;
+            line-height: 1.42857143;
+            border-radius: 2px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            text-transform: uppercase; 
+        }
 
-                <div class="Container50 Responsive100">
-                    <p:breadCrumb homeDisplay="icon">
+        .btn-default{
+            color: #a4b0b4;
+            background-color: #ffffff;
+            border-color: #dae2e5;
+            text-shadow: none;
+            box-sizing: border-box;
+        }
+
+    </style>
+
+
+    <h:form id="formList">
+
+
+        <div class="Container100 Responsive100 " style="z-index: -2000">
+
+
+
+
+            <div class="ui-breadcrumb NoPadding NoIndent">
+
+
+                <div class="Container70 Responsive100" style="padding: 0;margin: 0">
+                    <p:breadCrumb homeDisplay="icon" style="border: none;width: 50%">
                         <p:menuitem outcome="/main/configuracion/home"/>
                         <p:menuitem outcome="listado" value="#{titulo}"/>
                     </p:breadCrumb>
-                    
                 </div>
-                <div class="Container50 Responsive100">
-                    <div class="Container20 Responsive100">
+                <div class="Container30 Responsive100" style="padding: 0;margin: 0;">
+
+                    <div style="position: relative;
+                         display: inline-block;
+                         vertical-align: middle;
+                         float: right;
+                         box-sizing: border-box;
+                         padding-top: 5px;padding-right: 5px;">
+
+                        <!--                        <p:splitButton value="Otros" icon="fa fa-edit" styleClass="White Fs14" appendTo="@this" >
+                                                    <p:menuitem value="Users" icon="fa fa-user" />
+                                                    <p:menuitem value="Reports" icon="fa fa-file-text-o" />
+                                                    <p:menuitem value="Charts" icon="fa fa-line-chart" />
+                                                </p:splitButton>-->
+
+                        <p:link outcome="nuevo" title="Crear Nuevo" style="margin-left: 10px"><i class="fa fa-plus btn btn-default Fs18"
+                                                                                                 id="btn_plus"
+                                                                                                 onmouseover="document.getElementById('btn_plus').setAttribute('style', 'color:#0277BD')"
+                                                                                                 onmouseout="document.getElementById('btn_plus').setAttribute('style', '')"></i>
+                        </p:link>
+
+                        <p:commandLink ajax="false" title="Imprimr"><i class="fa fa-print btn btn-default Fs18"
+                                                                                               id="btn_print"
+                                                                                               onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
+                                                                                               onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
+                            <p:dataExporter type="pdf" target="tabla" fileName="#{titulo}"/>
+                        </p:commandLink>
+                        <p:commandLink ajax="false" title="Descargar Excel"><i class="fa fa-download btn btn-default Fs18"
+                                                                                                       id="btn_download"
+                                                                                                       onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
+                                                                                                       onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
+                            <p:dataExporter type="xls" target="tabla" fileName="#{titulo}"/>
+                        </p:commandLink>
+
+                        <p:commandLink id="toggler" title="Columnas"><i class="fa fa-list btn btn-default Fs18"
+                                                                        id="btn_download"
+                                                                        onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
+                                                                        onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
+                        </p:commandLink>
+
+                        <p:commandLink onclick="PF('panelfiltro').toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
+                                                                                               id="btn_filter"
+                                                                                               onmouseover="document.getElementById('btn_filter').setAttribute('style', 'color:#0277BD')"
+                                                                                               onmouseout="document.getElementById('btn_filter').setAttribute('style', '')"></i>
+                        </p:commandLink>
+
+
+
+
 
                     </div>
-                    <div class="Container20 Responsive100">
-                        <i class="fa fa-plus Fs16 Green MarRight10"></i><p:link id="createButton" outcome="nuevo" value="Crear nuevo" styleClass="Fs14 FontVoltLight"></p:link>
-                    </div>
-                    <div class="Container20 Responsive100">
-                        <i class="fa fa-filter Fs20 MarRight10"></i>
-                        <p:commandLink value="Filtros" styleClass="Fs14 FontVoltLight"
-                                       onclick="PF('panelfiltro').toggle()"/>
-                    </div>
-                    <div class="Container20 Responsive100">
-                        <i class="fa fa-file-excel-o Fs20 MarRight10"></i>
-                        <p:link value="Exp. Excel" styleClass="Fs14 FontVoltLight"
-                                onclick="PF('panelfiltro').toggle()"/>
-                    </div>
-                    <div class="Container20 Responsive100">
-                        <i class="fa fa-file-pdf-o Fs20 MarRight10"></i>
-                        <p:commandLink value="Exp. PDF" styleClass="Fs14 FontVoltLight"
-                                       onclick="PF('panelfiltro').toggle()"/>
-                    </div>
+
 
                 </div>
 
+                <p:columnToggler datasource="tabla" trigger="toggler"/>
 
-
-
-
-                
-
-
-
-                <div class="Container100 Responsive100">
+                <div class="Container100" style="padding: 0;margin: 0">
                     <div class="NoIndent">
+
 
 
                         <p:panel collapsed="true" widgetVar="panelfiltro"  toggleable="true"
                                  styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;padding: 0;margin: 0">
-                            <div class="Container80 Responsive100" style="margin: 0;padding: 0">
 
+                            <div class="Container80 Responsive100" style="margin: 0;padding: 0;border-top: 1px solid #cccccc;">
+                                <div class="EmptyBox10"></div>
                                 <p:dataGrid columns="2"  layout="grid" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;padding: 0;margin: 0"
                                             value="#{bean.filterOptions}" var="f">
                                     <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;">
@@ -79,8 +144,8 @@
                             </div>
 
 
-                            <div class="Container20 Responsive100">
-
+                            <div class="Container20 Responsive100" style="margin: 0;padding: 0;border-top: 1px solid #cccccc;">
+                                <div class="EmptyBox10"></div>
                                 <div><i class="fa fa-save Blue"></i> <span class="FontNormal Fs12 Blue">Guardar consulta actual</span></div>
                                 <div class="Separator"></div>
                                 <p:inputText/>
@@ -107,45 +172,53 @@
 
 
                             </div>
-                            <div class="Separator"></div>
+
                         </p:panel>
+
                     </div>
                 </div>
+            </div>
+
+        </div>
 
 
-                <div class="Container100 Responsive100">
-                    <div class="NoIndent">
-                        <p:dataTable id="tabla" var="o" value="#{bean}"
-                                     lazy="true" paginator="true" 
-                                     rows="10"
-                                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                     rowsPerPageTemplate="10,15,20,30"
-                                     paginatorPosition="bottom">  
 
-                            <p:ajax event="rowSelect"   update=":formList:createButton"/>
-                            <p:ajax event="rowUnselect" update=":formList:createButton"/>
 
-                            <p:columns value="#{bean.columnas}" var="column" sortBy="#{o[column.campo]}" sortable="true">
-                                <f:facet name="header">
-                                    <h:outputText value="#{column.descripcion}" />
-                                </f:facet>
-                                <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link)}"/>
 
-                                <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link)}">
-                                    <f:param name="id" value="#{o['id']}"/>
-                                </p:link>
 
-                            </p:columns>
-                        </p:dataTable>
-                    </div>
-                </div>
 
+        <div class="Container100 Responsive100">
+            <div class="ContainerIndent HeiAutoOnMobile">
+
+                <p:dataTable id="tabla" var="o" value="#{bean}" reflow="true"
+                             lazy="true" paginator="true" 
+                             rows="10"
+                             rowHover="true"
+                             currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
+                             resizableColumns="true"
+                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                             rowsPerPageTemplate="10,15,20,30"
+                             paginatorPosition="top"
+                             draggableColumns="true">  
+
+
+
+                    <p:columns value="#{bean.columnas}" var="column" sortBy="#{o[column.campo]}" sortable="true">
+                        <f:facet name="header">
+                            <h:outputText value="#{column.descripcion}" />
+                        </f:facet>
+                        <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link)}"/>
+
+                        <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link)}">
+                            <f:param name="id" value="#{o['id']}"/>
+                        </p:link>
+
+                    </p:columns>
+                </p:dataTable>
 
             </div>
         </div>
-    </div>
 
-
-
+    </h:form>
 
 </ui:composition>

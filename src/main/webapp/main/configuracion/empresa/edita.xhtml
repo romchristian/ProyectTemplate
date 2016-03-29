@@ -12,7 +12,7 @@
 
     <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
         <ui:define name="content">
-            <div class="Container50 Responsive100">
+            <div class="Container100 Responsive100">
                 <p:breadCrumb homeDisplay="icon">
                     <p:menuitem outcome="/main/configuracion/home"/>
                     <p:menuitem outcome="listado" value="Listado de empresas"/>
@@ -21,10 +21,14 @@
                     </p:menuitem>
                 </p:breadCrumb>
             </div>
-            <div class="Separator"/>
-            <ui:include src="cuerpo.xhtml">
-                <ui:param name="contexto" value="edicion"/>
-            </ui:include>
+            <div class="Container100 Responsive100">
+                <div class="Card">
+                    <ui:include src="cuerpo.xhtml">
+                        <ui:param name="contexto" value="edicion"/>
+                    </ui:include>
+                </div>
+            </div>
+
         </ui:define>
     </ui:decorate>
 

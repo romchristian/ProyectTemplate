@@ -5,11 +5,16 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -94,12 +99,12 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
 
     }
 
-    private String construyeFilters() {
+    private String construyeFilters(String sortField,SortOrder sortOrder) {
         String consulta = "SELECT * FROM " + getClazz().getSimpleName().toLowerCase() + "  ";
         StringBuilder sb = new StringBuilder(consulta);
         sb.append(" WHERE 1 = 1 ");
-        
-        if(filterOptions == null){
+
+        if (filterOptions == null) {
             loadFilters();
         }
 
@@ -107,6 +112,12 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
             if (f.tieneValor()) {
                 sb.append(f.getCadenaFiltro());
             }
+        }
+
+        if (sortField != null) {
+            sb.append(" ORDER BY  ");
+            sb.append(sortField);
+            sb.append(SortOrder.ASCENDING.equals(sortOrder) ? " ASC ": " DESC ");
         }
 
         return sb.toString();
@@ -130,7 +141,12 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
             int first, int pageSize,
             String sortField, SortOrder sortOrder,
             Map<String, Object> filters) {
-        lista = getEjb().findFilter(construyeFilters(), first, pageSize);
+
+        lista = new ArrayList<>();
+
+        //sort
+        lista = getEjb().findFilter(construyeFilters(sortField,sortOrder), first, pageSize);
+
         setRowCount(getEjb().countFilter(construyeCount()));
         return lista;
     }
