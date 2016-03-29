@@ -83,13 +83,13 @@ public class SubMenuDAO implements ISubMenuDAO {
         }
         return items;
     }
-    
+
     @Override
     public int countFilter(String consulta) {
         int R = 0;
 
         try {
-            Query query = abmService.getEM().createNativeQuery(consulta, Long.class);
+            Query query = abmService.getEM().createNativeQuery(consulta);
             R = ((Long) query.getSingleResult()).intValue();
 
         } catch (Exception e) {
@@ -97,6 +97,5 @@ public class SubMenuDAO implements ISubMenuDAO {
 
         return R;
     }
-    
-    
+
 }

@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.model.SelectItem;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -99,7 +102,7 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
 
     }
 
-    private String construyeFilters(String sortField,SortOrder sortOrder) {
+    private String construyeFilters(String sortField, SortOrder sortOrder) {
         String consulta = "SELECT * FROM " + getClazz().getSimpleName().toLowerCase() + "  ";
         StringBuilder sb = new StringBuilder(consulta);
         sb.append(" WHERE 1 = 1 ");
@@ -117,8 +120,10 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         if (sortField != null) {
             sb.append(" ORDER BY  ");
             sb.append(sortField);
-            sb.append(SortOrder.ASCENDING.equals(sortOrder) ? " ASC ": " DESC ");
+            sb.append(SortOrder.ASCENDING.equals(sortOrder) ? " ASC " : " DESC ");
         }
+
+        System.out.println("Contruye Consulta: " + sb.toString());
 
         return sb.toString();
     }
@@ -145,10 +150,24 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         lista = new ArrayList<>();
 
         //sort
-        lista = getEjb().findFilter(construyeFilters(sortField,sortOrder), first, pageSize);
+        lista = getEjb().findFilter(construyeFilters(sortField, sortOrder), first, pageSize);
 
         setRowCount(getEjb().countFilter(construyeCount()));
         return lista;
+    }
+
+    public SelectItem[] obtItemsAvailableSelectMany(String campo) {
+        return getController(FacesContext.getCurrentInstance(), campo).getItemsAvailableSelectMany();
+    }
+
+    public SelectItem[] obtItemsAvailableSelectOne(String campo) {
+        return getController(FacesContext.getCurrentInstance(), campo).getItemsAvailableSelectOne();
+    }
+    
+    
+    private BeanGenerico getController(FacesContext facesContext, String campo) {
+        return (BeanGenerico) facesContext.getApplication().getELResolver().
+                getValue(facesContext.getELContext(), null, campo + "Bean");
     }
 
 }

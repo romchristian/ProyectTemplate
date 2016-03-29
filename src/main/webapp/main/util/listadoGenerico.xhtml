@@ -43,127 +43,109 @@
     <h:form id="formList">
 
 
-        <div class="Container100 Responsive100 " style="z-index: -2000">
+
+
+        <div class="Container100 Responsive100 ui-fluid">
+            <div class="NoIndent HeiAutoOnMobile">
 
 
 
+                <div class="ui-breadcrumb NoPadding NoIndent">
 
-            <div class="ui-breadcrumb NoPadding NoIndent">
+
+                    <div class="Container70 Responsive100" style="padding: 0;margin: 0">
+                        <p:breadCrumb homeDisplay="icon" style="border: none;width: 50%">
+                            <p:menuitem outcome="/main/configuracion/home"/>
+                            <p:menuitem outcome="listado" value="#{titulo}"/>
+                        </p:breadCrumb>
+                    </div>
+                    <div class="Container30 Responsive100" style="padding: 0;margin: 0;">
+                        <div style="position: relative;
+                             display: inline-block;
+                             vertical-align: middle;
+                             float: right;
+                             box-sizing: border-box;
+                             padding-top: 5px;padding-right: 5px;">
 
 
-                <div class="Container70 Responsive100" style="padding: 0;margin: 0">
-                    <p:breadCrumb homeDisplay="icon" style="border: none;width: 50%">
-                        <p:menuitem outcome="/main/configuracion/home"/>
-                        <p:menuitem outcome="listado" value="#{titulo}"/>
-                    </p:breadCrumb>
-                </div>
-                <div class="Container30 Responsive100" style="padding: 0;margin: 0;">
 
-                    <div style="position: relative;
-                         display: inline-block;
-                         vertical-align: middle;
-                         float: right;
-                         box-sizing: border-box;
-                         padding-top: 5px;padding-right: 5px;">
+                            <p:link outcome="nuevo" title="Crear Nuevo" style="margin-left: 10px"><i class="fa fa-plus btn btn-default Fs18"
+                                                                                                     id="btn_plus"
+                                                                                                     onmouseover="document.getElementById('btn_plus').setAttribute('style', 'color:#0277BD')"
+                                                                                                     onmouseout="document.getElementById('btn_plus').setAttribute('style', '')"></i>
+                            </p:link>
 
-                        <!--                        <p:splitButton value="Otros" icon="fa fa-edit" styleClass="White Fs14" appendTo="@this" >
-                                                    <p:menuitem value="Users" icon="fa fa-user" />
-                                                    <p:menuitem value="Reports" icon="fa fa-file-text-o" />
-                                                    <p:menuitem value="Charts" icon="fa fa-line-chart" />
-                                                </p:splitButton>-->
+                            <p:commandLink ajax="false" title="Imprimr"><i class="fa fa-print btn btn-default Fs18"
+                                                                           id="btn_print"
+                                                                           onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
+                                                                           onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
+                                <p:dataExporter type="pdf" target="tabla" fileName="#{titulo}"/>
+                            </p:commandLink>
+                            <p:commandLink ajax="false" title="Descargar Excel"><i class="fa fa-download btn btn-default Fs18"
+                                                                                   id="btn_download"
+                                                                                   onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
+                                                                                   onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
+                                <p:dataExporter type="xls" target="tabla" fileName="#{titulo}"/>
+                            </p:commandLink>
 
-                        <p:link outcome="nuevo" title="Crear Nuevo" style="margin-left: 10px"><i class="fa fa-plus btn btn-default Fs18"
-                                                                                                 id="btn_plus"
-                                                                                                 onmouseover="document.getElementById('btn_plus').setAttribute('style', 'color:#0277BD')"
-                                                                                                 onmouseout="document.getElementById('btn_plus').setAttribute('style', '')"></i>
-                        </p:link>
+                            <p:commandLink id="toggler" title="Columnas"><i class="fa fa-list btn btn-default Fs18"
+                                                                            id="btn_columnas"
+                                                                            onmouseover="document.getElementById('btn_columnas').setAttribute('style', 'color:#0277BD')"
+                                                                            onmouseout="document.getElementById('btn_columnas').setAttribute('style', '')"></i>
+                            </p:commandLink>
 
-                        <p:commandLink ajax="false" title="Imprimr"><i class="fa fa-print btn btn-default Fs18"
-                                                                                               id="btn_print"
-                                                                                               onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
-                                                                                               onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
-                            <p:dataExporter type="pdf" target="tabla" fileName="#{titulo}"/>
-                        </p:commandLink>
-                        <p:commandLink ajax="false" title="Descargar Excel"><i class="fa fa-download btn btn-default Fs18"
-                                                                                                       id="btn_download"
-                                                                                                       onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
-                                                                                                       onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
-                            <p:dataExporter type="xls" target="tabla" fileName="#{titulo}"/>
-                        </p:commandLink>
-
-                        <p:commandLink id="toggler" title="Columnas"><i class="fa fa-list btn btn-default Fs18"
-                                                                        id="btn_download"
-                                                                        onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
-                                                                        onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
-                        </p:commandLink>
-
-                        <p:commandLink onclick="PF('panelfiltro').toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
-                                                                                               id="btn_filter"
-                                                                                               onmouseover="document.getElementById('btn_filter').setAttribute('style', 'color:#0277BD')"
-                                                                                               onmouseout="document.getElementById('btn_filter').setAttribute('style', '')"></i>
-                        </p:commandLink>
+                            <p:commandLink onclick="PF('panelfiltro').toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
+                                                                                                   id="btn_filter"
+                                                                                                   onmouseover="document.getElementById('btn_filter').setAttribute('style', 'color:#0277BD')"
+                                                                                                   onmouseout="document.getElementById('btn_filter').setAttribute('style', '')"></i>
+                            </p:commandLink>
 
 
 
 
 
+                        </div>
                     </div>
 
-
-                </div>
-
-                <p:columnToggler datasource="tabla" trigger="toggler"/>
-
-                <div class="Container100" style="padding: 0;margin: 0">
-                    <div class="NoIndent">
+                    <p:columnToggler datasource="tabla" trigger="toggler"/>
 
 
 
+                    <div class="Container100 Responsive100" style="padding: 0;margin: 0">
                         <p:panel collapsed="true" widgetVar="panelfiltro"  toggleable="true"
                                  styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;padding: 0;margin: 0">
 
-                            <div class="Container80 Responsive100" style="margin: 0;padding: 0;border-top: 1px solid #cccccc;">
+                            <div class="Container100 Responsive100" style="margin: 0;padding: 0;border-top: 1px solid #cccccc;">
                                 <div class="EmptyBox10"></div>
-                                <p:dataGrid columns="2"  layout="grid" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;padding: 0;margin: 0"
-                                            value="#{bean.filterOptions}" var="f">
-                                    <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;">
-                                        <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha')}" styleClass="Responsive100"/>
-                                        <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}" styleClass="Responsive100"/>
-                                        <h:outputText value="#{f.descripcion} hasta" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}" styleClass="Responsive100"/>
 
-                                        <p:inputText value="#{f.valorString}" rendered="#{f.tipo == 'like'}"  styleClass="Responsive100"/>
-                                        <p:inputText value="#{f.valorInteger}" rendered="#{f.tipoCampo == 'java.lang.Integer' and f.tipoCampo == 'numero'}" styleClass="Responsive100"/>
-                                        <p:inputText value="#{f.valorLong}" rendered="#{f.tipoCampo == 'java.lang.Long'  and f.tipoCampo == 'numero'}" styleClass="Responsive100"/>
-                                        <p:inputText value="#{f.valorDouble}" rendered="#{f.tipoCampo == 'java.lang.Double'  and f.tipoCampo == 'numero'}" styleClass="Responsive100"/>
-                                        <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipoCampo == 'numero'}" styleClass="Responsive100"/>
-                                        <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}" styleClass="Responsive100"/>
-                                        <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}" styleClass="Responsive100"/>
-                                    </p:panelGrid>
-                                </p:dataGrid>
+                                <ui:repeat value="#{bean.filterOptions}" var="f">
+                                    <div class="Container50 Responsive100 ui-fluid" style="margin: 0;padding: 0;">
+                                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;"
+                                                     layout="grid">
+                                            <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha')}"/>
+                                            <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
+                                            <h:outputText value="#{f.descripcion} hasta" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
+
+                                            <p:inputText value="#{f.valorString}" rendered="#{f.tipo == 'like'}"/>
+                                            <p:inputText value="#{f.valorInteger}" rendered="#{f.tipoCampo == 'java.lang.Integer' and f.tipoCampo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorLong}" rendered="#{f.tipoCampo == 'java.lang.Long'  and f.tipoCampo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorDouble}" rendered="#{f.tipoCampo == 'java.lang.Double'  and f.tipoCampo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipoCampo == 'numero'}"/>
+                                            <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
+                                            <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
+                                            <p:selectOneMenu value="#{f.valorEntidadId}" rendered="#{f.tipo == 'selectOne'}" converter="empresaConverter">
+                                                <f:selectItems value="#{bean.obtItemsAvailableSelectOne(f.campo)}"/>
+                                            </p:selectOneMenu>
+                                        </p:panelGrid>
+                                    </div>
+                                </ui:repeat>
+
+
 
                             </div>
 
 
-                            <div class="Container20 Responsive100" style="margin: 0;padding: 0;border-top: 1px solid #cccccc;">
-                                <div class="EmptyBox10"></div>
-                                <div><i class="fa fa-save Blue"></i> <span class="FontNormal Fs12 Blue">Guardar consulta actual</span></div>
-                                <div class="Separator"></div>
-                                <p:inputText/>
 
-                                <div class="EmptyBox10"></div>
-                                <div><i class="fa fa-star Blue"></i> <span class="FontNormal Fs12 Blue">Favoritos</span></div>
-                                <div class="Separator"></div>
-                                <ul style="margin: 0;padding: 0"> 
-                                    <li style="border:none;"><i class="fa fa-search Blue Fs10" style="margin-right: 5px"/><p:link value="Empresa del Grupo" styleClass="FontNormal Fs12 Blue"/></li>
-                                    <li style="border:none;"><i class="fa fa-search Blue Fs10" style="margin-right: 5px"/><p:link value="Empresa del Grupo" styleClass="FontNormal Fs12 Blue"/></li>
-                                    <li style="border:none;"><i class="fa fa-search Blue Fs10" style="margin-right: 5px"/><p:link value="Empresa del Grupo" styleClass="FontNormal Fs12 Blue"/></li>
-                                    <li style="border:none;"><i class="fa fa-search Blue Fs10" style="margin-right: 5px"/><p:link value="Empresa del Grupo" styleClass="FontNormal Fs12 Blue"/></li>
-                                </ul>
-
-
-
-
-                            </div>
 
                             <div class="Container100 Responsive100">
 
@@ -176,46 +158,53 @@
                         </p:panel>
 
                     </div>
-                </div>
-            </div>
 
+
+
+
+                </div>
+
+
+            </div>
         </div>
 
 
 
+        <div class="EmptyBox20"/>
+
+        <div class="Container100 Responsive100 ui-fluid">
+            <div class="NoIndent NoPadding">
+
+
+                <div class="ContainerIndent HeiAutoOnMobile" style="padding: 0;margin: 0;">
+
+                    <p:dataTable id="tabla" var="o" value="#{bean}" reflow="true"
+                                 lazy="true" paginator="true" 
+                                 rows="10"
+                                 rowHover="true"
+                                 currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
+                                 resizableColumns="true"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="10,15,20,30"
+                                 paginatorPosition="top"
+                                 draggableColumns="true">  
 
 
 
+                        <p:columns value="#{bean.columnas}" var="column" sortBy="#{o[column.campo]}" sortable="true">
+                            <f:facet name="header">
+                                <h:outputText value="#{column.descripcion}" />
+                            </f:facet>
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link)}"/>
 
-        <div class="Container100 Responsive100">
-            <div class="ContainerIndent HeiAutoOnMobile">
+                            <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link)}">
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
 
-                <p:dataTable id="tabla" var="o" value="#{bean}" reflow="true"
-                             lazy="true" paginator="true" 
-                             rows="10"
-                             rowHover="true"
-                             currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
-                             resizableColumns="true"
-                             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                             rowsPerPageTemplate="10,15,20,30"
-                             paginatorPosition="top"
-                             draggableColumns="true">  
+                        </p:columns>
+                    </p:dataTable>
 
-
-
-                    <p:columns value="#{bean.columnas}" var="column" sortBy="#{o[column.campo]}" sortable="true">
-                        <f:facet name="header">
-                            <h:outputText value="#{column.descripcion}" />
-                        </f:facet>
-                        <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link)}"/>
-
-                        <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link)}">
-                            <f:param name="id" value="#{o['id']}"/>
-                        </p:link>
-
-                    </p:columns>
-                </p:dataTable>
-
+                </div>
             </div>
         </div>
 

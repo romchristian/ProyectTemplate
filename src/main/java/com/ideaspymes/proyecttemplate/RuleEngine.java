@@ -35,7 +35,7 @@ public class RuleEngine {
     public String getKieSession(String condicion, String consecuencia) throws UnsupportedEncodingException {
 
         String dslr = "package com.ideaspymes.proyecttemplate;\n"
-                + "import com.ideaspymes.proyecttemplate.model.*;\n"
+                + "import com.ideaspymes.proyecttemplate.configuracion.*;\n"
                 + "\n"
                 + "expander dslExample.dsl\n"
                 + " \n"

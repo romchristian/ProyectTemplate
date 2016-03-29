@@ -8,6 +8,8 @@ package com.ideaspymes.proyecttemplate.configuracion.model;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConEmpresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
+import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -24,7 +26,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Sucursal implements Serializable, IConEmpresa,IAuditable {
+public class Sucursal implements Serializable, IConEmpresa, IAuditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,12 +34,20 @@ public class Sucursal implements Serializable, IConEmpresa,IAuditable {
     private Long id;
 
     //Informacion principal
+    @Listado(descripcion = "Nombre", mostrar = true,link = true)
+    @Filtro(descripcion = "Nombre", tipo = "like", campo = "nombre")
     private String nombre;
+
+    @Listado(descripcion = "Nro. Establecimiento", mostrar = true)
+    @Filtro(descripcion = "Nro. Est.", tipo = "like", campo = "nroEstablecimiento")
     private String nroEstablecimiento;
+    @Listado(descripcion = "Dirección", mostrar = true)
+    @Filtro(descripcion = "Dirección", tipo = "like", campo = "direccion")
     private String direccion;
     private String telefono;
     private String ciudad;
     @ManyToOne
+    @Filtro(descripcion = "Empresa", tipo = "selectOne", campo = "empresa")
     private Empresa empresa;
 
     @Enumerated(EnumType.STRING)

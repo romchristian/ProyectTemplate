@@ -4,7 +4,7 @@
  */
 package com.ideaspymes.proyecttemplate.web.converters;
 
-import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
+import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.generico.ConverterGenerico;
 import javax.faces.convert.FacesConverter;
 
@@ -13,11 +13,11 @@ import javax.faces.convert.FacesConverter;
  *
  * @author christian
  */
-@FacesConverter(forClass = Empresa.class,value = "empresaConverter")
-public class EmpresaConverter extends ConverterGenerico<Empresa> {
+@FacesConverter(forClass = Sucursal.class)
+public class SucursalConverter extends ConverterGenerico<Sucursal> {
 
     @Override
     public String getBeanName() {
-        return "empresaBean";
+        return "sucursalBean";
     }
 }

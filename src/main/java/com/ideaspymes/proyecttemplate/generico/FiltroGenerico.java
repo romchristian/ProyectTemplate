@@ -26,12 +26,33 @@ public class FiltroGenerico {
     private Long valorLong;
     private Date valorDateInicio;
     private Date valorDateFin;
+    private Object valorEntidadId;
+    private String converter;
 
     public FiltroGenerico(String descripcion, String campo, String tipo, String tipoCampo) {
         this.descripcion = descripcion;
         this.campo = campo;
         this.tipo = tipo;
         this.tipoCampo = tipoCampo;
+    }
+
+    public String getConverter() {
+        if (campo != null) {
+            converter = campo + "Converter";
+        }
+        return converter;
+    }
+
+    public void setConverter(String converter) {
+        this.converter = converter;
+    }
+
+    public Object getValorEntidadId() {
+        return valorEntidadId;
+    }
+
+    public void setValorEntidadId(Object valorEntidadId) {
+        this.valorEntidadId = valorEntidadId;
     }
 
     public String getTipoCampo() {
@@ -135,6 +156,9 @@ public class FiltroGenerico {
             case "numero":
                 R = " AND " + campo + " = " + valorInteger + " ";
                 break;
+            case "selectOne":
+                R = " AND " + campo + "_id = " + ((IAuditable) valorEntidadId).getId() + " ";
+                break;
 
         }
         return R;
@@ -168,6 +192,12 @@ public class FiltroGenerico {
 
         if (valorDateFin != null) {
             R = true;
+        }
+
+        System.out.println("Valor Entidad : " + valorEntidadId);
+        if (valorEntidadId != null) {
+            R = true;
+            System.out.println("Valor Entidad Entre: " + valorEntidadId);
         }
         return R;
     }

@@ -91,7 +91,7 @@ public class SucursalDAO implements ISucursalDAO {
         int R = 0;
 
         try {
-            Query query = abmService.getEM().createNativeQuery(consulta, Long.class);
+            Query query = abmService.getEM().createNativeQuery(consulta);
             R = ((Long) query.getSingleResult()).intValue();
 
         } catch (Exception e) {
