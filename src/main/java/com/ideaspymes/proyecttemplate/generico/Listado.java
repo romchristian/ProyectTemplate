@@ -21,24 +21,30 @@ import javax.inject.Qualifier;
 @Retention(RUNTIME)
 @Target({METHOD, FIELD})
 public @interface Listado {
-     /**
+
+    /**
      * Key that will be searched when injecting the value.
-     * @return 
+     *
+     * @return
      */
     @Nonbinding
     String descripcion() default "";
 
+    @Nonbinding
+    String campoDescripcion() default "";
+
     /**
      * Defines if value for the given key must be defined.
-     * @return 
+     *
+     * @return
      */
     @Nonbinding
     boolean mostrar() default true;
-    
+
     @Nonbinding
     boolean link() default false;
     
-    
-    
-    
+    @Nonbinding
+    boolean entidad() default false;
+
 }

@@ -120,7 +120,7 @@
 
                                 <ui:repeat value="#{bean.filterOptions}" var="f">
                                     <div class="Container50 Responsive100 ui-fluid" style="margin: 0;padding: 0;">
-                                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;"
+                                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;margin: 0"
                                                      layout="grid">
                                             <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha')}"/>
                                             <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
@@ -133,7 +133,7 @@
                                             <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipoCampo == 'numero'}"/>
                                             <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
                                             <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
-                                            <p:selectOneMenu value="#{f.valorEntidadId}" rendered="#{f.tipo == 'selectOne'}" converter="empresaConverter">
+                                            <p:selectOneMenu value="#{f.valorEntidadId}" rendered="#{f.tipo == 'selectOne'}" converter="#{bean.obtConverter(f.campo)}">
                                                 <f:selectItems value="#{bean.obtItemsAvailableSelectOne(f.campo)}"/>
                                             </p:selectOneMenu>
                                         </p:panelGrid>
@@ -146,8 +146,10 @@
 
 
 
-
-                            <div class="Container100 Responsive100">
+                            <div class="Container80 Responsive100 ">
+                                
+                            </div>
+                            <div class="Container20 Responsive100 ">
 
 
                                 <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla" icon="fa fa-search" styleClass="BlueButton"/>
@@ -170,7 +172,7 @@
 
 
 
-        <div class="EmptyBox20"/>
+        
 
         <div class="Container100 Responsive100 ui-fluid">
             <div class="NoIndent NoPadding">
@@ -195,7 +197,9 @@
                             <f:facet name="header">
                                 <h:outputText value="#{column.descripcion}" />
                             </f:facet>
-                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link)}"/>
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad)}"/>
+                            
+                            <h:outputText value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.entidad)}"/>
 
                             <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link)}">
                                 <f:param name="id" value="#{o['id']}"/>

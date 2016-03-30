@@ -8,8 +8,10 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.ISucursalDAO;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.BeanGenerico;
+import com.ideaspymes.proyecttemplate.web.converters.SucursalConverter;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -32,6 +34,11 @@ public class SucursalBean extends BeanGenerico<Sucursal> implements Serializable
     @Override
     public Sucursal getNuevo() {
         return new Sucursal();
+    }
+
+    @Override
+    public Converter getConverter() {
+        return new SucursalConverter();
     }
 
 }

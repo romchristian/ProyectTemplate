@@ -15,12 +15,32 @@ public class Columna {
     private String descripcion;
     private String tipo;
     private boolean link;
+    private boolean entidad;
+    private String campoDescripcion;
 
-    public Columna(String descripcion, String campo, String tipo, boolean link) {
-        this.descripcion = descripcion;
+    public Columna(String descripcion,String campo,String tipo, boolean link, boolean entidad, String campoDescripcion) {
         this.campo = campo;
+        this.descripcion = descripcion;
         this.tipo = tipo;
         this.link = link;
+        this.entidad = entidad;
+        this.campoDescripcion = campoDescripcion;
+    }
+
+    public boolean isEntidad() {
+        return entidad;
+    }
+
+    public void setEntidad(boolean entidad) {
+        this.entidad = entidad;
+    }
+
+    public String getCampoDescripcion() {
+        return campoDescripcion;
+    }
+
+    public void setCampoDescripcion(String campoDescripcion) {
+        this.campoDescripcion = campoDescripcion;
     }
 
     public boolean isLink() {

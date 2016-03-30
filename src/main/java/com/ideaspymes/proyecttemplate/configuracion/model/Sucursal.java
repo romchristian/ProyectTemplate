@@ -34,7 +34,7 @@ public class Sucursal implements Serializable, IConEmpresa, IAuditable {
     private Long id;
 
     //Informacion principal
-    @Listado(descripcion = "Nombre", mostrar = true,link = true)
+    @Listado(descripcion = "Nombre", mostrar = true, link = true)
     @Filtro(descripcion = "Nombre", tipo = "like", campo = "nombre")
     private String nombre;
 
@@ -46,8 +46,10 @@ public class Sucursal implements Serializable, IConEmpresa, IAuditable {
     private String direccion;
     private String telefono;
     private String ciudad;
+
     @ManyToOne
     @Filtro(descripcion = "Empresa", tipo = "selectOne", campo = "empresa")
+    @Listado(descripcion = "Empresa", mostrar = true,entidad = true,campoDescripcion = "nombre")
     private Empresa empresa;
 
     @Enumerated(EnumType.STRING)

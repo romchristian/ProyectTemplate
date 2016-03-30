@@ -4,18 +4,16 @@
  */
 package com.ideaspymes.proyecttemplate.web;
 
-
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IEmpresaDAO;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.BeanGenerico;
+import com.ideaspymes.proyecttemplate.web.converters.EmpresaConverter;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-
-
-
 
 /**
  *
@@ -23,11 +21,11 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class EmpresaBean extends BeanGenerico<Empresa> implements Serializable{
+public class EmpresaBean extends BeanGenerico<Empresa> implements Serializable {
 
-    @EJB private IEmpresaDAO ejb;
-    
-    
+    @EJB
+    private IEmpresaDAO ejb;
+
     @Override
     public AbstractDAO<Empresa> getEjb() {
         return ejb;
@@ -38,5 +36,9 @@ public class EmpresaBean extends BeanGenerico<Empresa> implements Serializable{
         return new Empresa();
     }
 
-    
+    @Override
+    public Converter getConverter() {
+        return new EmpresaConverter();
+    }
+
 }

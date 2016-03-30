@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.component.UIComponent;
+import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
@@ -66,6 +67,8 @@ public abstract class BeanGenerico<T> implements Serializable {
     public abstract AbstractDAO<T> getEjb();
 
     public abstract T getNuevo();
+    
+    public abstract Converter getConverter();
 
     public String create() {
 

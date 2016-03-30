@@ -70,7 +70,7 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         for (Field f : fields) {
             if (f.getAnnotation(Listado.class) != null && f.getAnnotation(Listado.class).mostrar()) {
                 String descripcion = f.getAnnotation(Listado.class).descripcion();
-                columnas.add(new Columna(descripcion, f.getName(), f.getGenericType().getTypeName(), f.getAnnotation(Listado.class).link()));
+                columnas.add(new Columna(descripcion, f.getName(), f.getGenericType().getTypeName(), f.getAnnotation(Listado.class).link(),f.getAnnotation(Listado.class).entidad(),f.getAnnotation(Listado.class).campoDescripcion()));
             }
         }
 
@@ -163,8 +163,15 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
     public SelectItem[] obtItemsAvailableSelectOne(String campo) {
         return getController(FacesContext.getCurrentInstance(), campo).getItemsAvailableSelectOne();
     }
-    
-    
+
+    public Converter obtConverter(String campo) {
+        if (campo != null && campo.length() > 0) {
+            BeanGenerico bean = getController(FacesContext.getCurrentInstance(), campo);
+            return bean.getConverter();
+        }
+        return null;
+    }
+
     private BeanGenerico getController(FacesContext facesContext, String campo) {
         return (BeanGenerico) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, campo + "Bean");

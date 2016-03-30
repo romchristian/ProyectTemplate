@@ -5,9 +5,12 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
+import com.ideaspymes.proyecttemplate.web.EmpresaConsultaBean;
+import com.ideaspymes.proyecttemplate.web.converters.EmpresaConverter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.faces.convert.Converter;
 
 /**
  *
@@ -27,24 +30,12 @@ public class FiltroGenerico {
     private Date valorDateInicio;
     private Date valorDateFin;
     private Object valorEntidadId;
-    private String converter;
 
     public FiltroGenerico(String descripcion, String campo, String tipo, String tipoCampo) {
         this.descripcion = descripcion;
         this.campo = campo;
         this.tipo = tipo;
         this.tipoCampo = tipoCampo;
-    }
-
-    public String getConverter() {
-        if (campo != null) {
-            converter = campo + "Converter";
-        }
-        return converter;
-    }
-
-    public void setConverter(String converter) {
-        this.converter = converter;
     }
 
     public Object getValorEntidadId() {
