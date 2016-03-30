@@ -5,6 +5,7 @@
  */
 package com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
@@ -37,4 +38,6 @@ public interface ISucursalDAO extends AbstractDAO<Sucursal> {
     @Override
     void remove(Sucursal entity, Usuario usuario);
 
+    @Override
+    List<Sucursal> completar(String query);
 }

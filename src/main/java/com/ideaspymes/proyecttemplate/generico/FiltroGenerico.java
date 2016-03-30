@@ -22,6 +22,7 @@ public class FiltroGenerico {
     private String descripcion;
     private String tipo;
     private String tipoCampo;
+    private String campoDescripcion;
     private String valorString;
     private Integer valorInteger;
     private Double valorDouble;
@@ -31,11 +32,20 @@ public class FiltroGenerico {
     private Date valorDateFin;
     private Object valorEntidadId;
 
-    public FiltroGenerico(String descripcion, String campo, String tipo, String tipoCampo) {
+    public FiltroGenerico(String descripcion, String campo, String tipo, String tipoCampo, String campoDescripcion) {
         this.descripcion = descripcion;
         this.campo = campo;
         this.tipo = tipo;
         this.tipoCampo = tipoCampo;
+        this.campoDescripcion = campoDescripcion;
+    }
+
+    public String getCampoDescripcion() {
+        return campoDescripcion;
+    }
+
+    public void setCampoDescripcion(String campoDescripcion) {
+        this.campoDescripcion = campoDescripcion;
     }
 
     public Object getValorEntidadId() {
@@ -148,6 +158,10 @@ public class FiltroGenerico {
                 R = " AND " + campo + " = " + valorInteger + " ";
                 break;
             case "selectOne":
+                R = " AND " + campo + "_id = " + ((IAuditable) valorEntidadId).getId() + " ";
+                break;
+
+            case "autocomplete":
                 R = " AND " + campo + "_id = " + ((IAuditable) valorEntidadId).getId() + " ";
                 break;
 

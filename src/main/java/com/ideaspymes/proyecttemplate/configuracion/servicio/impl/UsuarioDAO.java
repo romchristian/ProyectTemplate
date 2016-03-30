@@ -96,4 +96,19 @@ public class UsuarioDAO implements IUsuarioDAO {
 
         return R;
     }
+    
+    
+    @Override
+    public List<Usuario> completar(String matchText) {
+        List<Usuario> sugerencias = new ArrayList<>();
+
+        if (matchText != null && matchText.length() > 0) {
+            String consulta = "select * from usuario where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
+            Query query = abmService.getEM().createNativeQuery(consulta, Usuario.class);
+            query.setMaxResults(20);
+            sugerencias = query.getResultList();
+        }
+        
+        return sugerencias;
+    }
 }

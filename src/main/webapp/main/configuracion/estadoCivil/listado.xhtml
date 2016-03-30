@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <ui:decorate template="/main/util/principal.xhtml">
+        <ui:define name="content">
+
+
+            <ui:include src="/main/util/listadoGenerico.xhtml">
+                <ui:param name="titulo" value="Listado de Estado Civil"/>
+                <ui:param name="bean" value="#{estadoCivilConsultaBean}"/>
+            </ui:include>
+
+
+
+        </ui:define>
+    </ui:decorate>
+
+
+</ui:composition>
+

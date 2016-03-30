@@ -97,4 +97,9 @@ public class MenuItemDAO implements IMenuItemDAO {
 
         return R;
     }
+
+    @Override
+    public List<MenuItem> completar(String query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

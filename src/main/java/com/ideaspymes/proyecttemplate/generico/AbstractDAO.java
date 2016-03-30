@@ -29,5 +29,7 @@ public interface AbstractDAO<T> {
     
     public abstract List<T> findFilter(String query, int first, int pageSize);
     
+    public abstract List<T> completar(String query);
+    
     public abstract int countFilter(String query);
 }

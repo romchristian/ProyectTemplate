@@ -48,7 +48,7 @@ public class Sucursal implements Serializable, IConEmpresa, IAuditable {
     private String ciudad;
 
     @ManyToOne
-    @Filtro(descripcion = "Empresa", tipo = "selectOne", campo = "empresa")
+    @Filtro(descripcion = "Empresa", tipo = "autocomplete", campo = "empresa",campoDescripcion = "nombre")
     @Listado(descripcion = "Empresa", mostrar = true,entidad = true,campoDescripcion = "nombre")
     private Empresa empresa;
 

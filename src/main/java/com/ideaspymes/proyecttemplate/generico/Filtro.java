@@ -39,5 +39,8 @@ public @interface Filtro {
     @Nonbinding
     String descripcion() default "";
     
+    @Nonbinding
+    String campoDescripcion() default "";
+    
     
 }

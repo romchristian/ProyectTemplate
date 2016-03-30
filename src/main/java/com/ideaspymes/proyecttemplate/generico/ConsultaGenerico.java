@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -27,6 +28,8 @@ import org.primefaces.model.SortOrder;
  */
 public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Serializable {
 
+    @Inject
+    private Credencial credencial;
     private List<FiltroGenerico> filterOptions;
     private List<Columna> columnas;
     private List<T> lista;
@@ -70,7 +73,7 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         for (Field f : fields) {
             if (f.getAnnotation(Listado.class) != null && f.getAnnotation(Listado.class).mostrar()) {
                 String descripcion = f.getAnnotation(Listado.class).descripcion();
-                columnas.add(new Columna(descripcion, f.getName(), f.getGenericType().getTypeName(), f.getAnnotation(Listado.class).link(),f.getAnnotation(Listado.class).entidad(),f.getAnnotation(Listado.class).campoDescripcion()));
+                columnas.add(new Columna(descripcion, f.getName(), f.getGenericType().getTypeName(), f.getAnnotation(Listado.class).link(), f.getAnnotation(Listado.class).entidad(), f.getAnnotation(Listado.class).campoDescripcion()));
             }
         }
 
@@ -82,7 +85,7 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
 
         for (Field f : fields) {
             if (f.getAnnotation(Filtro.class) != null && f.getAnnotation(Filtro.class).campo().length() > 0) {
-                filterOptions.add(new FiltroGenerico(f.getAnnotation(Filtro.class).descripcion(), f.getAnnotation(Filtro.class).campo(), f.getAnnotation(Filtro.class).tipo(), f.getGenericType().getTypeName()));
+                filterOptions.add(new FiltroGenerico(f.getAnnotation(Filtro.class).descripcion(), f.getAnnotation(Filtro.class).campo(), f.getAnnotation(Filtro.class).tipo(), f.getGenericType().getTypeName(), f.getAnnotation(Filtro.class).campoDescripcion()));
             }
         }
 
@@ -105,7 +108,12 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
     private String construyeFilters(String sortField, SortOrder sortOrder) {
         String consulta = "SELECT * FROM " + getClazz().getSimpleName().toLowerCase() + "  ";
         StringBuilder sb = new StringBuilder(consulta);
-        sb.append(" WHERE 1 = 1 ");
+        if (credencial.getEmpresa() != null) {
+            sb.append(" WHERE empresa_id =  ");
+            sb.append(credencial.getEmpresa().getId());
+        } else {
+            sb.append(" WHERE 1 = 1 ");
+        }
 
         if (filterOptions == null) {
             loadFilters();
@@ -172,9 +180,23 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         return null;
     }
 
+    public ConsultaGenerico obtConsultaBean(String campo) {
+        ConsultaGenerico bean = null;
+        if (campo != null && campo.length() > 0) {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            bean = (ConsultaGenerico) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, campo + "ConsultaBean");
+        }
+        return bean;
+    }
+
     private BeanGenerico getController(FacesContext facesContext, String campo) {
         return (BeanGenerico) facesContext.getApplication().getELResolver().
                 getValue(facesContext.getELContext(), null, campo + "Bean");
+    }
+
+    public List<T> completar(String query) {
+        return getEjb().completar(query);
     }
 
 }

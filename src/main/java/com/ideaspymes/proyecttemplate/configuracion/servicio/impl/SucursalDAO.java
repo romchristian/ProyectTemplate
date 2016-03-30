@@ -99,4 +99,19 @@ public class SucursalDAO implements ISucursalDAO {
 
         return R;
     }
+    
+    
+    @Override
+    public List<Sucursal> completar(String matchText) {
+        List<Sucursal> sugerencias = new ArrayList<>();
+
+        if (matchText != null && matchText.length() > 0) {
+            String consulta = "select * from sucursal where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
+            Query query = abmService.getEM().createNativeQuery(consulta, Sucursal.class);
+            query.setMaxResults(20);
+            sugerencias = query.getResultList();
+        }
+        
+        return sugerencias;
+    }
 }

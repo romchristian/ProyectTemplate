@@ -37,4 +37,9 @@ public interface IEmpresaDAO extends AbstractDAO<Empresa> {
     @Override
     void remove(Empresa entity, Usuario usuario);
 
+    @Override
+    List<Empresa> completar(String query);
+
+    Empresa getEmpresaDefault(Usuario usuario);
+
 }

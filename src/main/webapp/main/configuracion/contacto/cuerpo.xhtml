@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+
+
+
+    <h:form>
+        <p:growl id="mensajes" autoUpdate="true"/>
+        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+
+
+            <p:outputLabel value="Empresa" for="empresa" rendered="#{(contexto == 'vista')}"/>
+            <h:outputText value="#{contactoBean.actual.empresa == null?'':contactoBean.actual.empresa.nombre}" rendered="#{(contexto == 'vista')}"/>
+            
+
+            <p:spacer/>
+            <p:spacer/>
+            <p:outputLabel value="Nombre" for="nombre" />
+            <h:outputText value="#{contactoBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
+            <p:inputText value="#{contactoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+
+            
+        </p:panelGrid>
+
+        <div class="CardFooter">
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-4">
+                        <p:commandButton value="Crear" action="#{contactoBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
+                        <p:commandButton value="Guardar" action="#{contactoBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
+                        <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
+                            <f:param name="id" value="#{contactoBean.actual.id}"/>
+                        </p:button>
+                        <p:commandButton value="Eliminar" action="#{contactoBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+    </h:form>
+
+
+
+</ui:composition>
+

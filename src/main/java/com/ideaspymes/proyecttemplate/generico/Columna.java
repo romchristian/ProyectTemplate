@@ -17,6 +17,7 @@ public class Columna {
     private boolean link;
     private boolean entidad;
     private String campoDescripcion;
+    
 
     public Columna(String descripcion,String campo,String tipo, boolean link, boolean entidad, String campoDescripcion) {
         this.campo = campo;

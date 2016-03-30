@@ -89,7 +89,7 @@ public class MenuController implements Serializable {
             for (SubMenu s : moduloActual.getMenus()) {
                 DefaultSubMenu submenu = new DefaultSubMenu(s.getLabel(), s.getIcon());
                 for (MenuItem mi : s.getItems()) {
-                    DefaultMenuItem item = new DefaultMenuItem(mi.getValor(), mi.getIcon(), mi.getUrl());
+                    DefaultMenuItem item = new DefaultMenuItem(mi.getValor(), mi.getIcon(), mi.getUrl()+"?idMenu="+mi.getSubmenu().getModulo().getId());
                     submenu.addElement(item);
                 }
 

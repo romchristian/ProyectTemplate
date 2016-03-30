@@ -37,4 +37,7 @@ public interface IModuloDAO extends AbstractDAO<Modulo> {
     @Override
     void remove(Modulo entity, Usuario usuario);
 
+    @Override
+    List<Modulo> completar(String query);
+
 }

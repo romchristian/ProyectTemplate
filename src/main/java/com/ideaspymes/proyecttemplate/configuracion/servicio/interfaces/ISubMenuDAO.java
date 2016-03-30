@@ -37,4 +37,7 @@ public interface ISubMenuDAO extends AbstractDAO<SubMenu> {
     @Override
     void remove(SubMenu entity, Usuario usuario);
 
+    @Override
+    List<SubMenu> completar(String query);
+
 }

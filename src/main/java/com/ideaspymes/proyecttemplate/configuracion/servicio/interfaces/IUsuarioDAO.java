@@ -36,4 +36,7 @@ public interface IUsuarioDAO extends AbstractDAO<Usuario> {
     @Override
     void remove(Usuario entity, Usuario usuario);
 
+    @Override
+    List<Usuario> completar(String query);
+
 }

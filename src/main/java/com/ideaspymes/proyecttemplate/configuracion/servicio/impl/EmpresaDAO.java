@@ -99,4 +99,23 @@ public class EmpresaDAO implements IEmpresaDAO {
         return R;
     }
 
+    @Override
+    public List<Empresa> completar(String matchText) {
+        List<Empresa> sugerencias = new ArrayList<>();
+
+        if (matchText != null && matchText.length() > 0) {
+            String consulta = "select * from empresa where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
+            Query query = abmService.getEM().createNativeQuery(consulta, Empresa.class);
+            query.setMaxResults(20);
+            sugerencias = query.getResultList();
+        }
+        
+        return sugerencias;
+    }
+
+    @Override
+    public Empresa getEmpresaDefault(Usuario usuario) {
+        return find(1L);
+    }
+
 }

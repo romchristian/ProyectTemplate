@@ -97,4 +97,9 @@ public class ModuloDAO implements IModuloDAO {
 
         return R;
     }
+
+    @Override
+    public List<Modulo> completar(String query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

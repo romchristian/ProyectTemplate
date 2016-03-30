@@ -14,11 +14,9 @@
         <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
 
-            <p:outputLabel value="Empresa" for="empresa" />
+            <p:outputLabel value="Empresa" for="empresa" rendered="#{(contexto == 'vista')}"/>
             <h:outputText value="#{sucursalBean.actual.empresa == null?'':sucursalBean.actual.empresa.nombre}" rendered="#{(contexto == 'vista')}"/>
-            <p:selectOneMenu value="#{sucursalBean.actual.empresa}" rendered="#{not(contexto == 'vista')}" id="empresa">
-                <f:selectItems value="#{empresaBean.itemsAvailableSelectMany}"/>
-            </p:selectOneMenu>
+            
 
             <p:spacer/>
             <p:spacer/>

@@ -136,6 +136,13 @@
                                             <p:selectOneMenu value="#{f.valorEntidadId}" rendered="#{f.tipo == 'selectOne'}" converter="#{bean.obtConverter(f.campo)}">
                                                 <f:selectItems value="#{bean.obtItemsAvailableSelectOne(f.campo)}"/>
                                             </p:selectOneMenu>
+
+                                            <p:autoComplete value="#{f.valorEntidadId}"
+                                                            completeMethod="#{bean.obtConsultaBean(f.campo).completar}"
+                                                            forceSelection="true" converter="#{bean.obtConverter(f.campo)}"
+                                                            var="c" itemValue="#{c}" itemLabel="#{c[f.campoDescripcion]}"
+                                                            rendered="#{f.tipo == 'autocomplete'}"/>
+
                                         </p:panelGrid>
                                     </div>
                                 </ui:repeat>
@@ -147,7 +154,7 @@
 
 
                             <div class="Container80 Responsive100 ">
-                                
+
                             </div>
                             <div class="Container20 Responsive100 ">
 
@@ -172,7 +179,7 @@
 
 
 
-        
+
 
         <div class="Container100 Responsive100 ui-fluid">
             <div class="NoIndent NoPadding">
@@ -193,12 +200,12 @@
 
 
 
-                        <p:columns value="#{bean.columnas}" var="column" sortBy="#{o[column.campo]}" sortable="true">
+                        <p:columns value="#{bean.columnas}" var="column" sortBy="#{o[column.campo]}" sortable="#{(column.entidad)?'false':'true'}">
                             <f:facet name="header">
                                 <h:outputText value="#{column.descripcion}" />
                             </f:facet>
                             <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad)}"/>
-                            
+
                             <h:outputText value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.entidad)}"/>
 
                             <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link)}">

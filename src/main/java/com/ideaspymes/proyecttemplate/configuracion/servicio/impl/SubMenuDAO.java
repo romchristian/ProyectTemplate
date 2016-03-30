@@ -98,4 +98,9 @@ public class SubMenuDAO implements ISubMenuDAO {
         return R;
     }
 
+    @Override
+    public List<SubMenu> completar(String query) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

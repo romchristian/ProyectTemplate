@@ -15,7 +15,7 @@
 
             <span class="DispInlBlock Fright" style="margin:10px 10px 0px 0px;">
                 <h:form styleClass="DispInline">
-                    <p:splitButton value="Menu" icon="ui-icon-check fa fa-cog" styleClass="White Fs14" appendTo="@this">
+                    <p:splitButton value="Mr. Jack BAUER, Welcome" icon="fa fa-user" styleClass="White Fs14" appendTo="@this">
                         <p:menuitem value="Users" icon="fa fa-user" />
                         <p:menuitem value="Reports" icon="fa fa-file-text-o" />
                         <p:menuitem value="Charts" icon="fa fa-line-chart" />
@@ -32,10 +32,30 @@
     </div>
     <!-- TOPBAR END -->
 
+
+    <style type="text/css">
+        .menuEmpresa > label {
+            color: white;
+            font-size: 14pt
+        }
+
+        .menuEmpresa > div {
+            background: none!important;
+        }
+
+        .menuEmpresa > div > span {
+            background: none!important;
+        }
+    </style>
     <!-- TOPMENU START -->
     <ul id="top-menu">
         <li style="float:left; border:none;">
-            <a href="#"><i class="icon-vcard Opac80 Fs22"></i><span><span class="Fs16">Mr. Jack BAUER, Welcome</span></span></a>
+            <h:form>
+                <p:selectOneMenu value="#{credencial.empresa}" style="width: 100%" styleClass="menuEmpresa">
+                    <p:ajax process="@this" event="change"/>
+                    <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}" />
+                </p:selectOneMenu>
+            </h:form>
         </li>
 
         <ui:repeat value="#{menuController.modulos}" var="m">
