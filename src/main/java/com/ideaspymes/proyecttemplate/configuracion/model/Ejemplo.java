@@ -5,10 +5,9 @@
  */
 package com.ideaspymes.proyecttemplate.configuracion.model;
 
-import com.ideaspymes.proyecttemplate.generico.IAuditable;
-import com.ideaspymes.proyecttemplate.generico.IConEmpresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
 import java.util.Date;
@@ -26,7 +25,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class EjemploConEmpresa implements Serializable, IConEmpresa, IAuditable {
+public class Ejemplo implements Serializable, IAuditable{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,13 +37,10 @@ public class EjemploConEmpresa implements Serializable, IConEmpresa, IAuditable 
     @Filtro(descripcion = "Nombre", tipo = "like", campo = "nombre")
     private String nombre;
 
-   
-
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true,entidad = true,campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
     private Empresa empresa;
 
-    
     //Auditoria
     @Enumerated(EnumType.STRING)
     private Estado estado;
@@ -55,6 +51,7 @@ public class EjemploConEmpresa implements Serializable, IConEmpresa, IAuditable 
     @ManyToOne
     private Usuario usuarioUltimaModificacion;
 
+    
     @Override
     public Long getId() {
         return id;
@@ -72,52 +69,60 @@ public class EjemploConEmpresa implements Serializable, IConEmpresa, IAuditable 
         this.nombre = nombre;
     }
 
-   
-
+    
     @Override
     public Empresa getEmpresa() {
         return empresa;
     }
 
+    @Override
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 
+    
     @Override
     public Estado getEstado() {
         return estado;
     }
 
+    
     @Override
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
+    
     @Override
     public Date getFechaRegitro() {
         return fechaRegitro;
     }
 
+    
     @Override
     public void setFechaRegitro(Date fechaRegitro) {
         this.fechaRegitro = fechaRegitro;
     }
 
+    
     @Override
     public Date getFechaUltimaModificacion() {
         return fechaUltimaModificacion;
     }
 
+    
     @Override
     public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
+    
     @Override
     public Usuario getUsuarioUltimaModificacion() {
         return usuarioUltimaModificacion;
     }
 
+    
     @Override
     public void setUsuarioUltimaModificacion(Usuario usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
@@ -133,10 +138,10 @@ public class EjemploConEmpresa implements Serializable, IConEmpresa, IAuditable 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EjemploConEmpresa)) {
+        if (!(object instanceof Ejemplo)) {
             return false;
         }
-        EjemploConEmpresa other = (EjemploConEmpresa) object;
+        Ejemplo other = (Ejemplo) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 

@@ -30,7 +30,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Empresa implements Serializable, IAuditable {
+public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

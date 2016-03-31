@@ -16,15 +16,8 @@
             <span class="DispInlBlock Fright" style="margin:10px 10px 0px 0px;">
                 <h:form styleClass="DispInline">
                     <p:splitButton value="Mr. Jack BAUER, Welcome" icon="fa fa-user" styleClass="White Fs14" appendTo="@this">
-                        <p:menuitem value="Users" icon="fa fa-user" />
-                        <p:menuitem value="Reports" icon="fa fa-file-text-o" />
-                        <p:menuitem value="Charts" icon="fa fa-line-chart" />
-                        <p:separator />
-                        <p:menuitem value="Tasks" icon="fa fa-tasks" />
-                        <p:menuitem value="Messages" icon="fa fa-envelope-o" />
-                        <p:menuitem value="Notes" icon="fa fa-file-zip-o" />
-                        <p:separator />
-                        <p:menuitem value="Log In / Log Out" url="#" icon="fa fa-key" />
+
+                        <p:menuitem value="Salir"  icon="fa fa-power-off" action="#{autenticador.logout()}"/>
                     </p:splitButton>
                 </h:form>
             </span>
@@ -52,8 +45,10 @@
         <li style="float:left; border:none;">
             <h:form>
                 <p:selectOneMenu value="#{credencial.empresa}" style="width: 100%" styleClass="menuEmpresa">
-                    <p:ajax process="@this" event="change"/>
+
+                    <p:ajax listener="#{credencial.handleChange}" process="@this" event="change"/>
                     <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}" />
+                    
                 </p:selectOneMenu>
             </h:form>
         </li>

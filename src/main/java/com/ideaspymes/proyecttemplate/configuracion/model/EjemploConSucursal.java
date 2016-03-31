@@ -26,7 +26,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class EjemploConEmpresaSucursal implements Serializable, IConSucursal, IAuditable {
+public class EjemploConSucursal implements Serializable, IConSucursal, IAuditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -78,6 +78,7 @@ public class EjemploConEmpresaSucursal implements Serializable, IConSucursal, IA
         return empresa;
     }
 
+    @Override
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
@@ -87,6 +88,7 @@ public class EjemploConEmpresaSucursal implements Serializable, IConSucursal, IA
         return sucursal;
     }
 
+    @Override
     public void setSucursal(Sucursal sucursal) {
         this.sucursal = sucursal;
     }
@@ -141,10 +143,10 @@ public class EjemploConEmpresaSucursal implements Serializable, IConSucursal, IA
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EjemploConEmpresaSucursal)) {
+        if (!(object instanceof EjemploConSucursal)) {
             return false;
         }
-        EjemploConEmpresaSucursal other = (EjemploConEmpresaSucursal) object;
+        EjemploConSucursal other = (EjemploConSucursal) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 

@@ -10,11 +10,14 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.Query;
 
 /*
@@ -29,12 +32,30 @@ public class UsuarioDAO implements IUsuarioDAO {
 
     @Override
     public Usuario create(Usuario entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+        EntityManager em = abmService.getEM();
+        entity.setEstado(Estado.ACTIVO);
+        entity.setFechaRegitro(new Date());
+
+        em.persist(entity);
+        em.flush();
+        em.refresh(entity);
+        return entity;
     }
 
     @Override
     public Usuario edit(Usuario entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+        try {
+            EntityManager em = abmService.getEM();
+
+            entity.setFechaUltimaModificacion(new Date());
+
+            entity = em.merge(entity);
+            em.flush();
+            em.refresh(entity);
+        } catch (OptimisticLockException e) {
+            throw new RuntimeException(e);
+        }
+        return entity;
     }
 
     @Override
@@ -45,6 +66,19 @@ public class UsuarioDAO implements IUsuarioDAO {
     @Override
     public Usuario find(Object id) {
         return abmService.find(id, Usuario.class);
+    }
+
+    @Override
+    public Usuario find(String login) {
+        Usuario R = null;
+
+        try {
+            R = (Usuario) abmService.getEM().createQuery("SELECT u FROM Usuario u WHERE u.userName = :login ")
+                    .setParameter("login", login).getSingleResult();
+        } catch (Exception e) {
+        }
+
+        return R;
     }
 
     @Override
@@ -96,8 +130,7 @@ public class UsuarioDAO implements IUsuarioDAO {
 
         return R;
     }
-    
-    
+
     @Override
     public List<Usuario> completar(String matchText) {
         List<Usuario> sugerencias = new ArrayList<>();
@@ -108,7 +141,7 @@ public class UsuarioDAO implements IUsuarioDAO {
             query.setMaxResults(20);
             sugerencias = query.getResultList();
         }
-        
+
         return sugerencias;
     }
 }

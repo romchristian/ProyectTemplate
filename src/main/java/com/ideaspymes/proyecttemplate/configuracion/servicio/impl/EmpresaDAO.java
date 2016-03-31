@@ -9,13 +9,18 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
+import com.ideaspymes.proyecttemplate.generico.Credencial;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.Query;
 
 /*
@@ -27,15 +32,34 @@ public class EmpresaDAO implements IEmpresaDAO {
 
     @EJB(beanName = "ABMServiceBean")
     private ABMService abmService;
+    
 
     @Override
     public Empresa create(Empresa entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+        EntityManager em = abmService.getEM();
+        entity.setEstado(Estado.ACTIVO);
+        entity.setFechaRegitro(new Date());
+        entity.setUsuarioUltimaModificacion(usuario);
+        em.persist(entity);
+        em.flush();
+        em.refresh(entity);
+        return entity;
     }
 
     @Override
     public Empresa edit(Empresa entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+        try {
+            EntityManager em = abmService.getEM();
+
+            entity.setFechaUltimaModificacion(new Date());
+            entity.setUsuarioUltimaModificacion(usuario);
+            entity = em.merge(entity);
+            em.flush();
+            em.refresh(entity);
+        } catch (OptimisticLockException e) {
+            throw new RuntimeException(e);
+        }
+        return entity;
     }
 
     @Override
@@ -109,7 +133,7 @@ public class EmpresaDAO implements IEmpresaDAO {
             query.setMaxResults(20);
             sugerencias = query.getResultList();
         }
-        
+
         return sugerencias;
     }
 

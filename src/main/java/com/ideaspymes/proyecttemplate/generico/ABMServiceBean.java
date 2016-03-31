@@ -36,6 +36,10 @@ public class ABMServiceBean implements ABMService {
     @Inject
     private Credencial credencial;
 
+    public Credencial getCredencial() {
+        return credencial;
+    }
+
     @Override
     public EntityManager getEM() {
         return em;
@@ -47,8 +51,9 @@ public class ABMServiceBean implements ABMService {
             IAuditable obj = (IAuditable) t;
             obj.setEstado(Estado.ACTIVO);
             obj.setFechaRegitro(new Date());
-            
+
             obj.setEstado(Estado.ACTIVO);
+            obj.setEmpresa(credencial.getEmpresa());
             //obj.setUsuarioUltimaModificacion(usuario);
             this.em.persist(obj);
             this.em.flush();
@@ -83,8 +88,7 @@ public class ABMServiceBean implements ABMService {
             IAuditable obj = (IAuditable) t;
             try {
 
-                obj.setEstado(Estado.ACTIVO);
-                obj.setFechaRegitro(new Date());
+                obj.setFechaUltimaModificacion(new Date());
                 //obj.setUsuarioUltimaModificacion(usuario);
                 obj = this.em.merge(obj);
                 this.em.flush();
@@ -194,13 +198,12 @@ public class ABMServiceBean implements ABMService {
         }
         return query.getResultList();
     }
-    
-    
+
     @Override
-    public List findByQuery(String consulta, Map<String, Object> params, int first,int pageSize) {
+    public List findByQuery(String consulta, Map<String, Object> params, int first, int pageSize) {
         Set<Entry<String, Object>> rawParameters = params.entrySet();
         Query query = this.em.createQuery(consulta);
-        if(first > 0){
+        if (first > 0) {
             query.setFirstResult(first);
         }
         if (pageSize > 0) {

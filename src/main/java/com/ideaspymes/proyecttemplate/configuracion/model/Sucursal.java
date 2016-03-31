@@ -6,7 +6,6 @@
 package com.ideaspymes.proyecttemplate.configuracion.model;
 
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
-import com.ideaspymes.proyecttemplate.generico.IConEmpresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.Listado;
@@ -26,7 +25,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Sucursal implements Serializable, IConEmpresa, IAuditable {
+public class Sucursal implements Serializable, IAuditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,8 +47,8 @@ public class Sucursal implements Serializable, IConEmpresa, IAuditable {
     private String ciudad;
 
     @ManyToOne
-    @Filtro(descripcion = "Empresa", tipo = "autocomplete", campo = "empresa",campoDescripcion = "nombre")
-    @Listado(descripcion = "Empresa", mostrar = true,entidad = true,campoDescripcion = "nombre")
+    @Filtro(descripcion = "Empresa", tipo = "autocomplete", campo = "empresa", campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
     private Empresa empresa;
 
     @Enumerated(EnumType.STRING)

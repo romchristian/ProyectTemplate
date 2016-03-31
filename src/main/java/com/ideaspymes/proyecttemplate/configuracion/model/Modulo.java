@@ -26,7 +26,7 @@ import javax.persistence.Temporal;
  * @author cromero
  */
 @Entity
-public class Modulo implements Serializable, IAuditable {
+public class Modulo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id

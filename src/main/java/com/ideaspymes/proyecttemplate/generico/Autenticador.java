@@ -5,6 +5,7 @@
 package com.ideaspymes.proyecttemplate.generico;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
+import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IEmpresaDAO;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IUsuarioDAO;
 import java.io.IOException;
 import java.io.Serializable;
@@ -34,6 +35,8 @@ public class Autenticador implements Serializable {
     private IUsuarioDAO usuarioInterface;
     @Inject
     private Credencial credencial;
+    @EJB
+    private IEmpresaDAO empresaDAO;
     
     private String username;
     private String password;
@@ -72,11 +75,12 @@ public class Autenticador implements Serializable {
             Usuario u = usuarioInterface.find(username);
             System.out.println("Usuario en el login: " + u);
             credencial.setUsuario(u);
+            credencial.setEmpresa(empresaDAO.getEmpresaDefault(u));
             
         } catch (ServletException ex) {
             Logger.getLogger(Autenticador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "/main/index.xhtml?faces-redirect=true";
+        return "/main/configuracion/home.xhtml?idMenu=2&faces-redirect=true";
     }
 
     public String logout() throws IOException {

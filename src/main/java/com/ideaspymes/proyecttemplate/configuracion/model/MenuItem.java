@@ -23,7 +23,7 @@ import javax.persistence.Temporal;
  * @author cromero
  */
 @Entity
-public class MenuItem implements Serializable, IAuditable {
+public class MenuItem implements Serializable{
 
     private static final long serialVersionUID = 1L;
     @Id

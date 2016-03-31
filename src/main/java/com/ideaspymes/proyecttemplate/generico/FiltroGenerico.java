@@ -171,23 +171,23 @@ public class FiltroGenerico {
 
     public boolean tieneValor() {
         boolean R = false;
-        if (valorString != null) {
+        if (valorString != null && valorString.length() > 0) {
             R = true;
         }
 
-        if (valorInteger != null) {
+        if (valorInteger != null && valorInteger > 0) {
             R = true;
         }
 
-        if (valorDouble != null) {
+        if (valorDouble != null  && valorDouble > 0) {
             R = true;
         }
 
-        if (valorLong != null) {
+        if (valorLong != null  && valorLong > 0) {
             R = true;
         }
 
-        if (valorBigDecimal != null) {
+        if (valorBigDecimal != null  && valorBigDecimal.compareTo(BigDecimal.ZERO) > 0) {
             R = true;
         }
 

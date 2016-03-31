@@ -108,7 +108,15 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
     private String construyeFilters(String sortField, SortOrder sortOrder) {
         String consulta = "SELECT * FROM " + getClazz().getSimpleName().toLowerCase() + "  ";
         StringBuilder sb = new StringBuilder(consulta);
-        if (credencial.getEmpresa() != null) {
+        boolean tieneCampoEmpresa = false;
+        for (Field f : getClazz().getDeclaredFields()) {
+            if (f.getName().compareToIgnoreCase("empresa") == 0) {
+                tieneCampoEmpresa = true;
+                break;
+            }
+        }
+
+        if (credencial.getEmpresa() != null && tieneCampoEmpresa) {
             sb.append(" WHERE empresa_id =  ");
             sb.append(credencial.getEmpresa().getId());
         } else {

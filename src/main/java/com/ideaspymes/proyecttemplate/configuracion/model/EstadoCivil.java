@@ -6,7 +6,6 @@
 package com.ideaspymes.proyecttemplate.configuracion.model;
 
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
-import com.ideaspymes.proyecttemplate.generico.IConEmpresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.Listado;
@@ -26,7 +25,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class EstadoCivil implements Serializable, IConEmpresa, IAuditable {
+public class EstadoCivil implements Serializable, IAuditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,13 +37,10 @@ public class EstadoCivil implements Serializable, IConEmpresa, IAuditable {
     @Filtro(descripcion = "Nombre", tipo = "like", campo = "nombre")
     private String nombre;
 
-   
-
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true,entidad = true,campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
     private Empresa empresa;
 
-    
     //Auditoria
     @Enumerated(EnumType.STRING)
     private Estado estado;
@@ -71,8 +67,6 @@ public class EstadoCivil implements Serializable, IConEmpresa, IAuditable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-   
 
     @Override
     public Empresa getEmpresa() {

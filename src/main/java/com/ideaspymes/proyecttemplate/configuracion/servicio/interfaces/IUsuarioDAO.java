@@ -26,6 +26,9 @@ public interface IUsuarioDAO extends AbstractDAO<Usuario> {
 
     @Override
     Usuario find(Object id);
+    
+    
+    Usuario find(String username);
 
     @Override
     List<Usuario> findAll();

@@ -5,7 +5,6 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
-import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 
 /**
@@ -13,6 +12,8 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
  * @author christian.romero
  */
 public interface IConSucursal {
-    Empresa getEmpresa();
+
     Sucursal getSucursal();
+
+    void setSucursal(Sucursal sucursal);
 }

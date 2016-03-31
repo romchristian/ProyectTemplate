@@ -6,7 +6,9 @@
 package com.ideaspymes.proyecttemplate.configuracion.model;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
-import com.ideaspymes.proyecttemplate.generico.Encryptador;
+import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.IAuditable;
+import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -24,30 +27,34 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Usuario implements Serializable {
+public class Grupo implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
-    private String userName;
-    private String password;
 
-    @ManyToMany
-    private List<Empresa> empresa;
+    //Informacion principal
+    @Listado(descripcion = "Nombre", mostrar = true, link = true)
+    @Filtro(descripcion = "Nombre", tipo = "like", campo = "nombre")
+    private String nombre;
+
+    @ManyToOne
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    private Empresa empresa;
+    //Auditoria
     @Enumerated(EnumType.STRING)
     private Estado estado;
-
-    //Auditoria
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
     
-    
-    @ManyToMany
-    private List<Grupo> grupos;
 
+    @ManyToMany(mappedBy = "grupos")
+    private List<Usuario> usuarios;
+
+  
     public Long getId() {
         return id;
     }
@@ -64,64 +71,55 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getUserName() {
-        return userName;
-    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = Encryptador.encrypta(password);
-    }
-
-    public List<Empresa> getEmpresa() {
+    public Empresa getEmpresa() {
         return empresa;
     }
 
-    public void setEmpresa(List<Empresa> empresa) {
+ 
+    public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 
+   
     public Estado getEstado() {
         return estado;
     }
 
+  
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
+  
     public Date getFechaRegitro() {
         return fechaRegitro;
     }
+
 
     public void setFechaRegitro(Date fechaRegitro) {
         this.fechaRegitro = fechaRegitro;
     }
 
+
     public Date getFechaUltimaModificacion() {
         return fechaUltimaModificacion;
     }
 
+   
     public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
+   
 
-    public List<Grupo> getGrupos() {
-        return grupos;
+    public List<Usuario> getUsuarios() {
+        return usuarios;
     }
 
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -133,19 +131,16 @@ public class Usuario implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
+        if (!(object instanceof Grupo)) {
             return false;
         }
-        Usuario other = (Usuario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        Grupo other = (Grupo) object;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.ideaspymes.proyecttemplate.configuracion.model.Usuario[ id=" + id + " ]";
+        return nombre;
     }
 
 }
