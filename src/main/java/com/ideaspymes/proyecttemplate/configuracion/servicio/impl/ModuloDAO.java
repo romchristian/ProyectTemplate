@@ -50,8 +50,8 @@ public class ModuloDAO implements IModuloDAO {
 
     @Override
     public List<Modulo> findAll() {
-        return abmService.getEM().createQuery("select obj from Modulo obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from Modulo obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 

@@ -73,8 +73,10 @@ public class UsuarioDAO implements IUsuarioDAO {
         Usuario R = null;
 
         try {
-            R = (Usuario) abmService.getEM().createQuery("SELECT u FROM Usuario u WHERE u.userName = :login ")
-                    .setParameter("login", login).getSingleResult();
+            R = (Usuario) abmService.getEM().createQuery("SELECT u FROM Usuario u WHERE u.userName = :login AND u.estado = :estado")
+                    .setParameter("login", login)
+                    .setParameter("estado", Estado.ACTIVO)
+                    .getSingleResult();
         } catch (Exception e) {
         }
 
@@ -83,8 +85,8 @@ public class UsuarioDAO implements IUsuarioDAO {
 
     @Override
     public List<Usuario> findAll() {
-        return abmService.getEM().createQuery("select obj from Usuario obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from Usuario obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 

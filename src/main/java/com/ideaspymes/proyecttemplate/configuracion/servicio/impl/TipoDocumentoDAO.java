@@ -50,8 +50,8 @@ public class TipoDocumentoDAO implements ITipoDocumentoDAO {
 
     @Override
     public List<TipoDocumento> findAll() {
-        return abmService.getEM().createQuery("select obj from TipoDocumento obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from TipoDocumento obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 

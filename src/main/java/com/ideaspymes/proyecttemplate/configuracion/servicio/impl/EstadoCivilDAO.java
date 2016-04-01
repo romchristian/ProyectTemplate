@@ -50,8 +50,8 @@ public class EstadoCivilDAO implements IEstadoCivilDAO {
 
     @Override
     public List<EstadoCivil> findAll() {
-        return abmService.getEM().createQuery("select obj from EstadoCivil obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from EstadoCivil obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 

@@ -3,53 +3,35 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
 
 
 
 
 
-    <h:form>
+    <h:form id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
         <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
-            <p:outputLabel value="Nombre" for="nombre" />
-            <h:outputText value="#{empresaBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
+            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
+            <h:outputText value="#{empresaBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{empresaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
-            <p:outputLabel value="RUC" for="ruc" />
-            <h:outputText value="#{empresaBean.actual.ruc}" rendered="#{(contexto == 'vista')}"/>
+            <p:outputLabel value="RUC" for="ruc" styleClass="FontVoltRegular"/>
+            <h:outputText value="#{empresaBean.actual.ruc}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{empresaBean.actual.ruc}" required="true" id="ruc" rendered="#{not(contexto == 'vista')}"/>
 
-            <p:outputLabel value="Dirección Contacto" for="direccion" />
-            <h:outputText value="#{empresaBean.actual.contactoDireccion}" rendered="#{(contexto == 'vista')}"/>
+            <p:outputLabel value="Dirección Contacto" for="direccion" styleClass="FontVoltRegular"/>
+            <h:outputText value="#{empresaBean.actual.contactoDireccion}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{empresaBean.actual.contactoDireccion}" required="true" id="direccion" rendered="#{not(contexto == 'vista')}"/>
 
 
-            <p:outputLabel value="Télefono Contacto" for="telefono" />
-            <h:outputText value="#{empresaBean.actual.contactoTelefono}" rendered="#{(contexto == 'vista')}"/>
+            <p:outputLabel value="Télefono Contacto" for="telefono" styleClass="FontVoltRegular"/>
+            <h:outputText value="#{empresaBean.actual.contactoTelefono}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{empresaBean.actual.contactoTelefono}" required="true" id="telefono" rendered="#{not(contexto == 'vista')}"/>
         </p:panelGrid>
 
-        <div class="CardFooter">
-            <div class="ui-grid ui-grid-responsive">
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4">
-                        <p:commandButton value="Crear" action="#{empresaBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
-                        <p:commandButton value="Guardar" action="#{empresaBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
-                        <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
-                            <f:param name="id" value="#{empresaBean.actual.id}"/>
-                        </p:button>
-                        <p:commandButton value="Eliminar" action="#{empresaBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
-                    </div>
-
-
-                </div>
-            </div>
-
-
-
-
-        </div>
+        <facilerp:botoneraABM bean="#{empresaBean}" contexto="#{contexto}" entidad="empresa" update=":formABM:panel"/>
 
     </h:form>
 

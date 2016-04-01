@@ -50,8 +50,8 @@ public class TipoContactoDAO implements ITipoContactoDAO {
 
     @Override
     public List<TipoContacto> findAll() {
-        return abmService.getEM().createQuery("select obj from TipoContacto obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from TipoContacto obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 

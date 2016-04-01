@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="bean" required="true"/>
+        <cc:attribute name="contexto" required="true"/>
+        <cc:attribute name="entidad" required="true"/>
+        <cc:attribute name="update" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+         <div class="CardFooter">
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-2">
+                        <p:commandButton value="Crear" action="#{cc.attrs.bean.create()}" styleClass="Fleft GreenButton" update="#{cc.attrs.update}" rendered="#{(cc.attrs.contexto == 'creacion')}"/>
+                        <p:commandButton value="Guardar" action="#{cc.attrs.bean.edit()}" styleClass="Fleft BlueButton" update="#{cc.attrs.update}" rendered="#{(cc.attrs.contexto == 'edicion')}"/>
+                        <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(cc.attrs.contexto == 'vista')}">
+                            <f:param name="id" value="#{cc.attrs.bean.actual.id}"/>
+                        </p:button>
+                        
+                    </div>
+
+                    <div class="ui-grid-col-2">
+                        <p:commandButton value="Eliminar" action="#{cc.attrs.bean.remove()}" styleClass="Fleft RedButton" update="#{cc.attrs.update}" rendered="#{(cc.attrs.contexto == 'vista')}">
+                            <p:confirm header="Confirmar eliminación" message="¿Eliminar este registro?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes RedButton" icon="ui-icon-check"/>
+                            <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </cc:implementation>
+</html>

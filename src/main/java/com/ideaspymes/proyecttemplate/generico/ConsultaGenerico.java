@@ -119,8 +119,9 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         if (credencial.getEmpresa() != null && tieneCampoEmpresa) {
             sb.append(" WHERE empresa_id =  ");
             sb.append(credencial.getEmpresa().getId());
+            sb.append(" AND estado <> 'BORRADO' ");
         } else {
-            sb.append(" WHERE 1 = 1 ");
+            sb.append(" WHERE estado <> 'BORRADO' ");
         }
 
         if (filterOptions == null) {

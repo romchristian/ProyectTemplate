@@ -148,7 +148,7 @@ public class FiltroGenerico {
         String R = "";
         switch (tipo) {
             case "like":
-                R = " AND " + campo + " like '%" + valorString + "%' ";
+                R = " AND UPPER(" + campo + ") like '%" + valorString.toUpperCase() + "%' ";
                 break;
             case "rangoFecha":
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

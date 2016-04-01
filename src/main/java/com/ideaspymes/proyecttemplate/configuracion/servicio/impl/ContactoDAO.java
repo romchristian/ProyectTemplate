@@ -50,8 +50,8 @@ public class ContactoDAO implements IContactoDAO {
 
     @Override
     public List<Contacto> findAll() {
-        return abmService.getEM().createQuery("select obj from Contacto obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from Contacto obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 

@@ -74,8 +74,8 @@ public class EmpresaDAO implements IEmpresaDAO {
 
     @Override
     public List<Empresa> findAll() {
-        return abmService.getEM().createQuery("select obj from Empresa obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from Empresa obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 

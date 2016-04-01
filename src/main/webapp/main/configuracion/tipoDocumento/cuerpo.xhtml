@@ -3,50 +3,31 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
 
 
 
 
 
-    <h:form>
+    <h:form  id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
-        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
 
-            <p:outputLabel value="Empresa" for="empresa" rendered="#{(contexto == 'vista')}"/>
-            <h:outputText value="#{tipoDocumentoBean.actual.empresa == null?'':tipoDocumentoBean.actual.empresa.nombre}" rendered="#{(contexto == 'vista')}"/>
-            
+            <h:outputText value="Empresa"  styleClass="FontVoltRegular"
+                          rendered="#{not(contexto == 'creacion')}"/>
+            <h:outputText value="#{tipoDocumentoBean.actual.empresa == null?'':tipoDocumentoBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
+                          rendered="#{not(contexto == 'creacion')}"/>
 
-            <p:spacer/>
-            <p:spacer/>
-            <p:outputLabel value="Nombre" for="nombre" />
-            <h:outputText value="#{tipoDocumentoBean.actual.nombre}" rendered="#{(contexto == 'vista')}"/>
+            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
+            <h:outputText value="#{tipoDocumentoBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{tipoDocumentoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
-            
+
         </p:panelGrid>
 
-        <div class="CardFooter">
-            <div class="ui-grid ui-grid-responsive">
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-4">
-                        <p:commandButton value="Crear" action="#{tipoDocumentoBean.create()}" styleClass="Fleft GreenButton" update="panel" rendered="#{(contexto == 'creacion')}"/>
-                        <p:commandButton value="Guardar" action="#{tipoDocumentoBean.edit()}" styleClass="Fleft BlueButton" update="panel" rendered="#{(contexto == 'edicion')}"/>
-                        <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista')}">
-                            <f:param name="id" value="#{tipoDocumentoBean.actual.id}"/>
-                        </p:button>
-                        <p:commandButton value="Eliminar" action="#{tipoDocumentoBean.remove()}" styleClass="Fleft RedButton" update="panel" rendered="#{(contexto == 'vista')}"/>
-                    </div>
-
-
-                </div>
-            </div>
-
-
-
-
-        </div>
+        <facilerp:botoneraABM bean="#{tipoDocumentoBean}" contexto="#{contexto}" entidad="tipoDocumento" update=":formABM:panel"/>
 
     </h:form>
 

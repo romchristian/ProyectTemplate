@@ -51,8 +51,8 @@ public class SucursalDAO implements ISucursalDAO {
     @Override
     public List<Sucursal> findAll() {
 
-        return abmService.getEM().createQuery("select obj from Sucursal obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from Sucursal obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
 
     }

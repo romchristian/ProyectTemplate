@@ -50,8 +50,8 @@ public class SubMenuDAO implements ISubMenuDAO {
 
     @Override
     public List<SubMenu> findAll() {
-        return abmService.getEM().createQuery("select obj from SubMenu obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from SubMenu obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 

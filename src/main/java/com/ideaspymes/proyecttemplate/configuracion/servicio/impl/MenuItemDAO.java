@@ -50,8 +50,8 @@ public class MenuItemDAO implements IMenuItemDAO {
 
     @Override
     public List<MenuItem> findAll() {
-        return abmService.getEM().createQuery("select obj from MenuItem obj where obj.estado <> :estado")
-                .setParameter("estado", Estado.BORRADO)
+        return abmService.getEM().createQuery("select obj from MenuItem obj where obj.estado = :estado")
+                .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 
