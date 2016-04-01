@@ -45,8 +45,7 @@ public class Modulo implements Serializable {
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
-    @ManyToOne
-    private Usuario usuarioUltimaModificacion;
+    private String usuarioUltimaModificacion;
 
     public Modulo() {
     }
@@ -74,11 +73,11 @@ public class Modulo implements Serializable {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
-    public Usuario getUsuarioUltimaModificacion() {
+    public String getUsuarioUltimaModificacion() {
         return usuarioUltimaModificacion;
     }
 
-    public void setUsuarioUltimaModificacion(Usuario usuarioUltimaModificacion) {
+    public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
 

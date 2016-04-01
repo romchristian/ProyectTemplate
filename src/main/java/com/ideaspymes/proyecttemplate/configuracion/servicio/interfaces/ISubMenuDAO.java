@@ -20,10 +20,10 @@ import javax.ejb.Local;
 public interface ISubMenuDAO extends AbstractDAO<SubMenu> {
 
     @Override
-    SubMenu create(SubMenu entity, Usuario usuario);
+    SubMenu create(SubMenu entity);
 
     @Override
-    SubMenu edit(SubMenu entity, Usuario usuario);
+    SubMenu edit(SubMenu entity);
 
     @Override
     SubMenu find(Object id);
@@ -35,7 +35,7 @@ public interface ISubMenuDAO extends AbstractDAO<SubMenu> {
     List<SubMenu> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(SubMenu entity, Usuario usuario);
+    void remove(SubMenu entity);
 
     @Override
     List<SubMenu> completar(String query);

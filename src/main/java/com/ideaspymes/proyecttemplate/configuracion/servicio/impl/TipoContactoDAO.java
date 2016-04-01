@@ -7,7 +7,6 @@ package com.ideaspymes.proyecttemplate.configuracion.servicio.impl;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.ITipoContactoDAO;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.TipoContacto;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
@@ -29,18 +28,18 @@ public class TipoContactoDAO implements ITipoContactoDAO {
     private ABMService abmService;
 
     @Override
-    public TipoContacto create(TipoContacto entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+    public TipoContacto create(TipoContacto entity) {
+        return abmService.create(entity);
     }
 
     @Override
-    public TipoContacto edit(TipoContacto entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+    public TipoContacto edit(TipoContacto entity) {
+        return abmService.update(entity);
     }
 
     @Override
-    public void remove(TipoContacto entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(TipoContacto entity) {
+        abmService.delete(entity);
     }
 
     @Override

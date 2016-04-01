@@ -6,7 +6,6 @@
 package com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.TipoContacto;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.List;
@@ -20,10 +19,10 @@ import javax.ejb.Local;
 public interface ITipoContactoDAO extends AbstractDAO<TipoContacto> {
 
     @Override
-    TipoContacto create(TipoContacto entity, Usuario usuario);
+    TipoContacto create(TipoContacto entity);
 
     @Override
-    TipoContacto edit(TipoContacto entity, Usuario usuario);
+    TipoContacto edit(TipoContacto entity);
 
     @Override
     TipoContacto find(Object id);
@@ -35,7 +34,7 @@ public interface ITipoContactoDAO extends AbstractDAO<TipoContacto> {
     List<TipoContacto> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(TipoContacto entity, Usuario usuario);
+    void remove(TipoContacto entity);
 
     @Override
     List<TipoContacto> completar(String query);

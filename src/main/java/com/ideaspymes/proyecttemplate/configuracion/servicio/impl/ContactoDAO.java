@@ -29,18 +29,18 @@ public class ContactoDAO implements IContactoDAO {
     private ABMService abmService;
 
     @Override
-    public Contacto create(Contacto entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+    public Contacto create(Contacto entity) {
+        return abmService.create(entity);
     }
 
     @Override
-    public Contacto edit(Contacto entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+    public Contacto edit(Contacto entity) {
+        return abmService.update(entity);
     }
 
     @Override
-    public void remove(Contacto entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(Contacto entity) {
+        abmService.delete(entity);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class ContactoDAO implements IContactoDAO {
             query.setMaxResults(20);
             sugerencias = query.getResultList();
         }
-        
+
         return sugerencias;
     }
 

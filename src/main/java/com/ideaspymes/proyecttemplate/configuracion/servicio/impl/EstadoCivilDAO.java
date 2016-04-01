@@ -7,7 +7,6 @@ package com.ideaspymes.proyecttemplate.configuracion.servicio.impl;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IEstadoCivilDAO;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.EstadoCivil;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
@@ -29,18 +28,18 @@ public class EstadoCivilDAO implements IEstadoCivilDAO {
     private ABMService abmService;
 
     @Override
-    public EstadoCivil create(EstadoCivil entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+    public EstadoCivil create(EstadoCivil entity) {
+        return abmService.create(entity);
     }
 
     @Override
-    public EstadoCivil edit(EstadoCivil entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+    public EstadoCivil edit(EstadoCivil entity) {
+        return abmService.update(entity);
     }
 
     @Override
-    public void remove(EstadoCivil entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(EstadoCivil entity) {
+        abmService.delete(entity);
     }
 
     @Override
@@ -109,7 +108,7 @@ public class EstadoCivilDAO implements IEstadoCivilDAO {
             query.setMaxResults(20);
             sugerencias = query.getResultList();
         }
-        
+
         return sugerencias;
     }
 

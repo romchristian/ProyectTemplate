@@ -5,7 +5,6 @@
 package com.ideaspymes.proyecttemplate.generico;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +35,7 @@ public class ABMServiceBean implements ABMService {
     @Inject
     private Credencial credencial;
 
+    @Override
     public Credencial getCredencial() {
         return credencial;
     }
@@ -46,7 +46,7 @@ public class ABMServiceBean implements ABMService {
     }
 
     @Override
-    public <T> T create(T t, Usuario usuario) {
+    public <T> T create(T t) {
         if (t instanceof IAuditable) {
             IAuditable obj = (IAuditable) t;
             obj.setEstado(Estado.ACTIVO);
@@ -54,7 +54,8 @@ public class ABMServiceBean implements ABMService {
 
             obj.setEstado(Estado.ACTIVO);
             obj.setEmpresa(credencial.getEmpresa());
-            //obj.setUsuarioUltimaModificacion(usuario);
+            String usuario = credencial.getUsuario() != null ? credencial.getUsuario().getNombre() + ", " + credencial.getUsuario().getUserName() : "";
+            obj.setUsuarioUltimaModificacion(usuario);
             this.em.persist(obj);
             this.em.flush();
             this.em.refresh(obj);
@@ -68,28 +69,27 @@ public class ABMServiceBean implements ABMService {
     }
 
     @Override
-    public void delete(Object t, Usuario usuario) {
+    public void delete(Object t) {
 
         if (t instanceof IAuditable) {
             IAuditable obj = (IAuditable) t;
             obj.setEstado(Estado.BORRADO);
-            obj.setFechaUltimaModificacion(new Date());
-            //obj.setUsuarioUltimaModificacion(usuario);
-            this.em.merge(obj);
+            update(t);
         } else {
             this.em.remove(this.em.merge(t));
         }
     }
 
     @Override
-    public <T> T update(T t, Usuario usuario) {
+    public <T> T update(T t) {
 
         if (t instanceof IAuditable) {
             IAuditable obj = (IAuditable) t;
             try {
 
                 obj.setFechaUltimaModificacion(new Date());
-                //obj.setUsuarioUltimaModificacion(usuario);
+                String usuario = credencial.getUsuario() != null ? credencial.getUsuario().getNombre() + ", " + credencial.getUsuario().getUserName() : "";
+                obj.setUsuarioUltimaModificacion(usuario);
                 obj = this.em.merge(obj);
                 this.em.flush();
                 this.em.refresh(obj);

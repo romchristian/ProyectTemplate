@@ -9,7 +9,6 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
-import com.ideaspymes.proyecttemplate.generico.Credencial;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +17,6 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.Query;
@@ -32,11 +30,11 @@ public class EmpresaDAO implements IEmpresaDAO {
 
     @EJB(beanName = "ABMServiceBean")
     private ABMService abmService;
-    
 
     @Override
-    public Empresa create(Empresa entity, Usuario usuario) {
+    public Empresa create(Empresa entity) {
         EntityManager em = abmService.getEM();
+        String usuario = abmService.getCredencial().getUsuario() != null ? abmService.getCredencial().getUsuario().getNombre() + ", " + abmService.getCredencial().getUsuario().getUserName() : "";
         entity.setEstado(Estado.ACTIVO);
         entity.setFechaRegitro(new Date());
         entity.setUsuarioUltimaModificacion(usuario);
@@ -47,10 +45,11 @@ public class EmpresaDAO implements IEmpresaDAO {
     }
 
     @Override
-    public Empresa edit(Empresa entity, Usuario usuario) {
+    public Empresa edit(Empresa entity) {
         try {
             EntityManager em = abmService.getEM();
 
+            String usuario = abmService.getCredencial().getUsuario() != null ? abmService.getCredencial().getUsuario().getNombre() + ", " + abmService.getCredencial().getUsuario().getUserName() : "";
             entity.setFechaUltimaModificacion(new Date());
             entity.setUsuarioUltimaModificacion(usuario);
             entity = em.merge(entity);
@@ -63,8 +62,9 @@ public class EmpresaDAO implements IEmpresaDAO {
     }
 
     @Override
-    public void remove(Empresa entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(Empresa entity) {
+        entity.setEstado(Estado.BORRADO);
+        edit(entity);
     }
 
     @Override

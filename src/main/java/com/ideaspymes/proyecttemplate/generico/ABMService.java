@@ -4,7 +4,6 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Local;
@@ -17,11 +16,11 @@ import javax.persistence.EntityManager;
 @Local
 public interface ABMService {
 
-    <T> T create(T t, Usuario usuario);
+    <T> T create(T t);
 
-    void delete(Object t, Usuario usuario);
+    void delete(Object t);
 
-    <T> T update(T t, Usuario usuario);
+    <T> T update(T t);
 
     <T> T find(Object id, Class<T> type);
 
@@ -48,5 +47,7 @@ public interface ABMService {
     EntityManager getEM();
 
     Double findTotal(String query, Map<String, Object> params);
+    
+    Credencial getCredencial();
 
 }

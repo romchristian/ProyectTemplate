@@ -49,12 +49,11 @@ public class Grupo implements Serializable {
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
-    
+    private String usuarioUltimaModificacion;
 
     @ManyToMany(mappedBy = "grupos")
     private List<Usuario> usuarios;
 
-  
     public Long getId() {
         return id;
     }
@@ -71,47 +70,37 @@ public class Grupo implements Serializable {
         this.nombre = nombre;
     }
 
-
     public Empresa getEmpresa() {
         return empresa;
     }
 
- 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 
-   
     public Estado getEstado() {
         return estado;
     }
 
-  
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-  
     public Date getFechaRegitro() {
         return fechaRegitro;
     }
-
 
     public void setFechaRegitro(Date fechaRegitro) {
         this.fechaRegitro = fechaRegitro;
     }
 
-
     public Date getFechaUltimaModificacion() {
         return fechaUltimaModificacion;
     }
 
-   
     public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
-
-   
 
     public List<Usuario> getUsuarios() {
         return usuarios;
@@ -119,6 +108,14 @@ public class Grupo implements Serializable {
 
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public String getUsuarioUltimaModificacion() {
+        return usuarioUltimaModificacion;
+    }
+
+    public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
+        this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
 
     @Override

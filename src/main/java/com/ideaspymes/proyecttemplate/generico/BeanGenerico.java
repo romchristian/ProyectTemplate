@@ -67,12 +67,12 @@ public abstract class BeanGenerico<T> implements Serializable {
     public abstract AbstractDAO<T> getEjb();
 
     public abstract T getNuevo();
-    
+
     public abstract Converter getConverter();
 
     public String create() {
 
-        if (getEjb().create(getActual(), credencial.getUsuario()) != null) {
+        if (getEjb().create(getActual()) != null) {
             JsfUtil.addSuccessMessage("Se creó exitosamente!");
             setActual(null);
             return "listado.xhtml?faces-redirect=true";
@@ -83,7 +83,7 @@ public abstract class BeanGenerico<T> implements Serializable {
     }
 
     public String edit() {
-        if (getEjb().edit(getActual(), credencial.getUsuario()) == null) {
+        if (getEjb().edit(getActual()) == null) {
             JsfUtil.addErrorMessage("Otro usuario realizó una modificación sobre el mismo dato,y pruebe de nuevo");
             return null;
         }
@@ -94,7 +94,7 @@ public abstract class BeanGenerico<T> implements Serializable {
     }
 
     public String remove() {
-        getEjb().remove(getActual(), credencial.getUsuario());
+        getEjb().remove(getActual());
         setActual(null);
         JsfUtil.addSuccessMessage("Se removió exitosamente!");
         return "listado.xhtml?faces-redirect=true";

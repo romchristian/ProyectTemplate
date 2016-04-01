@@ -12,23 +12,85 @@
 
     <h:form id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
-        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
 
-            <h:outputText value="Empresa"  styleClass="FontVoltRegular"
-                          rendered="#{not(contexto == 'creacion')}"/>
-            <h:outputText value="#{contactoBean.actual.empresa == null?'':contactoBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
-                          rendered="#{not(contexto == 'creacion')}"/>
+        <p:outputPanel id="panel">
 
-            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
-            <h:outputText value="#{contactoBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:inputText value="#{contactoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+            <facilerp:seccion titulo="Información Principal"/>
 
 
-        </p:panelGrid>
+            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
 
-        <facilerp:botoneraABM bean="#{contactoBean}" contexto="#{contexto}" entidad="contacto" update=":formABM:panel"/>
 
+
+                <h:outputText value="Empresa"  styleClass="FontVoltRegular"
+                              rendered="#{not(contexto == 'creacion')}"/>
+                <h:outputText value="#{contactoBean.actual.empresa == null?'':contactoBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
+                              rendered="#{not(contexto == 'creacion')}"/>
+
+                <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{contactoBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{contactoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+
+                <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{contactoBean.actual.codigo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{contactoBean.actual.codigo}" required="false" id="codigo" rendered="#{not(contexto == 'vista')}"/>
+
+                <p:outputLabel value="Tipo Documento" for="tipoDocumento" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{contactoBean.actual.tipoDocumento == null?'': contactoBean.actual.tipoDocumento.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:selectOneMenu value="#{contactoBean.actual.tipoDocumento}"  id="tipoDocumento" rendered="#{not(contexto == 'vista')}">
+                    <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectMany}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Id Documento" for="idDocumento" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{contactoBean.actual.documentoId}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{contactoBean.actual.documentoId}" required="false" id="idDocumento" rendered="#{not(contexto == 'vista')}"/>
+
+
+                <p:outputLabel value="Tipo Persona" for="tipoContacto" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{contactoBean.actual.tipoContacto == null?'': contactoBean.actual.tipoContacto.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:selectOneMenu value="#{contactoBean.actual.tipoContacto}"  id="tipoContacto" rendered="#{not(contexto == 'vista')}">
+                    <f:selectItems value="#{tipoContactoBean.itemsAvailableSelectMany}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Estado Civil" for="estadoCivil" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{contactoBean.actual.estadoCivil == null?'': contactoBean.actual.estadoCivil.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:selectOneMenu value="#{contactoBean.actual.tipoContacto}"  id="estadoCivil" rendered="#{not(contexto == 'vista')}">
+                    <f:selectItems value="#{estadoCivilBean.itemsAvailableSelectOne}"/>
+                </p:selectOneMenu>
+
+
+                <p:outputLabel value="Fecha Nacimiento" for="fechaNacimiento" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{contactoBean.actual.fechaNacimiento}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular">
+                    <f:convertDateTime pattern="#{formato.patronFecha}"/>
+                </h:outputText>
+                <p:calendar value="#{contactoBean.actual.fechaNacimiento}" required="false" id="fechaNacimiento" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
+
+
+
+                <p:outputLabel value="Nacionalidad" for="nacionalidad" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{contactoBean.actual.nacionalidad}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{contactoBean.actual.nacionalidad}" required="false" id="nacionalidad" rendered="#{not(contexto == 'vista')}"/>
+
+            </p:panelGrid>
+
+            <div class="EmptyBox10"></div>
+
+            <facilerp:seccion titulo="Otros Datos"/>
+
+            <p:tabView orientation="right">
+                <p:tab title="Información Cliente">
+
+                </p:tab>
+                <p:tab title="Información Proveedor">
+
+                </p:tab>
+
+            </p:tabView>
+
+            <facilerp:botoneraABM bean="#{contactoBean}" contexto="#{contexto}" entidad="contacto" update=":formABM:panel"/>
+
+        </p:outputPanel>
     </h:form>
 
 

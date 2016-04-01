@@ -48,8 +48,7 @@ public class TipoContacto implements Serializable, IAuditable {
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
-    @ManyToOne
-    private Usuario usuarioUltimaModificacion;
+    private String usuarioUltimaModificacion;
 
     @Override
     public Long getId() {
@@ -107,13 +106,11 @@ public class TipoContacto implements Serializable, IAuditable {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
-    @Override
-    public Usuario getUsuarioUltimaModificacion() {
+    public String getUsuarioUltimaModificacion() {
         return usuarioUltimaModificacion;
     }
 
-    @Override
-    public void setUsuarioUltimaModificacion(Usuario usuarioUltimaModificacion) {
+    public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
 

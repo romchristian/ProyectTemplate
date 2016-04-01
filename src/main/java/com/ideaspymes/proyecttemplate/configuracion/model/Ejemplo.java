@@ -25,7 +25,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Ejemplo implements Serializable, IAuditable{
+public class Ejemplo implements Serializable, IAuditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,10 +48,8 @@ public class Ejemplo implements Serializable, IAuditable{
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
-    @ManyToOne
-    private Usuario usuarioUltimaModificacion;
+    private String usuarioUltimaModificacion;
 
-    
     @Override
     public Long getId() {
         return id;
@@ -69,7 +67,6 @@ public class Ejemplo implements Serializable, IAuditable{
         this.nombre = nombre;
     }
 
-    
     @Override
     public Empresa getEmpresa() {
         return empresa;
@@ -80,51 +77,43 @@ public class Ejemplo implements Serializable, IAuditable{
         this.empresa = empresa;
     }
 
-    
     @Override
     public Estado getEstado() {
         return estado;
     }
 
-    
     @Override
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    
     @Override
     public Date getFechaRegitro() {
         return fechaRegitro;
     }
 
-    
     @Override
     public void setFechaRegitro(Date fechaRegitro) {
         this.fechaRegitro = fechaRegitro;
     }
 
-    
     @Override
     public Date getFechaUltimaModificacion() {
         return fechaUltimaModificacion;
     }
 
-    
     @Override
     public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
-    
     @Override
-    public Usuario getUsuarioUltimaModificacion() {
+    public String getUsuarioUltimaModificacion() {
         return usuarioUltimaModificacion;
     }
 
-    
     @Override
-    public void setUsuarioUltimaModificacion(Usuario usuarioUltimaModificacion) {
+    public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
 

@@ -58,8 +58,7 @@ public class Sucursal implements Serializable, IAuditable {
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
-    @ManyToOne
-    private Usuario usuarioUltimaModificacion;
+    private String usuarioUltimaModificacion;
 
     public Long getId() {
         return id;
@@ -142,11 +141,11 @@ public class Sucursal implements Serializable, IAuditable {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
-    public Usuario getUsuarioUltimaModificacion() {
+    public String getUsuarioUltimaModificacion() {
         return usuarioUltimaModificacion;
     }
 
-    public void setUsuarioUltimaModificacion(Usuario usuarioUltimaModificacion) {
+    public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
 

@@ -7,7 +7,6 @@ package com.ideaspymes.proyecttemplate.configuracion.servicio.impl;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.ISubMenuDAO;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.SubMenu;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
@@ -29,18 +28,18 @@ public class SubMenuDAO implements ISubMenuDAO {
     private ABMService abmService;
 
     @Override
-    public SubMenu create(SubMenu entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+    public SubMenu create(SubMenu entity) {
+        return abmService.create(entity);
     }
 
     @Override
-    public SubMenu edit(SubMenu entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+    public SubMenu edit(SubMenu entity) {
+        return abmService.update(entity);
     }
 
     @Override
-    public void remove(SubMenu entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(SubMenu entity) {
+        abmService.delete(entity);
     }
 
     @Override

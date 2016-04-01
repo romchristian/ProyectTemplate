@@ -23,7 +23,7 @@ import javax.persistence.Temporal;
  * @author cromero
  */
 @Entity
-public class MenuItem implements Serializable{
+public class MenuItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,8 +41,7 @@ public class MenuItem implements Serializable{
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
-    @ManyToOne
-    private Usuario usuarioUltimaModificacion;
+    private String usuarioUltimaModificacion;
 
     public MenuItem() {
     }
@@ -70,11 +69,11 @@ public class MenuItem implements Serializable{
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
-    public Usuario getUsuarioUltimaModificacion() {
+    public String getUsuarioUltimaModificacion() {
         return usuarioUltimaModificacion;
     }
 
-    public void setUsuarioUltimaModificacion(Usuario usuarioUltimaModificacion) {
+    public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
 

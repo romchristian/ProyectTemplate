@@ -4,9 +4,10 @@
  */
 package com.ideaspymes.proyecttemplate.configuracion.servicio.impl;
 
-import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.ITipoDocumentoDAO;
+import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IMonedaDAO;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
-import com.ideaspymes.proyecttemplate.configuracion.model.TipoDocumento;
+import com.ideaspymes.proyecttemplate.configuracion.model.Moneda;
+import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
@@ -22,54 +23,54 @@ import javax.persistence.Query;
  */
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-public class TipoDocumentoDAO implements ITipoDocumentoDAO {
+public class MonedaDAO implements IMonedaDAO {
 
     @EJB(beanName = "ABMServiceBean")
     private ABMService abmService;
 
     @Override
-    public TipoDocumento create(TipoDocumento entity) {
+    public Moneda create(Moneda entity) {
         return abmService.create(entity);
     }
 
     @Override
-    public TipoDocumento edit(TipoDocumento entity) {
+    public Moneda edit(Moneda entity) {
         return abmService.update(entity);
     }
 
     @Override
-    public void remove(TipoDocumento entity) {
+    public void remove(Moneda entity) {
         abmService.delete(entity);
     }
 
     @Override
-    public TipoDocumento find(Object id) {
-        return abmService.find(id, TipoDocumento.class);
+    public Moneda find(Object id) {
+        return abmService.find(id, Moneda.class);
     }
 
     @Override
-    public List<TipoDocumento> findAll() {
-        return abmService.getEM().createQuery("select obj from TipoDocumento obj where obj.estado = :estado")
+    public List<Moneda> findAll() {
+        return abmService.getEM().createQuery("select obj from Moneda obj where obj.estado = :estado")
                 .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
 
     @Override
-    public List<TipoDocumento> findAll(String query, QueryParameter params) {
+    public List<Moneda> findAll(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
     }
 
     @Override
-    public List<TipoDocumento> findAll(String query, QueryParameter params, int firt, int pageSize) {
+    public List<Moneda> findAll(String query, QueryParameter params, int firt, int pageSize) {
         return abmService.findByQuery(query, params.parameters(), firt, pageSize);
     }
 
     @Override
-    public List<TipoDocumento> findFilter(String consulta, int first, int pageSize) {
-        List<TipoDocumento> items = new ArrayList<>();
+    public List<Moneda> findFilter(String consulta, int first, int pageSize) {
+        List<Moneda> items = new ArrayList<>();
         if (consulta != null) {
             System.out.println("Consulta: " + consulta);
-            Query query = abmService.getEM().createNativeQuery(consulta, TipoDocumento.class);
+            Query query = abmService.getEM().createNativeQuery(consulta, Moneda.class);
             if (first > 0) {
                 query.setFirstResult(first);
             }
@@ -78,7 +79,7 @@ public class TipoDocumentoDAO implements ITipoDocumentoDAO {
                 query.setMaxResults(pageSize);
             }
 
-            items = (List<TipoDocumento>) query.getResultList();
+            items = (List<Moneda>) query.getResultList();
 
         }
         return items;
@@ -99,17 +100,22 @@ public class TipoDocumentoDAO implements ITipoDocumentoDAO {
     }
 
     @Override
-    public List<TipoDocumento> completar(String matchText) {
-        List<TipoDocumento> sugerencias = new ArrayList<>();
+    public List<Moneda> completar(String matchText) {
+        List<Moneda> sugerencias = new ArrayList<>();
 
         if (matchText != null && matchText.length() > 0) {
-            String consulta = "select * from tipodocumento where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
-            Query query = abmService.getEM().createNativeQuery(consulta, TipoDocumento.class);
+            String consulta = "select * from moneda where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
+            Query query = abmService.getEM().createNativeQuery(consulta, Moneda.class);
             query.setMaxResults(20);
             sugerencias = query.getResultList();
         }
 
         return sugerencias;
+    }
+
+    @Override
+    public Moneda getMonedaDefault(Usuario usuario) {
+        return find(1L);
     }
 
 }

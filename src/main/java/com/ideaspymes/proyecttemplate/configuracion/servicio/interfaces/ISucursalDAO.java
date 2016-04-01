@@ -5,9 +5,7 @@
  */
 package com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces;
 
-import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.List;
@@ -21,10 +19,10 @@ import javax.ejb.Local;
 public interface ISucursalDAO extends AbstractDAO<Sucursal> {
 
     @Override
-    Sucursal create(Sucursal entity, Usuario usuario);
+    Sucursal create(Sucursal entity);
 
     @Override
-    Sucursal edit(Sucursal entity, Usuario usuario);
+    Sucursal edit(Sucursal entity);
 
     @Override
     Sucursal find(Object id);
@@ -36,7 +34,7 @@ public interface ISucursalDAO extends AbstractDAO<Sucursal> {
     List<Sucursal> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(Sucursal entity, Usuario usuario);
+    void remove(Sucursal entity);
 
     @Override
     List<Sucursal> completar(String query);

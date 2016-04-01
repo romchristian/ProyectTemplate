@@ -34,7 +34,7 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     private Long id;
 
     //Informacion principal
-    @Listado(descripcion = "Código", mostrar = true, link = true)
+    @Listado(descripcion = "Código", mostrar = true)
     @Filtro(descripcion = "Código", tipo = "like", campo = "codigo")
     private String codigo;
 
@@ -49,9 +49,13 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     @Filtro(descripcion = "Tipo Documento", tipo = "selectOne", campo = "tipoDocumento", campoDescripcion = "nombre")
     @Listado(descripcion = "Tipo Documento", mostrar = true, entidad = true, campoDescripcion = "nombre")
     private TipoDocumento tipoDocumento;
-    @Listado(descripcion = "Id Documento", mostrar = true, link = true)
+    @Listado(descripcion = "Id Documento", mostrar = true)
     @Filtro(descripcion = "Id Documento", tipo = "like", campo = "documentoId")
     private String documentoId;
+    
+    @Listado(descripcion = "Nacionalidad", mostrar = true)
+    @Filtro(descripcion = "Nacionalidad", tipo = "like", campo = "nacionalidad")
+    private String nacionalidad;
 
     @ManyToOne
     @Filtro(descripcion = "Estado Civil", tipo = "selectOne", campo = "estadoCivil", campoDescripcion = "nombre")
@@ -68,6 +72,8 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     @ManyToOne
     @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre")
     private Sucursal sucursal;
+    
+    
 
     //Auditoria
     @Enumerated(EnumType.STRING)
@@ -76,8 +82,8 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
-    @ManyToOne
-    private Usuario usuarioUltimaModificacion;
+    
+    private String usuarioUltimaModificacion;
 
     @Override
     public Long getId() {
@@ -95,6 +101,16 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public String getNacionalidad() {
+        return nacionalidad;
+    }
+
+    public void setNacionalidad(String nacionalidad) {
+        this.nacionalidad = nacionalidad;
+    }
+    
+    
 
     @Override
     public Empresa getEmpresa() {
@@ -145,14 +161,16 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     }
 
     @Override
-    public Usuario getUsuarioUltimaModificacion() {
+    public String getUsuarioUltimaModificacion() {
         return usuarioUltimaModificacion;
     }
 
     @Override
-    public void setUsuarioUltimaModificacion(Usuario usuarioUltimaModificacion) {
+    public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
+
+  
 
     public String getCodigo() {
         return codigo;

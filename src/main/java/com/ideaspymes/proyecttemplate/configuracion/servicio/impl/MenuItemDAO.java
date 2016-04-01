@@ -29,18 +29,18 @@ public class MenuItemDAO implements IMenuItemDAO {
     private ABMService abmService;
 
     @Override
-    public MenuItem create(MenuItem entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+    public MenuItem create(MenuItem entity) {
+        return abmService.create(entity);
     }
 
     @Override
-    public MenuItem edit(MenuItem entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+    public MenuItem edit(MenuItem entity) {
+        return abmService.update(entity);
     }
 
     @Override
-    public void remove(MenuItem entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(MenuItem entity) {
+        abmService.delete(entity);
     }
 
     @Override

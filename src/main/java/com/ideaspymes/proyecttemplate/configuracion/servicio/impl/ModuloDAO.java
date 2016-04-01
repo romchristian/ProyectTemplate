@@ -7,7 +7,6 @@ package com.ideaspymes.proyecttemplate.configuracion.servicio.impl;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IModuloDAO;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.Modulo;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
@@ -29,18 +28,18 @@ public class ModuloDAO implements IModuloDAO {
     private ABMService abmService;
 
     @Override
-    public Modulo create(Modulo entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+    public Modulo create(Modulo entity) {
+        return abmService.create(entity);
     }
 
     @Override
-    public Modulo edit(Modulo entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+    public Modulo edit(Modulo entity) {
+        return abmService.update(entity);
     }
 
     @Override
-    public void remove(Modulo entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(Modulo entity) {
+        abmService.delete(entity);
     }
 
     @Override

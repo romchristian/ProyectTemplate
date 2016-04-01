@@ -29,18 +29,18 @@ public class SucursalDAO implements ISucursalDAO {
     private ABMService abmService;
 
     @Override
-    public Sucursal create(Sucursal entity, Usuario usuario) {
-        return abmService.create(entity, usuario);
+    public Sucursal create(Sucursal entity) {
+        return abmService.create(entity);
     }
 
     @Override
-    public Sucursal edit(Sucursal entity, Usuario usuario) {
-        return abmService.update(entity, usuario);
+    public Sucursal edit(Sucursal entity) {
+        return abmService.update(entity);
     }
 
     @Override
-    public void remove(Sucursal entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(Sucursal entity) {
+        abmService.delete(entity);
     }
 
     @Override
@@ -99,8 +99,7 @@ public class SucursalDAO implements ISucursalDAO {
 
         return R;
     }
-    
-    
+
     @Override
     public List<Sucursal> completar(String matchText) {
         List<Sucursal> sugerencias = new ArrayList<>();
@@ -111,7 +110,7 @@ public class SucursalDAO implements ISucursalDAO {
             query.setMaxResults(20);
             sugerencias = query.getResultList();
         }
-        
+
         return sugerencias;
     }
 }

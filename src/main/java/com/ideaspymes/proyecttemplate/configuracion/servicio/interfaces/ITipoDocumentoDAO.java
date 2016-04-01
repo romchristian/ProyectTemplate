@@ -20,10 +20,10 @@ import javax.ejb.Local;
 public interface ITipoDocumentoDAO extends AbstractDAO<TipoDocumento> {
 
     @Override
-    TipoDocumento create(TipoDocumento entity, Usuario usuario);
+    TipoDocumento create(TipoDocumento entity);
 
     @Override
-    TipoDocumento edit(TipoDocumento entity, Usuario usuario);
+    TipoDocumento edit(TipoDocumento entity);
 
     @Override
     TipoDocumento find(Object id);
@@ -35,7 +35,7 @@ public interface ITipoDocumentoDAO extends AbstractDAO<TipoDocumento> {
     List<TipoDocumento> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(TipoDocumento entity, Usuario usuario);
+    void remove(TipoDocumento entity);
 
     @Override
     List<TipoDocumento> completar(String query);

@@ -6,7 +6,6 @@
 package com.ideaspymes.proyecttemplate.generico;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import java.util.Date;
 
@@ -30,9 +29,9 @@ public interface IAuditable {
 
     void setFechaUltimaModificacion(Date fecha);
 
-    Usuario getUsuarioUltimaModificacion();
+    String getUsuarioUltimaModificacion();
 
-    void setUsuarioUltimaModificacion(Usuario u);
+    void setUsuarioUltimaModificacion(String u);
 
     Estado getEstado();
 

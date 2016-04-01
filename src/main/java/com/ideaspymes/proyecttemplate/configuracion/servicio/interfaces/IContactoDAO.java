@@ -20,10 +20,10 @@ import javax.ejb.Local;
 public interface IContactoDAO extends AbstractDAO<Contacto> {
 
     @Override
-    Contacto create(Contacto entity, Usuario usuario);
+    Contacto create(Contacto entity);
 
     @Override
-    Contacto edit(Contacto entity, Usuario usuario);
+    Contacto edit(Contacto entity);
 
     @Override
     Contacto find(Object id);
@@ -35,7 +35,7 @@ public interface IContactoDAO extends AbstractDAO<Contacto> {
     List<Contacto> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(Contacto entity, Usuario usuario);
+    void remove(Contacto entity);
 
     @Override
     List<Contacto> completar(String query);

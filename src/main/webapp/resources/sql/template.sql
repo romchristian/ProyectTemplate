@@ -9,8 +9,8 @@ INSERT INTO usuario (id, estado, fecharegitro, fechaultimamodificacion, nombre, 
 -- Data for Name: empresa; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion_id) VALUES (1, NULL, 'España', NULL, NULL, 'sdasd', NULL, false, 'ACTIVO', '2016-03-23 17:52:35.736', NULL, 'Codas Vuyk S.A', NULL, NULL, NULL, '1234564', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
-INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion_id) VALUES (2, NULL, 'Artigas', NULL, NULL, '1231231', NULL, false, 'ACTIVO', '2016-03-28 12:25:53.37', NULL, 'TABACOS S.A.', NULL, NULL, NULL, '123456', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
+INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (1, NULL, 'España', NULL, NULL, 'sdasd', NULL, false, 'ACTIVO', '2016-03-23 17:52:35.736', NULL, 'Codas Vuyk S.A', NULL, NULL, NULL, '1234564', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
+INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (2, NULL, 'Artigas', NULL, NULL, '1231231', NULL, false, 'ACTIVO', '2016-03-28 12:25:53.37', NULL, 'TABACOS S.A.', NULL, NULL, NULL, '123456', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
 
 
 --
@@ -19,10 +19,10 @@ INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, conta
 -- Data for Name: estadocivil; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (1, 'ACTIVO', '2016-03-30 16:42:47.332', NULL, 'Soltero/a', 1, NULL);
-INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (2, 'ACTIVO', '2016-03-30 16:42:53.685', NULL, 'Casado/a', 1, NULL);
-INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (3, 'ACTIVO', '2016-03-30 16:43:04.657', NULL, 'Divorciado/a', 1, NULL);
-INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (4, 'ACTIVO', '2016-03-30 16:43:15.926', NULL, 'Viudo/a', 1, NULL);
+INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-30 16:42:47.332', NULL, 'Soltero/a', 1, NULL);
+INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-30 16:42:53.685', NULL, 'Casado/a', 1, NULL);
+INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', '2016-03-30 16:43:04.657', NULL, 'Divorciado/a', 1, NULL);
+INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', '2016-03-30 16:43:15.926', NULL, 'Viudo/a', 1, NULL);
 
 
 --
@@ -31,7 +31,7 @@ INSERT INTO estadocivil (id, estado, fecharegitro, fechaultimamodificacion, nomb
 -- Data for Name: sucursal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO sucursal (id, ciudad, direccion, estado, fecharegitro, fechaultimamodificacion, nombre, nroestablecimiento, telefono, empresa_id, usuarioultimamodificacion_id) VALUES (1, NULL, 'XXXX', 'ACTIVO', '2016-03-29 13:18:15.527', NULL, 'Matriz', '002', '4512378', 1, NULL);
+INSERT INTO sucursal (id, ciudad, direccion, estado, fecharegitro, fechaultimamodificacion, nombre, nroestablecimiento, telefono, empresa_id, usuarioultimamodificacion) VALUES (1, NULL, 'XXXX', 'ACTIVO', '2016-03-29 13:18:15.527', NULL, 'Matriz', '002', '4512378', 1, NULL);
 
 
 --
@@ -40,8 +40,8 @@ INSERT INTO sucursal (id, ciudad, direccion, estado, fecharegitro, fechaultimamo
 -- Data for Name: tipocontacto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (1, 'ACTIVO', '2016-03-30 16:41:45.332', NULL, 'Persona Física', 1, NULL);
-INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (2, 'ACTIVO', '2016-03-30 16:42:01.198', NULL, 'Persona Jurídica', 1, NULL);
+INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-30 16:41:45.332', NULL, 'Persona Física', 1, NULL);
+INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-30 16:42:01.198', NULL, 'Persona Jurídica', 1, NULL);
 
 
 --
@@ -50,9 +50,9 @@ INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nom
 -- Data for Name: tipodocumento; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (1, 'ACTIVO', '2016-03-30 16:42:10.579', NULL, 'CI', 1, NULL);
-INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (2, 'ACTIVO', '2016-03-30 16:42:20.392', NULL, 'DNI', 1, NULL);
-INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion_id) VALUES (3, 'ACTIVO', '2016-03-30 16:42:28.394', NULL, 'Pasaporte', 1, NULL);
+INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-30 16:42:10.579', NULL, 'CI', 1, NULL);
+INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-30 16:42:20.392', NULL, 'DNI', 1, NULL);
+INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', '2016-03-30 16:42:28.394', NULL, 'Pasaporte', 1, NULL);
 
 
 --
@@ -165,8 +165,8 @@ SELECT pg_catalog.setval('hibernate_sequence', 1, false);
 -- Data for Name: modulo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion_id) VALUES (1, '/main/puntoventa/home.xhtml?idMenu=1', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Punto de Venta', 'Tickets, Facturas..', NULL);
-INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion_id) VALUES (2, '/main/configuracion/home.xhtml?idMenu=2', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Configuración', 'Configuraciones generales', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (1, '/main/puntoventa/home.xhtml?idMenu=1', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Punto de Venta', 'Tickets, Facturas..', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (2, '/main/configuracion/home.xhtml?idMenu=2', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Configuración', 'Configuraciones generales', NULL);
 
 
 --
@@ -175,9 +175,10 @@ INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificaci
 -- Data for Name: submenu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion_id) VALUES (1, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Empresas', 2, NULL);
-INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion_id) VALUES (2, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Productos', 1, NULL);
-INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion_id) VALUES (3, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-user', 'Contactos', 2, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Empresas', 2, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Productos', 1, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-user', 'Contactos', 2, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-money', 'Monedas', 2, NULL);
 
 
 --
@@ -186,13 +187,14 @@ INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, la
 -- Data for Name: menuitem; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion_id) VALUES (3, 'ACTIVO', NULL, NULL, 'icon-uniE675', '#', 'Producto', 2, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion_id) VALUES (1, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/empresa/listado.xhtml', 'Empresa', 1, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion_id) VALUES (2, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/sucursal/listado.xhtml', 'Sucursal', 1, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion_id) VALUES (4, 'ACTIVO', NULL, NULL, 'fa fa-user', '/main/configuracion/contacto/listado.xhtml', 'Contacto', 3, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion_id) VALUES (5, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/tipoContacto/listado.xhtml', 'Tipo Contacto', 3, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion_id) VALUES (6, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/tipoDocumento/listado.xhtml', 'Tipo Documento', 3, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion_id) VALUES (7, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/estadoCivil/listado.xhtml', 'Estado Civil', 3, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', NULL, NULL, 'icon-uniE675', '#', 'Producto', 2, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/empresa/listado.xhtml', 'Empresa', 1, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/sucursal/listado.xhtml', 'Sucursal', 1, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', NULL, NULL, 'fa fa-user', '/main/configuracion/contacto/listado.xhtml', 'Contacto', 3, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (5, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/tipoContacto/listado.xhtml', 'Tipo Contacto', 3, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (6, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/tipoDocumento/listado.xhtml', 'Tipo Documento', 3, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (7, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/estadoCivil/listado.xhtml', 'Estado Civil', 3, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (8, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/moneda/listado.xhtml', 'Moneda', 4, NULL);
 
 
 --
@@ -201,7 +203,7 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 -- Name: menuitem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('menuitem_id_seq', 7, true);
+SELECT pg_catalog.setval('menuitem_id_seq', 8, true);
 
 
 --
@@ -219,7 +221,7 @@ SELECT pg_catalog.setval('modulo_id_seq', 2, true);
 -- Name: submenu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('submenu_id_seq', 3, true);
+SELECT pg_catalog.setval('submenu_id_seq', 4, true);
 
 
 --

@@ -31,11 +31,12 @@ public class UsuarioDAO implements IUsuarioDAO {
     private ABMService abmService;
 
     @Override
-    public Usuario create(Usuario entity, Usuario usuario) {
+    public Usuario create(Usuario entity) {
         EntityManager em = abmService.getEM();
+        String usuario = abmService.getCredencial().getUsuario() != null ? abmService.getCredencial().getUsuario().getNombre() + ", " + abmService.getCredencial().getUsuario().getUserName() : "";
         entity.setEstado(Estado.ACTIVO);
         entity.setFechaRegitro(new Date());
-
+        entity.setUsuarioUltimaModificacion(usuario);
         em.persist(entity);
         em.flush();
         em.refresh(entity);
@@ -43,12 +44,12 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public Usuario edit(Usuario entity, Usuario usuario) {
+    public Usuario edit(Usuario entity) {
         try {
             EntityManager em = abmService.getEM();
-
+            String usuario = abmService.getCredencial().getUsuario() != null ? abmService.getCredencial().getUsuario().getNombre() + ", " + abmService.getCredencial().getUsuario().getUserName() : "";
             entity.setFechaUltimaModificacion(new Date());
-
+            entity.setUsuarioUltimaModificacion(usuario);
             entity = em.merge(entity);
             em.flush();
             em.refresh(entity);
@@ -59,8 +60,9 @@ public class UsuarioDAO implements IUsuarioDAO {
     }
 
     @Override
-    public void remove(Usuario entity, Usuario usuario) {
-        abmService.delete(entity, usuario);
+    public void remove(Usuario entity) {
+        entity.setEstado(Estado.BORRADO);
+        edit(entity);
     }
 
     @Override

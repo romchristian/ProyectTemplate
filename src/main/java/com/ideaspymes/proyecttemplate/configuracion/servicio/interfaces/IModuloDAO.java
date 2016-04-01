@@ -20,10 +20,10 @@ import javax.ejb.Local;
 public interface IModuloDAO extends AbstractDAO<Modulo> {
 
     @Override
-    Modulo create(Modulo entity, Usuario usuario);
+    Modulo create(Modulo entity);
 
     @Override
-    Modulo edit(Modulo entity, Usuario usuario);
+    Modulo edit(Modulo entity);
 
     @Override
     Modulo find(Object id);
@@ -35,7 +35,7 @@ public interface IModuloDAO extends AbstractDAO<Modulo> {
     List<Modulo> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(Modulo entity, Usuario usuario);
+    void remove(Modulo entity);
 
     @Override
     List<Modulo> completar(String query);

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="value" required="true"/>
+        
+        <cc:attribute name="contexto" required="true"/>
+        
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:outputText value="#{cc.attrs.value}" rendered="#{(cc.attrs.contexto == 'vista')}" styleClass="FontVoltRegular"/>
+        <p:inputText value="#{cc.attrs.value}" required="true" id="#{cc.attrs.id}" rendered="#{not(cc.attrs.contexto == 'vista')}"/>
+    </cc:implementation>
+</html>

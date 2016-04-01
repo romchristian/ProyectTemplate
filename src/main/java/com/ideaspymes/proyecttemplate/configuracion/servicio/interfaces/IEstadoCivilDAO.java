@@ -6,7 +6,6 @@
 package com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.EstadoCivil;
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.List;
@@ -20,10 +19,10 @@ import javax.ejb.Local;
 public interface IEstadoCivilDAO extends AbstractDAO<EstadoCivil> {
 
     @Override
-    EstadoCivil create(EstadoCivil entity, Usuario usuario);
+    EstadoCivil create(EstadoCivil entity);
 
     @Override
-    EstadoCivil edit(EstadoCivil entity, Usuario usuario);
+    EstadoCivil edit(EstadoCivil entity);
 
     @Override
     EstadoCivil find(Object id);
@@ -35,7 +34,7 @@ public interface IEstadoCivilDAO extends AbstractDAO<EstadoCivil> {
     List<EstadoCivil> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(EstadoCivil entity, Usuario usuario);
+    void remove(EstadoCivil entity);
 
     @Override
     List<EstadoCivil> completar(String query);

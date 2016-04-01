@@ -19,15 +19,14 @@ import javax.ejb.Local;
 public interface IUsuarioDAO extends AbstractDAO<Usuario> {
 
     @Override
-    Usuario create(Usuario entity, Usuario usuario);
+    Usuario create(Usuario entity);
 
     @Override
-    Usuario edit(Usuario entity, Usuario usuario);
+    Usuario edit(Usuario entity);
 
     @Override
     Usuario find(Object id);
-    
-    
+
     Usuario find(String username);
 
     @Override
@@ -37,7 +36,7 @@ public interface IUsuarioDAO extends AbstractDAO<Usuario> {
     List<Usuario> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(Usuario entity, Usuario usuario);
+    void remove(Usuario entity);
 
     @Override
     List<Usuario> completar(String query);

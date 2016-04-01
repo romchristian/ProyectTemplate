@@ -5,8 +5,7 @@
  */
 package com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces;
 
-import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
-import com.ideaspymes.proyecttemplate.configuracion.model.MenuItem;
+import com.ideaspymes.proyecttemplate.configuracion.model.Moneda;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
@@ -18,27 +17,29 @@ import javax.ejb.Local;
  * @author Acer
  */
 @Local
-public interface IMenuItemDAO extends AbstractDAO<MenuItem> {
+public interface IMonedaDAO extends AbstractDAO<Moneda> {
 
     @Override
-    MenuItem create(MenuItem entity);
+    Moneda create(Moneda entity);
 
     @Override
-    MenuItem edit(MenuItem entity);
+    Moneda edit(Moneda entity);
 
     @Override
-    MenuItem find(Object id);
+    Moneda find(Object id);
 
     @Override
-    List<MenuItem> findAll();
+    List<Moneda> findAll();
 
     @Override
-    List<MenuItem> findAll(String query, QueryParameter params);
+    List<Moneda> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(MenuItem entity);
-    
+    void remove(Moneda entity);
+
     @Override
-    List<MenuItem> completar(String query);
+    List<Moneda> completar(String query);
+
+    Moneda getMonedaDefault(Usuario usuario);
 
 }

@@ -4,7 +4,6 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
-import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import java.util.List;
 
 /**
@@ -13,11 +12,11 @@ import java.util.List;
  */
 public interface AbstractDAO<T> {
 
-    public abstract T create(T entity, Usuario usuario);
+    public abstract T create(T entity);
 
-    public abstract T edit(T entity, Usuario usuario);
+    public abstract T edit(T entity);
 
-    public abstract void remove(T entity, Usuario usuario);
+    public abstract void remove(T entity);
 
     public abstract T find(Object id);
 
@@ -26,10 +25,10 @@ public interface AbstractDAO<T> {
     public abstract List<T> findAll(String query, QueryParameter params);
 
     public abstract List<T> findAll(String query, QueryParameter params, int first, int pageSize);
-    
+
     public abstract List<T> findFilter(String query, int first, int pageSize);
-    
+
     public abstract List<T> completar(String query);
-    
+
     public abstract int countFilter(String query);
 }

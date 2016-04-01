@@ -20,10 +20,10 @@ import javax.ejb.Local;
 public interface IEmpresaDAO extends AbstractDAO<Empresa> {
 
     @Override
-    Empresa create(Empresa entity, Usuario usuario);
+    Empresa create(Empresa entity);
 
     @Override
-    Empresa edit(Empresa entity, Usuario usuario);
+    Empresa edit(Empresa entity);
 
     @Override
     Empresa find(Object id);
@@ -35,7 +35,7 @@ public interface IEmpresaDAO extends AbstractDAO<Empresa> {
     List<Empresa> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(Empresa entity, Usuario usuario);
+    void remove(Empresa entity);
 
     @Override
     List<Empresa> completar(String query);

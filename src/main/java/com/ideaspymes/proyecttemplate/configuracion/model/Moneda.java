@@ -6,17 +6,18 @@
 package com.ideaspymes.proyecttemplate.configuracion.model;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
-import com.ideaspymes.proyecttemplate.generico.Encryptador;
+import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.IAuditable;
+import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -24,31 +25,33 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Usuario implements Serializable {
+public class Moneda implements Serializable, IAuditable{
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
-    private String userName;
-    private String password;
 
-    @ManyToMany
-    private List<Empresa> empresa;
-    @Enumerated(EnumType.STRING)
-    private Estado estado;
+    //Informacion principal
+    @Listado(descripcion = "Nombre", mostrar = true, link = true)
+    @Filtro(descripcion = "Nombre", tipo = "like", campo = "nombre")
+    private String nombre;
+
+    @ManyToOne
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    private Empresa empresa;
 
     //Auditoria
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
     private String usuarioUltimaModificacion;
 
-    @ManyToMany
-    private List<Grupo> grupos;
-
+    
+    @Override
     public Long getId() {
         return id;
     }
@@ -65,69 +68,65 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = Encryptador.encrypta(password);
-    }
-
-    public List<Empresa> getEmpresa() {
+    
+    @Override
+    public Empresa getEmpresa() {
         return empresa;
     }
 
-    public void setEmpresa(List<Empresa> empresa) {
+    @Override
+    public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
 
+    
+    @Override
     public Estado getEstado() {
         return estado;
     }
 
+    
+    @Override
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
+    
+    @Override
     public Date getFechaRegitro() {
         return fechaRegitro;
     }
 
+    
+    @Override
     public void setFechaRegitro(Date fechaRegitro) {
         this.fechaRegitro = fechaRegitro;
     }
 
+    
+    @Override
     public Date getFechaUltimaModificacion() {
         return fechaUltimaModificacion;
     }
 
+    
+    @Override
     public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
     }
 
+    @Override
     public String getUsuarioUltimaModificacion() {
         return usuarioUltimaModificacion;
     }
 
+    @Override
     public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
 
-    public List<Grupo> getGrupos() {
-        return grupos;
-    }
-
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
-    }
+    
+    
 
     @Override
     public int hashCode() {
@@ -139,19 +138,16 @@ public class Usuario implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
+        if (!(object instanceof Moneda)) {
             return false;
         }
-        Usuario other = (Usuario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        Moneda other = (Moneda) object;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.ideaspymes.proyecttemplate.configuracion.model.Usuario[ id=" + id + " ]";
+        return nombre;
     }
 
 }
