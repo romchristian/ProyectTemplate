@@ -11,6 +11,7 @@ import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -73,6 +74,20 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre")
     private Sucursal sucursal;
     
+    
+    //Informacion de contacto
+    private String telefonoFijo;
+    private String telefonoMovil;
+    private String email;
+    private String lugarDeTrabajo;
+    
+    //Información de cliente
+    private boolean esCliente;
+    private boolean esExentoImpuesto;
+    private Integer tasaMaximaDescuentoVenta;
+    
+    private BigDecimal lineaCreditoMonedaLocal;
+    private BigDecimal lineaCreditoMonedaExtranjera;
     
 
     //Auditoria
@@ -219,6 +234,81 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
+    public String getTelefonoFijo() {
+        return telefonoFijo;
+    }
+
+    public void setTelefonoFijo(String telefonoFijo) {
+        this.telefonoFijo = telefonoFijo;
+    }
+
+    public String getTelefonoMovil() {
+        return telefonoMovil;
+    }
+
+    public void setTelefonoMovil(String telefonoMovil) {
+        this.telefonoMovil = telefonoMovil;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLugarDeTrabajo() {
+        return lugarDeTrabajo;
+    }
+
+    public void setLugarDeTrabajo(String lugarDeTrabajo) {
+        this.lugarDeTrabajo = lugarDeTrabajo;
+    }
+
+    public boolean isEsCliente() {
+        return esCliente;
+    }
+
+    public void setEsCliente(boolean esCliente) {
+        this.esCliente = esCliente;
+    }
+
+    public boolean isEsExentoImpuesto() {
+        return esExentoImpuesto;
+    }
+
+    public void setEsExentoImpuesto(boolean esExentoImpuesto) {
+        this.esExentoImpuesto = esExentoImpuesto;
+    }
+
+    public Integer getTasaMaximaDescuentoVenta() {
+        return tasaMaximaDescuentoVenta;
+    }
+
+    public void setTasaMaximaDescuentoVenta(Integer tasaMaximaDescuentoVenta) {
+        this.tasaMaximaDescuentoVenta = tasaMaximaDescuentoVenta;
+    }
+
+    public BigDecimal getLineaCreditoMonedaLocal() {
+        return lineaCreditoMonedaLocal;
+    }
+
+    public void setLineaCreditoMonedaLocal(BigDecimal lineaCreditoMonedaLocal) {
+        this.lineaCreditoMonedaLocal = lineaCreditoMonedaLocal;
+    }
+
+    public BigDecimal getLineaCreditoMonedaExtranjera() {
+        return lineaCreditoMonedaExtranjera;
+    }
+
+    public void setLineaCreditoMonedaExtranjera(BigDecimal lineaCreditoMonedaExtranjera) {
+        this.lineaCreditoMonedaExtranjera = lineaCreditoMonedaExtranjera;
+    }
+    
+    
+    
 
     @Override
     public int hashCode() {

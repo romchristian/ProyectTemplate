@@ -165,8 +165,13 @@ SELECT pg_catalog.setval('hibernate_sequence', 1, false);
 -- Data for Name: modulo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (1, '/main/puntoventa/home.xhtml?idMenu=1', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Punto de Venta', 'Tickets, Facturas..', NULL);
-INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (2, '/main/configuracion/home.xhtml?idMenu=2', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Configuración', 'Configuraciones generales', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (1, '/main/configuracion/home.xhtml?idMenu=1', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Configuración', 'Tickets, Facturas..', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (2, '/main/configuracion/home.xhtml?idMenu=2', 'INACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Infomes', 'Configuraciones generales', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (3, '/main/configuracion/home.xhtml?idMenu=3', 'INACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Contabilidad', 'Configuraciones generales', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (4, '/main/configuracion/home.xhtml?idMenu=4', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Finanzas', 'Configuraciones generales', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (5, '/main/configuracion/home.xhtml?idMenu=5', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Stock', 'Configuraciones generales', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (6, '/main/configuracion/home.xhtml?idMenu=6', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Compras', 'Configuraciones generales', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (7, '/main/puntoventa/home.xhtml?idMenu=7', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Ventas', 'Configuraciones generales', NULL);
 
 
 --
@@ -175,10 +180,10 @@ INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificaci
 -- Data for Name: submenu; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Empresas', 2, NULL);
-INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Productos', 1, NULL);
-INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-user', 'Contactos', 2, NULL);
-INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-money', 'Monedas', 2, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Empresas', 1, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Productos', 7, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-user', 'Contactos', 1, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-money', 'Monedas', 1, NULL);
 
 
 --
@@ -212,7 +217,7 @@ SELECT pg_catalog.setval('menuitem_id_seq', 8, true);
 -- Name: modulo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('modulo_id_seq', 2, true);
+SELECT pg_catalog.setval('modulo_id_seq', 7, true);
 
 
 --
