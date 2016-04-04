@@ -13,6 +13,7 @@
         <cc:attribute name="contexto" required="true"/>
         <cc:attribute name="entidad" required="true"/>
         <cc:attribute name="update" required="true"/>
+        <cc:attribute name="ajax"/>
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
@@ -21,8 +22,9 @@
             <div class="ui-grid ui-grid-responsive">
                 <div class="ui-grid-row">
                     <div class="ui-grid-col-2">
-                        <p:commandButton value="Crear" action="#{cc.attrs.bean.create()}" styleClass="Fleft GreenButton" update="#{cc.attrs.update}" rendered="#{(cc.attrs.contexto == 'creacion')}"/>
-                        <p:commandButton value="Guardar" action="#{cc.attrs.bean.edit()}" styleClass="Fleft BlueButton" update="#{cc.attrs.update}" rendered="#{(cc.attrs.contexto == 'edicion')}"/>
+                        <p:commandButton value="Crear" action="#{cc.attrs.bean.create()}" styleClass="Fleft GreenButton" update="#{cc.attrs.update}" rendered="#{(cc.attrs.contexto == 'creacion')}" ajax="#{cc.attrs.ajax == 'false'?'false':'true'}"/>
+                        <p:commandButton value="Guardar" action="#{cc.attrs.bean.edit()}" styleClass="Fleft BlueButton" update="#{cc.attrs.update}" rendered="#{(cc.attrs.contexto == 'edicion')}"
+                                         ajax="false"/>
                         <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(cc.attrs.contexto == 'vista')}">
                             <f:param name="id" value="#{cc.attrs.bean.actual.id}"/>
                         </p:button>

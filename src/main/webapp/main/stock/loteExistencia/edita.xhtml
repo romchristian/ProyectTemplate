@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{loteExistenciaBean.id}"/>
+        <f:viewAction action="#{loteExistenciaBean.cargaDatos()}"/>
+    </f:metadata>
+
+
+    <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
+        <ui:define name="content">
+            <div class="Container100 Responsive100">
+                <p:breadCrumb homeDisplay="icon">
+                    <p:menuitem outcome="/main/configuracion/home"/>
+                    <p:menuitem outcome="listado" value="Listado de Lotes de Existencias"/>
+                    <p:menuitem outcome="edita" value="#{loteExistenciaBean.actual.codigo}">
+                        <f:param name="id" value="#{loteExistenciaBean.actual.id}"/>
+                    </p:menuitem>
+                </p:breadCrumb>
+            </div>
+            <div class="Container100 Responsive100">
+                <div class="Card">
+                    <ui:include src="cuerpo.xhtml">
+                        <ui:param name="contexto" value="edicion"/>
+                    </ui:include>
+                </div>
+            </div>
+
+        </ui:define>
+    </ui:decorate>
+
+</ui:composition>
+

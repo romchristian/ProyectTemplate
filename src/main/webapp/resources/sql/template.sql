@@ -181,9 +181,12 @@ INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificaci
 --
 
 INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Empresas', 1, NULL);
-INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Productos', 7, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Productos', 5, NULL);
 INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-user', 'Contactos', 1, NULL);
 INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'fa fa-money', 'Monedas', 1, NULL);
+INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, label, modulo_id, usuarioultimamodificacion) VALUES (5, 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-uniE675', 'Movimientos', 5, NULL);
+
+
 
 
 --
@@ -192,7 +195,7 @@ INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, la
 -- Data for Name: menuitem; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', NULL, NULL, 'icon-uniE675', '#', 'Producto', 2, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/producto/listado.xhtml', 'Producto', 2, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/empresa/listado.xhtml', 'Empresa', 1, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/sucursal/listado.xhtml', 'Sucursal', 1, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', NULL, NULL, 'fa fa-user', '/main/configuracion/contacto/listado.xhtml', 'Contacto', 3, NULL);
@@ -201,6 +204,13 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (7, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/estadoCivil/listado.xhtml', 'Estado Civil', 3, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (8, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/moneda/listado.xhtml', 'Moneda', 4, NULL);
 
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (9, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/unidadMedida/listado.xhtml', 'Unidad de Medida', 2, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (10, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/familia/listado.xhtml', 'Familia', 2, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (12, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/comprobanteStock/listado.xhtml', 'Comprobante de Stock', 5, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (13, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/loteExistencia/listado.xhtml', 'Lote de Existencia', 5, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (14, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/deposito/listado.xhtml', 'Depósito', 5, NULL);
+
+
 
 --
 -- TOC entry 2320 (class 0 OID 0)
@@ -208,7 +218,7 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 -- Name: menuitem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('menuitem_id_seq', 8, true);
+SELECT pg_catalog.setval('menuitem_id_seq', 14, true);
 
 
 --
@@ -226,7 +236,7 @@ SELECT pg_catalog.setval('modulo_id_seq', 7, true);
 -- Name: submenu_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('submenu_id_seq', 4, true);
+SELECT pg_catalog.setval('submenu_id_seq', 5, true);
 
 
 --

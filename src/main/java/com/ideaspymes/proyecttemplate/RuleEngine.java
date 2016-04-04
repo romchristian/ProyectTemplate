@@ -6,8 +6,9 @@
 package com.ideaspymes.proyecttemplate;
 
 
-import com.ideaspymes.proyecttemplate.configuracion.Producto;
+
 import com.ideaspymes.proyecttemplate.configuracion.Resultado;
+import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import java.io.UnsupportedEncodingException;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
@@ -62,8 +63,7 @@ public class RuleEngine {
         StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
         Resultado R = new Resultado();
         ksession.insert(R);
-        ksession.insert(new Producto("Palermo", 1000D, 50000000D));
-        ksession.insert(new Producto("Kentucky", 3000D, 50000000D));
+        ksession.insert(new Producto());
         int rulesFired = ksession.fireAllRules();
         System.out.println("Rules Fired: " + rulesFired);
 

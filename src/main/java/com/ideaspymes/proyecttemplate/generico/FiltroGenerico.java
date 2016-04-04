@@ -5,8 +5,8 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
-import com.ideaspymes.proyecttemplate.web.EmpresaConsultaBean;
-import com.ideaspymes.proyecttemplate.web.converters.EmpresaConverter;
+import com.ideaspymes.proyecttemplate.configuracion.web.EmpresaConsultaBean;
+import com.ideaspymes.proyecttemplate.configuracion.web.converters.EmpresaConverter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;

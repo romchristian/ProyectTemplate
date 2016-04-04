@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
+
+
+
+
+
+    <h:form  id="formABM" enctype="multipart/form-data">
+        <p:growl id="mensajes" autoUpdate="true"/>
+
+        <p:panelGrid columns="3" columnClasses="ui-grid-col-2,ui-grid-col-1,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+            
+            <facilerp:imagen bean="#{productoBean}" contexto="#{contexto}" entidad="producto"/>
+            
+            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{productoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+        </p:panelGrid>
+        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+
+
+            <h:outputText value="Empresa"  styleClass="FontVoltRegular"
+                          rendered="#{not(contexto == 'creacion')}"/>
+            <h:outputText value="#{productoBean.actual.empresa == null?'':productoBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
+                          rendered="#{not(contexto == 'creacion')}"/>
+
+
+
+            <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoBean.actual.codigo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{productoBean.actual.codigo}" required="true" id="codigo" rendered="#{not(contexto == 'vista')}"/>
+
+            <p:outputLabel value="Unidad Medida Base" for="unidadMedida" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:selectOneMenu value="#{productoBean.actual.unidadMedidaBase}" required="true" id="unidadMedida" rendered="#{not(contexto == 'vista')}">
+                <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>
+            </p:selectOneMenu>
+
+
+            <p:outputLabel value="Precio Ventas Gs" for="precioVenta" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoBean.actual.precioVenta}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{productoBean.actual.precioVenta}" required="true" id="precioVenta" rendered="#{not(contexto == 'vista')}"/>
+
+
+            <p:outputLabel value="Precio Ventas U$" for="precioVentaMonedaExt" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoBean.actual.precioVentaMonedaExtranjera}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{productoBean.actual.precioVentaMonedaExtranjera}"  id="precioVentaMonedaExt" rendered="#{not(contexto == 'vista')}"/>
+
+
+        </p:panelGrid>
+
+        <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+            <p:selectBooleanCheckbox value="#{productoBean.actual.inventariable}" itemLabel="¿Es Inventariable?"/>
+            <p:selectBooleanCheckbox value="#{productoBean.actual.tieneVencimiento}" itemLabel="¿Tiene Vencimiento?"/>
+        </p:panelGrid>
+
+        <facilerp:botoneraABM bean="#{productoBean}" contexto="#{contexto}" entidad="producto" update=":formABM:panel" ajax="false"/>
+
+
+    </h:form>
+
+
+
+</ui:composition>
+

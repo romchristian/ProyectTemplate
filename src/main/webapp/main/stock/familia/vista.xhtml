@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:metadata>
+        <f:viewParam name="id" value="#{familiaBean.id}"/>
+        <f:viewAction action="#{familiaBean.cargaDatos()}"/>
+    </f:metadata>
+
+    <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
+        <ui:define name="content">
+            <div class="Container100 Responsive100">
+                <p:breadCrumb homeDisplay="icon">
+                    <p:menuitem outcome="/main/configuracion/home"/>
+                    <p:menuitem outcome="listado" value="Listado de Familias de Productos"/>
+                    <p:menuitem outcome="vista" value="#{familiaBean.actual.nombre}">
+                        <f:param name="id" value="#{familiaBean.actual.id}"/>
+                    </p:menuitem>
+                </p:breadCrumb>
+            </div>
+
+            <div class="Container100 Responsive100">
+                <div class="Card">
+                    <ui:include src="cuerpo.xhtml">
+                        <ui:param name="contexto" value="vista"/>
+                    </ui:include>
+                </div>
+            </div>
+
+
+        </ui:define>
+    </ui:decorate>
+
+
+</ui:composition>
