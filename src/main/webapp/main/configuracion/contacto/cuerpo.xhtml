@@ -9,113 +9,174 @@
 
 
 
-
     <h:form id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
 
 
         <p:outputPanel id="panel">
 
-            <facilerp:seccion titulo="Información Principal"/>
-
-
-            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
-
-
-
-                <h:outputText value="Empresa"  styleClass="FontVoltRegular"
-                              rendered="#{not(contexto == 'creacion')}"/>
-                <h:outputText value="#{contactoBean.actual.empresa == null?'':contactoBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
-                              rendered="#{not(contexto == 'creacion')}"/>
-
-                <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
-                <h:outputText value="#{contactoBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                <p:inputText value="#{contactoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
-
-                <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular"/>
-                <h:outputText value="#{contactoBean.actual.codigo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                <p:inputText value="#{contactoBean.actual.codigo}" required="false" id="codigo" rendered="#{not(contexto == 'vista')}"/>
-
-                <p:outputLabel value="Tipo Documento" for="tipoDocumento" styleClass="FontVoltRegular"/>
-                <h:outputText value="#{contactoBean.actual.tipoDocumento == null?'': contactoBean.actual.tipoDocumento.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                <p:selectOneMenu value="#{contactoBean.actual.tipoDocumento}"  id="tipoDocumento" rendered="#{not(contexto == 'vista')}">
-                    <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectMany}"/>
-                </p:selectOneMenu>
-
-                <p:outputLabel value="Id Documento" for="idDocumento" styleClass="FontVoltRegular"/>
-                <h:outputText value="#{contactoBean.actual.documentoId}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                <p:inputText value="#{contactoBean.actual.documentoId}" required="false" id="idDocumento" rendered="#{not(contexto == 'vista')}"/>
-
-
-                <p:outputLabel value="Tipo Persona" for="tipoContacto" styleClass="FontVoltRegular"/>
-                <h:outputText value="#{contactoBean.actual.tipoContacto == null?'': contactoBean.actual.tipoContacto.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                <p:selectOneMenu value="#{contactoBean.actual.tipoContacto}"  id="tipoContacto" rendered="#{not(contexto == 'vista')}">
-                    <f:selectItems value="#{tipoContactoBean.itemsAvailableSelectMany}"/>
-                </p:selectOneMenu>
-
-                <p:outputLabel value="Estado Civil" for="estadoCivil" styleClass="FontVoltRegular"/>
-                <h:outputText value="#{contactoBean.actual.estadoCivil == null?'': contactoBean.actual.estadoCivil.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                <p:selectOneMenu value="#{contactoBean.actual.estadoCivil}"  id="estadoCivil" rendered="#{not(contexto == 'vista')}">
-                    <f:selectItems value="#{estadoCivilBean.itemsAvailableSelectOne}"/>
-                </p:selectOneMenu>
-
-
-                <p:outputLabel value="Fecha Nacimiento" for="fechaNacimiento" styleClass="FontVoltRegular"/>
-                <h:outputText value="#{contactoBean.actual.fechaNacimiento}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular">
-                    <f:convertDateTime pattern="#{formato.patronFecha}"/>
-                </h:outputText>
-                <p:calendar value="#{contactoBean.actual.fechaNacimiento}" required="false" id="fechaNacimiento" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
+            <div class="Container20 Responsive100">
+                <p:panelMenu>
 
 
 
-                <p:outputLabel value="Nacionalidad" for="nacionalidad" styleClass="FontVoltRegular"/>
-                <h:outputText value="#{contactoBean.actual.nacionalidad}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                <p:inputText value="#{contactoBean.actual.nacionalidad}" required="false" id="nacionalidad" rendered="#{not(contexto == 'vista')}"/>
-
-            </p:panelGrid>
-
-            <div class="EmptyBox10"></div>
-
-            <facilerp:seccion titulo="Otros Datos"/>
-
-            <p:outputPanel>
 
 
-                <p:tabView>
-                    <p:tab title="Información Contacto">
+
+                    <p:submenu label="Datos" icon="ui-icon-heart"  expanded="true">
+                        <p:menuitem value="Infomación Principal" url="http://www.primefaces.org" icon="ui-icon-home" />
+                        <p:menuitem value="Infomación Contacto" url="http://www.primefaces.org/documentation" icon="ui-icon-document" />
+                        <p:menuitem value="Perfil Cliente" url="http://www.primefaces.org/downloads" icon="ui-icon-arrowthick-1-s" />
+                        <p:menuitem value="Perfil Proveedor" url="http://www.primefaces.org/support" icon="ui-icon-wrench" />
+                        <p:menuitem value="Mobile"  icon="ui-icon-signal" />
+                    </p:submenu>
+
+                    <p:submenu label="Actividades" icon="ui-icon-heart"  expanded="true">
+                        <p:menuitem value="Facturas Ventas" url="http://www.primefaces.org" icon="ui-icon-home" />
+                        <p:menuitem value="Facturas Proveedor" url="http://www.primefaces.org/documentation" icon="ui-icon-document" />
+                        <p:menuitem value="Notas Creditos" url="http://www.primefaces.org/downloads" icon="ui-icon-arrowthick-1-s" />
+                        <p:menuitem value="Productos Vendidos" url="http://www.primefaces.org/support" icon="ui-icon-wrench" />
+                        <p:menuitem value="Productos Comprados"  icon="ui-icon-signal" />
+                    </p:submenu>
+
+                </p:panelMenu>
+            </div>
+            <div class="Container80 Responsive100">
+                <facilerp:seccion titulo="Información Principal"/>
 
 
-                    </p:tab>
-                    <p:tab title="Información Cliente">
-                        <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
-                            <p:selectBooleanCheckbox value="#{contactoBean.actual.esCliente}" itemLabel="¿Es Cliente?" disabled="#{(contexto == 'vista')}"/>
-                            <p:selectBooleanCheckbox value="#{contactoBean.actual.esExentoImpuesto}" itemLabel="¿Es Exento de Impuestos?" disabled="#{(contexto == 'vista')}"/>
-                        </p:panelGrid>
+                <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
 
-                        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
-                            <p:outputLabel value="Linea de Crádito Moneda Local" for="lineaCreditoMonedaLocal" styleClass="FontVoltRegular"/>
-                            <h:outputText value="#{contactoBean.actual.lineaCreditoMonedaLocal}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                            <p:inputText value="#{contactoBean.actual.lineaCreditoMonedaLocal}" required="false" id="lineaCreditoMonedaLocal" rendered="#{not(contexto == 'vista')}"/>
 
-                            <p:outputLabel value="Linea de Crádito Moneda Ext." for="lineaCreditoMonedaExtranjera" styleClass="FontVoltRegular"/>
-                            <h:outputText value="#{contactoBean.actual.lineaCreditoMonedaExtranjera}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                            <p:inputText value="#{contactoBean.actual.lineaCreditoMonedaExtranjera}" required="false" id="lineaCreditoMonedaExtranjera" rendered="#{not(contexto == 'vista')}"/>
 
-                            <p:outputLabel value="Tasa Máxima Descuento" for="tasaMaximaDescuentoVenta" styleClass="FontVoltRegular"/>
-                            <h:outputText value="#{contactoBean.actual.tasaMaximaDescuentoVenta}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-                            <p:inputText value="#{contactoBean.actual.tasaMaximaDescuentoVenta}" required="false" id="tasaMaximaDescuentoVenta" rendered="#{not(contexto == 'vista')}"/>
-                        </p:panelGrid>
-                    </p:tab>
-                    <p:tab title="Información Proveedor">
+                    <h:outputText value="Empresa"  styleClass="FontVoltRegular"
+                                  rendered="#{not(contexto == 'creacion')}"/>
+                    <h:outputText value="#{contactoBean.actual.empresa == null?'':contactoBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
+                                  rendered="#{not(contexto == 'creacion')}"/>
 
-                    </p:tab>
+                    <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
+                    <h:outputText value="#{contactoBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                    <p:inputText value="#{contactoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
-                </p:tabView>
-            </p:outputPanel>
+                    <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular"/>
+                    <h:outputText value="#{contactoBean.actual.codigo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                    <p:inputText value="#{contactoBean.actual.codigo}" required="false" id="codigo" rendered="#{not(contexto == 'vista')}"/>
 
-            <facilerp:botoneraABM bean="#{contactoBean}" contexto="#{contexto}" entidad="contacto" update=":formABM:panel"/>
+                    <p:outputLabel value="Tipo Documento" for="tipoDocumento" styleClass="FontVoltRegular"/>
+                    <h:outputText value="#{contactoBean.actual.tipoDocumento == null?'': contactoBean.actual.tipoDocumento.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                    <p:selectOneMenu value="#{contactoBean.actual.tipoDocumento}"  id="tipoDocumento" rendered="#{not(contexto == 'vista')}">
+                        <f:selectItems value="#{tipoDocumentoBean.itemsAvailableSelectMany}"/>
+                    </p:selectOneMenu>
 
-        </p:outputPanel>
+                    <p:outputLabel value="Id Documento" for="idDocumento" styleClass="FontVoltRegular"/>
+                    <h:outputText value="#{contactoBean.actual.documentoId}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                    <p:inputText value="#{contactoBean.actual.documentoId}" required="false" id="idDocumento" rendered="#{not(contexto == 'vista')}"/>
+
+
+                    <p:outputLabel value="Tipo Persona" for="tipoContacto" styleClass="FontVoltRegular"/>
+                    <h:outputText value="#{contactoBean.actual.tipoContacto == null?'': contactoBean.actual.tipoContacto.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                    <p:selectOneMenu value="#{contactoBean.actual.tipoContacto}"  id="tipoContacto" rendered="#{not(contexto == 'vista')}">
+                        <f:selectItems value="#{tipoContactoBean.itemsAvailableSelectMany}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Estado Civil" for="estadoCivil" styleClass="FontVoltRegular"/>
+                    <h:outputText value="#{contactoBean.actual.estadoCivil == null?'': contactoBean.actual.estadoCivil.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                    <p:selectOneMenu value="#{contactoBean.actual.estadoCivil}"  id="estadoCivil" rendered="#{not(contexto == 'vista')}">
+                        <f:selectItems value="#{estadoCivilBean.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+
+
+                    <p:outputLabel value="Fecha Nacimiento" for="fechaNacimiento" styleClass="FontVoltRegular"/>
+                    <h:outputText value="#{contactoBean.actual.fechaNacimiento}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular">
+                        <f:convertDateTime pattern="#{formato.patronFecha}"/>
+                    </h:outputText>
+                    <p:calendar value="#{contactoBean.actual.fechaNacimiento}" required="false" id="fechaNacimiento" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
+
+
+
+                    <p:outputLabel value="Nacionalidad" for="nacionalidad" styleClass="FontVoltRegular"/>
+                    <h:outputText value="#{contactoBean.actual.nacionalidad}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                    <p:inputText value="#{contactoBean.actual.nacionalidad}" required="false" id="nacionalidad" rendered="#{not(contexto == 'vista')}"/>
+
+                </p:panelGrid>
+
+
+
+                <div class="EmptyBox10"></div>
+
+                <facilerp:seccion titulo="Otros Datos"/>
+
+                <p:outputPanel>
+
+
+                    <p:tabView>
+                        <p:tab title="Información Contacto">
+
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                                <p:outputLabel value="Teléfono Fijo" for="telefonoFijo" styleClass="FontVoltRegular"/>
+                                <h:outputText value="#{contactoBean.actual.telefonoFijo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                                <p:inputText value="#{contactoBean.actual.telefonoFijo}" required="false" id="telefonoFijo" rendered="#{not(contexto == 'vista')}"/>
+
+                                <p:outputLabel value="Teléfono Móvil" for="telefonoMovil" styleClass="FontVoltRegular"/>
+                                <h:outputText value="#{contactoBean.actual.telefonoMovil}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                                <p:inputText value="#{contactoBean.actual.telefonoMovil}" required="false" id="telefonoMovil" rendered="#{not(contexto == 'vista')}"/>
+
+                                <p:outputLabel value="E-mail" for="email" styleClass="FontVoltRegular"/>
+                                <h:outputText value="#{contactoBean.actual.email}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                                <p:inputText value="#{contactoBean.actual.email}" required="false" id="email" rendered="#{not(contexto == 'vista')}"/>
+
+                                <p:outputLabel value="Lugar de trabajo" for="lugarDeTrabajo" styleClass="FontVoltRegular"/>
+                                <h:outputText value="#{contactoBean.actual.lugarDeTrabajo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                                <p:inputText value="#{contactoBean.actual.lugarDeTrabajo}" required="false" id="lugarDeTrabajo" rendered="#{not(contexto == 'vista')}"/>
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab title="Información Cliente">
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                                <p:selectBooleanCheckbox value="#{contactoBean.actual.esCliente}" itemLabel="¿Es Cliente?" disabled="#{(contexto == 'vista')}"/>
+                                <p:selectBooleanCheckbox value="#{contactoBean.actual.esExentoImpuesto}" itemLabel="¿Es Exento de Impuestos?" disabled="#{(contexto == 'vista')}"/>
+                            </p:panelGrid>
+
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                                <p:outputLabel value="Linea de Crádito Moneda Local" for="lineaCreditoMonedaLocal" styleClass="FontVoltRegular"/>
+                                <h:outputText value="#{contactoBean.actual.lineaCreditoMonedaLocal}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                                <p:inputText value="#{contactoBean.actual.lineaCreditoMonedaLocal}" required="false" id="lineaCreditoMonedaLocal" rendered="#{not(contexto == 'vista')}"/>
+
+                                <p:outputLabel value="Linea de Crádito Moneda Ext." for="lineaCreditoMonedaExtranjera" styleClass="FontVoltRegular"/>
+                                <h:outputText value="#{contactoBean.actual.lineaCreditoMonedaExtranjera}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                                <p:inputText value="#{contactoBean.actual.lineaCreditoMonedaExtranjera}" required="false" id="lineaCreditoMonedaExtranjera" rendered="#{not(contexto == 'vista')}"/>
+
+                                <p:outputLabel value="Tasa Máxima Descuento" for="tasaMaximaDescuentoVenta" styleClass="FontVoltRegular"/>
+                                <h:outputText value="#{contactoBean.actual.tasaMaximaDescuentoVenta}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                                <p:inputText value="#{contactoBean.actual.tasaMaximaDescuentoVenta}" required="false" id="tasaMaximaDescuentoVenta" rendered="#{not(contexto == 'vista')}"/>
+                            </p:panelGrid>
+                        </p:tab>
+                        <p:tab title="Información Proveedor">
+
+                        </p:tab>
+
+                    </p:tabView>
+                </p:outputPanel>
+            </div>
+
+
+            <div class="Container100">
+                <facilerp:botoneraABM bean="#{contactoBean}" contexto="#{contexto}" entidad="contacto" update=":formABM:panel"/>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+        </p:outputPanel>                
+
+
+
     </h:form>
 
 
