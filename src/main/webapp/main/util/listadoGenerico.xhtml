@@ -54,8 +54,8 @@
 
 
                     <div class="Container70 Responsive100" style="padding: 0;margin: 0">
-                        <p:breadCrumb homeDisplay="icon" style="border: none;width: 50%">
-                            <p:menuitem outcome="/main/configuracion/home"/>
+                        <p:breadCrumb  homeDisplay="text" style="border: none;width: 50%">
+                            <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
                             <p:menuitem outcome="listado" value="#{titulo}"/>
                         </p:breadCrumb>
                     </div>

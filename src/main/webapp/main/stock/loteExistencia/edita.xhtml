@@ -13,8 +13,8 @@
     <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
         <ui:define name="content">
             <div class="Container100 Responsive100">
-                <p:breadCrumb homeDisplay="icon">
-                    <p:menuitem outcome="/main/configuracion/home"/>
+                <p:breadCrumb homeDisplay="text">
+                    <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
                     <p:menuitem outcome="listado" value="Listado de Lotes de Existencias"/>
                     <p:menuitem outcome="edita" value="#{loteExistenciaBean.actual.codigo}">
                         <f:param name="id" value="#{loteExistenciaBean.actual.id}"/>

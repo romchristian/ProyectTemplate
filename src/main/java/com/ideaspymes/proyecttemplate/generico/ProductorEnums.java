@@ -6,6 +6,7 @@ package com.ideaspymes.proyecttemplate.generico;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.TipoCosteo;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock;
 import java.io.Serializable;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.model.SelectItem;
@@ -38,7 +39,22 @@ public class ProductorEnums implements Serializable {
         }
         return R;
     }
+    
+    
+    public SelectItem[] obtTiposComprobante() {
+        SelectItem[] R = new SelectItem[TipoCosteo.values().length];
+        TipoCosteo[] lista = TipoCosteo.values();
+        for (int i = 0; i < lista.length; i++) {
+            TipoCosteo tp = lista[i];
+            R[i] = new SelectItem(tp, tp.toString());
+        }
+        return R;
+    }
 
+    
+    public TipoComprobanteStock[] getTipoComprobantesStock() {
+        return TipoComprobanteStock.values();
+    }
 }
 
 //TipoCargo

@@ -20,10 +20,17 @@
             <h:outputText value="#{comprobanteStockBean.actual.empresa == null?'':comprobanteStockBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
                           rendered="#{not(contexto == 'creacion')}"/>
 
-            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
+            <p:outputLabel value="Nro" for="id" styleClass="FontVoltRegular" />
             <h:outputText value="#{comprobanteStockBean.actual.id}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:inputText value="#{comprobanteStockBean.actual.id}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+            <p:inputText value="#{comprobanteStockBean.actual.id}" required="true" id="id" rendered="#{not(contexto == 'vista')}" readonly="true"/>
 
+
+            <p:outputLabel value="Tipo Comprobante" for="tipo" styleClass="FontVoltRegular" />
+            <h:outputText value="#{comprobanteStockBean.actual.tipo == null?'':comprobanteStockBean.actual.tipo.label}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:selectOneMenu value="#{comprobanteStockBean.actual.tipo}" id="tipo" rendered="#{not(contexto == 'vista')}">
+                <f:selectItems value="#{productorEnums.tipoComprobantesStock}" var="tipo"
+                               itemValue="#{tipo}" itemLabel="#{tipo.label}" />
+            </p:selectOneMenu>
 
         </p:panelGrid>
 

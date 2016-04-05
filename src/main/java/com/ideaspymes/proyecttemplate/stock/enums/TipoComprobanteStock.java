@@ -10,5 +10,23 @@ package com.ideaspymes.proyecttemplate.stock.enums;
  * @author Acer
  */
 public enum TipoComprobanteStock {
-   VENTA,COMPRA,TRANSFERENCIA_INTERNA,TRANSFERENCIA_EXTERNA
+    VENTA("Venta"),
+    COMPRA("Compra"),
+    TRANSFERENCIA_INTERNA("Transferencia Interna"),
+    TRANSFERENCIA_EXTERNA("Transferencia Externa");
+
+    private String label;
+
+    private TipoComprobanteStock(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
 }
