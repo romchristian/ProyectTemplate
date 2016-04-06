@@ -5,10 +5,12 @@
  */
 package com.ideaspymes.proyecttemplate.stock.model;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.Contacto;
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
+import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
@@ -41,23 +43,32 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Listado(descripcion = "Nro.",mostrar = true,link = true)
+    @Listado(descripcion = "Nro.", mostrar = true, link = true)
     private Long id;
     @Version
     private Long version;
     @Enumerated(EnumType.STRING)
     private TipoComprobanteStock tipo;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Listado(descripcion = "Fecha", mostrar = true, link = true)
+    @Filtro(descripcion = "Fecha",campo = "fecha",tipo = "rangoFecha")
     private Date fecha;
     private String refOrigen;// Debe ser Entidad:id ej.: "Cliente:123" o "Deposito:1":
     private String refDestino;
-    @ManyToOne
-    private Usuario usuario;
+
     private String refDocumento;
     @ManyToOne
     private Empresa empresa;
     @ManyToOne
     private Sucursal sucursal;
+
+    @ManyToOne
+    private Deposito origen;
+    @ManyToOne
+    private Deposito destino;
+    @ManyToOne
+    private Usuario resposable;
+   
 
     //Auditoria
     @Enumerated(EnumType.STRING)
@@ -85,8 +96,6 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     public void setVersion(Long version) {
         this.version = version;
     }
-    
-    
 
     public TipoComprobanteStock getTipo() {
         return tipo;
@@ -120,20 +129,38 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
         this.refDestino = refDestino;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Usuario getResposable() {
+        return resposable;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setResposable(Usuario resposable) {
+        this.resposable = resposable;
     }
 
+    
+    
     public List<DetComprobanteStock> getDetalles() {
         return detalles;
     }
 
     public void setDetalles(List<DetComprobanteStock> detalles) {
         this.detalles = detalles;
+    }
+
+    public Deposito getOrigen() {
+        return origen;
+    }
+
+    public void setOrigen(Deposito origen) {
+        this.origen = origen;
+    }
+
+    public Deposito getDestino() {
+        return destino;
+    }
+
+    public void setDestino(Deposito destino) {
+        this.destino = destino;
     }
 
     public String getRefDocumento() {

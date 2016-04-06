@@ -55,6 +55,19 @@ INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, no
 INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', '2016-03-30 16:42:28.394', NULL, 'Pasaporte', 1, NULL);
 
 
+
+INSERT INTO public.deposito(id, estado, fecharegitro, fechaultimamodificacion, nombre, tipodeposito,usuarioultimamodificacion, version, empresa_id, sucursal_id)
+    VALUES (1, 'ACTIVO', now(), null, 'Deposito Principal', 'NORMAL', 'admin', 1, 1, null);
+
+INSERT INTO public.deposito(id, estado, fecharegitro, fechaultimamodificacion, nombre, tipodeposito,usuarioultimamodificacion, version, empresa_id, sucursal_id)
+    VALUES (2, 'ACTIVO', now(), null, 'VENTA', 'VENTA', 'admin', 1, 1, null);
+INSERT INTO public.deposito(id, estado, fecharegitro, fechaultimamodificacion, nombre, tipodeposito,usuarioultimamodificacion, version, empresa_id, sucursal_id)
+    VALUES (3, 'ACTIVO', now(), null, 'COMPRA', 'COMPRA', 'admin', 1, 1, null);
+INSERT INTO public.deposito(id, estado, fecharegitro, fechaultimamodificacion, nombre, tipodeposito,usuarioultimamodificacion, version, empresa_id, sucursal_id)
+    VALUES (4, 'ACTIVO', now(), null, 'PERDIDA', 'PERDIDA', 'admin', 1, 1, null);
+
+
+    SELECT pg_catalog.setval('deposito_id_seq', 4, false);
 --
 -- TOC entry 2286 (class 0 OID 26854)
 -- Dependencies: 188

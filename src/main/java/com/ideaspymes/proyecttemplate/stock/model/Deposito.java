@@ -12,6 +12,7 @@ import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoDeposito;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -37,9 +38,12 @@ public class Deposito implements Serializable, IAuditable, IConSucursal {
     private Long id;
     @Version
     private Long version;
-    @Listado(descripcion = "Nombre",mostrar = true,link = true)
-    @Filtro(campo = "nombre",descripcion = "Nombre",tipo = "like")
+    @Listado(descripcion = "Nombre", mostrar = true, link = true)
+    @Filtro(campo = "nombre", descripcion = "Nombre", tipo = "like")
     private String nombre;
+    @Listado(descripcion = "Nombre", mostrar = true,entidad = true,campoDescripcion = "label")
+    @Enumerated(EnumType.STRING)
+    private TipoDeposito tipoDeposito;
 
     @ManyToOne
     private Empresa empresa;
@@ -55,6 +59,10 @@ public class Deposito implements Serializable, IAuditable, IConSucursal {
     private Date fechaUltimaModificacion;
 
     private String usuarioUltimaModificacion;
+
+    public Deposito() {
+        tipoDeposito = TipoDeposito.NORMAL;
+    }
 
     @Override
     public Long getId() {
@@ -75,6 +83,14 @@ public class Deposito implements Serializable, IAuditable, IConSucursal {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public TipoDeposito getTipoDeposito() {
+        return tipoDeposito;
+    }
+
+    public void setTipoDeposito(TipoDeposito tipoDeposito) {
+        this.tipoDeposito = tipoDeposito;
     }
 
     public void setNombre(String nombre) {

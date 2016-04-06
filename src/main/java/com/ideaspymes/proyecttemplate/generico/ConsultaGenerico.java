@@ -99,13 +99,17 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         return getEjb().findAll();
     }
 
+    public Credencial getCredencial() {
+        return credencial;
+    }
+
     public abstract AbstractDAO<T> getEjb();
 
     private void construyeConsulta() {
 
     }
 
-    private String construyeFilters(String sortField, SortOrder sortOrder) {
+    public String construyeFilters(String sortField, SortOrder sortOrder) {
         String consulta = "SELECT * FROM " + getClazz().getSimpleName().toLowerCase() + "  ";
         StringBuilder sb = new StringBuilder(consulta);
         boolean tieneCampoEmpresa = false;
