@@ -217,13 +217,13 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (7, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/estadoCivil/listado.xhtml', 'Estado Civil', 3, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (8, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/moneda/listado.xhtml', 'Moneda', 4, NULL);
 
+
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (9, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/unidadMedida/listado.xhtml', 'Unidad de Medida', 2, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (10, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/familia/listado.xhtml', 'Familia', 2, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (12, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/comprobanteStock/listado.xhtml', 'Comprobante de Stock', 5, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (13, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/loteExistencia/listado.xhtml', 'Lote de Existencia', 5, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (14, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/deposito/listado.xhtml', 'Depósito', 5, NULL);
-
-
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (15, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/cotizacion/listado.xhtml', 'Cotización', 4, NULL);
 
 --
 -- TOC entry 2320 (class 0 OID 0)
@@ -231,7 +231,7 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 -- Name: menuitem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('menuitem_id_seq', 14, true);
+SELECT pg_catalog.setval('menuitem_id_seq', 15, true);
 
 
 --

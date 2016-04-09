@@ -18,6 +18,8 @@ import javax.faces.convert.Converter;
  */
 public class FiltroGenerico {
 
+    
+    
     private String campo;
     private String descripcion;
     private String tipo;

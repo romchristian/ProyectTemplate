@@ -122,17 +122,20 @@
                                     <div class="Container50 Responsive100 ui-fluid" style="margin: 0;padding: 0;">
                                         <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;margin: 0"
                                                      layout="grid">
-                                            <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha')}"/>
-                                            <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
-                                            <h:outputText value="#{f.descripcion} hasta" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
+                                            <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha')}"/>
+                                            
+                                            
 
                                             <p:inputText value="#{f.valorString}" rendered="#{f.tipo == 'like'}"/>
-                                            <p:inputText value="#{f.valorInteger}" rendered="#{f.tipoCampo == 'java.lang.Integer' and f.tipoCampo == 'numero'}"/>
-                                            <p:inputText value="#{f.valorLong}" rendered="#{f.tipoCampo == 'java.lang.Long'  and f.tipoCampo == 'numero'}"/>
-                                            <p:inputText value="#{f.valorDouble}" rendered="#{f.tipoCampo == 'java.lang.Double'  and f.tipoCampo == 'numero'}"/>
-                                            <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipoCampo == 'numero'}"/>
-                                            <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
-                                            <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipoCampo == 'rangoFecha'}"/>
+                                            <p:inputText value="#{f.valorInteger}" rendered="#{f.tipoCampo == 'java.lang.Integer' and f.tipo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorLong}" rendered="#{f.tipoCampo == 'java.lang.Long'  and f.tipo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorDouble}" rendered="#{f.tipoCampo == 'java.lang.Double'  and f.tipo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipo == 'numero'}"/>
+                                            
+                                            <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
+                                            <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
+                                            <h:outputText value="#{f.descripcion} hasta" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
+                                            <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
                                             <p:selectOneMenu value="#{f.valorEntidadId}" rendered="#{f.tipo == 'selectOne'}" converter="#{bean.obtConverter(f.campo)}">
                                                 <f:selectItems value="#{bean.obtItemsAvailableSelectOne(f.campo)}"/>
                                             </p:selectOneMenu>
@@ -204,12 +207,22 @@
                             <f:facet name="header">
                                 <h:outputText value="#{column.descripcion}" />
                             </f:facet>
-                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad)}"/>
+                            
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and not(column.tipo=='java.util.Date')}"/>
 
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.util.Date')}">
+                                <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                            </h:outputText>
+                            
                             <h:outputText value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.entidad)}"/>
 
-                            <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link)}">
+                            <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link) and not (column.tipo=='java.util.Date')}">
                                 <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+                            
+                             <p:link   value="#{o[column.campo]}" outcome="vista" rendered="#{(column.link) and (column.tipo=='java.util.Date')}">
+                                <f:param name="id" value="#{o['id']}"/>
+                                <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
                             </p:link>
 
                         </p:columns>
