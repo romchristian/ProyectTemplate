@@ -12,7 +12,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author christian
  */
-@FacesConverter(forClass = Producto.class)
+@FacesConverter(forClass = Producto.class,value = "productoConverter")
 public class ProductoConverter extends ConverterGenerico<Producto> {
 
     @Override

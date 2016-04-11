@@ -9,9 +9,11 @@ import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IMonedaD
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.BeanGenerico;
 import com.ideaspymes.proyecttemplate.configuracion.web.converters.MonedaConverter;
+import com.ideaspymes.proyecttemplate.generico.JsfUtil;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.convert.Converter;
+import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -39,6 +41,10 @@ public class MonedaBean extends BeanGenerico<Moneda> implements Serializable {
     @Override
     public Converter getConverter() {
         return new MonedaConverter();
+    }
+
+    public SelectItem[] getItemsParaCotizacion() {
+        return JsfUtil.getSelectItems(ejb.findAllParaCotizacion(), false);
     }
 
 }

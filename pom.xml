@@ -37,7 +37,7 @@
             <artifactId>picketlink</artifactId>
             <version>${version.picketlink.javaee.bom}</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>org.pivot4j</groupId>
             <artifactId>pivot4j-core</artifactId>
             <version>0.9</version>
@@ -46,6 +46,11 @@
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
             <version>1.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>primefaces-extensions</artifactId>
+            <version>4.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces</groupId>

@@ -4,7 +4,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp"
+                xmlns:pe="http://primefaces.org/ui/extensions">
 
 
 
@@ -23,7 +24,15 @@
             <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
             <h:outputText value="#{monedaBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{monedaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+            
+            <p:outputLabel value="¿Es Moneda Local?" for="nombre" styleClass="FontVoltRegular" />
+            <h:outputText value="#{monedaBean.actual.monedaLocal == true ? 'SI':'NO'}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:selectBooleanCheckbox value="#{monedaBean.actual.monedaLocal}"  id="monedaLocal" rendered="#{not(contexto == 'vista')}"/>
 
+            
+            <p:outputLabel value="Presición Decimal" for="presicionDecimal" styleClass="FontVoltRegular" />
+            <h:outputText value="#{monedaBean.actual.presicionDecimal}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <pe:inputNumber value="#{monedaBean.actual.presicionDecimal}" required="true" id="presicionDecimal" rendered="#{not(contexto == 'vista')}"/>
 
         </p:panelGrid>
 

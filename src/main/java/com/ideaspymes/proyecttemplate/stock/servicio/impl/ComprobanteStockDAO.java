@@ -23,6 +23,7 @@ import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStoc
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IMovimientoStockDAO;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import java.util.List;
 import javax.ejb.EJB;
@@ -30,7 +31,6 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.Query;
-
 
 /**
  *
@@ -50,6 +50,20 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
 
     @Override
     public ComprobanteStock create(ComprobanteStock entity) {
+
+        // Remueve items vacios
+        List<Integer> indices = new ArrayList<>();
+
+        Iterator<DetComprobanteStock> it = entity.getDetalles().iterator();
+        
+        while (it.hasNext()) {
+            DetComprobanteStock d = it.next();
+            if(d.getProducto() == null){
+                it.remove();
+            }
+        }
+        
+        // Fin remueve items vacios
         ComprobanteStock c = abmService.create(entity);
 
         switch (c.getTipo()) {
@@ -78,7 +92,7 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
      * @return
      */
     @Override
-    public ComprobanteStock create(ComprobanteStock entity, List<LoteExistencia> lotesPedientes)  {
+    public ComprobanteStock create(ComprobanteStock entity, List<LoteExistencia> lotesPedientes) {
 
         entity.setDetalles(new ArrayList<DetComprobanteStock>());
         for (LoteExistencia lt : lotesPedientes) {
@@ -93,7 +107,6 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
             }
         }
 
-        
         create(entity);
 
 //        for (LoteExistencia lt : lotesPedientes) {
@@ -102,7 +115,6 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
 //                abmService.getEM().merge(lt);
 //            }
 //        }
-
         return entity;
     }
 
@@ -180,7 +192,7 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
 
     }
 
-   @Override
+    @Override
     public List<ComprobanteStock> findAll(String query, QueryParameter params, int first, int pageSize) {
         return abmService.findByQuery(query, params.parameters(), first, pageSize);
     }

@@ -30,6 +30,9 @@ public interface IMonedaDAO extends AbstractDAO<Moneda> {
 
     @Override
     List<Moneda> findAll();
+    
+    
+    List<Moneda> findAllParaCotizacion();
 
     @Override
     List<Moneda> findAll(String query, QueryParameter params);

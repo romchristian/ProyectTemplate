@@ -20,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 /**
@@ -57,6 +58,15 @@ public class DetComprobanteStock implements Serializable, IAuditable, IConSucurs
     private Date fechaUltimaModificacion;
 
     private String usuarioUltimaModificacion;
+    private Integer indice;
+
+    public Integer getIndice() {
+        return indice;
+    }
+
+    public void setIndice(Integer indice) {
+        this.indice = indice;
+    }
 
     @Override
     public Long getId() {

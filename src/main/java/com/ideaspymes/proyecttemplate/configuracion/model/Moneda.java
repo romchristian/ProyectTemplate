@@ -25,7 +25,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Moneda implements Serializable, IAuditable{
+public class Moneda implements Serializable, IAuditable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,6 +36,10 @@ public class Moneda implements Serializable, IAuditable{
     @Listado(descripcion = "Nombre", mostrar = true, link = true)
     @Filtro(descripcion = "Nombre", tipo = "like", campo = "nombre")
     private String nombre;
+    @Listado(descripcion = "Moneda Local", mostrar = true)
+    private Boolean monedaLocal = false;
+    @Listado(descripcion = "Presición Decimal", mostrar = true)
+    private Integer presicionDecimal;
 
     @ManyToOne
     @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
@@ -50,7 +54,6 @@ public class Moneda implements Serializable, IAuditable{
     private Date fechaUltimaModificacion;
     private String usuarioUltimaModificacion;
 
-    
     @Override
     public Long getId() {
         return id;
@@ -68,7 +71,22 @@ public class Moneda implements Serializable, IAuditable{
         this.nombre = nombre;
     }
 
-    
+    public Boolean getMonedaLocal() {
+        return monedaLocal;
+    }
+
+    public void setMonedaLocal(Boolean monedaLocal) {
+        this.monedaLocal = monedaLocal;
+    }
+
+    public Integer getPresicionDecimal() {
+        return presicionDecimal;
+    }
+
+    public void setPresicionDecimal(Integer presicionDecimal) {
+        this.presicionDecimal = presicionDecimal;
+    }
+
     @Override
     public Empresa getEmpresa() {
         return empresa;
@@ -79,37 +97,31 @@ public class Moneda implements Serializable, IAuditable{
         this.empresa = empresa;
     }
 
-    
     @Override
     public Estado getEstado() {
         return estado;
     }
 
-    
     @Override
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    
     @Override
     public Date getFechaRegitro() {
         return fechaRegitro;
     }
 
-    
     @Override
     public void setFechaRegitro(Date fechaRegitro) {
         this.fechaRegitro = fechaRegitro;
     }
 
-    
     @Override
     public Date getFechaUltimaModificacion() {
         return fechaUltimaModificacion;
     }
 
-    
     @Override
     public void setFechaUltimaModificacion(Date fechaUltimaModificacion) {
         this.fechaUltimaModificacion = fechaUltimaModificacion;
@@ -124,9 +136,6 @@ public class Moneda implements Serializable, IAuditable{
     public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
-
-    
-    
 
     @Override
     public int hashCode() {

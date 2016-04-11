@@ -10,6 +10,7 @@ import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -57,6 +58,12 @@ public class Cotizacion implements Serializable, IAuditable {
     private Date fechaUltimaModificacion;
     private String usuarioUltimaModificacion;
 
+    public Cotizacion() {
+        fecha = new Date();
+    }
+
+    
+    
     @Override
     public Long getId() {
         return id;
@@ -167,7 +174,8 @@ public class Cotizacion implements Serializable, IAuditable {
 
     @Override
     public String toString() {
-        return fecha+" - "+moneda.getNombre();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(fecha)+" - "+moneda.getNombre();
     }
 
 }

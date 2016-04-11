@@ -16,8 +16,12 @@ import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,7 +41,7 @@ import javax.persistence.Version;
 @Entity
 public class ComprobanteStock implements Serializable, IAuditable, IConSucursal {
 
-    @OneToMany(mappedBy = "comprobanteStock", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "comprobanteStock", cascade = CascadeType.ALL)
     private List<DetComprobanteStock> detalles;
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +55,7 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     private TipoComprobanteStock tipo;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Listado(descripcion = "Fecha", mostrar = true, link = true)
-    @Filtro(descripcion = "Fecha",campo = "fecha",tipo = "rangoFecha")
+    @Filtro(descripcion = "Fecha", campo = "fecha", tipo = "rangoFecha")
     private Date fecha;
     private String refOrigen;// Debe ser Entidad:id ej.: "Cliente:123" o "Deposito:1":
     private String refDestino;
@@ -68,7 +72,6 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     private Deposito destino;
     @ManyToOne
     private Usuario resposable;
-   
 
     //Auditoria
     @Enumerated(EnumType.STRING)
@@ -137,10 +140,66 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
         this.resposable = resposable;
     }
 
-    
-    
     public List<DetComprobanteStock> getDetalles() {
+        if (detalles == null) {
+            detalles = new ArrayList<>();
+            DetComprobanteStock det = new DetComprobanteStock();
+            det.setComprobanteStock(this);
+            det.setIndice(1);
+            detalles.add(det);
+        }
         return detalles;
+    }
+
+    public void addDetalle() {
+        Comparator<DetComprobanteStock> comp = new Comparator<DetComprobanteStock>() {
+            @Override
+            public int compare(DetComprobanteStock o1, DetComprobanteStock o2) {
+                return o1.getIndice() > o2.getIndice() ? -1 : 1;
+            }
+        };
+
+        Comparator<DetComprobanteStock> comp2 = new Comparator<DetComprobanteStock>() {
+            @Override
+            public int compare(DetComprobanteStock o1, DetComprobanteStock o2) {
+                return o1.getIndice() > o2.getIndice() ? 1 : -1;
+            }
+        };
+
+        Collections.sort(detalles, comp);
+        int lastIndice = 1;
+        for (DetComprobanteStock d : detalles) {
+            lastIndice = d.getIndice();
+            break;
+        }
+        DetComprobanteStock det = new DetComprobanteStock();
+        det.setComprobanteStock(this);
+        det.setIndice(lastIndice + 1);
+        detalles.add(det);
+
+        Collections.sort(detalles, comp2);
+    }
+
+    public void removeDetalle(DetComprobanteStock d) {
+        int indice = 0;
+
+        for (int i = 0; i < detalles.size(); i++) {
+            DetComprobanteStock dt = detalles.get(i);
+            if (Objects.equals(d.getIndice(), dt.getIndice())) {
+                indice = i;
+                break;
+            }
+        }
+
+        detalles.remove(indice);
+
+        if (detalles.isEmpty()) {
+            DetComprobanteStock det = new DetComprobanteStock();
+            det.setComprobanteStock(this);
+            det.setIndice(1);
+            detalles.add(det);
+
+        }
     }
 
     public void setDetalles(List<DetComprobanteStock> detalles) {

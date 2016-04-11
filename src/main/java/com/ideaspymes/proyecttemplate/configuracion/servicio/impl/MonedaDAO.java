@@ -60,6 +60,12 @@ public class MonedaDAO implements IMonedaDAO {
         return abmService.findByQuery(query, params.parameters());
     }
 
+    public List<Moneda> findAllParaCotizacion() {
+
+        return abmService.findByQuery("select m from Moneda m where m.estado = :estado and m.monedaLocal = :monedaLocal",
+                QueryParameter.where("estado", Estado.ACTIVO).and("monedaLocal", false).parameters());
+    }
+
     @Override
     public List<Moneda> findAll(String query, QueryParameter params, int firt, int pageSize) {
         return abmService.findByQuery(query, params.parameters(), firt, pageSize);

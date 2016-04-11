@@ -4,7 +4,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp"
+                xmlns:pe="http://primefaces.org/ui/extensions">
 
 
 
@@ -12,57 +13,109 @@
 
     <h:form  id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
-        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+        <p:outputPanel id="panel">
+            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" >
 
 
-            <h:outputText value="Empresa"  styleClass="FontVoltRegular"
-                          rendered="#{not(contexto == 'creacion')}"/>
-            <h:outputText value="#{comprobanteStockBean.actual.empresa == null?'':comprobanteStockBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
-                          rendered="#{not(contexto == 'creacion')}"/>
+                <h:outputText value="Empresa"  styleClass="FontVoltRegular"
+                              rendered="#{not(contexto == 'creacion')}"/>
+                <h:outputText value="#{comprobanteStockBean.actual.empresa == null?'':comprobanteStockBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
+                              rendered="#{not(contexto == 'creacion')}"/>
 
-            <p:outputLabel value="Nro" for="id" styleClass="FontVoltRegular" />
-            <h:outputText value="#{comprobanteStockBean.actual.id}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:inputText value="#{comprobanteStockBean.actual.id}" required="true" id="id" rendered="#{not(contexto == 'vista')}" readonly="true"/>
-            
-             <p:outputLabel value="Fecha" for="fecha" styleClass="FontVoltRegular" />
-            <h:outputText value="#{comprobanteStockBean.actual.fecha}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular">
-                <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
-            </h:outputText>
-            <p:calendar value="#{comprobanteStockBean.actual.fecha}" required="true" id="fecha" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
+                <p:outputLabel value="Nro" for="id" styleClass="FontVoltRegular" />
+                <h:outputText value="#{comprobanteStockBean.actual.id}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{comprobanteStockBean.actual.id}" required="true" id="id" rendered="#{not(contexto == 'vista')}" readonly="true"/>
 
-            <p:outputLabel value="Resposable" for="responsable" styleClass="FontVoltRegular" />
-            <h:outputText value="#{comprobanteStockBean.actual.resposable == null?'':comprobanteStockBean.actual.resposable.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:autoComplete id="responsable"
-                value="#{comprobanteStockBean.actual.resposable}"
-                            completeMethod="#{usuarioConsultaBean.completar}"
-                            forceSelection="true" converter="usuarioConverter"
-                            var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
-                            rendered="#{not(contexto == 'vista')}"/>
+                <p:outputLabel value="Fecha" for="fecha" styleClass="FontVoltRegular" />
+                <h:outputText value="#{comprobanteStockBean.actual.fecha}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular">
+                    <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                </h:outputText>
+                <p:calendar value="#{comprobanteStockBean.actual.fecha}" required="true" id="fecha" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
 
-
-            <p:outputLabel value="Tipo Comprobante" for="tipo" styleClass="FontVoltRegular" />
-            <h:outputText value="#{comprobanteStockBean.actual.tipo == null?'':comprobanteStockBean.actual.tipo.label}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:selectOneMenu value="#{comprobanteStockBean.actual.tipo}" id="tipo" rendered="#{not(contexto == 'vista')}">
-                <f:selectItems value="#{productorEnums.tipoComprobantesStock}" var="tipo"
-                               itemValue="#{tipo}" itemLabel="#{tipo.label}" />
-            </p:selectOneMenu>
+                <p:outputLabel value="Resposable" for="responsable" styleClass="FontVoltRegular" />
+                <h:outputText value="#{comprobanteStockBean.actual.resposable == null?'':comprobanteStockBean.actual.resposable.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:autoComplete id="responsable"
+                                value="#{comprobanteStockBean.actual.resposable}"
+                                completeMethod="#{usuarioConsultaBean.completar}"
+                                forceSelection="true" converter="usuarioConverter"
+                                var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
+                                rendered="#{not(contexto == 'vista')}"/>
 
 
-            <p:outputLabel value="Origen" for="origen" styleClass="FontVoltRegular" />
-            <h:outputText value="#{comprobanteStockBean.actual.origen == null?'':comprobanteStockBean.actual.origen.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:selectOneMenu value="#{comprobanteStockBean.actual.origen}" id="origen" rendered="#{not(contexto == 'vista')}">
-                <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
-            </p:selectOneMenu>
+                <p:outputLabel value="Tipo Comprobante" for="tipo" styleClass="FontVoltRegular" />
+                <h:outputText value="#{comprobanteStockBean.actual.tipo == null?'':comprobanteStockBean.actual.tipo.label}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:selectOneMenu value="#{comprobanteStockBean.actual.tipo}" id="tipo" rendered="#{not(contexto == 'vista')}">
+                    <f:selectItems value="#{productorEnums.tipoComprobantesStock}" var="tipo"
+                                   itemValue="#{tipo}" itemLabel="#{tipo.label}" />
+                </p:selectOneMenu>
 
-            <p:outputLabel value="Destino" for="destino" styleClass="FontVoltRegular" />
-            <h:outputText value="#{comprobanteStockBean.actual.destino == null?'':comprobanteStockBean.actual.destino.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:selectOneMenu value="#{comprobanteStockBean.actual.destino}" id="destino" rendered="#{not(contexto == 'vista')}">
-                <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
-            </p:selectOneMenu>
 
-        </p:panelGrid>
+                <p:outputLabel value="Origen" for="origen" styleClass="FontVoltRegular" />
+                <h:outputText value="#{comprobanteStockBean.actual.origen == null?'':comprobanteStockBean.actual.origen.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:selectOneMenu value="#{comprobanteStockBean.actual.origen}" id="origen" rendered="#{not(contexto == 'vista')}">
+                    <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
+                </p:selectOneMenu>
 
-        <facilerp:botoneraABM bean="#{comprobanteStockBean}" contexto="#{contexto}" entidad="comprobanteStock" update=":formABM:panel"/>
+                <p:outputLabel value="Destino" for="destino" styleClass="FontVoltRegular" />
+                <h:outputText value="#{comprobanteStockBean.actual.destino == null?'':comprobanteStockBean.actual.destino.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:selectOneMenu value="#{comprobanteStockBean.actual.destino}" id="destino" rendered="#{not(contexto == 'vista')}">
+                    <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
+                </p:selectOneMenu>
+
+            </p:panelGrid>
+
+
+            <div class="EmptyBox20"></div>
+            <div class="NoIndent NoPadding">
+
+
+                <p:dataTable value="#{comprobanteStockBean.actual.detalles}" var="d" id="detalles">
+                    <p:column style="text-align: center;width: 4%"  rendered="#{not(contexto == 'vista')}">
+                        <p:commandLink  action="#{comprobanteStockBean.actual.removeDetalle(d)}" update="detalles">
+                            <i class="fa fa-remove Red"></i>
+                        </p:commandLink>
+                    </p:column>
+                    <p:column style="text-align: center;width: 4%" headerText="#">
+                        <h:outputText value="#{d.indice}"/>
+                    </p:column>
+                    <p:column headerText="Producto">
+                        <p:autoComplete value="#{d.producto}"
+                                        completeMethod="#{productoConsultaBean.completar}"
+                                        forceSelection="true" converter="productoConverter"
+                                        var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
+                                        rendered="#{not(contexto == 'vista')}"/>
+
+                        <h:outputText value="#{d.producto != null ? d.producto.nombre:''}" rendered="#{(contexto == 'vista')}"/>
+                    </p:column>
+                    <p:column headerText="Cantidad">
+                        <pe:inputNumber value="#{d.cantidad}" rendered="#{not(contexto == 'vista')}"/>
+                        <h:outputText value="#{d.cantidad}" rendered="#{(contexto == 'vista')}"/>
+                    </p:column>
+                    <p:column headerText="U.M">
+                        <p:selectOneMenu value="#{d.unidadMedida}" rendered="#{not(contexto == 'vista')}">
+                            <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="#{d.unidadMedida != null?d.unidadMedida.nombre:''}" rendered="#{(contexto == 'vista')}"/>
+                    </p:column>
+                    <p:column headerText="Costo">
+                        <pe:inputNumber value="#{d.valor}" rendered="#{not(contexto == 'vista')}"/>
+                        <h:outputText value="#{d.valor}" rendered="#{(contexto == 'vista')}"/>
+                    </p:column>
+                    <p:column style="text-align: center;width: 4%" rendered="#{not(contexto == 'vista')}">
+                        <p:commandLink  action="#{comprobanteStockBean.actual.addDetalle()}" update="detalles">
+                            <i class="fa fa-plus Green  "></i>
+                        </p:commandLink>
+                    </p:column>
+
+                </p:dataTable>
+
+
+            </div>
+
+        </p:outputPanel>
+
+        <facilerp:botoneraABM bean="#{comprobanteStockBean}" contexto="#{contexto}" entidad="comprobanteStock" update=":formABM:panel" editable="false"/>
+
 
     </h:form>
 
