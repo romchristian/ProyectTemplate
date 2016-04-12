@@ -50,7 +50,7 @@ public class LoteExistenciaService implements ILoteExistenciaService {
     public void afectaLotesExistenciaMasCovenientes(Producto p, UnidadMedida um, Double cantidad) {
         List<LoteExistencia> lotesAAfectar = null;
 
-        if (p.isTieneVencimiento()) {
+        if (p.getTieneVencimiento()) {
             lotesAAfectar = getLotesExitenciaVencimientosMasProximos(p, um, cantidad);
         } else {
             lotesAAfectar = getLotesExitenciaMasAntiguos(p, um, cantidad);

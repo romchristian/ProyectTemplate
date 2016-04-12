@@ -40,5 +40,9 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
     public Converter getConverter() {
         return new ComprobanteStockConverter();
     }
+    
+    public void confirmar(){
+        ejb.confirmar(getActual());
+    }
 
 }

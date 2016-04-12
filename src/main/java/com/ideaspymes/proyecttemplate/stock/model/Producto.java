@@ -44,7 +44,7 @@ public class Producto implements Serializable, IAuditable {
     private Impuesto impuesto;
     @Enumerated(EnumType.STRING)
     private TipoCosto tipoCosto;
-    private boolean costoCalculado;
+    private Boolean costoCalculado;
     private Double costoDirecto;
     private Double costoFifo;
     private Double costoLifo;
@@ -52,16 +52,19 @@ public class Producto implements Serializable, IAuditable {
     private Double costo;
     private Double precioVenta;
     private Double precioVentaMonedaExtranjera;
-    private boolean inventariable;
-    private boolean vendible;
-    private boolean tieneVencimiento;
+    @Listado(descripcion = "Inventariable", mostrar = true)
+    private Boolean inventariable;
+    private Boolean vendible;
+    @Listado(descripcion = "Tiene Vencimiento", mostrar = true)
+    private Boolean tieneVencimiento;
     private Double stockMinimo;
+    @Listado(descripcion = "Stock", mostrar = true)
     private Double stock;
 
     @ManyToOne
     private UnidadMedida unidadMedidaBase;
 
-    private boolean generarCodigo;
+    private Boolean generarCodigo;
 
     @ManyToMany
     private List<Familia> familias;
@@ -153,11 +156,11 @@ public class Producto implements Serializable, IAuditable {
         this.costo = costo;
     }
 
-    public boolean isCostoCalculado() {
+    public Boolean getCostoCalculado() {
         return costoCalculado;
     }
 
-    public void setCostoCalculado(boolean costoCalculado) {
+    public void setCostoCalculado(Boolean costoCalculado) {
         this.costoCalculado = costoCalculado;
     }
 
@@ -193,11 +196,11 @@ public class Producto implements Serializable, IAuditable {
         this.costoPonderado = costoPonderado;
     }
 
-    public boolean isInventariable() {
+    public Boolean getInventariable() {
         return inventariable;
     }
 
-    public void setInventariable(boolean inventariable) {
+    public void setInventariable(Boolean inventariable) {
         this.inventariable = inventariable;
     }
 
@@ -252,11 +255,11 @@ public class Producto implements Serializable, IAuditable {
         this.familias = familias;
     }
 
-    public boolean isGenerarCodigo() {
+    public Boolean getGenerarCodigo() {
         return generarCodigo;
     }
 
-    public void setGenerarCodigo(boolean generarCodigo) {
+    public void setGenerarCodigo(Boolean generarCodigo) {
         this.generarCodigo = generarCodigo;
     }
 
@@ -292,11 +295,11 @@ public class Producto implements Serializable, IAuditable {
         this.tipoProducto = tipoProducto;
     }
 
-    public boolean isVendible() {
+    public Boolean getVendible() {
         return vendible;
     }
 
-    public void setVendible(boolean vendible) {
+    public void setVendible(Boolean vendible) {
         this.vendible = vendible;
     }
 
@@ -308,11 +311,11 @@ public class Producto implements Serializable, IAuditable {
         this.ingredientes = ingredientes;
     }
 
-    public boolean isTieneVencimiento() {
+    public Boolean getTieneVencimiento() {
         return tieneVencimiento;
     }
 
-    public void setTieneVencimiento(boolean tieneVencimiento) {
+    public void setTieneVencimiento(Boolean tieneVencimiento) {
         this.tieneVencimiento = tieneVencimiento;
     }
 

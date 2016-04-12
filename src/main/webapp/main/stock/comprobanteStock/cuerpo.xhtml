@@ -5,7 +5,9 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp"
-                xmlns:pe="http://primefaces.org/ui/extensions">
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:o="http://omnifaces.org/ui"
+                xmlns:of="http://omnifaces.org/functions">
 
 
 
@@ -13,7 +15,18 @@
 
     <h:form  id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
+
+        <o:importConstants type="com.ideaspymes.proyecttemplate.stock.enums.EstadoComprobanteStock" var="Estado" />
         <p:outputPanel id="panel">
+            <h:outputText value="#{comprobanteStockBean.actual.estadoComprobate != null?comprobanteStockBean.actual.estadoComprobate.label:''}"
+                          styleClass="Fright Fs14 FontVoltBold Blue"
+                          rendered="#{comprobanteStockBean.actual.estadoComprobate == Estado.PENDIENTE_CONFIRMACION}"/>
+            
+            <h:outputText value="#{comprobanteStockBean.actual.estadoComprobate != null?comprobanteStockBean.actual.estadoComprobate.label:''}"
+                          styleClass="Fright Fs14 FontVoltBold Green"
+                          rendered="#{comprobanteStockBean.actual.estadoComprobate == Estado.CONFIRMADO}"/>
+            
+            <div class="EmptyBox20"></div>
             <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" >
 
 
@@ -114,7 +127,33 @@
 
         </p:outputPanel>
 
-        <facilerp:botoneraABM bean="#{comprobanteStockBean}" contexto="#{contexto}" entidad="comprobanteStock" update=":formABM:panel" editable="false"/>
+
+        <div class="CardFooter">
+            <div class="ui-grid ui-grid-responsive">
+                <div class="ui-grid-row">
+                    <div class="ui-grid-col-2">
+                        <p:commandButton value="Crear" action="#{comprobanteStockBean.create()}" styleClass="Fleft GreenButton" update=":formABM:panel" rendered="#{(contexto == 'creacion')}"/>
+                        <p:commandButton value="Guardar" action="#{comprobanteStockBean.edit()}" styleClass="Fleft BlueButton" update=":formABM:panel" rendered="#{(contexto == 'edicion')}"/>
+
+                        <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista') and (comprobanteStockBean.actual.estadoComprobate == 'PENDIENTE_CONFIRMACION')}">
+                            <f:param name="id" value="#{comprobanteStockBean.actual.id}"/>
+                        </p:button>
+
+
+                    </div>
+
+                    <div class="ui-grid-col-2">
+                        <p:commandButton value="Confirmar" action="#{comprobanteStockBean.confirmar()}" styleClass="Fleft GreenButton" update=":formABM:panel" rendered="#{not (contexto == 'creacion') and (comprobanteStockBean.actual.estadoComprobate == 'PENDIENTE_CONFIRMACION')}"/>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+
 
 
     </h:form>

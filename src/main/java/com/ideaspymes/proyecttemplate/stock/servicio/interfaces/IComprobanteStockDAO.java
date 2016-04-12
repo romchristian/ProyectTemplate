@@ -12,7 +12,6 @@ import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
 import java.util.List;
 import javax.ejb.Local;
 
-
 /**
  *
  * @author Acer
@@ -27,6 +26,8 @@ public interface IComprobanteStockDAO extends AbstractDAO<ComprobanteStock> {
 
     @Override
     ComprobanteStock edit(ComprobanteStock entity);
+
+    ComprobanteStock confirmar(ComprobanteStock entity);
 
     @Override
     ComprobanteStock find(Object id);

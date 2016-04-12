@@ -4,9 +4,11 @@
  */
 package com.ideaspymes.proyecttemplate.stock.servicio.impl;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.generico.ResolutorReferencia;
+import com.ideaspymes.proyecttemplate.stock.enums.EstadoComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.enums.EstadoLote;
 import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.COMPRA;
 import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.TRANSFERENCIA_EXTERNA;
@@ -55,32 +57,16 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         List<Integer> indices = new ArrayList<>();
 
         Iterator<DetComprobanteStock> it = entity.getDetalles().iterator();
-        
+
         while (it.hasNext()) {
             DetComprobanteStock d = it.next();
-            if(d.getProducto() == null){
+            if (d.getProducto() == null) {
                 it.remove();
             }
         }
-        
+
         // Fin remueve items vacios
         ComprobanteStock c = abmService.create(entity);
-
-        switch (c.getTipo()) {
-            case VENTA:
-                creaMovientosStockVenta(c.getDetalles());
-                break;
-            case COMPRA:
-                creaMovientosStockCompra(c.getDetalles());
-                break;
-            case TRANSFERENCIA_INTERNA:
-                creaMovientosStockTransferInterna(c.getDetalles());
-                break;
-            case TRANSFERENCIA_EXTERNA:
-                creaMovientosStockTransferExtena(c.getDetalles());
-                break;
-        }
-
         return c;
     }
 
@@ -118,8 +104,56 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         return entity;
     }
 
+    public ComprobanteStock confirmar(ComprobanteStock entity) {
+
+        ComprobanteStock R = entity;
+        if (entity.getEstadoComprobate() == EstadoComprobanteStock.PENDIENTE_CONFIRMACION) {
+
+            List<Integer> indices = new ArrayList<>();
+
+            Iterator<DetComprobanteStock> it = entity.getDetalles().iterator();
+
+            while (it.hasNext()) {
+                DetComprobanteStock d = it.next();
+                if (d.getProducto() == null) {
+                    it.remove();
+                }
+            }
+
+            switch (entity.getTipo()) {
+                case VENTA:
+                    creaMovientosStockVenta(entity.getDetalles());
+                    break;
+                case COMPRA:
+                    creaMovientosStockCompra(entity.getDetalles());
+                    break;
+                case TRANSFERENCIA_INTERNA:
+                    creaMovientosStockTransferInterna(entity.getDetalles());
+                    break;
+                case TRANSFERENCIA_EXTERNA:
+                    creaMovientosStockTransferExtena(entity.getDetalles());
+                    break;
+            }
+
+            entity.setEstadoComprobate(EstadoComprobanteStock.CONFIRMADO);
+            R = edit(entity);
+        }
+        return R;
+    }
+
     @Override
     public ComprobanteStock edit(ComprobanteStock entity) {
+
+        List<Integer> indices = new ArrayList<>();
+
+        Iterator<DetComprobanteStock> it = entity.getDetalles().iterator();
+
+        while (it.hasNext()) {
+            DetComprobanteStock d = it.next();
+            if (d.getProducto() == null) {
+                it.remove();
+            }
+        }
         return abmService.update(entity);
     }
 
@@ -147,41 +181,57 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
 
         for (DetComprobanteStock d : detalles) {
 
-            Deposito dp = resolutorRef.getDeposito(d.getComprobanteStock().getRefOrigen());
+            if (d.getProducto().getInventariable()) {
+                Deposito dp = d.getComprobanteStock().getOrigen();
 
-            MovimientoStockVenta m = new MovimientoStockVenta();
-            m.setComprobanteStock(d.getComprobanteStock());
-            System.out.println("Referencia en CreaMovimientoStockVenta: " + d.getComprobanteStock().getRefOrigen());
+                MovimientoStockVenta m = new MovimientoStockVenta();
+                m.setComprobanteStock(d.getComprobanteStock());
+                System.out.println("Referencia en CreaMovimientoStockVenta: " + d.getComprobanteStock().getRefOrigen());
 
-            if (dp != null) {
-                m.setDeposito(dp);
+                generaAuditoria(d);
+
+                if (dp != null) {
+                    m.setDeposito(dp);
+                }
+                m.setFecha(new Date());
+                m.setProducto(d.getProducto());
+                m.setUnidadMedida(d.getUnidadMedida());
+                m.setCantidad(d.getCantidad());
+
+                movimientoStockDAO.creaMovimientoStock(m);
+
             }
-            m.setFecha(new Date());
-            m.setProducto(d.getProducto());
-            m.setUnidadMedida(d.getUnidadMedida());
-            m.setCantidad(d.getCantidad());
-
-            movimientoStockDAO.creaMovimientoStock(m);
-
         }
     }
 
     private void creaMovientosStockCompra(List<DetComprobanteStock> detalles) {
+
         for (DetComprobanteStock d : detalles) {
-            MovimientoStockCompra m = new MovimientoStockCompra();
-            m.setComprobanteStock(d.getComprobanteStock());
+            if (d.getProducto().getInventariable()) {
+                MovimientoStockCompra m = new MovimientoStockCompra();
+                m.setComprobanteStock(d.getComprobanteStock());
 
-            Deposito dp = resolutorRef.getDeposito(d.getComprobanteStock().getRefDestino());
+                Deposito dp = d.getComprobanteStock().getDestino();
+                generaAuditoria(d);
 
-            if (dp != null) {
-                m.setDeposito(dp);
+                if (dp != null) {
+                    m.setDeposito(dp);
+                }
+                m.setFecha(new Date());
+                m.setProducto(d.getProducto());
+                m.setUnidadMedida(d.getUnidadMedida());
+                m.setCantidad(d.getCantidad());
+                movimientoStockDAO.creaMovimientoStock(m);
             }
-            m.setFecha(new Date());
-            m.setProducto(d.getProducto());
-            m.setUnidadMedida(d.getUnidadMedida());
-            m.setCantidad(d.getCantidad());
-            movimientoStockDAO.creaMovimientoStock(m);
         }
+    }
+
+    private void generaAuditoria(DetComprobanteStock d) {
+        d.setFechaRegitro(new Date());
+        d.setEstado(Estado.ACTIVO);
+        d.setEmpresa(abmService.getCredencial().getEmpresa());
+        String usuario = abmService.getCredencial().getUsuario() != null ? abmService.getCredencial().getUsuario().getNombre() + ", " + abmService.getCredencial().getUsuario().getUserName() : "";
+        d.setUsuarioUltimaModificacion(usuario);
     }
 
     private void creaMovientosStockTransferInterna(List<DetComprobanteStock> detalles) {

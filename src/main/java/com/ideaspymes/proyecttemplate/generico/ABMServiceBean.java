@@ -49,9 +49,8 @@ public class ABMServiceBean implements ABMService {
     public <T> T create(T t) {
         if (t instanceof IAuditable) {
             IAuditable obj = (IAuditable) t;
-            obj.setEstado(Estado.ACTIVO);
+            
             obj.setFechaRegitro(new Date());
-
             obj.setEstado(Estado.ACTIVO);
             obj.setEmpresa(credencial.getEmpresa());
             String usuario = credencial.getUsuario() != null ? credencial.getUsuario().getNombre() + ", " + credencial.getUsuario().getUserName() : "";

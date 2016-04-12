@@ -35,7 +35,7 @@
             <h:outputText value="#{productoBean.actual.codigo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{productoBean.actual.codigo}" required="true" id="codigo" rendered="#{not(contexto == 'vista')}"/>
 
-            <p:outputLabel value="Unidad Medida Base" for="unidadMedida" styleClass="FontVoltRegular" />
+            <p:outputLabel value="Unidad Medida Stock" for="unidadMedida" styleClass="FontVoltRegular" />
             <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:selectOneMenu value="#{productoBean.actual.unidadMedidaBase}" required="true" id="unidadMedida" rendered="#{not(contexto == 'vista')}">
                 <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>

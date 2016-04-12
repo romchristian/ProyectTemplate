@@ -14,6 +14,7 @@ import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
+import com.ideaspymes.proyecttemplate.stock.enums.EstadoComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -73,6 +74,10 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     @ManyToOne
     private Usuario resposable;
 
+    @Listado(descripcion = "Estado Comprobate", mostrar = true,entidad = true, campoDescripcion = "label")
+    @Enumerated(EnumType.STRING)
+    private EstadoComprobanteStock estadoComprobate;
+
     //Auditoria
     @Enumerated(EnumType.STRING)
     private Estado estado;
@@ -82,6 +87,10 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     private Date fechaUltimaModificacion;
 
     private String usuarioUltimaModificacion;
+
+    public ComprobanteStock() {
+        this.estadoComprobate = EstadoComprobanteStock.PENDIENTE_CONFIRMACION;
+    }
 
     @Override
     public Long getId() {
@@ -138,6 +147,14 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
 
     public void setResposable(Usuario resposable) {
         this.resposable = resposable;
+    }
+
+    public EstadoComprobanteStock getEstadoComprobate() {
+        return estadoComprobate;
+    }
+
+    public void setEstadoComprobate(EstadoComprobanteStock estadoComprobate) {
+        this.estadoComprobate = estadoComprobate;
     }
 
     public List<DetComprobanteStock> getDetalles() {
