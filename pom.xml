@@ -38,6 +38,11 @@
             <version>${version.picketlink.javaee.bom}</version>
         </dependency>
         <dependency>
+            <groupId>net.objecthunter</groupId>
+            <artifactId>exp4j</artifactId>
+            <version>0.4.5</version>
+        </dependency>
+        <dependency>
             <groupId>org.pivot4j</groupId>
             <artifactId>pivot4j-core</artifactId>
             <version>0.9</version>

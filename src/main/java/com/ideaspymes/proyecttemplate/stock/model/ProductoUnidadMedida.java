@@ -7,6 +7,7 @@ package com.ideaspymes.proyecttemplate.stock.model;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
+import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
@@ -35,13 +36,20 @@ public class ProductoUnidadMedida implements Serializable, IAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @Listado(descripcion = "Producto",mostrar = true,entidad = true,campoDescripcion = "nombre",link = true)
+    @Filtro(descripcion = "Producto",campo = "producto",campoDescripcion = "nombre",tipo = "autocomplete")
     private Producto producto;
     @ManyToOne
+    @Listado(descripcion = "U.M. De",mostrar = true,entidad = true,campoDescripcion = "nombre")
+    //@Filtro(descripcion = "U.M. De",campo = "unidadMedidaDe",campoDescripcion = "nombre",tipo = "selectOne")
     private UnidadMedida unidadMedidaDe;
     @ManyToOne
+    @Listado(descripcion = "U.M. A",mostrar = true,entidad = true,campoDescripcion = "nombre")
+    //@Filtro(descripcion = "U.M. A",campo = "unidadMedidaA",campoDescripcion = "nombre",tipo = "selectOne")
     private UnidadMedida unidadMedidaA;
-    private Double cantidadDe;
-    private Double cantidadA;
+    @Listado(descripcion = "Formula",mostrar = true)
+    private String formula;
+    
 
     @ManyToOne
     @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
@@ -90,21 +98,15 @@ public class ProductoUnidadMedida implements Serializable, IAuditable {
         this.unidadMedidaA = unidadMedidaA;
     }
 
-    public Double getCantidadDe() {
-        return cantidadDe;
+    public String getFormula() {
+        return formula;
     }
 
-    public void setCantidadDe(Double cantidadDe) {
-        this.cantidadDe = cantidadDe;
+    public void setFormula(String formula) {
+        this.formula = formula;
     }
 
-    public Double getCantidadA() {
-        return cantidadA;
-    }
-
-    public void setCantidadA(Double cantidadA) {
-        this.cantidadA = cantidadA;
-    }
+  
 
     public Empresa getEmpresa() {
         return empresa;

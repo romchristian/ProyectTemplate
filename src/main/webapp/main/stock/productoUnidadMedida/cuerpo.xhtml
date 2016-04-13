@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
+
+
+
+
+
+    <h:form  id="formABM">
+        <p:growl id="mensajes" autoUpdate="true"/>
+        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+
+
+            <h:outputText value="Empresa"  styleClass="FontVoltRegular"
+                          rendered="#{not(contexto == 'creacion')}"/>
+            <h:outputText value="#{productoUnidadMedidaBean.actual.empresa == null?'':productoUnidadMedidaBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
+                          rendered="#{not(contexto == 'creacion')}"/>
+
+            <p:outputLabel value="Producto" for="producto" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoUnidadMedidaBean.actual.producto != null?productoUnidadMedidaBean.actual.producto.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:autoComplete value="#{productoUnidadMedidaBean.actual.producto}"
+                            id="producto"
+                            required="true"
+                            completeMethod="#{productoConsultaBean.completar}"
+                            forceSelection="true" converter="productoConverter"
+                            var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
+                            rendered="#{not(contexto == 'vista')}"/>
+
+            <p:outputLabel value="Unidad Medida De" for="unidadMedidaDe" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoUnidadMedidaBean.actual.unidadMedidaDe != null?productoUnidadMedidaBean.actual.unidadMedidaDe.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:selectOneMenu value="#{productoUnidadMedidaBean.actual.unidadMedidaDe}" required="true" id="unidadMedidaDe" rendered="#{not(contexto == 'vista')}">
+                <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>
+            </p:selectOneMenu>
+            
+            <p:outputLabel value="Unidad Medida A" for="unidadMedidaA" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoUnidadMedidaBean.actual.unidadMedidaA != null?productoUnidadMedidaBean.actual.unidadMedidaA.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:selectOneMenu value="#{productoUnidadMedidaBean.actual.unidadMedidaA}" required="true" id="unidadMedidaA" rendered="#{not(contexto == 'vista')}">
+                <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>
+            </p:selectOneMenu>
+
+            <p:outputLabel value="Formula" for="formula" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoUnidadMedidaBean.actual.formula}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{productoUnidadMedidaBean.actual.formula}" required="true" id="formula" rendered="#{not(contexto == 'vista')}"/>
+
+        </p:panelGrid>
+
+        <facilerp:botoneraABM bean="#{productoUnidadMedidaBean}" contexto="#{contexto}" entidad="productoUnidadMedida" update=":formABM:panel"/>
+
+    </h:form>
+
+
+
+</ui:composition>
+

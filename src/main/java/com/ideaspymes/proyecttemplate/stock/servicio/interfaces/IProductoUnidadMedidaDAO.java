@@ -7,7 +7,9 @@ package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.model.ProductoUnidadMedida;
+import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -26,6 +28,9 @@ public interface IProductoUnidadMedidaDAO extends AbstractDAO<ProductoUnidadMedi
 
     @Override
     ProductoUnidadMedida find(Object id);
+    
+    
+    ProductoUnidadMedida find(Producto p, UnidadMedida umDe, UnidadMedida umA);
 
     @Override
     List<ProductoUnidadMedida> findAll();
