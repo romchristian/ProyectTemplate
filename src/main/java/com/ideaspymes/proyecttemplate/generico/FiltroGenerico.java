@@ -5,12 +5,9 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
-import com.ideaspymes.proyecttemplate.configuracion.web.EmpresaConsultaBean;
-import com.ideaspymes.proyecttemplate.configuracion.web.converters.EmpresaConverter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.faces.convert.Converter;
 
 /**
  *
@@ -18,6 +15,11 @@ import javax.faces.convert.Converter;
  */
 public class FiltroGenerico {
 
+    public static final String TIPO_LIKE = "like";
+    public static final String TIPO_RANGO_FECHA = "rangoFecha";
+    public static final String TIPO_SELECT_ONE = "selectOne";
+    public static final String TIPO_AUTOCOMPLETE = "autocomplete";
+    public static final String TIPO_NUMERO = "numero";
     
     
     private String campo;
@@ -149,21 +151,21 @@ public class FiltroGenerico {
     public String getCadenaFiltro() {
         String R = "";
         switch (tipo) {
-            case "like":
+            case TIPO_LIKE:
                 R = " AND UPPER(" + campo + ") like '%" + valorString.toUpperCase() + "%' ";
                 break;
-            case "rangoFecha":
+            case TIPO_RANGO_FECHA:
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 R = " AND " + campo + " between '" + sdf.format(valorDateInicio) + "' AND '" + sdf.format(valorDateFin) + "' ";
                 break;
-            case "numero":
+            case TIPO_NUMERO:
                 R = " AND " + campo + " = " + valorInteger + " ";
                 break;
-            case "selectOne":
+            case TIPO_SELECT_ONE:
                 R = " AND " + campo + "_id = " + ((IAuditable) valorEntidadId).getId() + " ";
                 break;
 
-            case "autocomplete":
+            case TIPO_AUTOCOMPLETE:
                 R = " AND " + campo + "_id = " + ((IAuditable) valorEntidadId).getId() + " ";
                 break;
 

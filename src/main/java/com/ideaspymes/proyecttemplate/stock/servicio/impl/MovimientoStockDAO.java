@@ -39,6 +39,7 @@ public class MovimientoStockDAO implements IMovimientoStockDAO {
 
     @Override
     public void creaMovimientoStock(MovimientoStock m) {
+        System.out.println("Invoque creaMovimiento");
         generaAuditoria(m);
         abms.getEM().merge(m);
         Producto p = m.getProducto();
@@ -133,4 +134,5 @@ public class MovimientoStockDAO implements IMovimientoStockDAO {
         }
         return R;
     }
+    
 }

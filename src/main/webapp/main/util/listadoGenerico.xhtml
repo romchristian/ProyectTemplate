@@ -233,9 +233,13 @@
                                 <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
                             </h:outputText>
 
-                            <h:outputText value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.entidad)}"/>
+                            <h:outputText value="#{o[column.campo][column.campoDescripcion]}" rendered="#{not (column.link) and (column.entidad)}"/>
 
 
+                            <p:link outcome="vista" value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.link) and (column.entidad)}">
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+                            
                             <p:link outcome="vista" value="#{o[column.campo]}" rendered="#{(column.link) and (column.tipo=='java.lang.String')}">
                                 <f:param name="id" value="#{o['id']}"/>
                             </p:link>

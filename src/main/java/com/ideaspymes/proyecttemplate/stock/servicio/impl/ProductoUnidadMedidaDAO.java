@@ -69,7 +69,7 @@ public class ProductoUnidadMedidaDAO implements IProductoUnidadMedidaDAO {
         List<ProductoUnidadMedida> items = new ArrayList<>();
         if (consulta != null) {
             System.out.println("Consulta: " + consulta);
-            Query query = abmService.getEM().createNativeQuery(consulta, Producto.class);
+            Query query = abmService.getEM().createNativeQuery(consulta, ProductoUnidadMedida.class);
             if (first > 0) {
                 query.setFirstResult(first);
             }
@@ -90,7 +90,7 @@ public class ProductoUnidadMedidaDAO implements IProductoUnidadMedidaDAO {
 
         if (matchText != null && matchText.length() > 0) {
             String consulta = "select * from productounidadmedida where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
-            Query query = abmService.getEM().createNativeQuery(consulta, Producto.class);
+            Query query = abmService.getEM().createNativeQuery(consulta, ProductoUnidadMedida.class);
             query.setMaxResults(20);
             sugerencias = query.getResultList();
         }

@@ -46,6 +46,10 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     @ManyToOne
     private UnidadMedida unidadMedida;
     private Double cantidad;
+
+    @ManyToOne
+    private UnidadMedida unidadMedidaStock;
+    private Double cantidadStock;
     @ManyToOne
     private ComprobanteStock comprobanteStock;
     @ManyToOne
@@ -55,6 +59,8 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     private Empresa empresa;
     @ManyToOne
     private Sucursal sucursal;
+    @ManyToOne
+    private LoteExistencia loteExistencia;
 
     //Auditoria
     @Enumerated(EnumType.STRING)
@@ -67,6 +73,7 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
 
     public abstract Double cantidadAAfectar();
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -137,6 +144,30 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
 
     public void setComprobanteStock(ComprobanteStock comprobanteStock) {
         this.comprobanteStock = comprobanteStock;
+    }
+
+    public LoteExistencia getLoteExistencia() {
+        return loteExistencia;
+    }
+
+    public void setLoteExistencia(LoteExistencia loteExistencia) {
+        this.loteExistencia = loteExistencia;
+    }
+
+    public UnidadMedida getUnidadMedidaStock() {
+        return unidadMedidaStock;
+    }
+
+    public void setUnidadMedidaStock(UnidadMedida unidadMedidaStock) {
+        this.unidadMedidaStock = unidadMedidaStock;
+    }
+
+    public Double getCantidadStock() {
+        return cantidadStock;
+    }
+
+    public void setCantidadStock(Double cantidadStock) {
+        this.cantidadStock = cantidadStock;
     }
 
     public Empresa getEmpresa() {

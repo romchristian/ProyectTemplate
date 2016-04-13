@@ -8,6 +8,7 @@ package com.ideaspymes.proyecttemplate.stock.model;
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.FiltroGenerico;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
@@ -36,20 +37,19 @@ public class ProductoUnidadMedida implements Serializable, IAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @Listado(descripcion = "Producto",mostrar = true,entidad = true,campoDescripcion = "nombre",link = true)
-    @Filtro(descripcion = "Producto",campo = "producto",campoDescripcion = "nombre",tipo = "autocomplete")
+    @Listado(descripcion = "Producto", mostrar = true, entidad = true, campoDescripcion = "nombre", link = true)
+    @Filtro(descripcion = "Producto", campo = "producto", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_AUTOCOMPLETE)
     private Producto producto;
     @ManyToOne
-    @Listado(descripcion = "U.M. De",mostrar = true,entidad = true,campoDescripcion = "nombre")
+    @Listado(descripcion = "U.M. De", mostrar = true, entidad = true, campoDescripcion = "nombre")
     //@Filtro(descripcion = "U.M. De",campo = "unidadMedidaDe",campoDescripcion = "nombre",tipo = "selectOne")
     private UnidadMedida unidadMedidaDe;
     @ManyToOne
-    @Listado(descripcion = "U.M. A",mostrar = true,entidad = true,campoDescripcion = "nombre")
+    @Listado(descripcion = "U.M. A", mostrar = true, entidad = true, campoDescripcion = "nombre")
     //@Filtro(descripcion = "U.M. A",campo = "unidadMedidaA",campoDescripcion = "nombre",tipo = "selectOne")
     private UnidadMedida unidadMedidaA;
-    @Listado(descripcion = "Formula",mostrar = true)
+    @Listado(descripcion = "Formula", mostrar = true)
     private String formula;
-    
 
     @ManyToOne
     @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
@@ -105,8 +105,6 @@ public class ProductoUnidadMedida implements Serializable, IAuditable {
     public void setFormula(String formula) {
         this.formula = formula;
     }
-
-  
 
     public Empresa getEmpresa() {
         return empresa;

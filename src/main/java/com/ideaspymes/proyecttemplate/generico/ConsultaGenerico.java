@@ -5,16 +5,11 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
-import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;

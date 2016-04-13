@@ -44,10 +44,16 @@ public class DetComprobanteStock implements Serializable, IAuditable, IConSucurs
     private UnidadMedida unidadMedida;
     private Double cantidad;
     private Double valor;
+    private Double total;
+
     @ManyToOne
     private Empresa empresa;
     @ManyToOne
     private Sucursal sucursal;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date elaboracion;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date vencimiento;
 
     //Auditoria
     @Enumerated(EnumType.STRING)
@@ -123,6 +129,30 @@ public class DetComprobanteStock implements Serializable, IAuditable, IConSucurs
 
     public void setValor(Double valor) {
         this.valor = valor;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public Date getElaboracion() {
+        return elaboracion;
+    }
+
+    public void setElaboracion(Date elaboracion) {
+        this.elaboracion = elaboracion;
+    }
+
+    public Date getVencimiento() {
+        return vencimiento;
+    }
+
+    public void setVencimiento(Date vencimiento) {
+        this.vencimiento = vencimiento;
     }
 
     public Estado getEstado() {

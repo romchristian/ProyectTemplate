@@ -21,11 +21,11 @@
             <h:outputText value="#{comprobanteStockBean.actual.estadoComprobate != null?comprobanteStockBean.actual.estadoComprobate.label:''}"
                           styleClass="Fright Fs14 FontVoltBold Blue"
                           rendered="#{comprobanteStockBean.actual.estadoComprobate == Estado.PENDIENTE_CONFIRMACION}"/>
-            
+
             <h:outputText value="#{comprobanteStockBean.actual.estadoComprobate != null?comprobanteStockBean.actual.estadoComprobate.label:''}"
                           styleClass="Fright Fs14 FontVoltBold Green"
                           rendered="#{comprobanteStockBean.actual.estadoComprobate == Estado.CONFIRMADO}"/>
-            
+
             <div class="EmptyBox20"></div>
             <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" >
 
@@ -110,9 +110,25 @@
                         </p:selectOneMenu>
                         <h:outputText value="#{d.unidadMedida != null?d.unidadMedida.nombre:''}" rendered="#{(contexto == 'vista')}"/>
                     </p:column>
-                    <p:column headerText="Costo">
+                    <p:column headerText="Elaboración">
+                        <p:calendar value="#{d.elaboracion}" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
+                        <h:outputText value="#{d.elaboracion}" rendered="#{(contexto == 'vista')}">
+                            <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Vencimiento">
+                        <p:calendar value="#{d.vencimiento}" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
+                        <h:outputText value="#{d.vencimiento}" rendered="#{(contexto == 'vista')}">
+                            <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="P.U">
                         <pe:inputNumber value="#{d.valor}" rendered="#{not(contexto == 'vista')}"/>
                         <h:outputText value="#{d.valor}" rendered="#{(contexto == 'vista')}"/>
+                    </p:column>
+                    <p:column headerText="Total">
+                        <pe:inputNumber value="#{d.total}" rendered="#{not(contexto == 'vista')}"/>
+                        <h:outputText value="#{d.total}" rendered="#{(contexto == 'vista')}"/>
                     </p:column>
                     <p:column style="text-align: center;width: 4%" rendered="#{not(contexto == 'vista')}">
                         <p:commandLink  action="#{comprobanteStockBean.actual.addDetalle()}" update="detalles">

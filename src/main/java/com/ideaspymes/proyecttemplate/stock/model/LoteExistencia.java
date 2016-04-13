@@ -53,10 +53,16 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
     @ManyToOne
     private UnidadMedida unidadMedida;
     private Double cantidadIngresada;
-    private Double cantidadUsada;
-    private Double cantidadReservada;
-    private Double cantidadSaldo;
     private Double costo;
+    
+    @ManyToOne
+    private UnidadMedida unidadMedidaStock;
+    private Double cantidadIngresadaStock;
+    private Double cantidadUsadaStock;
+    private Double cantidadReservadaStock;
+    private Double cantidadSaldoStock;
+    private Double costoUnitario;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date elaboracion;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -162,20 +168,20 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
         this.cantidadIngresada = cantidadIngresada;
     }
 
-    public Double getCantidadUsada() {
-        return cantidadUsada;
+    public Double getCantidadUsadaStock() {
+        return cantidadUsadaStock;
     }
 
-    public void setCantidadUsada(Double cantidadUsada) {
-        this.cantidadUsada = cantidadUsada;
+    public void setCantidadUsadaStock(Double cantidadUsada) {
+        this.cantidadUsadaStock = cantidadUsada;
     }
 
-    public Double getCantidadSaldo() {
-        return cantidadSaldo;
+    public Double getCantidadSaldoStock() {
+        return cantidadSaldoStock;
     }
 
-    public void setCantidadSaldo(Double cantidadSaldo) {
-        this.cantidadSaldo = cantidadSaldo;
+    public void setCantidadSaldoStock(Double cantidadSaldo) {
+        this.cantidadSaldoStock = cantidadSaldo;
     }
 
     public Double getCosto() {
@@ -185,6 +191,32 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
     public void setCosto(Double costo) {
         this.costo = costo;
     }
+
+    public UnidadMedida getUnidadMedidaStock() {
+        return unidadMedidaStock;
+    }
+
+    public void setUnidadMedidaStock(UnidadMedida unidadMedidaStock) {
+        this.unidadMedidaStock = unidadMedidaStock;
+    }
+
+    public Double getCantidadIngresadaStock() {
+        return cantidadIngresadaStock;
+    }
+
+    public void setCantidadIngresadaStock(Double cantidadIngresadaStock) {
+        this.cantidadIngresadaStock = cantidadIngresadaStock;
+    }
+
+    public Double getCostoUnitario() {
+        return costoUnitario;
+    }
+
+    public void setCostoUnitario(Double costoUnitario) {
+        this.costoUnitario = costoUnitario;
+    }
+    
+    
 
     public Date getElaboracion() {
         return elaboracion;
@@ -202,19 +234,19 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
         this.vencimiento = vencimiento;
     }
 
-    public Double getCantidadReservada() {
-        return cantidadReservada;
+    public Double getCantidadReservadaStock() {
+        return cantidadReservadaStock;
     }
 
-    public void setCantidadReservada(Double cantidadReservada) {
-        this.cantidadReservada = cantidadReservada;
+    public void setCantidadReservadaStock(Double cantidadReservada) {
+        this.cantidadReservadaStock = cantidadReservada;
     }
 
     public EstadoLote getEstadoLote() {
         return estadoLote;
     }
 
-    public void setEstadoLote(EstadoLote estado) {
+    public void setEstadoLote(EstadoLote estadoLote) {
         this.estadoLote = estadoLote;
     }
 

@@ -16,7 +16,7 @@
                 <p:breadCrumb homeDisplay="text">
                     <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
                     <p:menuitem outcome="listado" value="Listado de Productos x Unidades Conf"/>
-                    <p:menuitem outcome="edita" value="#{productoUnidadMedidaBean.actual.nombre}">
+                    <p:menuitem outcome="edita" value="#{productoUnidadMedidaBean.actual.producto.nombre}">
                         <f:param name="id" value="#{productoUnidadMedidaBean.actual.id}"/>
                     </p:menuitem>
                 </p:breadCrumb>

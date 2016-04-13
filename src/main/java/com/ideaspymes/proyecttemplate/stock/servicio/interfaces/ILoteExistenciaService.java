@@ -5,6 +5,7 @@
  */
 package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 
+import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
@@ -20,6 +21,8 @@ import javax.ejb.Local;
 @Local
 public interface ILoteExistenciaService {
     public LoteExistencia creaLoteExitencia(LoteExistencia l);
+    void creaLoteExistencia(DetComprobanteStock d);
+    void afectaLotesExistenciaMasCovenientes(DetComprobanteStock d);
     public LoteExistencia guardaLoteExitencia(LoteExistencia l);
     public void afectaLotesExistenciaMasCovenientes(Producto p, UnidadMedida um, Double cantidad);
     public Double afectaCantidadUsadaLoteExitencia(LoteExistencia l, Double cantidad);
