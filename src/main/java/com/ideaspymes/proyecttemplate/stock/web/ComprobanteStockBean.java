@@ -6,10 +6,14 @@ package com.ideaspymes.proyecttemplate.stock.web;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.BeanGenerico;
+import com.ideaspymes.proyecttemplate.generico.JsfUtil;
+import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.web.converters.ComprobanteStockConverter;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
@@ -40,9 +44,15 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
     public Converter getConverter() {
         return new ComprobanteStockConverter();
     }
-    
-    public void confirmar(){
-        ejb.confirmar(getActual());
+
+    public void confirmar() {
+
+        try {
+            ejb.confirmar(getActual());
+        } catch (SinStockException ex) {
+            JsfUtil.addErrorMessage(ex.getMessage());
+            Logger.getLogger(ComprobanteStockBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

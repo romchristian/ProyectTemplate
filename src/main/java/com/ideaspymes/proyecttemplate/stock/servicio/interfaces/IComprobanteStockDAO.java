@@ -7,6 +7,7 @@ package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
 import java.util.List;
@@ -27,7 +28,7 @@ public interface IComprobanteStockDAO extends AbstractDAO<ComprobanteStock> {
     @Override
     ComprobanteStock edit(ComprobanteStock entity);
 
-    ComprobanteStock confirmar(ComprobanteStock entity);
+    ComprobanteStock confirmar(ComprobanteStock entity) throws SinStockException;
 
     @Override
     ComprobanteStock find(Object id);

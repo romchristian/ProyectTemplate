@@ -8,21 +8,16 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.stock.model.Deposito;
-import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.Existencia;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStock;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
-import com.ideaspymes.proyecttemplate.stock.model.ProductoUnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IMovimientoStockDAO;
-import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoUnidadMedidaDAO;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import net.objecthunter.exp4j.Expression;
-import net.objecthunter.exp4j.ExpressionBuilder;
 
 /**
  *
@@ -34,19 +29,16 @@ public class MovimientoStockDAO implements IMovimientoStockDAO {
 
     @EJB
     private ABMService abms;
-    @EJB
-    private IProductoUnidadMedidaDAO productoUnidadMedidaDAO;
 
     @Override
     public void creaMovimientoStock(MovimientoStock m) {
         System.out.println("Invoque creaMovimiento");
         generaAuditoria(m);
-        abms.getEM().merge(m);
+        
         Producto p = m.getProducto();
+        abms.getEM().merge(m);
         System.out.println("Invoque creaMovimiento");
-        Double cantidadUnidadMedidaBase = calculaCantidadUMStock(p, m.getUnidadMedida(), m.cantidadAAfectar());
-
-        afectaStockExistencia(m.getDeposito(), p, cantidadUnidadMedidaBase, p.getUnidadMedidaBase());
+        afectaStockExistencia(m.getDeposito(), p, m.cantidadAAfectar(), p.getUnidadMedidaBase());
     }
 
     private void afectaStockExistencia(Deposito d, Producto p, Double cantidadAAfectar, UnidadMedida um) {
@@ -121,18 +113,4 @@ public class MovimientoStockDAO implements IMovimientoStockDAO {
         d.setUsuarioUltimaModificacion(usuario);
     }
 
-    private Double calculaCantidadUMStock(Producto p, UnidadMedida unidadMedida, Double cantidad) {
-        double R = cantidad;
-        try {
-            ProductoUnidadMedida pu = productoUnidadMedidaDAO.find(p, unidadMedida, p.getUnidadMedidaBase());
-            Expression e = new ExpressionBuilder(pu.getFormula())
-                    .variables("x")
-                    .build()
-                    .setVariable("x", cantidad);
-            R = e.evaluate();
-        } catch (Exception e) {
-        }
-        return R;
-    }
-    
 }

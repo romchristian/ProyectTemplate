@@ -4,7 +4,9 @@
  */
 package com.ideaspymes.proyecttemplate.stock.servicio.impl;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
+import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.generico.ResolutorReferencia;
 import com.ideaspymes.proyecttemplate.stock.enums.EstadoComprobanteStock;
@@ -13,12 +15,14 @@ import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.CO
 import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.TRANSFERENCIA_EXTERNA;
 import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.TRANSFERENCIA_INTERNA;
 import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.VENTA;
+import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ILoteExistenciaService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 import java.util.List;
@@ -99,7 +103,7 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
     }
 
     @Override
-    public ComprobanteStock confirmar(ComprobanteStock entity) {
+    public ComprobanteStock confirmar(ComprobanteStock entity) throws SinStockException{
 
         ComprobanteStock R = entity;
         if (entity.getEstadoComprobate() == EstadoComprobanteStock.PENDIENTE_CONFIRMACION) {
@@ -172,10 +176,11 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         return abmService.findByQuery(query, params.parameters());
     }
 
-    private void creaMovientosStockVenta(List<DetComprobanteStock> detalles) {
+    private void creaMovientosStockVenta(List<DetComprobanteStock> detalles) throws SinStockException {
 
         for (DetComprobanteStock d : detalles) {
 
+            generaAuditoriaUpdate(d);
             if (d.getProducto().getInventariable()) {
                 loteExistenciaService.afectaLotesExistenciaMasCovenientes(d);
             }
@@ -185,6 +190,7 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
     private void creaMovientosStockCompra(List<DetComprobanteStock> detalles) {
 
         for (DetComprobanteStock d : detalles) {
+            generaAuditoriaUpdate(d);
             if (d.getProducto().getInventariable()) {
                 loteExistenciaService.creaLoteExistencia(d);
             }
@@ -250,6 +256,22 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         }
 
         return R;
+    }
+
+    private void generaAuditoriaCreate(IAuditable d) {
+        d.setFechaRegitro(new Date());
+        d.setEstado(Estado.ACTIVO);
+        d.setEmpresa(abmService.getCredencial().getEmpresa());
+        String usuario = abmService.getCredencial().getUsuario() != null ? abmService.getCredencial().getUsuario().getNombre() + ", " + abmService.getCredencial().getUsuario().getUserName() : "";
+        d.setUsuarioUltimaModificacion(usuario);
+    }
+
+    private void generaAuditoriaUpdate(IAuditable d) {
+        d.setFechaUltimaModificacion(new Date());
+        d.setEstado(Estado.ACTIVO);
+        d.setEmpresa(abmService.getCredencial().getEmpresa());
+        String usuario = abmService.getCredencial().getUsuario() != null ? abmService.getCredencial().getUsuario().getNombre() + ", " + abmService.getCredencial().getUsuario().getUserName() : "";
+        d.setUsuarioUltimaModificacion(usuario);
     }
 
 }

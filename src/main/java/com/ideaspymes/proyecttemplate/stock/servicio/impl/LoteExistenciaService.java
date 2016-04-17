@@ -8,6 +8,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.stock.enums.EstadoLote;
+import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
@@ -18,6 +19,7 @@ import com.ideaspymes.proyecttemplate.stock.model.ProductoUnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ILoteExistenciaService;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IMovimientoStockDAO;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoUnidadMedidaDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,13 +42,15 @@ public class LoteExistenciaService implements ILoteExistenciaService {
     private ABMService abmService;
     @EJB
     private IMovimientoStockDAO movimientoStockDAO;
+    @EJB
+    private IProductoUnidadMedidaDAO productoUnidadMedidaDAO;
 
     @Override
     public void creaLoteExistencia(DetComprobanteStock d) {
 
         LoteExistencia l = new LoteExistencia();
-        
- 
+
+        Double cantidadStock = calculaCantidadUMStock(d.getProducto(), d.getUnidadMedida(), d.getCantidad());
 
         l.setEstadoLote(EstadoLote.ABIERTO);
         l.setComprobanteStock(d.getComprobanteStock());
@@ -57,9 +61,10 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         l.setProducto(d.getProducto());
         l.setUnidadMedida(d.getUnidadMedida());
         l.setCantidadIngresada(d.getCantidad());
+        l.setCantidadIngresadaStock(cantidadStock);
         l.setCantidadUsadaStock(0d);
         l.setCantidadReservadaStock(0d);
-        l.setCantidadSaldoStock(d.getCantidad());
+        l.setCantidadSaldoStock(cantidadStock);
         l.setCosto(d.getTotal());
 
         l.setElaboracion(d.getElaboracion());
@@ -81,9 +86,8 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         m.setProducto(d.getProducto());
         m.setUnidadMedida(d.getUnidadMedida());
         m.setCantidad(d.getCantidad());
+        m.setCantidadStock(cantidadStock);
 
-        
-        
         movimientoStockDAO.creaMovimientoStock(m);
 
     }
@@ -109,19 +113,20 @@ public class LoteExistenciaService implements ILoteExistenciaService {
     }
 
     @Override
-    public void afectaLotesExistenciaMasCovenientes(DetComprobanteStock d) {
+    public void afectaLotesExistenciaMasCovenientes(DetComprobanteStock d) throws SinStockException {
         List<LoteExistencia> lotesAAfectar = null;
+
+        double cantidadPorMovimiento = calculaCantidadUMStock(d.getProducto(), d.getUnidadMedida(), d.getCantidad());
 
         if (d.getProducto().getTieneVencimiento()) {
 
-            lotesAAfectar = getLotesExitenciaVencimientosMasProximos(d.getProducto(), d.getUnidadMedida(), d.getCantidad());
+            lotesAAfectar = getLotesExitenciaVencimientosMasProximos(d.getProducto(), cantidadPorMovimiento);
 
         } else {
 
-            lotesAAfectar = getLotesExitenciaMasAntiguos(d.getProducto(), d.getUnidadMedida(), d.getCantidad());
+            lotesAAfectar = getLotesExitenciaMasAntiguos(d.getProducto(), cantidadPorMovimiento);
 
         }
-        double cantidadPorMovimiento = d.getCantidad();
 
         for (LoteExistencia l : lotesAAfectar) {
 
@@ -143,9 +148,11 @@ public class LoteExistenciaService implements ILoteExistenciaService {
 
                 if (l.getCantidadSaldoStock() > cantidadPorMovimiento) {
                     m.setCantidad(cantidadPorMovimiento);
+                    m.setCantidadStock(cantidadPorMovimiento);
                     cantidadPorMovimiento = afectaCantidadUsadaLoteExitencia(l, cantidadPorMovimiento);
                 } else {
                     m.setCantidad(l.getCantidadSaldoStock());
+                    m.setCantidadStock(l.getCantidadSaldoStock());
                     cantidadPorMovimiento = afectaCantidadUsadaLoteExitencia(l, cantidadPorMovimiento);
                 }
 
@@ -157,13 +164,13 @@ public class LoteExistenciaService implements ILoteExistenciaService {
     }
 
     @Override
-    public void afectaLotesExistenciaMasCovenientes(Producto p, UnidadMedida um, Double cantidad) {
+    public void afectaLotesExistenciaMasCovenientes(Producto p, UnidadMedida um, Double cantidad) throws SinStockException {
         List<LoteExistencia> lotesAAfectar = null;
 
         if (p.getTieneVencimiento()) {
-            lotesAAfectar = getLotesExitenciaVencimientosMasProximos(p, um, cantidad);
+            lotesAAfectar = getLotesExitenciaVencimientosMasProximos(p, cantidad);
         } else {
-            lotesAAfectar = getLotesExitenciaMasAntiguos(p, um, cantidad);
+            lotesAAfectar = getLotesExitenciaMasAntiguos(p, cantidad);
         }
         double saldo = cantidad;
         for (LoteExistencia l : lotesAAfectar) {
@@ -184,7 +191,7 @@ public class LoteExistenciaService implements ILoteExistenciaService {
 
         } else {
             R = cantidad - l.getCantidadSaldoStock();
-            l.setCantidadUsadaStock(l.getCantidadIngresada());
+            l.setCantidadUsadaStock(l.getCantidadIngresadaStock());
             l.setCantidadSaldoStock(0d);
 
         }
@@ -199,12 +206,11 @@ public class LoteExistenciaService implements ILoteExistenciaService {
     }
 
     @Override
-    public List<LoteExistencia> getLotesExitenciaMasAntiguos(Producto p, UnidadMedida um, Double cantidad) {
+    public List<LoteExistencia> getLotesExitenciaMasAntiguos(Producto p, Double cantidad) throws SinStockException {
 
-        List<LoteExistencia> lotesDisponibles = abmService.getEM().createQuery("SELECT l from LoteExistencia l WHERE l.estadoLote = ?1 and l.producto = ?2 and l.unidadMedida = ?3 ORDER BY l.ingreso DESC")
+        List<LoteExistencia> lotesDisponibles = abmService.getEM().createQuery("SELECT l from LoteExistencia l WHERE l.estadoLote = ?1 and l.producto = ?2  ORDER BY l.ingreso DESC")
                 .setParameter(1, EstadoLote.ABIERTO)
                 .setParameter(2, p)
-                .setParameter(3, um)
                 .getResultList();
 
         List<LoteExistencia> R = new ArrayList<>();
@@ -220,15 +226,25 @@ public class LoteExistenciaService implements ILoteExistenciaService {
             }
         }
 
+        double stockTotal = 0d;
+        Deposito d = null;
+        for (LoteExistencia lt : R) {
+            stockTotal += lt.getCantidadSaldoStock();
+            d = lt.getDeposito();
+        }
+
+        if (stockTotal < cantidad) {
+            throw new SinStockException(p, d);
+        }
+
         return R;
     }
 
     @Override
-    public List<LoteExistencia> getLotesExitenciaMasRecientes(Producto p, UnidadMedida um, Double cantidad) {
-        List<LoteExistencia> lotesDisponibles = abmService.getEM().createQuery("SELECT l from LoteExistencia l WHERE l.estadoLote = ?1 and l.producto = ?2 and l.unidadMedida = ?3 ORDER BY l.ingreso")
+    public List<LoteExistencia> getLotesExitenciaMasRecientes(Producto p, Double cantidad) throws SinStockException {
+        List<LoteExistencia> lotesDisponibles = abmService.getEM().createQuery("SELECT l from LoteExistencia l WHERE l.estadoLote = ?1 and l.producto = ?2 ORDER BY l.ingreso")
                 .setParameter(1, EstadoLote.ABIERTO)
                 .setParameter(2, p)
-                .setParameter(3, um)
                 .getResultList();
 
         List<LoteExistencia> R = new ArrayList<>();
@@ -244,15 +260,24 @@ public class LoteExistenciaService implements ILoteExistenciaService {
             }
         }
 
+        double stockTotal = 0d;
+        Deposito d = null;
+        for (LoteExistencia lt : R) {
+            stockTotal += lt.getCantidadSaldoStock();
+            d = lt.getDeposito();
+        }
+
+        if (stockTotal < cantidad) {
+            throw new SinStockException(p, d);
+        }
         return R;
     }
 
     @Override
-    public List<LoteExistencia> getLotesExitenciaVencimientosMasProximos(Producto p, UnidadMedida um, Double cantidad) {
-        List<LoteExistencia> lotesDisponibles = abmService.getEM().createQuery("SELECT l from LoteExistencia l WHERE l.estadoLote = ?1 and l.producto = ?2 and l.unidadMedida = ?3 ORDER BY l.vencimiento")
+    public List<LoteExistencia> getLotesExitenciaVencimientosMasProximos(Producto p, Double cantidad) throws SinStockException {
+        List<LoteExistencia> lotesDisponibles = abmService.getEM().createQuery("SELECT l from LoteExistencia l WHERE l.estadoLote = ?1 and l.producto = ?2  ORDER BY l.vencimiento")
                 .setParameter(1, EstadoLote.ABIERTO)
                 .setParameter(2, p)
-                .setParameter(3, um)
                 .getResultList();
 
         List<LoteExistencia> R = new ArrayList<>();
@@ -266,6 +291,17 @@ public class LoteExistenciaService implements ILoteExistenciaService {
                 R.add(l);
                 saldo = (l.getCantidadSaldoStock() - saldo) * 1; // esto tendria que ser negativo entonces multiplico por -1, para que en la siguiente iteracion no me sume
             }
+        }
+
+        double stockTotal = 0d;
+        Deposito d = null;
+        for (LoteExistencia lt : R) {
+            stockTotal += lt.getCantidadSaldoStock();
+            d = lt.getDeposito();
+        }
+
+        if (stockTotal < cantidad) {
+            throw new SinStockException(p, d);
         }
 
         return R;
@@ -300,7 +336,19 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         String usuario = abmService.getCredencial().getUsuario() != null ? abmService.getCredencial().getUsuario().getNombre() + ", " + abmService.getCredencial().getUsuario().getUserName() : "";
         d.setUsuarioUltimaModificacion(usuario);
     }
-    
-    
-    
+
+    private Double calculaCantidadUMStock(Producto p, UnidadMedida unidadMedida, Double cantidad) {
+        double R = cantidad;
+        try {
+            ProductoUnidadMedida pu = productoUnidadMedidaDAO.find(p, unidadMedida, p.getUnidadMedidaBase());
+            Expression e = new ExpressionBuilder(pu.getFormula())
+                    .variables("x")
+                    .build()
+                    .setVariable("x", cantidad);
+            R = e.evaluate();
+        } catch (Exception e) {
+        }
+        return R;
+    }
+
 }

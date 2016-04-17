@@ -21,7 +21,7 @@ public class MovimientoStockCompra extends MovimientoStock {
 
     @Override
     public Double cantidadAAfectar() {
-        return getCantidad() == null ? 0d : getCantidad();
+        return getCantidadStock()== null ? 0d : getCantidadStock();
     }
 
 }

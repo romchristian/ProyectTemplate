@@ -141,34 +141,38 @@
 
             </div>
 
+
+
+            <div class="CardFooter">
+                <div class="ui-grid ui-grid-responsive">
+                    <div class="ui-grid-row">
+                        <div class="ui-grid-col-2">
+                            <p:commandButton value="Crear" action="#{comprobanteStockBean.create()}" styleClass="Fleft GreenButton" update=":formABM:panel" rendered="#{(contexto == 'creacion')}"/>
+                            <p:commandButton value="Guardar" action="#{comprobanteStockBean.edit()}" styleClass="Fleft BlueButton" update=":formABM:panel" rendered="#{(contexto == 'edicion')}"/>
+
+                            <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista') and (comprobanteStockBean.actual.estadoComprobate == 'PENDIENTE_CONFIRMACION')}">
+                                <f:param name="id" value="#{comprobanteStockBean.actual.id}"/>
+                            </p:button>
+
+
+                        </div>
+
+                        <div class="ui-grid-col-2">
+                            <p:commandButton value="Confirmar" action="#{comprobanteStockBean.confirmar()}" styleClass="Fleft GreenButton" update=":formABM:panel" rendered="#{not (contexto == 'creacion') and (comprobanteStockBean.actual.estadoComprobate == 'PENDIENTE_CONFIRMACION')}"/>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
         </p:outputPanel>
 
 
-        <div class="CardFooter">
-            <div class="ui-grid ui-grid-responsive">
-                <div class="ui-grid-row">
-                    <div class="ui-grid-col-2">
-                        <p:commandButton value="Crear" action="#{comprobanteStockBean.create()}" styleClass="Fleft GreenButton" update=":formABM:panel" rendered="#{(contexto == 'creacion')}"/>
-                        <p:commandButton value="Guardar" action="#{comprobanteStockBean.edit()}" styleClass="Fleft BlueButton" update=":formABM:panel" rendered="#{(contexto == 'edicion')}"/>
 
-                        <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita" rendered="#{(contexto == 'vista') and (comprobanteStockBean.actual.estadoComprobate == 'PENDIENTE_CONFIRMACION')}">
-                            <f:param name="id" value="#{comprobanteStockBean.actual.id}"/>
-                        </p:button>
-
-
-                    </div>
-
-                    <div class="ui-grid-col-2">
-                        <p:commandButton value="Confirmar" action="#{comprobanteStockBean.confirmar()}" styleClass="Fleft GreenButton" update=":formABM:panel" rendered="#{not (contexto == 'creacion') and (comprobanteStockBean.actual.estadoComprobate == 'PENDIENTE_CONFIRMACION')}"/>
-                    </div>
-
-                </div>
-            </div>
-
-
-
-
-        </div>
 
 
 

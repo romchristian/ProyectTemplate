@@ -24,7 +24,7 @@ public class MovimientoStockConsumoMateriaPrima extends MovimientoStock {
 
     @Override
     public Double cantidadAAfectar() {
-        return (getCantidad() == null ? 0d : getCantidad())*-1;
+        return (getCantidadStock()== null ? 0d : getCantidadStock())*-1;
     }
 
 }
