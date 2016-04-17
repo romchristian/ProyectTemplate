@@ -5,6 +5,7 @@
                 xmlns:p="http://primefaces.org/ui">
 
 
+
     <ui:decorate template="/main/util/principal.xhtml">
         <ui:define name="content">
             <div class="Container100">
@@ -12,6 +13,37 @@
                     <div class="CardTopic Blue">Compras</div>
                     <div class="Separator"></div>
                     <br/>
+
+<!--http://www.jqueryrain.com/demo/jquery-crop-image-plugin/-->
+<!--
+                    <h:form  id="formUpload" enctype="multipart/form-data">
+                        <p:outputPanel id="panelAdjunto">
+                            <p:fileUpload fileUploadListener="{indexManagedBean.handleFileUpload}" mode="advanced"
+                                          rendered="{(empty indexManagedBean.imagemTemporaria)}"
+                                          label="Elegir Archivo"
+                                          update="panelAdjunto :formCrop:panelArchivo" auto="true" sizeLimit="10000000" allowTypes="/(\.|\/)(png|jpeg|jpg|gif)$/" />
+                        </p:outputPanel>
+
+                    </h:form>-->
+
+                    <h:form  id="formCrop">
+                        
+                            <h:panelGrid columns="2" >
+                                <p:imageCropper value="#{indexManagedBean.croppedImage}" image="/upload/comando.png"
+                                                initialCoords="225,75,300,125" boxHeight="500" boxWidth="500" />
+                                <h:panelGroup id="cropped">
+                                    
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        
+                            <p:commandButton value="Crop" action="#{indexManagedBean.crop()}" update="cropped" type="submit"/>
+                            <h:commandButton value="Crop2" action="#{indexManagedBean.crop()}"/>
+
+                        
+
+                    </h:form>
+
+
                 </div>
             </div>
         </ui:define>
