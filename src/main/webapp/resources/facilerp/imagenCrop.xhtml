@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+
+        <cc:attribute name="bean" required="true"/>
+        <cc:attribute name="contexto" required="true"/>
+
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:outputPanel>
+
+
+            <div class="raised" style="height: 250px; width: 80%; text-align: center;vertical-align: middle;position: relative;left: 10%">
+
+
+                <p:outputPanel styleClass="imagen">
+                    <p:commandLink onclick="PF('dialogCrop').show()" rendered="#{not (cc.attrs.contexto == 'vista')}" immediate="true"
+                                   style="z-index: 2;overflow:hidden;position: absolute;top: calc(100% - 25px);left: calc(100% - 27px);"><i class="icon-edit Fs25  White PurpleBack PurpleBorder"></i>
+                    </p:commandLink>
+
+
+                    <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE" rendered="#{(cc.attrs.contexto == 'vista')}"
+                                     styleClass="imagen"
+                                     style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top:0;left:0;
+                                     border-radius: 50%;
+                                    
+                                     border: 1px solid #ccc;">
+                        <f:param name="id" value="#{cc.attrs.bean['actual']['id']}"/>
+                    </p:graphicImage>
+
+
+                    <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE" 
+                                     rendered="#{(empty productoBean.newImageName and cc.attrs.contexto == 'edicion')}"
+                                     styleClass="imagen"
+                                     style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0">
+                        <f:param name="id" value="#{cc.attrs.bean['actual']['id']}"/>
+                    </p:graphicImage>
+
+                    <p:graphicImage library="img" name="no_disponible.png"  styleClass="imagen"
+                                    style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0"
+                                    rendered="#{empty productoBean.newImageName and (cc.attrs.contexto == 'creacion')}"/>
+
+
+                    <p:graphicImage id="localCroppedImage" value="/imagens/prof/#{productoBean.newImageName}.jpg" styleClass="imagen"
+
+                                    style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0"
+                                    rendered="#{not empty productoBean.newImageName and not (cc.attrs.contexto == 'vista')}"/>  
+                </p:outputPanel>
+
+
+            </div>
+            <br></br>
+
+
+            <p:dialog widgetVar="dialogCrop" responsive="true" width="500" height="500">
+                <p:outputPanel>
+                    <p:fileUpload fileUploadListener="#{productoBean.fileUploadAction}" update="imageCropper"  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  dragDropSupport="true" auto="true" uploadLabel="Subir Archivo"/>
+
+                    <p:imageCropper value="#{productoBean.croppedImage}" image="/imagens/prof/#{productoBean.currentImageName}" initialCoords="550,200,1150,800" id="imageCropper"
+                                    boxHeight="500" boxWidth="500"/>
+                    <p:commandButton value="Cortar" action="#{productoBean.crop}" update="@(.imagen)" oncomplete="PF('dialogCrop').hide()"/>
+                </p:outputPanel>
+            </p:dialog>
+
+
+
+        </p:outputPanel>
+
+    </cc:implementation>
+</html>

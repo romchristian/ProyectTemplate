@@ -3,7 +3,8 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
 
     <f:metadata>
         <f:viewParam name="id" value="#{productoBean.id}"/>
@@ -23,10 +24,114 @@
             </div>
 
             <div class="Container100 Responsive100">
-                <div class="Card">
-                    <ui:include src="cuerpo.xhtml">
-                        <ui:param name="contexto" value="vista"/>
-                    </ui:include>
+                <div class="Card BlueBack White">
+                    <h:form  id="formABM">
+                        <p:growl id="mensajes" autoUpdate="true"/>
+
+                        <p:outputPanel id="panel">
+
+
+                            <div class="Container70 Responsive100">
+                                <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
+                                    <h:outputText value="Estado"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.estado}" styleClass="FontVoltRegular White"/>
+                                    
+                                    <h:outputText value="Empresa"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.empresa == null?'':productoBean.actual.empresa.nombre}" styleClass="FontVoltRegular White"/>
+
+                                    <h:outputText value="Nombre"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.nombre}" styleClass="FontVoltRegular White"/>
+
+
+
+                                    <h:outputText value="Código"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.codigo}" styleClass="FontVoltRegular White"/>
+
+
+                                    <h:outputText value="U.M. Stock"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" styleClass="FontVoltRegular White"/>
+
+
+                                    <h:outputText value="Precio Venta Gs"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.precioVenta}"  styleClass="FontVoltRegular White"/>
+
+
+
+                                    <h:outputText value="Precio Venta $"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.precioVentaMonedaExtranjera}" styleClass="FontVoltRegular White"/>
+
+
+                                    <h:outputText value="¿Es Inventariable?"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.inventariable == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="¿Tiene Vencimiento?"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.tieneVencimiento == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
+
+                                </p:panelGrid>
+
+
+                            </div>
+                            <div class="Container30 Responsive100 TexAlCenter">
+                                <h:outputText value="#{productoBean.actual.nombre}"  styleClass="FontVoltRegular White Fs20 TexAlCenter"/>
+                                <div class="EmptyBox10"/>
+                                <facilerp:imagenCrop  contexto="vista" bean="#{productoBean}"/>
+                                <div class="EmptyBox10"/>
+                                <h:outputText value="Stock"  styleClass="FontVoltRegular White Fs14 TexAlCenter"/><br/>
+                                <h:outputText value="#{productoBean.actual.stock !=null?productoBean.actual.stock:'0'}"  styleClass="FontVoltRegular White Fs24 TexAlCenter">
+                                    <f:convertNumber locale="#{formato.locale}"/>
+                                </h:outputText>
+                                <br/>
+                                <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}"  styleClass="FontVoltRegular White Fs14 TexAlCenter"/>
+                            </div>
+                            <div class="Container100 Responsive100">
+                                <div class="CardFooter">
+                                    <div class="ui-grid ui-grid-responsive">
+                                        <div class="ui-grid-row">
+                                            <div class="ui-grid-col-2">
+
+
+                                                <p:button value="Editar"  styleClass="Fleft BlueButton" outcome="edita">
+                                                    <f:param name="id" value="#{productoBean.actual.id}"/>
+                                                </p:button>
+
+                                            </div>
+
+                                            <div class="ui-grid-col-2">
+                                                <p:commandButton value="Activar/Inactivar" action="#{productoBean.toggleActivavion()}" styleClass="Fleft BlueButton" update=":formABM:panel">
+                                                    <p:confirm header="Confirmar" message="#{productoBean.actual.estado == 'ACTIVO'?'¿Inactivar este producto?':'¿Activar este producto?'}" icon="ui-icon-alert" />
+                                                </p:commandButton>
+                                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                    <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                                                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                </p:confirmDialog>
+                                            </div>
+                                            
+                                            <div class="ui-grid-col-2">
+                                                <p:commandButton value="Eliminar" action="#{productoBean.remove()}" styleClass="Fleft BlueButton" update=":formABM:panel">
+                                                    <p:confirm header="Confirmar eliminación" message="¿Eliminar este registro?" icon="ui-icon-alert" />
+                                                </p:commandButton>
+                                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                    <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                                                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                </p:confirmDialog>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+                        </p:outputPanel>
+
+                    </h:form>
+
+
                 </div>
             </div>
 

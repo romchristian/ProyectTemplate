@@ -8,23 +8,28 @@
     <ui:define name="subheader">
         Page Header
     </ui:define>
-    
+
     <ui:define name="content">
-        
-        <style>
-            .ui-inputfield {
-                width: 70%;
-            }
-            
-        </style>
+
+     
         <div class="Container100">
             <div class="Card TexAlCenter ">
                 <div class="CardTopic Blue">Contabilidad</div>
                 <div class="Separator"></div>
                 <br/>
+
+                <h:form enctype="multipart/form-data">
+                    <p:fileUpload fileUploadListener="#{imageCropperBean.fileUploadAction}" update="imageCropper" />
+                    <h:panelGrid columns="2">  
+                        <p:imageCropper value="#{imageCropperBean.croppedImage}" image="/imagens/prof/#{imageCropperBean.currentImageName}" initialCoords="225,75,300,125" id="imageCropper"
+                                        boxHeight="500" boxWidth="500"/>  
+                        <p:graphicImage id="localCroppedImage" value="/imagens/prof/#{imageCropperBean.newImageName}.jpg" width="150" height="128"/>  
+                    </h:panelGrid>  
+                    <p:commandButton value="Crop" action="#{imageCropperBean.crop}" update="localCroppedImage"/>  
+                </h:form> 
             </div>
         </div>
-        
+
     </ui:define>
 
 </ui:composition>

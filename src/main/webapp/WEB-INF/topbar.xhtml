@@ -11,11 +11,11 @@
     <div id="layout-topbar">
         <div id="layout-topbar-indent">
             <a id="menu-button"><i class="icon-th-menu"></i></a>
-            <a href="dashboard.xhtml"><h:graphicImage name="logo.png"  library="img" style="height: 50px;padding-left: 10px; padding-top: 5px"/></a>
+            <a href="#"><h:graphicImage name="logo.png"  library="img" style="height: 50px;padding-left: 10px; padding-top: 5px"/></a>
 
             <span class="DispInlBlock Fright" style="margin:10px 10px 0px 0px;">
                 <h:form styleClass="DispInline">
-                    <p:splitButton value="#{credencial.usuario.nombre}" styleClass="White Fs14" appendTo="@this">
+                    <p:splitButton value="Mi Cuenta" styleClass="White Fs14" appendTo="@this">
 
                         <p:menuitem value="Salir"  icon="fa fa-power-off" action="#{autenticador.logout()}"/>
                     </p:splitButton>
