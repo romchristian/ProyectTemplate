@@ -9,8 +9,7 @@
 
     <!-- INTERFACE -->
     <cc:interface>
-        <cc:attribute name="bean" required="true"/>
-        <cc:attribute name="contexto" required="true"/>
+        <cc:attribute name="value" required="true"/>
         <cc:attribute name="entidad" required="true"/>
     </cc:interface>
 
@@ -18,103 +17,17 @@
     <cc:implementation>
         <p:outputPanel>
 
-
-            <div class="raised" style="height: 100px; width: 100px; text-align: center;vertical-align: middle;position: relative">
-
-
-                <p:outputPanel rendered="#{not(cc.attrs.contexto == 'vista')}">
-                    <a href="#" id="upload_link" style="z-index: 2;overflow:hidden;position: absolute;top: 0;left: 0"><img src="#{resource['img/camera.png']}" width="28px" height="28px"/></a>
-                </p:outputPanel>
-
-                <p:graphicImage id="photo" value="#{imageResolutor.streamedImageById}" cache="FALSE" rendered="#{(cc.attrs.contexto == 'vista')}"
-                                style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0">
-                    <f:param name="id" value="#{cc.attrs.bean['actual']['id']}"/>
-                </p:graphicImage>   
+            <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE"
+                             styleClass="imagen"
+                             style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;margin: 0 auto 0 auto;
+                             border-radius: 50%;
+                             background-color: white;
+                             border: 1px solid #ccc;">
+                <f:param name="id" value="#{cc.attrs.value['id']}"/>
+                <f:param name="entidad" value="#{cc.attrs.entidad}"/>
+            </p:graphicImage>
 
 
-                <p:graphicImage  value="#{imageResolutor.streamedImageById}"    binding="#{image2}" cache="FALSE" rendered="#{(cc.attrs.contexto == 'edicion')}"
-                                 style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0">
-                    <f:param name="id" value="#{cc.attrs.bean['actual']['id']}"/>
-                </p:graphicImage>   
-
-                <p:graphicImage library="img" name="no_disponible.png"  binding="#{image}" style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0"
-                                rendered="#{(cc.attrs.contexto == 'creacion')}"/>
-
-
-            </div>
-            <br></br>
-
-            <p:fileUpload binding="#{upload}" mode="simple" id="upload"
-                          allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                          value="#{cc.attrs.bean['file']}" style="display: none"/>
-
-
-        </p:outputPanel>
-
-
-        <p:outputPanel rendered="#{(cc.attrs.contexto == 'creacion')}">
-            <script type="text/javascript">
-                function readPicture(input, output)
-                {
-                if (input.files &amp;&amp; input.files[0])
-                {
-                var reader = new FileReader();
-                reader.onload = function (e)
-                {
-                output.attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-                }
-                }
-
-                jQuery(document).ready(function () {
-
-                jQuery("#upload_link").on('click', function (e) {
-
-                e.preventDefault();
-                jQuery("[id='#{upload.clientId}']").trigger('click');
-                });
-                jQuery("[id='#{upload.clientId}']").change(
-                        function ()
-                        {
-
-                        readPicture(this, jQuery("[id='#{image.clientId}']"));
-                        });
-                });
-            </script>
-        </p:outputPanel>
-        <p:outputPanel rendered="#{(cc.attrs.contexto == 'edicion')}">
-
-            <script type="text/javascript">
-                function readPicture(input, output)
-                {
-                if (input.files &amp;&amp; input.files[0])
-                {
-                var reader = new FileReader();
-                reader.onload = function (e)
-                {
-                output.attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-                }
-                }
-
-                jQuery(document).ready(function () {
-
-                jQuery("#upload_link").on('click', function (e) {
-
-                e.preventDefault();
-                jQuery("[id='#{upload.clientId}']").trigger('click');
-                });
-                jQuery("[id='#{upload.clientId}']").change(
-                        function ()
-                        {
-
-                        readPicture(this, jQuery("[id='#{image2.clientId}']"));
-                        });
-                });
-
-            </script>
         </p:outputPanel>
     </cc:implementation>
 </html>

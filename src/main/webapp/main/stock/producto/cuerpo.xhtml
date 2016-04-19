@@ -40,9 +40,9 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Familia" for="familia" styleClass="FontVoltRegular" />
-                    <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
-                    <p:selectOneMenu value="#{productoBean.actual.unidadMedidaBase}" required="true" id="unidadMedida" rendered="#{not(contexto == 'vista')}">
-                        <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>
+                    <h:outputText value="#{productoBean.actual.familia != null?productoBean.actual.familia.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
+                    <p:selectOneMenu value="#{productoBean.actual.familia}" id="familia" rendered="#{not(contexto == 'vista')}">
+                        <f:selectItems value="#{familiaBean.itemsAvailableSelectMany}"/>
                     </p:selectOneMenu>
 
 
@@ -60,7 +60,7 @@
             <div class="Container30 Responsive100 TexAlCenter">
                 <h:outputText value="#{productoBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White Fs20 TexAlCenter"/>
                 <div class="EmptyBox10"/>
-                <facilerp:imagenCrop  contexto="#{contexto}" bean="#{productoBean}"/>
+                <facilerp:imagenCrop  contexto="#{contexto}" bean="#{productoBean}" entidad="producto"/>
             </div>
             <div class="Container100 Responsive100">
                 <facilerp:botoneraABM bean="#{productoBean}" contexto="#{contexto}" entidad="producto" update=":formABM:panel" ajax="false"/>

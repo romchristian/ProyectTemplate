@@ -9,6 +9,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Impuesto;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
+import com.ideaspymes.proyecttemplate.generico.IConImagen;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoCosto;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoProducto;
@@ -24,7 +25,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"codigo"}))
-public class Producto implements Serializable, IAuditable {
+public class Producto implements Serializable, IAuditable, IConImagen {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,11 +33,11 @@ public class Producto implements Serializable, IAuditable {
     private Long id;
     @Version
     private Long version;
-    @Listado(descripcion = "Código", mostrar = true,link = true)
-    @Filtro(descripcion = "Código",campo = "codigo",tipo = "like")
+    @Listado(descripcion = "Código", mostrar = true, link = true)
+    @Filtro(descripcion = "Código", campo = "codigo", tipo = "like")
     private String codigo;
-    @Listado(descripcion = "Nombre", mostrar = true,link = true)
-    @Filtro(descripcion = "Nombre",campo = "nombre",tipo = "like")
+    @Listado(descripcion = "Nombre", mostrar = true, link = true)
+    @Filtro(descripcion = "Nombre", campo = "nombre", tipo = "like")
     private String nombre;
     @Enumerated(EnumType.STRING)
     private TipoProducto tipoProducto;
@@ -66,8 +67,8 @@ public class Producto implements Serializable, IAuditable {
 
     private Boolean generarCodigo;
 
-    @ManyToMany
-    private List<Familia> familias;
+    @ManyToOne
+    private Familia familia;
 
     @Lob
     private byte[] imagen;
@@ -113,6 +114,14 @@ public class Producto implements Serializable, IAuditable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public Familia getFamilia() {
+        return familia;
+    }
+
+    public void setFamilia(Familia familia) {
+        this.familia = familia;
     }
 
     public Estado getEstado() {
@@ -242,17 +251,6 @@ public class Producto implements Serializable, IAuditable {
 
     public void setUnidadMedidaBase(UnidadMedida unidadMedidaBase) {
         this.unidadMedidaBase = unidadMedidaBase;
-    }
-
-    public List<Familia> getFamilias() {
-        if (familias == null) {
-            familias = new ArrayList<>();
-        }
-        return familias;
-    }
-
-    public void setFamilias(List<Familia> familias) {
-        this.familias = familias;
     }
 
     public Boolean getGenerarCodigo() {

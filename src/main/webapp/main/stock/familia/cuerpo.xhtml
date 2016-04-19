@@ -10,24 +10,39 @@
 
 
 
-    <h:form  id="formABM">
+    <h:form  id="formABM" enctype="multipart/form-data">
         <p:growl id="mensajes" autoUpdate="true"/>
-        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+        <div class="Container70 Responsive100">
+            <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
 
-            <h:outputText value="Empresa"  styleClass="FontVoltRegular"
-                          rendered="#{not(contexto == 'creacion')}"/>
-            <h:outputText value="#{familiaBean.actual.empresa == null?'':familiaBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
-                          rendered="#{not(contexto == 'creacion')}"/>
+                <h:outputText value="Empresa"  styleClass="FontVoltRegular"
+                              rendered="#{not(contexto == 'creacion')}"/>
+                <h:outputText value="#{familiaBean.actual.empresa == null?'':familiaBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
+                              rendered="#{not(contexto == 'creacion')}"/>
 
-            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
-            <h:outputText value="#{familiaBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:inputText value="#{familiaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+                <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
+                <h:outputText value="#{familiaBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{familiaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+
+                <p:outputLabel value="Nivel Padre" for="padre" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{familiaBean.actual.padre != null?familiaBean.actual.padre.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
+                <p:selectOneMenu value="#{familiaBean.actual.padre}" id="padre" rendered="#{not(contexto == 'vista')}">
+                    <f:selectItems value="#{familiaBean.itemsAvailableSelectOne}"/>
+                </p:selectOneMenu>
 
 
-        </p:panelGrid>
+            </p:panelGrid>
+        </div>
+        <div class="Container30 Responsive100">
+            <facilerp:imagenCrop  contexto="#{contexto}" bean="#{familiaBean}" entidad="familia"/>
+        </div>
+        <div class="Container100 Responsive100">
+            <facilerp:botoneraABM bean="#{familiaBean}" contexto="#{contexto}" entidad="familia" update=":formABM:panel" ajax="false"/>
+        </div>
 
-        <facilerp:botoneraABM bean="#{familiaBean}" contexto="#{contexto}" entidad="familia" update=":formABM:panel"/>
+
+
 
     </h:form>
 

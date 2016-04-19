@@ -96,7 +96,16 @@
                                         completeMethod="#{productoConsultaBean.completar}"
                                         forceSelection="true" converter="productoConverter"
                                         var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
-                                        rendered="#{not(contexto == 'vista')}"/>
+                                        rendered="#{not(contexto == 'vista')}">
+
+                            <p:column>
+                                <facilerp:imagen value="#{c}" entidad="producto"/>
+                            </p:column>
+
+                            <p:column>
+                                <h:outputText value="#{c.nombre}"/>
+                            </p:column>
+                        </p:autoComplete>
 
                         <h:outputText value="#{d.producto != null ? d.producto.nombre:''}" rendered="#{(contexto == 'vista')}"/>
                     </p:column>
@@ -110,19 +119,19 @@
                         </p:selectOneMenu>
                         <h:outputText value="#{d.unidadMedida != null?d.unidadMedida.nombre:''}" rendered="#{(contexto == 'vista')}"/>
                     </p:column>
-                    <p:column headerText="Elaboración">
+                    <p:column headerText="Elaboración" rendered="false">
                         <p:calendar value="#{d.elaboracion}" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
                         <h:outputText value="#{d.elaboracion}" rendered="#{(contexto == 'vista')}">
                             <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Vencimiento">
+                    <p:column headerText="Vencimiento" rendered="false">
                         <p:calendar value="#{d.vencimiento}" rendered="#{not(contexto == 'vista')}" locale="es" pattern="#{formato.patronFecha}"/>
                         <h:outputText value="#{d.vencimiento}" rendered="#{(contexto == 'vista')}">
                             <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="P.U">
+                    <p:column headerText="Costo">
                         <pe:inputNumber value="#{d.valor}" rendered="#{not(contexto == 'vista')}"/>
                         <h:outputText value="#{d.valor}" rendered="#{(contexto == 'vista')}"/>
                     </p:column>

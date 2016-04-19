@@ -5,7 +5,9 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
+import com.ideaspymes.proyecttemplate.stock.model.Familia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IFamiliaDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoDAO;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
@@ -24,24 +26,42 @@ import org.primefaces.model.StreamedContent;
  */
 @Named
 @SessionScoped
-public class ImageResolutor implements Serializable{
-    
+public class ImageResolutor implements Serializable {
+
     @EJB
     private IProductoDAO productoDAO;
-    
-    public StreamedContent getStreamedImageById() {
-    FacesContext context = FacesContext.getCurrentInstance();
+    @EJB
+    private IFamiliaDAO familiaDAO;
 
-    if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
-        // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
-        return new DefaultStreamedContent();
+    public StreamedContent getStreamedImageById() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return new DefaultStreamedContent();
+        } else {
+            // So, browser is requesting the image. Get ID value from actual request param.
+            String id = context.getExternalContext().getRequestParameterMap().get("id");
+            String entidad = context.getExternalContext().getRequestParameterMap().get("entidad");
+            StreamedContent R = null;
+            if (entidad != null && entidad.length() > 0) {
+                switch (entidad) {
+                    case "producto":
+                        Producto producto = productoDAO.find(Long.valueOf(id));
+                        R = new DefaultStreamedContent(new ByteArrayInputStream(producto.getImagen()));
+                        break;
+                    case "familia":
+                        Familia familia = familiaDAO.find(Long.valueOf(id));
+                        R = new DefaultStreamedContent(new ByteArrayInputStream(familia.getImagen()));
+                        break;
+                }
+            }
+
+            if (R == null) {
+                R = new DefaultStreamedContent();
+            }
+
+            return R;
+        }
     }
-    else {
-        // So, browser is requesting the image. Get ID value from actual request param.
-        String id = context.getExternalContext().getRequestParameterMap().get("id");
-        Producto producto = productoDAO.find(Long.valueOf(id));
-        System.out.println("IMAGEN EN RESOLUTOR: " + producto.getImagen());
-        return new DefaultStreamedContent(new ByteArrayInputStream(producto.getImagen()));
-    }
-}
 }

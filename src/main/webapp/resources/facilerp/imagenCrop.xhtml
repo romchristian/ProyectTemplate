@@ -12,6 +12,7 @@
 
         <cc:attribute name="bean" required="true"/>
         <cc:attribute name="contexto" required="true"/>
+        <cc:attribute name="entidad" required="true"/>
 
     </cc:interface>
 
@@ -31,30 +32,32 @@
 
                     <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE" rendered="#{(cc.attrs.contexto == 'vista')}"
                                      styleClass="imagen"
-                                     style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top:0;left:0;
+                                     style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;margin: 0 auto 0 auto;
                                      border-radius: 50%;
-                                    
+                                     background-color: white;
                                      border: 1px solid #ccc;">
                         <f:param name="id" value="#{cc.attrs.bean['actual']['id']}"/>
+                        <f:param name="entidad" value="#{cc.attrs.entidad}"/>
                     </p:graphicImage>
 
 
                     <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE" 
-                                     rendered="#{(empty productoBean.newImageName and cc.attrs.contexto == 'edicion')}"
+                                     rendered="#{(empty cc.attrs.bean.newImageName and cc.attrs.contexto == 'edicion')}"
                                      styleClass="imagen"
                                      style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0">
                         <f:param name="id" value="#{cc.attrs.bean['actual']['id']}"/>
+                        <f:param name="entidad" value="#{cc.attrs.entidad}"/>
                     </p:graphicImage>
 
                     <p:graphicImage library="img" name="no_disponible.png"  styleClass="imagen"
                                     style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0"
-                                    rendered="#{empty productoBean.newImageName and (cc.attrs.contexto == 'creacion')}"/>
+                                    rendered="#{empty cc.attrs.bean.newImageName and (cc.attrs.contexto == 'creacion')}"/>
 
 
-                    <p:graphicImage id="localCroppedImage" value="/imagens/prof/#{productoBean.newImageName}.jpg" styleClass="imagen"
+                    <p:graphicImage id="localCroppedImage" value="/imagens/prof/#{cc.attrs.bean.newImageName}.jpg" styleClass="imagen"
 
                                     style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;position:absolute;top: 0;left: 0"
-                                    rendered="#{not empty productoBean.newImageName and not (cc.attrs.contexto == 'vista')}"/>  
+                                    rendered="#{not empty cc.attrs.bean.newImageName and not (cc.attrs.contexto == 'vista')}"/>  
                 </p:outputPanel>
 
 
@@ -64,12 +67,14 @@
 
             <p:dialog widgetVar="dialogCrop" responsive="true" width="500" height="500">
                 <p:outputPanel>
-                    <p:fileUpload fileUploadListener="#{productoBean.fileUploadAction}" update="imageCropper"  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                    <p:fileUpload fileUploadListener="#{cc.attrs.bean.fileUploadAction}" update="imageCropper"  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  label="Elegir Foto"
                                   dragDropSupport="true" auto="true" uploadLabel="Subir Archivo"/>
 
-                    <p:imageCropper value="#{productoBean.croppedImage}" image="/imagens/prof/#{productoBean.currentImageName}" initialCoords="550,200,1150,800" id="imageCropper"
+
+                    <p:imageCropper value="#{cc.attrs.bean.croppedImage}" image="/imagens/prof/#{cc.attrs.bean.currentImageName}" initialCoords="225,75,300,125" id="imageCropper"
                                     boxHeight="500" boxWidth="500"/>
-                    <p:commandButton value="Cortar" action="#{productoBean.crop}" update="@(.imagen)" oncomplete="PF('dialogCrop').hide()"/>
+                    <p:commandButton value="Cortar" action="#{cc.attrs.bean.crop}" update="@(.imagen)" oncomplete="PF('dialogCrop').hide()"/>
                 </p:outputPanel>
             </p:dialog>
 

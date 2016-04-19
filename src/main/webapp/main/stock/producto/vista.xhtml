@@ -59,6 +59,9 @@
                                     <h:outputText value="#{productoBean.actual.inventariable == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
                                     <h:outputText value="¿Tiene Vencimiento?"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.tieneVencimiento == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
+                                    
+                                    <h:outputText value="Familia"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.familia != null?productoBean.actual.familia.nombre:''}" styleClass="FontVoltRegular White"/>
 
                                 </p:panelGrid>
 
@@ -67,8 +70,8 @@
                             <div class="Container30 Responsive100 TexAlCenter">
                                 <h:outputText value="#{productoBean.actual.nombre}"  styleClass="FontVoltRegular White Fs20 TexAlCenter"/>
                                 <div class="EmptyBox10"/>
-                                <facilerp:imagenCrop  contexto="vista" bean="#{productoBean}"/>
-                                <div class="EmptyBox10"/>
+                                <facilerp:imagenCrop  contexto="vista" bean="#{productoBean}" entidad="producto"/>
+                                <div class="EmptyBox50"/>
                                 <h:outputText value="Stock"  styleClass="FontVoltRegular White Fs14 TexAlCenter"/><br/>
                                 <h:outputText value="#{productoBean.actual.stock !=null?productoBean.actual.stock:'0'}"  styleClass="FontVoltRegular White Fs24 TexAlCenter">
                                     <f:convertNumber locale="#{formato.locale}"/>

@@ -8,6 +8,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
+import com.ideaspymes.proyecttemplate.generico.IConImagen;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
 import java.util.Date;
@@ -19,7 +20,7 @@ import javax.persistence.*;
  * @author cromero
  */
 @Entity
-public class Familia implements Serializable, IAuditable {
+public class Familia implements Serializable, IAuditable, IConImagen {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,16 +29,15 @@ public class Familia implements Serializable, IAuditable {
     private Long id;
     @Version
     private Long version;
-    @Listado(descripcion = "Nombre", mostrar = true,link = true)
-    @Filtro(descripcion = "Nombre",campo = "nombre",tipo = "like")
+    @Listado(descripcion = "Nombre", mostrar = true, link = true)
+    @Filtro(descripcion = "Nombre", campo = "nombre", tipo = "like")
     private String nombre;
     private String cod;
+    @ManyToOne
+    private Familia padre;
 
     @Lob
     private byte[] imagen;
-
-    @ManyToMany(mappedBy = "familias")
-    private List<Producto> productos;
 
     @ManyToOne
     private Empresa empresa;
@@ -95,20 +95,20 @@ public class Familia implements Serializable, IAuditable {
         this.nombre = nombre;
     }
 
+    public Familia getPadre() {
+        return padre;
+    }
+
+    public void setPadre(Familia padre) {
+        this.padre = padre;
+    }
+
     public Estado getEstado() {
         return estado;
     }
 
     public void setEstado(Estado estado) {
         this.estado = estado;
-    }
-
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
     }
 
     public byte[] getImagen() {
