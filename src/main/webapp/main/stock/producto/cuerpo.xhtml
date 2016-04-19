@@ -39,15 +39,13 @@
                         <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>
                     </p:selectOneMenu>
 
+                    <p:outputLabel value="Familia" for="familia" styleClass="FontVoltRegular" />
+                    <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
+                    <p:selectOneMenu value="#{productoBean.actual.unidadMedidaBase}" required="true" id="unidadMedida" rendered="#{not(contexto == 'vista')}">
+                        <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>
+                    </p:selectOneMenu>
 
-                    <p:outputLabel value="Precio Ventas Gs" for="precioVenta" styleClass="FontVoltRegular" />
-                    <h:outputText value="#{productoBean.actual.precioVenta}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
-                    <p:inputText value="#{productoBean.actual.precioVenta}" required="true" id="precioVenta" rendered="#{not(contexto == 'vista')}"/>
 
-
-                    <p:outputLabel value="Precio Ventas U$" for="precioVentaMonedaExt" styleClass="FontVoltRegular" />
-                    <h:outputText value="#{productoBean.actual.precioVentaMonedaExtranjera}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
-                    <p:inputText value="#{productoBean.actual.precioVentaMonedaExtranjera}"  id="precioVentaMonedaExt" rendered="#{not(contexto == 'vista')}"/>
 
                     <p:spacer/>
                     <p:outputPanel>
