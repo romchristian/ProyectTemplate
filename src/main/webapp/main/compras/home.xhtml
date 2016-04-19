@@ -4,48 +4,208 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-
-
     <ui:decorate template="/main/util/principal.xhtml">
         <ui:define name="content">
-            <div class="Container100">
-                <div class="Card TexAlCenter ">
-                    <div class="CardTopic Blue">Compras</div>
-                    <div class="Separator"></div>
-                    <br/>
 
-<!--http://www.jqueryrain.com/demo/jquery-crop-image-plugin/-->
-<!--
-                    <h:form  id="formUpload" enctype="multipart/form-data">
-                        <p:outputPanel id="panelAdjunto">
-                            <p:fileUpload fileUploadListener="{indexManagedBean.handleFileUpload}" mode="advanced"
-                                          rendered="{(empty indexManagedBean.imagemTemporaria)}"
-                                          label="Elegir Archivo"
-                                          update="panelAdjunto :formCrop:panelArchivo" auto="true" sizeLimit="10000000" allowTypes="/(\.|\/)(png|jpeg|jpg|gif)$/" />
+
+
+            <style>
+
+
+                .rotate90 {
+                    transform: rotate(90deg) translateY(-100%);
+                    -webkit-transform: rotate(90deg) translateY(-100%);
+                    -ms-transform: rotate(90deg) translateY(-100%);
+                }
+                .rotate180{
+                    transform: rotate(180deg) translate(-100%, -100%);
+                    -webkit-transform: rotate(180deg) translate(-100%, -100%);
+                    -ms-transform: rotate(180deg) translateX(-100%, -100%);
+                }
+                .rotate270  {
+                    transform: rotate(270deg) translateX(-100%);
+                    -webkit-transform: rotate(270deg) translateX(-100%);
+                    -ms-transform: rotate(270deg) translateX(-100%);
+                }
+
+                .imageBox
+                {
+                    position: relative;
+                    height: 400px;
+                    width: 400px;
+                    border:1px solid #aaa;
+                    background: #fff;
+                    overflow: hidden;
+                    background-repeat: no-repeat;
+                    cursor:move;
+                }
+
+                .imageBox .thumbBox
+                {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 200px;
+                    height: 200px;
+                    margin-top: -100px;
+                    margin-left: -100px;
+                    box-sizing: border-box;
+                    border: 1px solid rgb(102, 102, 102);
+                    box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+                    background: none repeat scroll 0% 0% transparent;
+                }
+
+                .imageBox .spinner
+                {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    text-align: center;
+                    line-height: 400px;
+                    background: rgba(0,0,0,0.7);
+                }
+                .container
+                {
+                    width: 400px;
+                    height: 400px;
+                }
+                .action
+                {
+                    width: 400px;
+                    height: 30px;
+                    margin: 10px 0;
+                }
+                .cropped
+                {
+
+                }
+            </style>
+
+            <script src="http://yui.yahooapis.com/3.17.2/build/yui/yui-min.js"></script>
+            <h:outputScript name="cropbox.js" library="js" />
+
+            <h:form>
+
+
+
+                <p:outputPanel>
+
+
+                    <div class="raised" style="height: 100px; width: 100px; text-align: center;vertical-align: middle;position: relative">
+
+
+                        <p:outputPanel>
+                            <p:commandLink id="upload_link" style="z-index: 2;overflow:hidden;position: absolute;top: 0;left: 0"
+                                           onclick="PF('dialogImagen').show()"><img src="#{resource['img/camera.png']}" width="28px" height="28px"/>
+                            </p:commandLink>
                         </p:outputPanel>
 
-                    </h:form>-->
-
-                    <h:form  id="formCrop">
-                        
-                            <h:panelGrid columns="2" >
-                                <p:imageCropper value="#{indexManagedBean.croppedImage}" image="/upload/comando.png"
-                                                initialCoords="225,75,300,125" boxHeight="500" boxWidth="500" />
-                                <h:panelGroup id="cropped">
-                                    
-                                </h:panelGroup>
-                            </h:panelGrid>
-                        
-                            <p:commandButton value="Crop" action="#{indexManagedBean.crop()}" update="cropped" type="submit"/>
-                            <h:commandButton value="Crop2" action="#{indexManagedBean.crop()}"/>
-
-                        
-
-                    </h:form>
+                        <p:graphicImage library="img" name="no_disponible.png"  binding="#{image}" style="max-width: 100%;max-height: 100%;vertical-align: middle;z-index: 1;"/>
 
 
-                </div>
-            </div>
+                    </div>
+                    <br></br>
+
+                    <p:fileUpload binding="#{upload}" mode="simple" id="upload"
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  value="#{cc.attrs.bean['file']}" style="display: none"/>
+
+
+                </p:outputPanel>
+
+
+                <p:dialog widgetVar="dialogImagen">
+                    <p:outputPanel>
+                        <h:panelGrid columns="2">
+                            <p:outputPanel>
+                                <div class="container">
+                                    <div class="imageBox">
+                                        <div class="thumbBox"></div>
+                                        <div class="spinner" style="display: none">Loading...</div>
+                                    </div>
+                                    <div class="action">
+                                        <input type="file" id="file" style="float:left; width: 250px"/>
+                                        <input type="button" id="btnCrop" value="Crop" style="float: right"/>
+                                        <input type="button" id="btnZoomIn" value="+" style="float: right"/>
+                                        <input type="button" id="btnZoomOut" value="-" style="float: right"/>
+                                        <input type="button" id="btnRotate" value="R" style="float: right"/>
+                                    </div>
+
+                                </div>
+                            </p:outputPanel>
+
+                            <p:outputPanel>
+                                <div class="cropped">
+
+                                </div>
+                            </p:outputPanel>
+                        </h:panelGrid>        
+
+                    </p:outputPanel>
+                </p:dialog>
+
+
+
+
+                <script type="text/javascript">
+
+                    function readPicture(output, img,cropper)
+                    {
+
+                        input = jQuery("[id='#{upload.clientId}']");
+                        input. = cropper.image;
+                        var reader = new FileReader();
+
+                        reader.onload = function (e)
+                        {
+                            output.attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+
+                        //output.attr('src', img);
+                        PF('dialogImagen').hide();
+
+                    }
+                    YUI().use('node', 'crop-box', function (Y) {
+                        var options =
+                                {
+                                    imageBox: '.imageBox',
+                                    thumbBox: '.thumbBox',
+                                    spinner: '.spinner',
+                                    imgSrc: 'avatar.png'
+                                }
+                        var cropper = new Y.cropbox(options);
+                        Y.one('#file').on('change', function () {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                options.imgSrc = e.target.result;
+                                cropper = new Y.cropbox(options);
+                            }
+                            reader.readAsDataURL(this.get('files')._nodes[0]);
+                            this.get('files')._nodes = [];
+                        })
+                        Y.one('#btnCrop').on('click', function () {
+                            var img = cropper.getDataURL()
+                            //Y.one('.cropped').append('<img src="' + img + '"/>');
+                            readPicture(jQuery("[id='#{image.clientId}']"), img,cropper);
+
+                        })
+                        Y.one('#btnZoomIn').on('click', function () {
+                            cropper.zoomIn();
+                        })
+                        Y.one('#btnZoomOut').on('click', function () {
+                            cropper.zoomOut();
+                        })
+                        Y.one('#btnRotate').on('click', function () {
+                            cropper.rotate();
+                        })
+                    })
+                </script>
+
+            </h:form>
+
         </ui:define>
 
     </ui:decorate>
