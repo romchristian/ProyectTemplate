@@ -10,6 +10,7 @@ import com.ideaspymes.proyecttemplate.generico.JsfUtil;
 import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.web.converters.ComprobanteStockConverter;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
+import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -29,6 +30,7 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
 
     @EJB
     private IComprobanteStockDAO ejb;
+    private Producto productoElegido;
 
     @Override
     public AbstractDAO<ComprobanteStock> getEjb() {
@@ -53,6 +55,14 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
             JsfUtil.addErrorMessage(ex.getMessage());
             Logger.getLogger(ComprobanteStockBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Producto getProductoElegido() {
+        return productoElegido;
+    }
+
+    public void setProductoElegido(Producto productoElegido) {
+        this.productoElegido = productoElegido;
     }
 
 }

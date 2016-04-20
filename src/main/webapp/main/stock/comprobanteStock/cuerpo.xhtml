@@ -79,6 +79,23 @@
 
 
             <div class="EmptyBox20"></div>
+
+            <p:autoComplete value="#{comprobanteStockBean.productoElegido}"
+                            style="width: 100%"
+                            completeMethod="#{productoConsultaBean.completar}"
+                            forceSelection="true" converter="productoConverter"
+                            var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
+                            rendered="#{not(contexto == 'vista')}">
+
+                <p:column style="width: 10%">
+                    <facilerp:imagen value="#{c}" entidad="producto"/>
+                </p:column>
+
+                <p:column style="width: 90%">
+                    <h:outputText value="#{c.nombre}"/>
+                </p:column>
+            </p:autoComplete>
+
             <div class="NoIndent NoPadding">
 
 
@@ -98,11 +115,11 @@
                                         var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
                                         rendered="#{not(contexto == 'vista')}">
 
-                            <p:column>
+                            <p:column style="width: 40%">
                                 <facilerp:imagen value="#{c}" entidad="producto"/>
                             </p:column>
 
-                            <p:column>
+                            <p:column style="width: 60%">
                                 <h:outputText value="#{c.nombre}"/>
                             </p:column>
                         </p:autoComplete>
