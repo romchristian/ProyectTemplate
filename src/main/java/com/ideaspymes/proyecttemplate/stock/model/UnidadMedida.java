@@ -32,7 +32,7 @@ public class UnidadMedida implements Serializable, IAuditable {
     private Long version;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private Empresa empresa;
 
     //Auditoria

@@ -16,16 +16,46 @@ public class Columna {
     private String tipo;
     private boolean link;
     private boolean entidad;
+    private boolean enumeracion;
     private String campoDescripcion;
+    private String outcome;
+    private String modulo;
     
 
-    public Columna(String descripcion,String campo,String tipo, boolean link, boolean entidad, String campoDescripcion) {
+    public Columna(String descripcion, String campo, String tipo, boolean link, boolean entidad, String campoDescripcion, String modulo, boolean enumeracion) {
         this.campo = campo;
         this.descripcion = descripcion;
         this.tipo = tipo;
         this.link = link;
         this.entidad = entidad;
         this.campoDescripcion = campoDescripcion;
+        this.modulo = modulo;
+        this.outcome = "/main/" + modulo + "/" + campo + "/vista";
+        this.enumeracion = enumeracion;
+    }
+
+    public boolean isEnumeracion() {
+        return enumeracion;
+    }
+
+    public void setEnumeracion(boolean enumeracion) {
+        this.enumeracion = enumeracion;
+    }
+
+    public String getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(String modulo) {
+        this.modulo = modulo;
+    }
+
+    public String getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(String outcome) {
+        this.outcome = outcome;
     }
 
     public boolean isEntidad() {

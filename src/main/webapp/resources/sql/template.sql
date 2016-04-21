@@ -9,8 +9,8 @@ INSERT INTO usuario (id, estado, fecharegitro, fechaultimamodificacion, nombre, 
 -- Data for Name: empresa; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (1, NULL, 'España', NULL, NULL, 'sdasd', NULL, false, 'ACTIVO', '2016-03-23 17:52:35.736', NULL, 'Codas Vuyk S.A', NULL, NULL, NULL, '1234564', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
-INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (2, NULL, 'Artigas', NULL, NULL, '1231231', NULL, false, 'ACTIVO', '2016-03-28 12:25:53.37', NULL, 'TABACOS S.A.', NULL, NULL, NULL, '123456', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
+INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (1, NULL, 'España', NULL, NULL, 'sdasd', NULL, false, 'ACTIVO', '2016-03-23 17:52:35.736', NULL, 'Mburuvicha Roga', NULL, NULL, NULL, '1234564', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
+--INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (2, NULL, 'Artigas', NULL, NULL, '1231231', NULL, false, 'ACTIVO', '2016-03-28 12:25:53.37', NULL, 'TABACOS S.A.', NULL, NULL, NULL, '123456', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
 
 
 --
@@ -57,7 +57,7 @@ INSERT INTO tipodocumento (id, estado, fecharegitro, fechaultimamodificacion, no
 
 
 INSERT INTO public.deposito(id, estado, fecharegitro, fechaultimamodificacion, nombre, tipodeposito,usuarioultimamodificacion, version, empresa_id, sucursal_id)
-    VALUES (1, 'ACTIVO', now(), null, 'Deposito Principal', 'NORMAL', 'admin', 1, 1, null);
+    VALUES (1, 'ACTIVO', now(), null, 'Mburuvicha Roga', 'NORMAL', 'admin', 1, 1, null);
 
 INSERT INTO public.deposito(id, estado, fecharegitro, fechaultimamodificacion, nombre, tipodeposito,usuarioultimamodificacion, version, empresa_id, sucursal_id)
     VALUES (2, 'ACTIVO', now(), null, 'VENTA', 'VENTA', 'admin', 1, 1, null);
@@ -125,7 +125,7 @@ SELECT pg_catalog.setval('ejemploconsucursal_id_seq', 1, false);
 -- Name: empresa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('empresa_id_seq', 2, true);
+SELECT pg_catalog.setval('empresa_id_seq', 1, true);
 
 
 --
@@ -221,10 +221,11 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (9, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/unidadMedida/listado.xhtml', 'Unidad de Medida', 2, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (10, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/familia/listado.xhtml', 'Familia', 2, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (12, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/comprobanteStock/listado.xhtml', 'Comprobante de Stock', 5, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (13, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/loteExistencia/listado.xhtml', 'Lote de Existencia', 5, NULL);
+--INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (13, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/loteExistencia/listado.xhtml', 'Lote de Existencia', 5, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (14, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/deposito/listado.xhtml', 'Depósito', 5, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (15, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/cotizacion/listado.xhtml', 'Cotización', 4, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (16, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/productoUnidadMedida/listado.xhtml', 'Producto X U.M. Conf.', 2, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (17, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/movimientoStock/listado.xhtml', 'Movimientos', 5, NULL);
 
 --
 -- TOC entry 2320 (class 0 OID 0)
@@ -287,7 +288,7 @@ SELECT pg_catalog.setval('tipodocumento_id_seq', 3, true);
 --
 
 INSERT INTO usuario_empresa (empresa_id, usuarios_id) VALUES (1, 1);
-INSERT INTO usuario_empresa (empresa_id, usuarios_id) VALUES (2, 1);
+--INSERT INTO usuario_empresa (empresa_id, usuarios_id) VALUES (2, 1);
 
 
 --

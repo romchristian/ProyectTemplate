@@ -41,7 +41,7 @@ public class Deposito implements Serializable, IAuditable, IConSucursal {
     @Listado(descripcion = "Nombre", mostrar = true, link = true)
     @Filtro(campo = "nombre", descripcion = "Nombre", tipo = "like")
     private String nombre;
-    @Listado(descripcion = "Nombre", mostrar = true,entidad = true,campoDescripcion = "label")
+    @Listado(descripcion = "Nombre", mostrar = true,enumeracion = true,campoDescripcion = "label")
     @Enumerated(EnumType.STRING)
     private TipoDeposito tipoDeposito;
 

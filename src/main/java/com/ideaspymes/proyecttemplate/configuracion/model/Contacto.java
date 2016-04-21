@@ -44,11 +44,11 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     private String nombre;
     @ManyToOne
     @Filtro(descripcion = "Tipo", tipo = "selectOne", campo = "tipoContacto", campoDescripcion = "nombre")
-    @Listado(descripcion = "Tipo", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Tipo", mostrar = true, entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
     private TipoContacto tipoContacto;
     @ManyToOne
     @Filtro(descripcion = "Tipo Documento", tipo = "selectOne", campo = "tipoDocumento", campoDescripcion = "nombre")
-    @Listado(descripcion = "Tipo Documento", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Tipo Documento", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private TipoDocumento tipoDocumento;
     @Listado(descripcion = "Id Documento", mostrar = true)
     @Filtro(descripcion = "Id Documento", tipo = "like", campo = "documentoId")
@@ -60,18 +60,18 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
 
     @ManyToOne
     @Filtro(descripcion = "Estado Civil", tipo = "selectOne", campo = "estadoCivil", campoDescripcion = "nombre")
-    @Listado(descripcion = "Estado Civil", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Estado Civil", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private EstadoCivil estadoCivil;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNacimiento;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private Empresa empresa;
 
     @ManyToOne
-    @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private Sucursal sucursal;
     
     

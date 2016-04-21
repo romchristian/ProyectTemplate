@@ -33,6 +33,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
 /**
@@ -74,7 +75,7 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     @ManyToOne
     private Usuario resposable;
 
-    @Listado(descripcion = "Estado Comprobate", mostrar = true,entidad = true, campoDescripcion = "label")
+    @Listado(descripcion = "Estado Comprobate", mostrar = true, enumeracion = true, campoDescripcion = "label")
     @Enumerated(EnumType.STRING)
     private EstadoComprobanteStock estadoComprobate;
 
@@ -88,8 +89,22 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
 
     private String usuarioUltimaModificacion;
 
+    @Transient
+    private String descripcion;
+
     public ComprobanteStock() {
         this.estadoComprobate = EstadoComprobanteStock.PENDIENTE_CONFIRMACION;
+    }
+
+    public String getDescripcion() {
+        if (id != null && tipo != null) {
+            descripcion = tipo.getLabel() + ", Comp. Stock # " + id;
+        }
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override

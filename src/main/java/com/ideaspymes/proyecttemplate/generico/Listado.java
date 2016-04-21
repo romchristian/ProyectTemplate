@@ -33,6 +33,12 @@ public @interface Listado {
     @Nonbinding
     String campoDescripcion() default "";
 
+    @Nonbinding
+    String campo() default "";
+
+    @Nonbinding
+    String modulo() default "";
+
     /**
      * Defines if value for the given key must be defined.
      *
@@ -43,8 +49,11 @@ public @interface Listado {
 
     @Nonbinding
     boolean link() default false;
-    
+
     @Nonbinding
     boolean entidad() default false;
+
+    @Nonbinding
+    boolean enumeracion() default false;
 
 }

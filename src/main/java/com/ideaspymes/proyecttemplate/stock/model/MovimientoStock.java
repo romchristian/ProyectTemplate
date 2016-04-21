@@ -8,8 +8,11 @@ package com.ideaspymes.proyecttemplate.stock.model;
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
+import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.FiltroGenerico;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
+import com.ideaspymes.proyecttemplate.generico.Listado;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoMovimientoStock;
 
 import java.io.Serializable;
@@ -37,23 +40,44 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     private Long id;
     @Version
     private Long version;
+
+    @Listado(descripcion = "Fecha", mostrar = true, link = true)
+    @Filtro(campo = "fecha", descripcion = "Fecha", tipo = FiltroGenerico.TIPO_RANGO_FECHA)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fecha;
+
+    @Listado(descripcion = "Tipo", mostrar = true, enumeracion = true, campoDescripcion = "label")
     @Enumerated(EnumType.STRING)
     private TipoMovimientoStock tipo;
+    
+    @Listado(descripcion = "Depósito", entidad = true, mostrar = true, campoDescripcion = "nombre",modulo = "stock")
+    @Filtro(descripcion = "Depósito", campo = "deposito", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
+    @ManyToOne
+    private Deposito deposito;
+
+    @Listado(descripcion = "Producto", entidad = true, mostrar = true, campoDescripcion = "nombre",modulo = "stock")
+    @Filtro(descripcion = "Producto", campo = "producto", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_AUTOCOMPLETE)
     @ManyToOne
     private Producto producto;
-    @ManyToOne
-    private UnidadMedida unidadMedida;
+
+    @Listado(descripcion = "Cant.", mostrar = true)
     private Double cantidad;
 
     @ManyToOne
-    private UnidadMedida unidadMedidaStock;
+    @Listado(descripcion = "U.M", entidad = true, mostrar = true, campoDescripcion = "nombre",modulo = "stock")
+    @Filtro(descripcion = "U.M", campo = "unidadMedida", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
+    private UnidadMedida unidadMedida;
+    @Listado(descripcion = "Cant. Stock", mostrar = true)
     private Double cantidadStock;
     @ManyToOne
-    private ComprobanteStock comprobanteStock;
+    @Listado(descripcion = "U.M Stock", entidad = true, mostrar = true, campo = "unidadMedida",campoDescripcion = "nombre",modulo = "stock")
+    private UnidadMedida unidadMedidaStock;
+
     @ManyToOne
-    private Deposito deposito;
+    @Listado(descripcion = "Nro. Comprobante Stock", entidad = true, mostrar = true, campoDescripcion = "descripcion",modulo = "stock")
+    private ComprobanteStock comprobanteStock;
+
+    
 
     @ManyToOne
     private Empresa empresa;
@@ -69,6 +93,7 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
+    @Listado(descripcion = "Usuario", mostrar = true)
     private String usuarioUltimaModificacion;
 
     public abstract Double cantidadAAfectar();

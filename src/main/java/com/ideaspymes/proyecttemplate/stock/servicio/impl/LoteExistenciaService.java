@@ -18,7 +18,6 @@ import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.model.ProductoUnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ILoteExistenciaService;
-import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IMovimientoStockDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoUnidadMedidaDAO;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +28,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IMovimientoStockService;
 
 /**
  *
@@ -41,7 +41,7 @@ public class LoteExistenciaService implements ILoteExistenciaService {
     @EJB(beanName = "ABMServiceBean")
     private ABMService abmService;
     @EJB
-    private IMovimientoStockDAO movimientoStockDAO;
+    private IMovimientoStockService movimientoStockDAO;
     @EJB
     private IProductoUnidadMedidaDAO productoUnidadMedidaDAO;
 

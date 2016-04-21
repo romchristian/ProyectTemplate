@@ -76,7 +76,7 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     private List<Ingrediente> ingredientes;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private Empresa empresa;
 
     //Auditoria

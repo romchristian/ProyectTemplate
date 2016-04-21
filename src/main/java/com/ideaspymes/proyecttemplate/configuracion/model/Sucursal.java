@@ -48,7 +48,7 @@ public class Sucursal implements Serializable, IAuditable {
 
     @ManyToOne
     @Filtro(descripcion = "Empresa", tipo = "autocomplete", campo = "empresa", campoDescripcion = "nombre")
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private Empresa empresa;
 
     @Enumerated(EnumType.STRING)

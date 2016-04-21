@@ -6,111 +6,112 @@ package com.ideaspymes.proyecttemplate.stock.servicio.impl;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
-import com.ideaspymes.proyecttemplate.generico.IAuditable;
-import com.ideaspymes.proyecttemplate.stock.model.Deposito;
-import com.ideaspymes.proyecttemplate.stock.model.Existencia;
+import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
+import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStock;
-import com.ideaspymes.proyecttemplate.stock.model.Producto;
-import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IMovimientoStockDAO;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.persistence.Query;
 
 /**
  *
  * @author christian
  */
 @Stateless
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class MovimientoStockDAO implements IMovimientoStockDAO {
 
-    @EJB
-    private ABMService abms;
+    @EJB(beanName = "ABMServiceBean")
+    private ABMService abmService;
 
     @Override
-    public void creaMovimientoStock(MovimientoStock m) {
-        System.out.println("Invoque creaMovimiento");
-        generaAuditoria(m);
-        
-        Producto p = m.getProducto();
-        abms.getEM().merge(m);
-        System.out.println("Invoque creaMovimiento");
-        afectaStockExistencia(m.getDeposito(), p, m.cantidadAAfectar(), p.getUnidadMedidaBase());
+    public MovimientoStock create(MovimientoStock entity) {
+        return abmService.create(entity);
     }
 
-    private void afectaStockExistencia(Deposito d, Producto p, Double cantidadAAfectar, UnidadMedida um) {
-        System.out.println("Invoque afectaExistencia :  Deposito: " + d + " Producto : " + p + " UnidadMedida: " + um + " Cantidad : " + cantidadAAfectar);
-        if (p != null && d != null && cantidadAAfectar != null && um != null) {
-            Existencia e = null;
-            System.out.println("Estoy dentro");
-            try {
-                e = (Existencia) abms.getEM().createQuery("Select e from Existencia e WHERE e.deposito= :deposito and e.producto= :producto and e.unidadMedida= :unidadmedida")
-                        .setParameter("producto", p)
-                        .setParameter("deposito", d)
-                        .setParameter("unidadmedida", um)
-                        .getSingleResult();
+    @Override
+    public MovimientoStock edit(MovimientoStock entity) {
+        return abmService.update(entity);
+    }
 
-            } catch (Exception ex) {
-                System.out.println("No se encontro existencia: " + ex.getMessage());
+    @Override
+    public void remove(MovimientoStock entity) {
+        abmService.delete(entity);
+    }
+
+    @Override
+    public MovimientoStock find(Object id) {
+        return abmService.find(id, MovimientoStock.class);
+    }
+
+    @Override
+    public List<MovimientoStock> findAll() {
+        return abmService.getEM().createQuery("select obj from MovimientoStock obj WHERE OBJ.estado = ?1")
+                .setParameter(1, Estado.ACTIVO)
+                .getResultList();
+    }
+
+    @Override
+    public List<MovimientoStock> findAll(String query, QueryParameter params) {
+        return abmService.findByQuery(query, params.parameters());
+    }
+
+    @Override
+    public List<MovimientoStock> findAll(String query, QueryParameter params, int first, int pageSize) {
+        return abmService.findByQuery(query, params.parameters(), first, pageSize);
+    }
+
+    @Override
+    public List<MovimientoStock> findFilter(String consulta, int first, int pageSize) {
+        List<MovimientoStock> items = new ArrayList<>();
+        if (consulta != null) {
+            System.out.println("Consulta: " + consulta);
+            Query query = abmService.getEM().createNativeQuery(consulta, MovimientoStock.class);
+            if (first > 0) {
+                query.setFirstResult(first);
             }
 
-            if (e == null) {
-                e = new Existencia();
-                e.setDeposito(d);
-                e.setProducto(p);
-                e.setCantidad(cantidadAAfectar);
-                e.setUnidadMedida(um);
-                generaAuditoria(e);
-                System.out.println("No Existe e : " + e.getCantidad());
-            } else {
-
-                Double existenciaActual = e.getCantidad() == null ? 0d : e.getCantidad();
-                e.setCantidad(existenciaActual + cantidadAAfectar);
-                System.out.println("Existe e : " + e.getCantidad());
-                generaAuditoria(e);
+            if (pageSize > 0) {
+                query.setMaxResults(pageSize);
             }
 
-            abms.getEM().merge(e);
-            System.out.println("Hizo el merge: " + e.getCantidad());
-
-            afectaStock(p, um);
+            items = (List<MovimientoStock>) query.getResultList();
 
         }
+        return items;
     }
 
-    private void afectaStock(Producto p, UnidadMedida um) {
-        if (p != null && um != null) {
-            Double cantidadAcumulada = 0d;
-            try {
-                cantidadAcumulada = (Double) abms.getEM()
-                        .createQuery("Select sum(e.cantidad) from Existencia e where e.producto= :producto and e.unidadMedida= :unidadmedida")
-                        .setParameter("producto", p)
-                        .setParameter("unidadmedida", um)
-                        .getSingleResult();
+    @Override
+    public List<MovimientoStock> completar(String matchText) {
+        List<MovimientoStock> sugerencias = new ArrayList<>();
 
-                p = abms.getEM().find(Producto.class, p.getId());
-
-                p.setStock(cantidadAcumulada);
-                generaAuditoria(p);
-                abms.getEM().merge(p);
-
-                System.out.println("Afecte stock: " + cantidadAcumulada);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
+        if (matchText != null && matchText.length() > 0) {
+            String consulta = "select * from movimientostock where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
+            Query query = abmService.getEM().createNativeQuery(consulta, MovimientoStock.class);
+            query.setMaxResults(AbstractDAO.AUTOCOMPLETE_MAX_RESULS);
+            sugerencias = query.getResultList();
         }
+
+        return sugerencias;
     }
 
-    private void generaAuditoria(IAuditable d) {
-        d.setFechaUltimaModificacion(new Date());
-        d.setEstado(Estado.ACTIVO);
-        d.setEmpresa(abms.getCredencial().getEmpresa());
-        String usuario = abms.getCredencial().getUsuario() != null ? abms.getCredencial().getUsuario().getNombre() + ", " + abms.getCredencial().getUsuario().getUserName() : "";
-        d.setUsuarioUltimaModificacion(usuario);
+    @Override
+    public int countFilter(String consulta) {
+        int R = 0;
+
+        try {
+            Query query = abmService.getEM().createNativeQuery(consulta);
+            R = ((Long) query.getSingleResult()).intValue();
+
+        } catch (Exception e) {
+        }
+
+        return R;
     }
 
 }

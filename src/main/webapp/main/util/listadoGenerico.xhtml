@@ -69,13 +69,13 @@
 
 
 
-                            <p:link outcome="nuevo" title="Crear Nuevo" style="margin-left: 10px"><i class="fa fa-plus btn btn-default Fs18"
+                            <p:link outcome="nuevo" title="Crear Nuevo" style="margin-left: 10px" rendered="#{sololectura == 'true'?false:true}"><i class="fa fa-plus btn btn-default Fs18"
                                                                                                      id="btn_plus"
                                                                                                      onmouseover="document.getElementById('btn_plus').setAttribute('style', 'color:#0277BD')"
                                                                                                      onmouseout="document.getElementById('btn_plus').setAttribute('style', '')"></i>
                             </p:link>
 
-                            <p:commandLink ajax="false" title="Imprimr"><i class="fa fa-print btn btn-default Fs18"
+                            <p:commandLink ajax="false" title="Imprimir"><i class="fa fa-print btn btn-default Fs18"
                                                                            id="btn_print"
                                                                            onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
                                                                            onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
@@ -230,11 +230,14 @@
                             </h:outputText>
 
                             <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.util.Date')}">
-                                <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                                <f:convertDateTime locale="#{formato.locale}"  pattern="dd/MM/yyyy HH:mm" timeZone="America/Asuncion"/>
                             </h:outputText>
 
-                            <h:outputText value="#{o[column.campo][column.campoDescripcion]}" rendered="#{not (column.link) and (column.entidad)}"/>
+                            <h:outputText value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.enumeracion)}"/>
 
+                             <p:link outcome="#{column.outcome}" value="#{o[column.campo][column.campoDescripcion]}" rendered="#{not(column.link) and (column.entidad)}">
+                                <f:param name="id" value="#{o[column.campo]['id']}"/>
+                            </p:link>
 
                             <p:link outcome="vista" value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.link) and (column.entidad)}">
                                 <f:param name="id" value="#{o['id']}"/>
@@ -247,7 +250,7 @@
                             <p:link outcome="vista" rendered="#{(column.link) and (column.tipo=='java.util.Date')}">
 
                                 <h:outputText value="#{o[column.campo]}">
-                                    <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}"/>
+                                    <f:convertDateTime locale="#{formato.locale}" pattern="dd/MM/yyyy HH:mm" timeZone="America/Asuncion"/>
                                 </h:outputText>
 
                                 <f:param name="id" value="#{o['id']}"/>

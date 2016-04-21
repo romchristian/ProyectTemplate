@@ -38,7 +38,7 @@ public class Cotizacion implements Serializable, IAuditable {
     @Temporal(javax.persistence.TemporalType.DATE)
      @Filtro(descripcion = "Fecha",tipo = "rangoFecha",campo = "fecha")
     private Date fecha;
-    @Listado(descripcion = "Moneda",mostrar=true, link = false,campoDescripcion = "nombre",entidad = true)
+    @Listado(descripcion = "Moneda",mostrar=true, link = false,campoDescripcion = "nombre",entidad = true,modulo = "configuracion")
     @Filtro(descripcion = "Moneda",tipo = "selectOne",campo = "moneda",campoDescripcion = "nombre")
     @ManyToOne
     private Moneda moneda;

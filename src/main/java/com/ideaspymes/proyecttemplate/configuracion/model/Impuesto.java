@@ -29,7 +29,7 @@ public class Impuesto implements Serializable, IAuditable {
     private Double valor;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private Empresa empresa;
 
     //Auditoria

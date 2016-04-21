@@ -37,22 +37,22 @@ public class ProductoUnidadMedida implements Serializable, IAuditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @Listado(descripcion = "Producto", mostrar = true, entidad = true, campoDescripcion = "nombre", link = true)
+    @Listado(descripcion = "Producto", mostrar = true, entidad = true, campoDescripcion = "nombre", link = true,modulo = "stock")
     @Filtro(descripcion = "Producto", campo = "producto", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_AUTOCOMPLETE)
     private Producto producto;
     @ManyToOne
-    @Listado(descripcion = "U.M. De", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "U.M. De", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "stock")
     //@Filtro(descripcion = "U.M. De",campo = "unidadMedidaDe",campoDescripcion = "nombre",tipo = "selectOne")
     private UnidadMedida unidadMedidaDe;
     @ManyToOne
-    @Listado(descripcion = "U.M. A", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "U.M. A", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "stock")
     //@Filtro(descripcion = "U.M. A",campo = "unidadMedidaA",campoDescripcion = "nombre",tipo = "selectOne")
     private UnidadMedida unidadMedidaA;
     @Listado(descripcion = "Formula", mostrar = true)
     private String formula;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private Empresa empresa;
 
     //Auditoria

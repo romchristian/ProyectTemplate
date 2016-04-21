@@ -11,5 +11,20 @@ package com.ideaspymes.proyecttemplate.stock.enums;
  */
 public enum TipoMovimientoStock {
 
-    ENTRADA, SALIDA
+    ENTRADA("Entrada"), SALIDA("Salida");
+
+    private String label;
+
+    private TipoMovimientoStock(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
 }

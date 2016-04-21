@@ -40,7 +40,7 @@ public class Grupo implements Serializable {
     private String nombre;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
     private Empresa empresa;
     //Auditoria
     @Enumerated(EnumType.STRING)
