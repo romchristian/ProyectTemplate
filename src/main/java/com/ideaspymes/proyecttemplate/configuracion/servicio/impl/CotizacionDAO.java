@@ -9,6 +9,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.Cotizacion;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
+import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +107,7 @@ public class CotizacionDAO implements ICotizacionDAO {
         if (matchText != null && matchText.length() > 0) {
             String consulta = "select z.* from cotizacion z inner join moneda m on z.moneda_id = m.id  where z.estado = 'ACTIVO' and upper(m.nombre) like '%" + matchText.toUpperCase().trim() + "%' order by m.nombre";
             Query query = abmService.getEM().createNativeQuery(consulta, Cotizacion.class);
-            query.setMaxResults(20);
+            query.setMaxResults(AbstractDAO.AUTOCOMPLETE_MAX_RESULS);
             sugerencias = query.getResultList();
         }
 

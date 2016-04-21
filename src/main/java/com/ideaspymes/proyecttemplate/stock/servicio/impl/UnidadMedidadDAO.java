@@ -4,8 +4,9 @@
  */
 package com.ideaspymes.proyecttemplate.stock.servicio.impl;
 
-import com.ideaspymes.proyecttemplate.configuracion.model.Contacto;
+import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
+import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IUnidadMedidaDAO;
@@ -50,16 +51,16 @@ public class UnidadMedidadDAO implements IUnidadMedidaDAO {
 
     @Override
     public List<UnidadMedida> findAll() {
-        return abmService.getEM().createQuery("select obj from UnidadMedida obj").getResultList();
+        return abmService.getEM().createQuery("select obj from UnidadMedida obj WHERE OBJ.estado = ?1")
+                .setParameter(1, Estado.ACTIVO)
+                .getResultList();
     }
 
-    
-    
     @Override
     public List<UnidadMedida> findAll(String query, QueryParameter params) {
         return abmService.findByQuery(query, params.parameters());
     }
-    
+
     @Override
     public List<UnidadMedida> findAll(String query, QueryParameter params, int first, int pageSize) {
         return abmService.findByQuery(query, params.parameters(), first, pageSize);
@@ -92,7 +93,7 @@ public class UnidadMedidadDAO implements IUnidadMedidaDAO {
         if (matchText != null && matchText.length() > 0) {
             String consulta = "select * from unidadmedida where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
             Query query = abmService.getEM().createNativeQuery(consulta, UnidadMedida.class);
-            query.setMaxResults(20);
+            query.setMaxResults(AbstractDAO.AUTOCOMPLETE_MAX_RESULS);
             sugerencias = query.getResultList();
         }
 
@@ -112,7 +113,5 @@ public class UnidadMedidadDAO implements IUnidadMedidaDAO {
 
         return R;
     }
-
-    
 
 }

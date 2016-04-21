@@ -11,6 +11,8 @@ import java.util.List;
  * @author christian
  */
 public interface AbstractDAO<T> {
+    
+    public static final int AUTOCOMPLETE_MAX_RESULS = 10;
 
     public abstract T create(T entity);
 

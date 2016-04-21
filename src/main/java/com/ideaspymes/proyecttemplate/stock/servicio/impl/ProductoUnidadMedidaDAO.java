@@ -4,7 +4,9 @@
  */
 package com.ideaspymes.proyecttemplate.stock.servicio.impl;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
+import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.model.ProductoUnidadMedida;
@@ -51,7 +53,9 @@ public class ProductoUnidadMedidaDAO implements IProductoUnidadMedidaDAO {
 
     @Override
     public List<ProductoUnidadMedida> findAll() {
-        return abmService.getEM().createQuery("select obj from ProductoUnidadMedida obj").getResultList();
+        return abmService.getEM().createQuery("select obj from ProductoUnidadMedida obj WHERE OBJ.estado = ?1")
+                .setParameter(1, Estado.ACTIVO)
+                .getResultList();
     }
 
     @Override
@@ -91,7 +95,7 @@ public class ProductoUnidadMedidaDAO implements IProductoUnidadMedidaDAO {
         if (matchText != null && matchText.length() > 0) {
             String consulta = "select * from productounidadmedida where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
             Query query = abmService.getEM().createNativeQuery(consulta, ProductoUnidadMedida.class);
-            query.setMaxResults(20);
+            query.setMaxResults(AbstractDAO.AUTOCOMPLETE_MAX_RESULS);
             sugerencias = query.getResultList();
         }
 

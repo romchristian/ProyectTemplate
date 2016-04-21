@@ -9,6 +9,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
+import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -130,7 +131,7 @@ public class EmpresaDAO implements IEmpresaDAO {
         if (matchText != null && matchText.length() > 0) {
             String consulta = "select * from empresa where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
             Query query = abmService.getEM().createNativeQuery(consulta, Empresa.class);
-            query.setMaxResults(20);
+            query.setMaxResults(AbstractDAO.AUTOCOMPLETE_MAX_RESULS);
             sugerencias = query.getResultList();
         }
 

@@ -8,6 +8,7 @@ import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.ITipoCon
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.TipoContacto;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
+import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,10 +106,10 @@ public class TipoContactoDAO implements ITipoContactoDAO {
         if (matchText != null && matchText.length() > 0) {
             String consulta = "select * from tipocontacto where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
             Query query = abmService.getEM().createNativeQuery(consulta, TipoContacto.class);
-            query.setMaxResults(20);
+            query.setMaxResults(AbstractDAO.AUTOCOMPLETE_MAX_RESULS);
             sugerencias = query.getResultList();
         }
-        
+
         return sugerencias;
     }
 

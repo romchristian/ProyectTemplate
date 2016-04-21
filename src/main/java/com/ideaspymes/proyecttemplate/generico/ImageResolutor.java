@@ -9,14 +9,20 @@ import com.ideaspymes.proyecttemplate.stock.model.Familia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IFamiliaDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoDAO;
-import java.awt.Image;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -48,17 +54,22 @@ public class ImageResolutor implements Serializable {
                 switch (entidad) {
                     case "producto":
                         Producto producto = productoDAO.find(Long.valueOf(id));
-                        R = new DefaultStreamedContent(new ByteArrayInputStream(producto.getImagen()));
+                        if (producto != null && producto.getImagen() != null) {
+                            R = new DefaultStreamedContent(new ByteArrayInputStream(producto.getImagen()));
+                        }
                         break;
                     case "familia":
                         Familia familia = familiaDAO.find(Long.valueOf(id));
-                        R = new DefaultStreamedContent(new ByteArrayInputStream(familia.getImagen()));
+                        if (familia != null && familia.getImagen() != null) {
+                            R = new DefaultStreamedContent(new ByteArrayInputStream(familia.getImagen()));
+                        }
                         break;
                 }
             }
 
             if (R == null) {
-                R = new DefaultStreamedContent();
+                InputStream iStream = context.getExternalContext().getResourceAsStream("/resources/img/default.jpg");
+                R = new DefaultStreamedContent(iStream);
             }
 
             return R;

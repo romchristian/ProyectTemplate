@@ -8,6 +8,7 @@ import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IUsuario
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
+import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -142,7 +143,7 @@ public class UsuarioDAO implements IUsuarioDAO {
         if (matchText != null && matchText.length() > 0) {
             String consulta = "select * from usuario where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
             Query query = abmService.getEM().createNativeQuery(consulta, Usuario.class);
-            query.setMaxResults(20);
+            query.setMaxResults(AbstractDAO.AUTOCOMPLETE_MAX_RESULS);
             sugerencias = query.getResultList();
         }
 
