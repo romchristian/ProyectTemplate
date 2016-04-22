@@ -10,11 +10,15 @@ package com.ideaspymes.proyecttemplate.stock.enums;
  * @author Acer
  */
 public enum TipoComprobanteStock {
-    VENTA("Salida por Venta"),
+
     COMPRA("Entrada por Compra"),
+    CONSUMO_INTERNO("Salida por Consumo Interno"),
+    VENTA("Salida por Venta"),
+    AJUSTE_ENTRADA_INVENTARIO("Entrada por Ajuste Inventario"),
+    AJUSTE_SALIDA_INVENTARIO("Salida por Ajuste Inventario"),
     TRANSFERENCIA_INTERNA("Transferencia Interna"),
-    TRANSFERENCIA_EXTERNA("Transferencia Externa"),
-    PERDIDA("Salida por Perdida"),;
+    ENTRADA_PRODUCCION("Entrada por Producción"),
+    PERDIDA("Salida por Perdida");
 
     private String label;
 

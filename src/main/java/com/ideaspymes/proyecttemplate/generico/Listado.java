@@ -38,6 +38,8 @@ public @interface Listado {
 
     @Nonbinding
     String modulo() default "";
+    @Nonbinding
+    String outcome() default "";
 
     /**
      * Defines if value for the given key must be defined.

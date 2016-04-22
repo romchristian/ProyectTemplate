@@ -8,6 +8,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoDeposito;
 import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IDepositoDAO;
 import java.util.ArrayList;
@@ -48,11 +49,25 @@ public class DepositoDAO implements IDepositoDAO {
     public Deposito find(Object id) {
         return abmService.find(id, Deposito.class);
     }
+    
+     public Deposito findPorTipo(TipoDeposito tipo) {
+         Deposito R = null;
+         try {
+             R = (Deposito) abmService.getEM().createQuery("SELECT d FROM Deposito d where d.tipoDeposito = :tipo AND d.estado = :estado")
+                     .setParameter("tipo",tipo)
+                     .setParameter("estado",Estado.ACTIVO)
+                     .getSingleResult();
+         } catch (Exception e) {
+         }
+        return R;
+    }
+
 
     @Override
     public List<Deposito> findAll() {
-        return abmService.getEM().createQuery("select obj from Deposito obj WHERE OBJ.estado = ?1")
+        return abmService.getEM().createQuery("select obj from Deposito obj WHERE OBJ.estado = ?1 AND OBJ.tipoDeposito = ?2")
                 .setParameter(1, Estado.ACTIVO)
+                .setParameter(2, TipoDeposito.NORMAL)
                 .getResultList();
     }
 

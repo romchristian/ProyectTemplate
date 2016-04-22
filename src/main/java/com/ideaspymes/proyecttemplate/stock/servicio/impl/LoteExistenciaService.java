@@ -41,7 +41,7 @@ public class LoteExistenciaService implements ILoteExistenciaService {
     @EJB(beanName = "ABMServiceBean")
     private ABMService abmService;
     @EJB
-    private IMovimientoStockService movimientoStockDAO;
+    private IMovimientoStockService movimientoService;
     @EJB
     private IProductoUnidadMedidaDAO productoUnidadMedidaDAO;
 
@@ -87,8 +87,9 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         m.setUnidadMedida(d.getUnidadMedida());
         m.setCantidad(d.getCantidad());
         m.setCantidadStock(cantidadStock);
+        m.setUnidadMedidaStock(d.getProducto().getUnidadMedidaBase());
 
-        movimientoStockDAO.creaMovimientoStock(m);
+        movimientoService.creaMovimientoStock(m);
 
     }
 
@@ -147,17 +148,19 @@ public class LoteExistenciaService implements ILoteExistenciaService {
                 m.setUnidadMedida(d.getUnidadMedida());
 
                 if (l.getCantidadSaldoStock() > cantidadPorMovimiento) {
-                    m.setCantidad(cantidadPorMovimiento);
+                    m.setCantidad( calculaCantidadUMStockDesconversion(d.getProducto(), d.getUnidadMedida(), cantidadPorMovimiento));
                     m.setCantidadStock(cantidadPorMovimiento);
+                    m.setUnidadMedidaStock(d.getProducto().getUnidadMedidaBase());
                     cantidadPorMovimiento = afectaCantidadUsadaLoteExitencia(l, cantidadPorMovimiento);
                 } else {
-                    m.setCantidad(l.getCantidadSaldoStock());
+                    m.setCantidad( calculaCantidadUMStockDesconversion(d.getProducto(), d.getUnidadMedida(), l.getCantidadSaldoStock()));
                     m.setCantidadStock(l.getCantidadSaldoStock());
+                    m.setUnidadMedidaStock(d.getProducto().getUnidadMedidaBase());
                     cantidadPorMovimiento = afectaCantidadUsadaLoteExitencia(l, cantidadPorMovimiento);
                 }
 
                 m.setLoteExistencia(l);
-                movimientoStockDAO.creaMovimientoStock(m);
+                movimientoService.creaMovimientoStock(m);
 
             }
         }
@@ -342,6 +345,21 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         try {
             ProductoUnidadMedida pu = productoUnidadMedidaDAO.find(p, unidadMedida, p.getUnidadMedidaBase());
             Expression e = new ExpressionBuilder(pu.getFormula())
+                    .variables("x")
+                    .build()
+                    .setVariable("x", cantidad);
+            R = e.evaluate();
+        } catch (Exception e) {
+        }
+        return R;
+    }
+    
+    
+    private Double calculaCantidadUMStockDesconversion(Producto p, UnidadMedida unidadMedida, Double cantidad) {
+        double R = cantidad;
+        try {
+            ProductoUnidadMedida pu = productoUnidadMedidaDAO.find(p, unidadMedida, p.getUnidadMedidaBase());
+            Expression e = new ExpressionBuilder(pu.getFormulaDescoversion())
                     .variables("x")
                     .build()
                     .setVariable("x", cantidad);

@@ -7,6 +7,7 @@ package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoDeposito;
 import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import java.util.List;
 import javax.ejb.Local;
@@ -37,5 +38,7 @@ public interface IDepositoDAO extends AbstractDAO<Deposito> {
     void remove(Deposito entity);
 
     Deposito findDefault();
+
+    Deposito findPorTipo(TipoDeposito tipo);
 
 }

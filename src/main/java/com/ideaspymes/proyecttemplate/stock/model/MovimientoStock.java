@@ -70,11 +70,11 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     @Listado(descripcion = "Cant. Stock", mostrar = true)
     private Double cantidadStock;
     @ManyToOne
-    @Listado(descripcion = "U.M Stock", entidad = true, mostrar = true, campo = "unidadMedida",campoDescripcion = "nombre",modulo = "stock")
+    @Listado(descripcion = "U.M Stock", entidad = true, mostrar = true, campo = "unidadMedidaStock",campoDescripcion = "nombre",modulo = "stock",outcome = "/main/stock/unidadMedida/vista")
     private UnidadMedida unidadMedidaStock;
 
     @ManyToOne
-    @Listado(descripcion = "Nro. Comprobante Stock", entidad = true, mostrar = true, campoDescripcion = "descripcion",modulo = "stock")
+    @Listado(descripcion = "Comprobante Stock", entidad = true, mostrar = true, campoDescripcion = "descripcion",modulo = "stock")
     private ComprobanteStock comprobanteStock;
 
     

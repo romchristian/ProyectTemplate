@@ -11,6 +11,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.configuracion.model.Usuario;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.FiltroGenerico;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
@@ -74,6 +75,10 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     private Deposito destino;
     @ManyToOne
     private Usuario resposable;
+    @Listado(descripcion = "Contacto", campo = "contacto", entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
+    @Filtro(descripcion = "Contacto", campo = "contacto", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_AUTOCOMPLETE)
+    @ManyToOne
+    private Contacto contacto;
 
     @Listado(descripcion = "Estado Comprobate", mostrar = true, enumeracion = true, campoDescripcion = "label")
     @Enumerated(EnumType.STRING)
@@ -89,11 +94,24 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
 
     private String usuarioUltimaModificacion;
 
+    @ManyToOne
+    private Deposito depositoPivot;
+    
+
     @Transient
     private String descripcion;
 
     public ComprobanteStock() {
         this.estadoComprobate = EstadoComprobanteStock.PENDIENTE_CONFIRMACION;
+    }
+
+    public Deposito getDepositoPivot() {
+        return depositoPivot;
+    }
+
+    public void setDepositoPivot(Deposito depositoPivot) {
+
+        this.depositoPivot = depositoPivot;
     }
 
     public String getDescripcion() {
@@ -105,6 +123,14 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Contacto getContacto() {
+        return contacto;
+    }
+
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
     }
 
     @Override

@@ -5,6 +5,7 @@
 package com.ideaspymes.proyecttemplate.generico;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
+import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -113,6 +114,10 @@ public abstract class BeanGenerico<T> implements Serializable {
 
     public void setActual(T actual) {
         this.actual = actual;
+    }
+
+    public Credencial getCredencial() {
+        return credencial;
     }
 
     public abstract AbstractDAO<T> getEjb();

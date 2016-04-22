@@ -22,20 +22,30 @@
 
             <p:outputLabel value="Producto" for="producto" styleClass="FontVoltRegular" />
             <h:outputText value="#{productoUnidadMedidaBean.actual.producto != null?productoUnidadMedidaBean.actual.producto.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:autoComplete value="#{productoUnidadMedidaBean.actual.producto}"
-                            id="producto"
-                            required="true"
+
+            <p:autoComplete id="producto"
+                            value="#{productoUnidadMedidaBean.actual.producto}"
                             completeMethod="#{productoConsultaBean.completar}"
                             forceSelection="true" converter="productoConverter"
                             var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
-                            rendered="#{not(contexto == 'vista')}"/>
+                            rendered="#{not(contexto == 'vista')}">
+
+                <p:column style="width: 40%">
+                    <facilerp:imagen value="#{c}" entidad="producto"/>
+                </p:column>
+
+                <p:column style="width: 60%">
+                    <h:outputText value="#{c.nombre}"/>
+                </p:column>
+            </p:autoComplete>
+
 
             <p:outputLabel value="Unidad Medida De" for="unidadMedidaDe" styleClass="FontVoltRegular" />
             <h:outputText value="#{productoUnidadMedidaBean.actual.unidadMedidaDe != null?productoUnidadMedidaBean.actual.unidadMedidaDe.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:selectOneMenu value="#{productoUnidadMedidaBean.actual.unidadMedidaDe}" required="true" id="unidadMedidaDe" rendered="#{not(contexto == 'vista')}">
                 <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectMany}"/>
             </p:selectOneMenu>
-            
+
             <p:outputLabel value="Unidad Medida A" for="unidadMedidaA" styleClass="FontVoltRegular" />
             <h:outputText value="#{productoUnidadMedidaBean.actual.unidadMedidaA != null?productoUnidadMedidaBean.actual.unidadMedidaA.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:selectOneMenu value="#{productoUnidadMedidaBean.actual.unidadMedidaA}" required="true" id="unidadMedidaA" rendered="#{not(contexto == 'vista')}">
@@ -45,6 +55,11 @@
             <p:outputLabel value="Formula" for="formula" styleClass="FontVoltRegular" />
             <h:outputText value="#{productoUnidadMedidaBean.actual.formula}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{productoUnidadMedidaBean.actual.formula}" required="true" id="formula" rendered="#{not(contexto == 'vista')}"/>
+            
+            
+            <p:outputLabel value="Formula Contraria" for="formulaC" styleClass="FontVoltRegular" />
+            <h:outputText value="#{productoUnidadMedidaBean.actual.formulaDescoversion}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{productoUnidadMedidaBean.actual.formulaDescoversion}" required="true" id="formulaC" rendered="#{not(contexto == 'vista')}"/>
 
         </p:panelGrid>
 

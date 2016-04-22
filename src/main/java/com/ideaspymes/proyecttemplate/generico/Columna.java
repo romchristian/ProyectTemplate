@@ -20,9 +20,8 @@ public class Columna {
     private String campoDescripcion;
     private String outcome;
     private String modulo;
-    
 
-    public Columna(String descripcion, String campo, String tipo, boolean link, boolean entidad, String campoDescripcion, String modulo, boolean enumeracion) {
+    public Columna(String descripcion, String campo, String tipo, boolean link, boolean entidad, String campoDescripcion, String modulo, boolean enumeracion, String outcome) {
         this.campo = campo;
         this.descripcion = descripcion;
         this.tipo = tipo;
@@ -30,7 +29,12 @@ public class Columna {
         this.entidad = entidad;
         this.campoDescripcion = campoDescripcion;
         this.modulo = modulo;
-        this.outcome = "/main/" + modulo + "/" + campo + "/vista";
+
+        if (outcome != null && outcome.length() > 0) {
+            this.outcome = outcome;
+        } else {
+            this.outcome = "/main/" + modulo + "/" + campo + "/vista";
+        }
         this.enumeracion = enumeracion;
     }
 

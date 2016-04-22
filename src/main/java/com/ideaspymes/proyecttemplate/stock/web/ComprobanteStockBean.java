@@ -10,15 +10,18 @@ import com.ideaspymes.proyecttemplate.generico.JsfUtil;
 import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.web.converters.ComprobanteStockConverter;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
+import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.apache.bcel.generic.Select;
 
 /**
  *
@@ -39,7 +42,9 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
 
     @Override
     public ComprobanteStock getNuevo() {
-        return new ComprobanteStock();
+        ComprobanteStock R = new ComprobanteStock();
+        R.setResposable(getCredencial().getUsuario());
+        return R;
     }
 
     @Override
@@ -47,9 +52,16 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
         return new ComprobanteStockConverter();
     }
 
+    @Override
+    public String create() {
+        limpiarDetallesVacios();
+        return super.create();
+    }
+
     public void confirmar() {
 
         try {
+            limpiarDetallesVacios();
             ejb.confirmar(getActual());
         } catch (SinStockException ex) {
             JsfUtil.addErrorMessage(ex.getMessage());
@@ -65,4 +77,15 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
         this.productoElegido = productoElegido;
     }
 
+    public void limpiarDetallesVacios() {
+
+        Iterator<DetComprobanteStock> it = getActual().getDetalles().iterator();
+
+        while (it.hasNext()) {
+            DetComprobanteStock d = it.next();
+            if (d.getProducto() == null) {
+                it.remove();
+            }
+        }
+    }
 }

@@ -70,7 +70,9 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
                 String descripcion = f.getAnnotation(Listado.class).descripcion();
                 String campo = f.getAnnotation(Listado.class).campo();
 
-                columnas.add(new Columna(descripcion, (campo.length() > 0 ? campo : f.getName()), f.getGenericType().getTypeName(), f.getAnnotation(Listado.class).link(), f.getAnnotation(Listado.class).entidad(), f.getAnnotation(Listado.class).campoDescripcion(), f.getAnnotation(Listado.class).modulo(), f.getAnnotation(Listado.class).enumeracion()));
+                columnas.add(new Columna(descripcion, (campo.length() > 0 ? campo : f.getName()), f.getGenericType().getTypeName(),
+                        f.getAnnotation(Listado.class).link(), f.getAnnotation(Listado.class).entidad(), f.getAnnotation(Listado.class).campoDescripcion(), f.getAnnotation(Listado.class).modulo(),
+                        f.getAnnotation(Listado.class).enumeracion(), f.getAnnotation(Listado.class).outcome()));
             }
         }
 
