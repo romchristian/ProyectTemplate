@@ -65,6 +65,12 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         l.setCantidadUsadaStock(0d);
         l.setCantidadReservadaStock(0d);
         l.setCantidadSaldoStock(cantidadStock);
+
+        
+        Double costoUnitario = d.getValor() / calculaCantidadUMStock(d.getProducto(), d.getUnidadMedida(), 1d);
+        
+        l.setCostoUnitario(costoUnitario);
+
         l.setCosto(d.getTotal());
 
         l.setElaboracion(d.getElaboracion());
@@ -148,12 +154,12 @@ public class LoteExistenciaService implements ILoteExistenciaService {
                 m.setUnidadMedida(d.getUnidadMedida());
 
                 if (l.getCantidadSaldoStock() > cantidadPorMovimiento) {
-                    m.setCantidad( calculaCantidadUMStockDesconversion(d.getProducto(), d.getUnidadMedida(), cantidadPorMovimiento));
+                    m.setCantidad(calculaCantidadUMStockDesconversion(d.getProducto(), d.getUnidadMedida(), cantidadPorMovimiento));
                     m.setCantidadStock(cantidadPorMovimiento);
                     m.setUnidadMedidaStock(d.getProducto().getUnidadMedidaBase());
                     cantidadPorMovimiento = afectaCantidadUsadaLoteExitencia(l, cantidadPorMovimiento);
                 } else {
-                    m.setCantidad( calculaCantidadUMStockDesconversion(d.getProducto(), d.getUnidadMedida(), l.getCantidadSaldoStock()));
+                    m.setCantidad(calculaCantidadUMStockDesconversion(d.getProducto(), d.getUnidadMedida(), l.getCantidadSaldoStock()));
                     m.setCantidadStock(l.getCantidadSaldoStock());
                     m.setUnidadMedidaStock(d.getProducto().getUnidadMedidaBase());
                     cantidadPorMovimiento = afectaCantidadUsadaLoteExitencia(l, cantidadPorMovimiento);
@@ -353,8 +359,7 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         }
         return R;
     }
-    
-    
+
     private Double calculaCantidadUMStockDesconversion(Producto p, UnidadMedida unidadMedida, Double cantidad) {
         double R = cantidad;
         try {

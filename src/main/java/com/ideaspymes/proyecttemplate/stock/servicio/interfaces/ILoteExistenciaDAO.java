@@ -8,12 +8,9 @@ package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
+import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import java.util.List;
 import javax.ejb.Local;
-
-
-
-
 
 /**
  *
@@ -39,5 +36,7 @@ public interface ILoteExistenciaDAO extends AbstractDAO<LoteExistencia> {
 
     @Override
     void remove(LoteExistencia entity);
-    
+
+    List<LoteExistencia> findAllPorProducto(Producto p);
+
 }

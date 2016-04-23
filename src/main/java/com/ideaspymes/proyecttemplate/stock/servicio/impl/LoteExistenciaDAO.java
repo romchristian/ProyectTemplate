@@ -8,7 +8,9 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.enums.EstadoLote;
 import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
+import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ILoteExistenciaDAO;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,18 @@ public class LoteExistenciaDAO implements ILoteExistenciaDAO {
     public List<LoteExistencia> findAll() {
         return abmService.getEM().createQuery("select obj from LoteExistencia obj WHERE OBJ.estado = ?1")
                 .setParameter(1, Estado.ACTIVO)
+                .getResultList();
+    }
+
+    @Override
+    public List<LoteExistencia> findAllPorProducto(Producto p) {
+        return abmService.getEM().createQuery("select OBJ from LoteExistencia OBJ WHERE OBJ.estado = ?1 "
+                + " AND OBJ.producto = ?2 "
+                + " AND OBJ.cantidadSaldoStock > 0 AND "
+                + " OBJ.estadoLote = ?3")
+                .setParameter(1, Estado.ACTIVO)
+                .setParameter(2, p)
+                .setParameter(3, EstadoLote.ABIERTO)
                 .getResultList();
     }
 

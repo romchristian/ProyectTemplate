@@ -35,7 +35,7 @@
                                 <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
                                     <h:outputText value="Estado"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.estado}" styleClass="FontVoltRegular White"/>
-                                    
+
                                     <h:outputText value="Empresa"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.empresa == null?'':productoBean.actual.empresa.nombre}" styleClass="FontVoltRegular White"/>
 
@@ -52,16 +52,21 @@
                                     <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" styleClass="FontVoltRegular White"/>
 
 
-                                   
+
 
 
                                     <h:outputText value="¿Es Inventariable?"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.inventariable == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
                                     <h:outputText value="¿Tiene Vencimiento?"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.tieneVencimiento == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
-                                    
+
                                     <h:outputText value="Familia"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.familia != null?productoBean.actual.familia.nombre:''}" styleClass="FontVoltRegular White"/>
+
+                                    <h:outputText value="Costo"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.obtCosto(productoBean.actual)}" styleClass="FontVoltRegular White">
+                                        <f:convertNumber locale="#{formato.locale}"/>
+                                    </h:outputText>
 
                                 </p:panelGrid>
 
@@ -101,7 +106,7 @@
                                                     <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                                 </p:confirmDialog>
                                             </div>
-                                            
+
                                             <div class="ui-grid-col-2">
                                                 <p:commandButton value="Eliminar" action="#{productoBean.remove()}" styleClass="Fleft BlueButton" update=":formABM:panel">
                                                     <p:confirm header="Confirmar eliminación" message="¿Eliminar este registro?" icon="ui-icon-alert" />
