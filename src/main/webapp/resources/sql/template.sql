@@ -1,4 +1,4 @@
-ï»¿
+
 
 INSERT INTO usuario (id, estado, fecharegitro, fechaultimamodificacion, nombre, password, username) VALUES (1, 'ACTIVO', NULL, NULL, 'Christian Romero', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'admin');
 
@@ -9,7 +9,7 @@ INSERT INTO usuario (id, estado, fecharegitro, fechaultimamodificacion, nombre, 
 -- Data for Name: empresa; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (1, NULL, 'EspaÃ±a', NULL, NULL, 'sdasd', NULL, false, 'ACTIVO', '2016-03-23 17:52:35.736', NULL, 'Mburuvicha Roga', NULL, NULL, NULL, '1234564', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
+INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (1, NULL, 'España', NULL, NULL, 'sdasd', NULL, false, 'ACTIVO', '2016-03-23 17:52:35.736', NULL, 'Mburuvicha Roga', NULL, NULL, NULL, '1234564', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
 --INSERT INTO empresa (id, contactociudad, contactodireccion, contactoemail, contactopais, contactotelefono, contactoweb, esretentor, estado, fecharegitro, fechaultimamodificacion, nombre, nombrerepresentantelegal, permitiroperaciondesde, retencionmontominimo, ruc, rucrepresentantelegal, seleccioncentroscostosencompras, sumarinteresalprecio, tasaanualinteres, tasamensualinteres, tasaretencioniva, tasaretencionrenta, tipocosteo, verificarlineacreditocliente, usuarioultimamodificacion) VALUES (2, NULL, 'Artigas', NULL, NULL, '1231231', NULL, false, 'ACTIVO', '2016-03-28 12:25:53.37', NULL, 'TABACOS S.A.', NULL, NULL, NULL, '123456', NULL, false, false, NULL, NULL, NULL, NULL, NULL, false, NULL);
 
 
@@ -40,8 +40,8 @@ INSERT INTO sucursal (id, ciudad, direccion, estado, fecharegitro, fechaultimamo
 -- Data for Name: tipocontacto; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-30 16:41:45.332', NULL, 'Persona FÃ­sica', 1, NULL);
-INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-30 16:42:01.198', NULL, 'Persona JurÃ­dica', 1, NULL);
+INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', '2016-03-30 16:41:45.332', NULL, 'Persona Física', 1, NULL);
+INSERT INTO tipocontacto (id, estado, fecharegitro, fechaultimamodificacion, nombre, empresa_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', '2016-03-30 16:42:01.198', NULL, 'Persona Jurídica', 1, NULL);
 
 
 --
@@ -169,7 +169,7 @@ SELECT pg_catalog.setval('grupo_id_seq', 1, true);
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 1, false);
+--SELECT pg_catalog.setval('hibernate_sequence', 1, false);
 
 
 --
@@ -178,7 +178,7 @@ SELECT pg_catalog.setval('hibernate_sequence', 1, false);
 -- Data for Name: modulo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (1, '/main/configuracion/home.xhtml?idMenu=1', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'ConfiguraciÃ³n', 'Tickets, Facturas..', NULL);
+INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (1, '/main/configuracion/home.xhtml?idMenu=1', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Configuración', 'Tickets, Facturas..', NULL);
 --INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (2, '/main/configuracion/home.xhtml?idMenu=2', 'INACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Infomes', 'Configuraciones generales', NULL);
 --INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (3, '/main/configuracion/home.xhtml?idMenu=3', 'INACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Contabilidad', 'Configuraciones generales', NULL);
 --INSERT INTO modulo (id, defaultpage, estado, fecharegitro, fechaultimamodificacion, iconfont, nombre, subtitle, usuarioultimamodificacion) VALUES (4, '/main/confoguracion/home.xhtml?idMenu=4', 'ACTIVO', '2016-03-18 17:35:15', NULL, 'icon-printer2 Opac80 Fs22', 'Finanzas', 'Configuraciones generales', NULL);
@@ -222,8 +222,8 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (10, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/familia/listado.xhtml', 'Familia', 2, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (12, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/comprobanteStock/listado.xhtml', 'Comprobante de Stock', 5, NULL);
 --INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (13, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/loteExistencia/listado.xhtml', 'Lote de Existencia', 5, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (14, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/deposito/listado.xhtml', 'DepÃ³sito', 5, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (15, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/cotizacion/listado.xhtml', 'CotizaciÃ³n', 4, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (14, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/deposito/listado.xhtml', 'Depósito', 5, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (15, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/cotizacion/listado.xhtml', 'Cotización', 4, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (16, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/productoUnidadMedida/listado.xhtml', 'Producto X U.M. Conf.', 2, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (17, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/movimientoStock/listado.xhtml', 'Movimientos', 5, NULL);
 
