@@ -67,7 +67,7 @@
 
                 <h:outputText value="Resposable"  styleClass="FontVoltRegular" />
                 <h:outputText value="#{comprobanteStockBean.actual.resposable == null?'':comprobanteStockBean.actual.resposable.nombre}" styleClass="FontVoltRegular"/>
-                
+
 
 
                 <p:outputLabel value="Contacto" for="contacto" styleClass="FontVoltRegular" />
@@ -224,6 +224,9 @@
 
                             </div>
 
+                            <div class="ui-grid-col-2">
+                                <p:commandButton value="Imprimir" action="#{comprobanteStockBean.imprimir()}" styleClass="Fleft"  rendered="#{not (contexto == 'creacion') and (comprobanteStockBean.actual.estadoComprobate == 'PENDIENTE_CONFIRMACION')}" ajax="false"/>
+                            </div>
                             <div class="ui-grid-col-2">
                                 <p:commandButton value="Confirmar" action="#{comprobanteStockBean.confirmar()}" styleClass="Fleft GreenButton" update=":formABM:panel" rendered="#{not (contexto == 'creacion') and (comprobanteStockBean.actual.estadoComprobate == 'PENDIENTE_CONFIRMACION')}"/>
                             </div>

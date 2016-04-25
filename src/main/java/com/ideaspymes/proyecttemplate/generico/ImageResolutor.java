@@ -5,24 +5,20 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
+import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IEmpresaDAO;
 import com.ideaspymes.proyecttemplate.stock.model.Familia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IFamiliaDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoDAO;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.inject.Named;
-import javax.servlet.ServletContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -38,6 +34,8 @@ public class ImageResolutor implements Serializable {
     private IProductoDAO productoDAO;
     @EJB
     private IFamiliaDAO familiaDAO;
+    @EJB
+    private IEmpresaDAO empresaDAO;
 
     public StreamedContent getStreamedImageById() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -62,6 +60,13 @@ public class ImageResolutor implements Serializable {
                         Familia familia = familiaDAO.find(Long.valueOf(id));
                         if (familia != null && familia.getImagen() != null) {
                             R = new DefaultStreamedContent(new ByteArrayInputStream(familia.getImagen()));
+                        }
+                        break;
+
+                    case "empresa":
+                        Empresa empresa = empresaDAO.find(Long.valueOf(id));
+                        if (empresa != null && empresa.getImagen() != null) {
+                            R = new DefaultStreamedContent(new ByteArrayInputStream(empresa.getImagen()));
                         }
                         break;
                 }

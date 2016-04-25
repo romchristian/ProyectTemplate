@@ -7,12 +7,14 @@ package com.ideaspymes.proyecttemplate.stock.web;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.BeanGenerico;
 import com.ideaspymes.proyecttemplate.generico.JsfUtil;
+import com.ideaspymes.proyecttemplate.generico.Reporte;
 import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.web.converters.ComprobanteStockConverter;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
+import com.ideaspymes.proyecttemplate.stock.web.reporte.ReporteComprobanteStock;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -20,8 +22,8 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.convert.Converter;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.bcel.generic.Select;
 
 /**
  *
@@ -30,6 +32,10 @@ import org.apache.bcel.generic.Select;
 @Named
 @ViewScoped
 public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> implements Serializable {
+
+    @Inject
+    @Reporte
+    private ReporteComprobanteStock reporteComprobanteStock;
 
     @EJB
     private IComprobanteStockDAO ejb;
@@ -67,6 +73,11 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
             JsfUtil.addErrorMessage(ex.getMessage());
             Logger.getLogger(ComprobanteStockBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void imprimir() {
+        reporteComprobanteStock.setComprobanteStock(getActual());
+        reporteComprobanteStock.generar();
     }
 
     public Producto getProductoElegido() {

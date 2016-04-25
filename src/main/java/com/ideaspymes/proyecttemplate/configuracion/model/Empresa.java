@@ -9,6 +9,7 @@ import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.TipoCosteo;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.IConImagen;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -30,7 +32,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Empresa implements Serializable {
+public class Empresa implements Serializable ,IConImagen{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -90,6 +92,19 @@ public class Empresa implements Serializable {
 
     @OneToMany(mappedBy = "empresa")
     private List<Sucursal> sucursales;
+
+    @Lob
+    private byte[] imagen;
+
+    @Override
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    @Override
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
 
     public Long getId() {
         return id;
@@ -314,8 +329,6 @@ public class Empresa implements Serializable {
     public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
-
-    
 
     @Override
     public int hashCode() {

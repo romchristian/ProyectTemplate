@@ -12,27 +12,33 @@
 
     <h:form id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
-        <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
-            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
-            <h:outputText value="#{empresaBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:inputText value="#{empresaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
-            <p:outputLabel value="RUC" for="ruc" styleClass="FontVoltRegular"/>
-            <h:outputText value="#{empresaBean.actual.ruc}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:inputText value="#{empresaBean.actual.ruc}" required="true" id="ruc" rendered="#{not(contexto == 'vista')}"/>
+        <div class="Container70 Responsive100">
+            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+                <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{empresaBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{empresaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
-            <p:outputLabel value="Dirección Contacto" for="direccion" styleClass="FontVoltRegular"/>
-            <h:outputText value="#{empresaBean.actual.contactoDireccion}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:inputText value="#{empresaBean.actual.contactoDireccion}" required="true" id="direccion" rendered="#{not(contexto == 'vista')}"/>
+                <p:outputLabel value="RUC" for="ruc" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{empresaBean.actual.ruc}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{empresaBean.actual.ruc}" required="true" id="ruc" rendered="#{not(contexto == 'vista')}"/>
+
+                <p:outputLabel value="Dirección Contacto" for="direccion" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{empresaBean.actual.contactoDireccion}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{empresaBean.actual.contactoDireccion}" required="true" id="direccion" rendered="#{not(contexto == 'vista')}"/>
 
 
-            <p:outputLabel value="Télefono Contacto" for="telefono" styleClass="FontVoltRegular"/>
-            <h:outputText value="#{empresaBean.actual.contactoTelefono}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
-            <p:inputText value="#{empresaBean.actual.contactoTelefono}" required="true" id="telefono" rendered="#{not(contexto == 'vista')}"/>
-        </p:panelGrid>
-
-        <facilerp:botoneraABM bean="#{empresaBean}" contexto="#{contexto}" entidad="empresa" update=":formABM:panel"/>
-
+                <p:outputLabel value="Télefono Contacto" for="telefono" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{empresaBean.actual.contactoTelefono}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{empresaBean.actual.contactoTelefono}" required="true" id="telefono" rendered="#{not(contexto == 'vista')}"/>
+            </p:panelGrid>
+        </div>
+        <div class="Container30 Responsive100 TexAlCenter">
+            <facilerp:imagenCrop  contexto="#{contexto}" bean="#{empresaBean}" entidad="empresa"/>
+        </div>
+        <div class="Container100 Responsive100">
+            <facilerp:botoneraABM bean="#{empresaBean}" contexto="#{contexto}" entidad="empresa" update=":formABM:panel"/>
+        </div>
     </h:form>
 
 

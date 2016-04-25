@@ -50,7 +50,7 @@ public class ReporteController implements Serializable{
     }
 
     private void init(Map parametros, Collection<?> lista, String nombre, FacesContext context) throws JRException {
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(lista);
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(lista,false);
         String reportpath = context
                 .getExternalContext()
                 .getRealPath(nombre);
