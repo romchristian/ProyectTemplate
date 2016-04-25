@@ -12,9 +12,6 @@ import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.generico.ResolutorReferencia;
 import com.ideaspymes.proyecttemplate.stock.enums.EstadoComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.enums.EstadoLote;
-import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.COMPRA;
-import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.TRANSFERENCIA_INTERNA;
-import static com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock.VENTA;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoDeposito;
 import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
@@ -57,20 +54,19 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
     @Override
     public ComprobanteStock create(ComprobanteStock entity) {
 
-        switch (entity.getTipo()) {
-            case COMPRA:
-            case AJUSTE_ENTRADA_INVENTARIO:
-            case ENTRADA_PRODUCCION:
+        switch (entity.getTipoComprobanteStock().getNombre()) {
+            case "Entrada por Compra":
+            case "Entrada por Ajuste":
                 entity.setDestino(entity.getDepositoPivot());
                 entity.setOrigen(iDepositoDAO.findPorTipo(TipoDeposito.COMPRA));
                 break;
-            case VENTA:
+            case "Salida por Venta":
                 entity.setOrigen(entity.getDepositoPivot());
                 entity.setDestino(iDepositoDAO.findPorTipo(TipoDeposito.VENTA));
                 break;
-            case AJUSTE_SALIDA_INVENTARIO:
-            case CONSUMO_INTERNO:
-            case PERDIDA:
+            case "Salida por Consumo Interno":
+            case "Salida por Ajuste":
+            case "Salida por Perdida":
                 entity.setOrigen(entity.getDepositoPivot());
                 entity.setDestino(iDepositoDAO.findPorTipo(TipoDeposito.PERDIDA));
                 break;
@@ -121,15 +117,12 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         ComprobanteStock R = entity;
         if (entity.getEstadoComprobate() == EstadoComprobanteStock.PENDIENTE_CONFIRMACION) {
 
-            switch (entity.getTipo()) {
-                case VENTA:
-                    creaMovientosStockVenta(entity.getDetalles());
+            switch (entity.getTipoComprobanteStock().getTipo()) {
+                case SALIDA:
+                    creaMovientosStockSalida(entity.getDetalles());
                     break;
-                case COMPRA:
-                    creaMovientosStockCompra(entity.getDetalles());
-                    break;
-                case TRANSFERENCIA_INTERNA:
-                    creaMovientosStockTransferInterna(entity.getDetalles());
+                case ENTRADA:
+                    creaMovientosStockEntrada(entity.getDetalles());
                     break;
             }
 
@@ -177,7 +170,7 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         return abmService.findByQuery(query, params.parameters());
     }
 
-    private void creaMovientosStockVenta(List<DetComprobanteStock> detalles) throws SinStockException {
+    private void creaMovientosStockSalida(List<DetComprobanteStock> detalles) throws SinStockException {
 
         for (DetComprobanteStock d : detalles) {
 
@@ -188,7 +181,9 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         }
     }
 
-    private void creaMovientosStockCompra(List<DetComprobanteStock> detalles) {
+ 
+
+    private void creaMovientosStockEntrada(List<DetComprobanteStock> detalles) {
 
         for (DetComprobanteStock d : detalles) {
             generaAuditoriaUpdate(d);
@@ -198,13 +193,7 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         }
     }
 
-    private void creaMovientosStockTransferInterna(List<DetComprobanteStock> detalles) {
-
-    }
-
-    private void creaMovientosStockTransferExtena(List<DetComprobanteStock> detalles) {
-
-    }
+   
 
     @Override
     public List<ComprobanteStock> findAll(String query, QueryParameter params, int first, int pageSize) {

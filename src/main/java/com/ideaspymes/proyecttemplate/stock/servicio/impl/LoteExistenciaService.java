@@ -12,7 +12,11 @@ import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStock;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockCompra;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockConsumoInterno;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockEntradaAjuste;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockPerdida;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockVenta;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.model.ProductoUnidadMedida;
@@ -66,9 +70,8 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         l.setCantidadReservadaStock(0d);
         l.setCantidadSaldoStock(cantidadStock);
 
-        
         Double costoUnitario = d.getValor() / calculaCantidadUMStock(d.getProducto(), d.getUnidadMedida(), 1d);
-        
+
         l.setCostoUnitario(costoUnitario);
 
         l.setCosto(d.getTotal());
@@ -78,7 +81,13 @@ public class LoteExistenciaService implements ILoteExistenciaService {
 
         l = creaLoteExitencia(l);
 
-        MovimientoStockCompra m = new MovimientoStockCompra();
+        MovimientoStock m = new MovimientoStockCompra();
+        switch (d.getComprobanteStock().getTipoComprobanteStock().getNombre()) {
+            case "Entrada por Ajuste":
+                m = new MovimientoStockEntradaAjuste();
+                break;
+        }
+
         m.setComprobanteStock(d.getComprobanteStock());
         m.setLoteExistencia(l);
 
@@ -94,6 +103,8 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         m.setCantidad(d.getCantidad());
         m.setCantidadStock(cantidadStock);
         m.setUnidadMedidaStock(d.getProducto().getUnidadMedidaBase());
+        m.setContacto(d.getComprobanteStock().getContacto());
+        m.setTipoComprobanteStock(d.getComprobanteStock().getTipoComprobanteStock());
 
         movimientoService.creaMovimientoStock(m);
 
@@ -142,7 +153,22 @@ public class LoteExistenciaService implements ILoteExistenciaService {
                 Deposito dp = d.getComprobanteStock().getOrigen();
                 generaAuditoriaUpdate(d);
 
-                MovimientoStockVenta m = new MovimientoStockVenta();
+                MovimientoStock m = new MovimientoStockVenta();
+
+                switch (d.getComprobanteStock().getTipoComprobanteStock().getNombre()) {
+                    case "Salida por Ajuste":
+                        m = new MovimientoStockEntradaAjuste();
+                        break;
+
+                    case "Salida por Consumo Interno":
+                        m = new MovimientoStockConsumoInterno();
+                        break;
+
+                    case "Salida por Perdida":
+                        m = new MovimientoStockPerdida();
+                        break;
+                }
+
                 m.setComprobanteStock(d.getComprobanteStock());
                 System.out.println("Referencia en CreaMovimientoStockVenta: " + d.getComprobanteStock().getRefOrigen());
 
@@ -166,6 +192,8 @@ public class LoteExistenciaService implements ILoteExistenciaService {
                 }
 
                 m.setLoteExistencia(l);
+                m.setContacto(d.getComprobanteStock().getContacto());
+                m.setTipoComprobanteStock(d.getComprobanteStock().getTipoComprobanteStock());
                 movimientoService.creaMovimientoStock(m);
 
             }

@@ -2,22 +2,74 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/template.xhtml">
+                xmlns:p="http://primefaces.org/ui">
 
-      <f:metadata>
+    <f:metadata>
         <f:viewParam name="idMenu" value="#{menuController.idMenu}"/>
         <f:viewAction action="#{menuController.cargaModulos()}"/>
     </f:metadata>
 
     <ui:decorate template="/main/util/principal.xhtml">
         <ui:define name="content">
-            <div class="Container100">
-                <div class="Card TexAlCenter ">
-                    <div class="CardTopic Blue">Stock</div>
-                    <div class="Separator"></div>
-                    <br/>
+            <div class="Container20 Responsive100">
+
+            </div>
+            <div class="Container20 Responsive100">
+                <div class="NoIndent">
+
+
+                    <div class="Card TexAlCenter ">
+                        <div class="Blue FontVoltBold">Nuevo Comprobante</div>
+                        <div class="Separator"></div>
+
+
+
+                        <p:link outcome="/main/stock/comprobanteStock/nuevo">
+                            <div class="BordRad10 GreenBack PadWithBorder5">
+                                <i class="icon-document-add Fs100 White"></i>
+                            </div>
+                        </p:link>
+
+
+                    </div>
                 </div>
+            </div>
+            <div class="Container20 Responsive100">
+                <div class="NoIndent">
+                    <div class="Card TexAlCenter ">
+                        <div class="Blue FontVoltBold">Nuevo Producto</div>
+                        <div class="Separator"></div>
+
+
+                        <p:link outcome="/main/stock/producto/nuevo">
+                            <div class="BordRad10 OrangeBack PadWithBorder5">
+                                <i class="fa fa-database Fs100 White"></i>
+                            </div>
+                        </p:link>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="Container20 Responsive100">
+                <div class="NoIndent">
+                    <div class="Card TexAlCenter ">
+                        <div class="Blue FontVoltBold">Nuevo Contacto</div>
+                        <div class="Separator"></div>
+
+
+                        <p:link outcome="/main/configuracion/contacto/nuevo">
+                            <div class="BordRad10 PurpleBack PadWithBorder5">
+                                <i class="icon-user-add Fs100 White"></i>
+                            </div>
+                        </p:link>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="Container20 Responsive100">
+
             </div>
         </ui:define>
 

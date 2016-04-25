@@ -16,7 +16,6 @@ import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import com.ideaspymes.proyecttemplate.stock.enums.EstadoComprobanteStock;
-import com.ideaspymes.proyecttemplate.stock.enums.TipoComprobanteStock;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,8 +53,12 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     private Long id;
     @Version
     private Long version;
-    @Enumerated(EnumType.STRING)
-    private TipoComprobanteStock tipo;
+
+    @Listado(descripcion = "Tipo", campo = "tipoComprobanteStock", entidad = true, campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/tipoComprobanteStock/vista")
+    @Filtro(descripcion = "Tipo", campo = "tipoComprobanteStock", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
+    @ManyToOne
+    private TipoComprobanteStock tipoComprobanteStock;
+
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     @Listado(descripcion = "Fecha", mostrar = true, link = true)
     @Filtro(descripcion = "Fecha", campo = "fecha", tipo = "rangoFecha")
@@ -96,7 +99,6 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
 
     @ManyToOne
     private Deposito depositoPivot;
-    
 
     @Transient
     private String descripcion;
@@ -115,8 +117,8 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     }
 
     public String getDescripcion() {
-        if (id != null && tipo != null) {
-            descripcion = tipo.getLabel() + ", Comp. Stock # " + id;
+        if (id != null && tipoComprobanteStock != null) {
+            descripcion = "Comp. Stock # " + id;
         }
         return descripcion;
     }
@@ -150,12 +152,12 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
         this.version = version;
     }
 
-    public TipoComprobanteStock getTipo() {
-        return tipo;
+    public TipoComprobanteStock getTipoComprobanteStock() {
+        return tipoComprobanteStock;
     }
 
-    public void setTipo(TipoComprobanteStock tipo) {
-        this.tipo = tipo;
+    public void setTipoComprobanteStock(TipoComprobanteStock tipo) {
+        this.tipoComprobanteStock = tipo;
     }
 
     public Date getFecha() {

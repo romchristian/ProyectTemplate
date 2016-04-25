@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="value" required="true"/>
+        <cc:attribute name="entidad" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:outputPanel>
+
+            <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE"
+                             styleClass="imagen"
+                             style="width: 100px;max-height: 100px;vertical-align: middle;z-index: 1;margin: 0 auto 0 auto;
+                             border-radius: 50%;
+                             background-color: white;
+                             border: 1px solid #ccc;">
+                <f:param name="id" value="#{cc.attrs.value['id']}"/>
+                <f:param name="entidad" value="#{cc.attrs.entidad}"/>
+            </p:graphicImage>
+
+
+        </p:outputPanel>
+    </cc:implementation>
+</html>

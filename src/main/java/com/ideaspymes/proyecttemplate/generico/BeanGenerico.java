@@ -24,6 +24,7 @@ import javax.imageio.stream.FileImageOutputStream;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+import net.coobird.thumbnailator.Thumbnails;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.CroppedImage;
@@ -283,12 +284,23 @@ public abstract class BeanGenerico<T> implements Serializable {
         setNewImageName(getRandomImageName());
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String newFileName = servletContext.getRealPath("") + File.separator + "imagens" + File.separator + "prof" + File.separator + getNewImageName() + ".jpg";
+        
+        
 
         FileImageOutputStream imageOutput;
 
         try {
 
-            imageOutput = new FileImageOutputStream(new File(newFileName));
+            File imagenCortada = new File(newFileName);
+            System.out.println("Imagen Original: " + imagenCortada.getUsableSpace());
+            
+            Thumbnails.of(imagenCortada).size(100,100)
+                    .toFile(new File(newFileName+"optimizado.png"));
+            
+            File optimizado = new File(newFileName+"optimizado.png");
+            System.out.println("Imagen Optimizada: " + imagenCortada.getUsableSpace());
+            
+            imageOutput = new FileImageOutputStream(optimizado);
             imageOutput.write(croppedImage.getBytes(), 0, croppedImage.getBytes().length);
             imageOutput.close();
 

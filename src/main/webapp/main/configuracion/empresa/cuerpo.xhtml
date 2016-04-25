@@ -14,7 +14,7 @@
         <p:growl id="mensajes" autoUpdate="true"/>
 
         <div class="Container70 Responsive100">
-            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+            <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
                 <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
                 <h:outputText value="#{empresaBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
                 <p:inputText value="#{empresaBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
@@ -31,6 +31,10 @@
                 <p:outputLabel value="Télefono Contacto" for="telefono" styleClass="FontVoltRegular"/>
                 <h:outputText value="#{empresaBean.actual.contactoTelefono}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
                 <p:inputText value="#{empresaBean.actual.contactoTelefono}" required="true" id="telefono" rendered="#{not(contexto == 'vista')}"/>
+                
+                <p:outputLabel value="Email Contacto" for="email" styleClass="FontVoltRegular"/>
+                <h:outputText value="#{empresaBean.actual.contactoEmail}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+                <p:inputText value="#{empresaBean.actual.contactoEmail}" required="true" id="email" rendered="#{not(contexto == 'vista')}"/>
             </p:panelGrid>
         </div>
         <div class="Container30 Responsive100 TexAlCenter">

@@ -44,6 +44,7 @@ public class ReporteComprobanteStock extends ReporteGenerico<DetCompStock> {
         getParams().put("fecha", sdf.format(comprobanteStock.getFecha()));
         getParams().put("deposito", comprobanteStock.getDepositoPivot().getNombre());
         getParams().put("estado", comprobanteStock.getEstadoComprobate().getLabel());
+        getParams().put("tipo", comprobanteStock.getTipoComprobanteStock().getNombre());
     }
 
     @Override

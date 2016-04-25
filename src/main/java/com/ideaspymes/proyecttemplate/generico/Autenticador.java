@@ -80,7 +80,7 @@ public class Autenticador implements Serializable {
         } catch (ServletException ex) {
             Logger.getLogger(Autenticador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "/main/configuracion/home.xhtml?idMenu=2&faces-redirect=true";
+        return "/main/stock/home.xhtml?idMenu=5&faces-redirect=true";
     }
 
     public String logout() throws IOException {

@@ -8,13 +8,13 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Impuesto;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.FiltroGenerico;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConImagen;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoCosto;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoProducto;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
@@ -24,7 +24,7 @@ import javax.persistence.*;
  * @author christian
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"codigo"}))
+//@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"codigo"}))
 public class Producto implements Serializable, IAuditable, IConImagen {
 
     private static final long serialVersionUID = 1L;
@@ -68,6 +68,8 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     private Boolean generarCodigo;
 
     @ManyToOne
+    @Listado(descripcion = "Familia", mostrar = true, campo = "familia", campoDescripcion = "nombre", entidad = true, modulo = "stock")
+    @Filtro(descripcion = "Familia", campo = "familia", tipo = FiltroGenerico.TIPO_SELECT_ONE, campoDescripcion = "nombre")
     private Familia familia;
 
     @Lob
@@ -76,7 +78,7 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     private List<Ingrediente> ingredientes;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
     private Empresa empresa;
 
     //Auditoria

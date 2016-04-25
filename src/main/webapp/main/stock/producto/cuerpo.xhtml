@@ -15,9 +15,6 @@
 
         <p:outputPanel id="panel">
 
-
-
-
             <div class="Container70 Responsive100">
                 <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
                     <h:outputText value="Empresa"  styleClass="FontVoltRegular"
@@ -31,7 +28,7 @@
 
                     <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular" />
                     <h:outputText value="#{productoBean.actual.codigo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
-                    <p:inputText value="#{productoBean.actual.codigo}" required="true" id="codigo" rendered="#{not(contexto == 'vista')}"/>
+                    <p:inputText value="#{productoBean.actual.codigo}" id="codigo" rendered="#{not(contexto == 'vista')}"/>
 
                     <p:outputLabel value="Unidad Medida Stock" for="unidadMedida" styleClass="FontVoltRegular" />
                     <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>

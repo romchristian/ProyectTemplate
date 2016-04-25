@@ -8,6 +8,7 @@ package com.ideaspymes.proyecttemplate.configuracion.model;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.IConImagen;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
@@ -27,7 +29,7 @@ import javax.persistence.Temporal;
  * @author christian.romero
  */
 @Entity
-public class Contacto implements Serializable, IConSucursal, IAuditable {
+public class Contacto implements Serializable, IConSucursal, IAuditable, IConImagen {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,47 +50,51 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     private TipoContacto tipoContacto;
     @ManyToOne
     @Filtro(descripcion = "Tipo Documento", tipo = "selectOne", campo = "tipoDocumento", campoDescripcion = "nombre")
-    @Listado(descripcion = "Tipo Documento", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
+    @Listado(descripcion = "Tipo Documento", mostrar = true, entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
     private TipoDocumento tipoDocumento;
     @Listado(descripcion = "Id Documento", mostrar = true)
     @Filtro(descripcion = "Id Documento", tipo = "like", campo = "documentoId")
     private String documentoId;
-    
+
     @Listado(descripcion = "Nacionalidad", mostrar = true)
     @Filtro(descripcion = "Nacionalidad", tipo = "like", campo = "nacionalidad")
     private String nacionalidad;
 
     @ManyToOne
     @Filtro(descripcion = "Estado Civil", tipo = "selectOne", campo = "estadoCivil", campoDescripcion = "nombre")
-    @Listado(descripcion = "Estado Civil", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
+    @Listado(descripcion = "Estado Civil", mostrar = true, entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
     private EstadoCivil estadoCivil;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNacimiento;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
     private Empresa empresa;
 
     @ManyToOne
-    @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre",modulo = "configuracion")
+    @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
     private Sucursal sucursal;
-    
-    
+
     //Informacion de contacto
     private String telefonoFijo;
     private String telefonoMovil;
     private String email;
     private String lugarDeTrabajo;
-    
+
     //Información de cliente
     private boolean esCliente;
     private boolean esExentoImpuesto;
     private Integer tasaMaximaDescuentoVenta;
-    
+
     private BigDecimal lineaCreditoMonedaLocal;
     private BigDecimal lineaCreditoMonedaExtranjera;
-    
+
+    //Información de Proveedor
+    private boolean esProveedor;
+    private boolean esFuncionario;
+    @Lob
+    private byte[] imagen;
 
     //Auditoria
     @Enumerated(EnumType.STRING)
@@ -97,8 +103,32 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     private Date fechaRegitro;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
-    
+
     private String usuarioUltimaModificacion;
+
+    public boolean isEsProveedor() {
+        return esProveedor;
+    }
+
+    public void setEsProveedor(boolean esProveedor) {
+        this.esProveedor = esProveedor;
+    }
+
+    public boolean isEsFuncionario() {
+        return esFuncionario;
+    }
+
+    public void setEsFuncionario(boolean esFuncionario) {
+        this.esFuncionario = esFuncionario;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
 
     @Override
     public Long getId() {
@@ -124,8 +154,6 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     public void setNacionalidad(String nacionalidad) {
         this.nacionalidad = nacionalidad;
     }
-    
-    
 
     @Override
     public Empresa getEmpresa() {
@@ -184,8 +212,6 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
     }
-
-  
 
     public String getCodigo() {
         return codigo;
@@ -306,9 +332,6 @@ public class Contacto implements Serializable, IConSucursal, IAuditable {
     public void setLineaCreditoMonedaExtranjera(BigDecimal lineaCreditoMonedaExtranjera) {
         this.lineaCreditoMonedaExtranjera = lineaCreditoMonedaExtranjera;
     }
-    
-    
-    
 
     @Override
     public int hashCode() {

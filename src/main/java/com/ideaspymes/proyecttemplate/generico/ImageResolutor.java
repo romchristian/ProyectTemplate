@@ -5,7 +5,9 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.Contacto;
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
+import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IContactoDAO;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IEmpresaDAO;
 import com.ideaspymes.proyecttemplate.stock.model.Familia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
@@ -36,6 +38,8 @@ public class ImageResolutor implements Serializable {
     private IFamiliaDAO familiaDAO;
     @EJB
     private IEmpresaDAO empresaDAO;
+    @EJB
+    private IContactoDAO contactoDAO;
 
     public StreamedContent getStreamedImageById() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -67,6 +71,12 @@ public class ImageResolutor implements Serializable {
                         Empresa empresa = empresaDAO.find(Long.valueOf(id));
                         if (empresa != null && empresa.getImagen() != null) {
                             R = new DefaultStreamedContent(new ByteArrayInputStream(empresa.getImagen()));
+                        }
+                        break;
+                    case "contacto":
+                        Contacto contacto = contactoDAO.find(Long.valueOf(id));
+                        if (contacto != null && contacto.getImagen() != null) {
+                            R = new DefaultStreamedContent(new ByteArrayInputStream(contacto.getImagen()));
                         }
                         break;
                 }

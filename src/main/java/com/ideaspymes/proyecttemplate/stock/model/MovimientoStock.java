@@ -5,6 +5,7 @@
  */
 package com.ideaspymes.proyecttemplate.stock.model;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.Contacto;
 import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
@@ -46,16 +47,12 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fecha;
 
-    @Listado(descripcion = "Tipo", mostrar = true, enumeracion = true, campoDescripcion = "label")
-    @Enumerated(EnumType.STRING)
-    private TipoMovimientoStock tipo;
-    
-    @Listado(descripcion = "Depósito", entidad = true, mostrar = true, campoDescripcion = "nombre",modulo = "stock")
+    @Listado(descripcion = "Depósito", entidad = true, mostrar = true, campoDescripcion = "nombre", modulo = "stock")
     @Filtro(descripcion = "Depósito", campo = "deposito", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
     @ManyToOne
     private Deposito deposito;
 
-    @Listado(descripcion = "Producto", entidad = true, mostrar = true, campoDescripcion = "nombre",modulo = "stock")
+    @Listado(descripcion = "Producto", entidad = true, mostrar = true, campoDescripcion = "nombre", modulo = "stock")
     @Filtro(descripcion = "Producto", campo = "producto", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_AUTOCOMPLETE)
     @ManyToOne
     private Producto producto;
@@ -64,20 +61,30 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     private Double cantidad;
 
     @ManyToOne
-    @Listado(descripcion = "U.M", entidad = true, mostrar = true, campoDescripcion = "nombre",modulo = "stock")
+    @Listado(descripcion = "U.M", entidad = true, mostrar = true, campoDescripcion = "nombre", modulo = "stock")
     @Filtro(descripcion = "U.M", campo = "unidadMedida", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
     private UnidadMedida unidadMedida;
     @Listado(descripcion = "Cant. Stock", mostrar = true)
     private Double cantidadStock;
     @ManyToOne
-    @Listado(descripcion = "U.M Stock", entidad = true, mostrar = true, campo = "unidadMedidaStock",campoDescripcion = "nombre",modulo = "stock",outcome = "/main/stock/unidadMedida/vista")
+    @Listado(descripcion = "U.M Stock", entidad = true, mostrar = true, campo = "unidadMedidaStock", campoDescripcion = "nombre", modulo = "stock", outcome = "/main/stock/unidadMedida/vista")
     private UnidadMedida unidadMedidaStock;
 
     @ManyToOne
-    @Listado(descripcion = "Comprobante Stock", entidad = true, mostrar = true, campoDescripcion = "descripcion",modulo = "stock")
+    @Listado(descripcion = "Comprobante Stock", entidad = true, mostrar = true, campoDescripcion = "descripcion", modulo = "stock")
     private ComprobanteStock comprobanteStock;
 
-    
+    @Listado(descripcion = "Contacto", entidad = true, mostrar = true, campoDescripcion = "nombre", modulo = "configuracion")
+    @Filtro(descripcion = "Contacto", campo = "contacto", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_AUTOCOMPLETE)
+    @ManyToOne
+    private Contacto contacto;
+
+    @Listado(descripcion = "Tipo", campo = "tipoComprobanteStock", entidad = true, campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/tipoComprobanteStock/vista")
+    @Filtro(descripcion = "Tipo", campo = "tipoComprobanteStock", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
+    @ManyToOne
+    private TipoComprobanteStock tipoComprobanteStock;
+    @Enumerated(EnumType.STRING)
+    private TipoMovimientoStock tipo;
 
     @ManyToOne
     private Empresa empresa;
@@ -107,6 +114,14 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
         this.id = id;
     }
 
+    public Contacto getContacto() {
+        return contacto;
+    }
+
+    public void setContacto(Contacto contacto) {
+        this.contacto = contacto;
+    }
+
     public Deposito getDeposito() {
         return deposito;
     }
@@ -121,14 +136,6 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public TipoMovimientoStock getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoMovimientoStock tipo) {
-        this.tipo = tipo;
     }
 
     public Producto getProducto() {
@@ -241,6 +248,22 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
 
     public void setUsuarioUltimaModificacion(String usuarioUltimaModificacion) {
         this.usuarioUltimaModificacion = usuarioUltimaModificacion;
+    }
+
+    public TipoComprobanteStock getTipoComprobanteStock() {
+        return tipoComprobanteStock;
+    }
+
+    public void setTipoComprobanteStock(TipoComprobanteStock tipoComprobanteStock) {
+        this.tipoComprobanteStock = tipoComprobanteStock;
+    }
+
+    public TipoMovimientoStock getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoMovimientoStock tipo) {
+        this.tipo = tipo;
     }
 
     @Override
