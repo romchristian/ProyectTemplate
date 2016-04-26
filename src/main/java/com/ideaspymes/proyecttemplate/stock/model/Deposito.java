@@ -9,12 +9,19 @@ import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import com.ideaspymes.proyecttemplate.configuracion.model.Sucursal;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.FiltroGenerico;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoDeposito;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,6 +29,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.Version;
 
@@ -39,11 +47,19 @@ public class Deposito implements Serializable, IAuditable, IConSucursal {
     @Version
     private Long version;
     @Listado(descripcion = "Nombre", mostrar = true, link = true)
-    @Filtro(campo = "nombre", descripcion = "Nombre", tipo = "like")
+    @Filtro(campo = "nombre", descripcion = "Nombre", tipo = FiltroGenerico.TIPO_LIKE)
     private String nombre;
-    @Listado(descripcion = "Nombre", mostrar = true,enumeracion = true,campoDescripcion = "label")
+    @Listado(descripcion = "Nombre", mostrar = true, enumeracion = true, campoDescripcion = "label")
     @Enumerated(EnumType.STRING)
     private TipoDeposito tipoDeposito;
+
+    @Listado(descripcion = "Nombre", mostrar = true)
+    private String direccion;
+    @Listado(descripcion = "Nombre", mostrar = true)
+    private String telefono;
+
+    @OneToMany(mappedBy = "deposito", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Ubicacion> ubicaciones;
 
     @ManyToOne
     private Empresa empresa;
@@ -95,6 +111,88 @@ public class Deposito implements Serializable, IAuditable, IConSucursal {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public List<Ubicacion> getUbicaciones() {
+        if (ubicaciones == null) {
+            ubicaciones = new ArrayList<>();
+            Ubicacion det = new Ubicacion();
+            det.setDeposito(this);
+            det.setIndice(1);
+            ubicaciones.add(det);
+        }
+        return ubicaciones;
+    }
+
+    public void setUbicaciones(List<Ubicacion> ubicaciones) {
+        this.ubicaciones = ubicaciones;
+    }
+
+    public void addDetalle() {
+        Comparator<Ubicacion> comp = new Comparator<Ubicacion>() {
+            @Override
+            public int compare(Ubicacion o1, Ubicacion o2) {
+                return o1.getIndice() > o2.getIndice() ? -1 : 1;
+            }
+        };
+
+        Comparator<Ubicacion> comp2 = new Comparator<Ubicacion>() {
+            @Override
+            public int compare(Ubicacion o1, Ubicacion o2) {
+                return o1.getIndice() > o2.getIndice() ? 1 : -1;
+            }
+        };
+
+        Collections.sort(getUbicaciones(), comp);
+        int lastIndice = 1;
+        for (Ubicacion d : getUbicaciones()) {
+            lastIndice = d.getIndice();
+            break;
+        }
+        Ubicacion det = new Ubicacion();
+        det.setDeposito(this);
+        det.setIndice(lastIndice + 1);
+        getUbicaciones().add(det);
+
+        Collections.sort(getUbicaciones(), comp2);
+    }
+
+    public void removeDetalle(Ubicacion d) {
+        int indice = 0;
+
+        for (int i = 0; i < getUbicaciones().size(); i++) {
+            Ubicacion dt = getUbicaciones().get(i);
+            if (Objects.equals(d.getIndice(), dt.getIndice())) {
+                indice = i;
+                break;
+            }
+        }
+
+        getUbicaciones().remove(indice);
+
+        if (getUbicaciones().isEmpty()) {
+            Ubicacion det = new Ubicacion();
+            det.setDeposito(this);
+            det.setIndice(1);
+            getUbicaciones().add(det);
+
+        }
     }
 
     public Empresa getEmpresa() {

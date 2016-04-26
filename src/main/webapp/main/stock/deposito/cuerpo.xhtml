@@ -12,6 +12,9 @@
 
     <h:form  id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
+        
+        <facilerp:seccion titulo="Información Principal"/>
+        
         <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
 
@@ -24,8 +27,46 @@
             <h:outputText value="#{depositoBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
             <p:inputText value="#{depositoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
+            <p:outputLabel value="Dirección" for="direccion" styleClass="FontVoltRegular" />
+            <h:outputText value="#{depositoBean.actual.direccion}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{depositoBean.actual.direccion}"  id="direccion" rendered="#{not(contexto == 'vista')}"/>
+
+            <p:outputLabel value="Nombre" for="telefono" styleClass="FontVoltRegular" />
+            <h:outputText value="#{depositoBean.actual.telefono}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{depositoBean.actual.telefono}"  id="telefono" rendered="#{not(contexto == 'vista')}"/>
 
         </p:panelGrid>
+
+
+
+        <div class="EmptyBox20"/>
+        <facilerp:seccion titulo="Ubicaciones"/>
+
+        <div class="NoIndent NoPadding">
+            <p:dataTable value="#{depositoBean.actual.ubicaciones}" var="d" id="detalles">
+                <p:column style="text-align: center;width: 4%"  rendered="#{not(contexto == 'vista')}">
+                    <p:commandLink  action="#{depositoBean.actual.removeDetalle(d)}" update="detalles">
+                        <i class="fa fa-remove Red"></i>
+                    </p:commandLink>
+                </p:column>
+                <p:column style="text-align: center;width: 4%" headerText="#">
+                    <h:outputText value="#{d.indice}"/>
+                </p:column>
+                <p:column headerText="Ubicacion">
+                    <p:inputText value="#{d.nombre}" rendered="#{not(contexto == 'vista')}"/>
+                    <h:outputText value="#{d.nombre}" rendered="#{(contexto == 'vista')}"/>
+                </p:column>
+
+                <p:column style="text-align: center;width: 4%" rendered="#{not(contexto == 'vista')}">
+                    <p:commandLink  action="#{depositoBean.actual.addDetalle()}" update="detalles">
+                        <i class="fa fa-plus Green  "></i>
+                    </p:commandLink>
+                </p:column>
+
+            </p:dataTable>
+
+
+        </div>
 
         <facilerp:botoneraABM bean="#{depositoBean}" contexto="#{contexto}" entidad="deposito" update=":formABM:panel"/>
 

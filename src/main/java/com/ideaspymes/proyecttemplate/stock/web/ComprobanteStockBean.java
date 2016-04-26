@@ -16,6 +16,7 @@ import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import com.ideaspymes.proyecttemplate.stock.web.reporte.ReporteComprobanteStock;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +50,7 @@ public class ComprobanteStockBean extends BeanGenerico<ComprobanteStock> impleme
     @Override
     public ComprobanteStock getNuevo() {
         ComprobanteStock R = new ComprobanteStock();
+        R.setFecha(new Date());
         R.setResposable(getCredencial().getUsuario());
         return R;
     }

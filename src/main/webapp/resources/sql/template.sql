@@ -67,7 +67,7 @@ INSERT INTO public.deposito(id, estado, fecharegitro, fechaultimamodificacion, n
     VALUES (4, 'ACTIVO', now(), null, 'PERDIDA', 'PERDIDA', 'admin', 1, 1, null);
 
 
-    SELECT pg_catalog.setval('deposito_id_seq', 4, false);
+    SELECT pg_catalog.setval('deposito_id_seq', 5, false);
 --
 -- TOC entry 2286 (class 0 OID 26854)
 -- Dependencies: 188
