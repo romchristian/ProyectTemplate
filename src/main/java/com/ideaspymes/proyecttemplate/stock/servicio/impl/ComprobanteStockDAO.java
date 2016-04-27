@@ -17,9 +17,11 @@ import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.LoteExistencia;
+import com.ideaspymes.proyecttemplate.stock.model.TipoComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IDepositoDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ILoteExistenciaService;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ITipoComprobanteStockDAO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -51,6 +53,9 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
     @EJB
     private IDepositoDAO iDepositoDAO;
 
+    @EJB
+    private ITipoComprobanteStockDAO iTipoComprobanteStockDAO;
+
     @Override
     public ComprobanteStock create(ComprobanteStock entity) {
 
@@ -58,16 +63,19 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
             case "Entrada por Compra":
             case "Entrada por Ajuste":
                 entity.setDestino(entity.getDepositoPivot());
+                entity.setUbicacionDestino(entity.getUbicacionPivot());
                 entity.setOrigen(iDepositoDAO.findPorTipo(TipoDeposito.COMPRA));
                 break;
             case "Salida por Venta":
                 entity.setOrigen(entity.getDepositoPivot());
+                entity.setUbicacionOrigen(entity.getUbicacionPivot());
                 entity.setDestino(iDepositoDAO.findPorTipo(TipoDeposito.VENTA));
                 break;
             case "Salida por Consumo Interno":
             case "Salida por Ajuste":
             case "Salida por Perdida":
                 entity.setOrigen(entity.getDepositoPivot());
+                entity.setUbicacionOrigen(entity.getUbicacionPivot());
                 entity.setDestino(iDepositoDAO.findPorTipo(TipoDeposito.PERDIDA));
                 break;
 
@@ -117,13 +125,21 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         ComprobanteStock R = entity;
         if (entity.getEstadoComprobate() == EstadoComprobanteStock.PENDIENTE_CONFIRMACION) {
 
-            switch (entity.getTipoComprobanteStock().getTipo()) {
-                case SALIDA:
-                    creaMovientosStockSalida(entity.getDetalles());
-                    break;
-                case ENTRADA:
-                    creaMovientosStockEntrada(entity.getDetalles());
-                    break;
+            if (entity.getTipoComprobanteStock().getNombre().compareToIgnoreCase("Transferencia") == 0) {
+
+                creaMovientosStockSalida(entity.getDetalles());
+                creaMovientosStockEntrada(entity.getDetalles());
+
+            } else {
+
+                switch (entity.getTipoComprobanteStock().getTipo()) {
+                    case SALIDA:
+                        creaMovientosStockSalida(entity.getDetalles());
+                        break;
+                    case ENTRADA:
+                        creaMovientosStockEntrada(entity.getDetalles());
+                        break;
+                }
             }
 
             entity.setEstadoComprobate(EstadoComprobanteStock.CONFIRMADO);
@@ -181,8 +197,6 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         }
     }
 
- 
-
     private void creaMovientosStockEntrada(List<DetComprobanteStock> detalles) {
 
         for (DetComprobanteStock d : detalles) {
@@ -192,8 +206,6 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
             }
         }
     }
-
-   
 
     @Override
     public List<ComprobanteStock> findAll(String query, QueryParameter params, int first, int pageSize) {

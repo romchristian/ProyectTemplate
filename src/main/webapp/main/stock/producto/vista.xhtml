@@ -70,6 +70,21 @@
 
                                 </p:panelGrid>
 
+                                <div class="EmptyBox20"/>
+                                <h:outputText value="Ubicaciones"  styleClass="FontVoltRegular White"/>
+
+                                <div class="EmptyBox10"/>
+
+                                <ui:repeat value="#{productoBean.obtExistencias(productoBean.actual)}" var="e">
+                                    <p:outputPanel>
+                                        <h:outputText value="#{e.cantidad}">
+                                            <f:convertNumber locale="#{formato.locale}"/>
+                                        </h:outputText>
+                                        <p:spacer width="10"/>
+                                        <h:outputText value=" #{e.unidadMedida.nombre} en #{e.ubicacion.nombre} - #{e.deposito.nombre}"  styleClass="FontVoltRegular White"/>
+                                        <div class="EmptyBox10"/>
+                                    </p:outputPanel>
+                                </ui:repeat>
 
                             </div>
                             <div class="Container30 Responsive100 TexAlCenter">

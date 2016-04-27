@@ -38,6 +38,8 @@ public class Existencia implements Serializable, IAuditable, IConSucursal {
     @ManyToOne
     private Deposito deposito;
     @ManyToOne
+    private Ubicacion ubicacion;
+    @ManyToOne
     private Producto producto;
     private Double cantidad;
     @ManyToOne
@@ -81,6 +83,14 @@ public class Existencia implements Serializable, IAuditable, IConSucursal {
 
     public void setDeposito(Deposito deposito) {
         this.deposito = deposito;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     public Producto getProducto() {

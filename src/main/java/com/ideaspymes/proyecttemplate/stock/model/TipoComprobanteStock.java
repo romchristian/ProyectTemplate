@@ -40,6 +40,7 @@ public class TipoComprobanteStock implements Serializable, IAuditable {
     private String nombre;
     @Enumerated(EnumType.STRING)
     private TipoMovimientoStock tipo;
+    private Boolean mostrar;
 
     @ManyToOne
     @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
@@ -77,6 +78,14 @@ public class TipoComprobanteStock implements Serializable, IAuditable {
 
     public void setTipo(TipoMovimientoStock tipo) {
         this.tipo = tipo;
+    }
+
+    public Boolean getMostrar() {
+        return mostrar;
+    }
+
+    public void setMostrar(Boolean mostrar) {
+        this.mostrar = mostrar;
     }
 
     @Override

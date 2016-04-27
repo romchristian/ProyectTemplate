@@ -24,7 +24,6 @@ import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-
 /**
  *
  * @author cromero
@@ -41,7 +40,7 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
     private String codigo;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date ingreso;
-    private String ubicacion;
+    private String ubicacionDescripcion;
     private String refProveedor;
     private String refFactura;
     @ManyToOne
@@ -49,12 +48,15 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
     @ManyToOne
     private Deposito deposito;
     @ManyToOne
+    private Ubicacion ubicacion;
+
+    @ManyToOne
     private Producto producto;
     @ManyToOne
     private UnidadMedida unidadMedida;
     private Double cantidadIngresada;
     private Double costo;
-    
+
     @ManyToOne
     private UnidadMedida unidadMedidaStock;
     private Double cantidadIngresadaStock;
@@ -62,7 +64,7 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
     private Double cantidadReservadaStock;
     private Double cantidadSaldoStock;
     private Double costoUnitario;
-    
+
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date elaboracion;
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -120,12 +122,12 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
         this.ingreso = ingreso;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
+    public String getUbicacionDescripcion() {
+        return ubicacionDescripcion;
     }
 
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setUbicacionDescripcion(String ubicacion) {
+        this.ubicacionDescripcion = ubicacion;
     }
 
     public ComprobanteStock getComprobanteStock() {
@@ -142,6 +144,14 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
 
     public void setDeposito(Deposito deposito) {
         this.deposito = deposito;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     public Producto getProducto() {
@@ -215,8 +225,6 @@ public class LoteExistencia implements Serializable, IAuditable, IConSucursal {
     public void setCostoUnitario(Double costoUnitario) {
         this.costoUnitario = costoUnitario;
     }
-    
-    
 
     public Date getElaboracion() {
         return elaboracion;

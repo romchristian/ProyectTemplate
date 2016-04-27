@@ -12,9 +12,9 @@
 
     <h:form  id="formABM">
         <p:growl id="mensajes" autoUpdate="true"/>
-        
+
         <facilerp:seccion titulo="Información Principal"/>
-        
+
         <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
 
@@ -58,6 +58,9 @@
                 </p:column>
 
                 <p:column style="text-align: center;width: 4%" rendered="#{not(contexto == 'vista')}">
+                    <f:facet name="header">
+                        <p:commandButton icon="fa fa-plus" action="#{depositoBean.actual.addDetalle()}" update="detalles" rendered="#{not(contexto == 'vista')}"/>
+                    </f:facet>
                     <p:commandLink  action="#{depositoBean.actual.addDetalle()}" update="detalles">
                         <i class="fa fa-plus Green  "></i>
                     </p:commandLink>

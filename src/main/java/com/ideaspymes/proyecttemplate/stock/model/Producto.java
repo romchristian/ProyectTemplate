@@ -54,8 +54,8 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     private Double precioVenta;
     private Double precioVentaMonedaExtranjera;
     @Listado(descripcion = "Inventariable", mostrar = true)
-    private Boolean inventariable;
-    private Boolean vendible;
+    private Boolean inventariable = true;
+    private Boolean vendible = false;
     @Listado(descripcion = "Tiene Vencimiento", mostrar = true)
     private Boolean tieneVencimiento;
     private Double stockMinimo;

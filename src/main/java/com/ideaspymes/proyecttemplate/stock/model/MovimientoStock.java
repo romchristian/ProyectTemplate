@@ -47,10 +47,14 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fecha;
 
-    @Listado(descripcion = "Depósito", entidad = true, mostrar = true, campoDescripcion = "nombre", modulo = "stock")
-    @Filtro(descripcion = "Depósito", campo = "deposito", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
+    @Listado(descripcion = "Lugar", entidad = true, mostrar = true, campoDescripcion = "nombre", modulo = "stock")
+    @Filtro(descripcion = "Lugar", campo = "deposito", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
     @ManyToOne
     private Deposito deposito;
+    @Listado(descripcion = "Ubicación", entidad = true, mostrar = true, campoDescripcion = "nombre", modulo = "stock")
+    @Filtro(descripcion = "Ubicación", campo = "ubicacion", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
+    @ManyToOne
+    private Ubicacion ubicacion;
 
     @Listado(descripcion = "Producto", entidad = true, mostrar = true, campoDescripcion = "nombre", modulo = "stock")
     @Filtro(descripcion = "Producto", campo = "producto", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_AUTOCOMPLETE)
@@ -79,7 +83,7 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
     @ManyToOne
     private Contacto contacto;
 
-    @Listado(descripcion = "Tipo", campo = "tipoComprobanteStock", entidad = true, campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/tipoComprobanteStock/vista")
+    @Listado(descripcion = "Tipo", campo = "tipoComprobanteStock", entidad = true, campoDescripcion = "nombre", modulo = "stock", outcome = "/main/stock/tipoComprobanteStock/vista")
     @Filtro(descripcion = "Tipo", campo = "tipoComprobanteStock", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
     @ManyToOne
     private TipoComprobanteStock tipoComprobanteStock;
@@ -128,6 +132,14 @@ public abstract class MovimientoStock implements Serializable, IAuditable, IConS
 
     public void setDeposito(Deposito deposito) {
         this.deposito = deposito;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     public Date getFecha() {

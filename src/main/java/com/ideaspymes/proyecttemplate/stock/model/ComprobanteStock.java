@@ -54,7 +54,7 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     @Version
     private Long version;
 
-    @Listado(descripcion = "Tipo", campo = "tipoComprobanteStock", entidad = true, campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/tipoComprobanteStock/vista")
+    @Listado(descripcion = "Tipo", campo = "tipoComprobanteStock", entidad = true, campoDescripcion = "nombre", modulo = "stock", outcome = "/main/stock/tipoComprobanteStock/vista")
     @Filtro(descripcion = "Tipo", campo = "tipoComprobanteStock", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
     @ManyToOne
     private TipoComprobanteStock tipoComprobanteStock;
@@ -75,7 +75,11 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     @ManyToOne
     private Deposito origen;
     @ManyToOne
+    private Ubicacion ubicacionOrigen;
+    @ManyToOne
     private Deposito destino;
+    @ManyToOne
+    private Ubicacion ubicacionDestino;
     @ManyToOne
     private Usuario resposable;
     @Listado(descripcion = "Contacto", campo = "contacto", entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
@@ -99,6 +103,9 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
 
     @ManyToOne
     private Deposito depositoPivot;
+
+    @ManyToOne
+    private Ubicacion ubicacionPivot;
 
     @Transient
     private String descripcion;
@@ -198,6 +205,30 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
 
     public void setEstadoComprobate(EstadoComprobanteStock estadoComprobate) {
         this.estadoComprobate = estadoComprobate;
+    }
+
+    public Ubicacion getUbicacionOrigen() {
+        return ubicacionOrigen;
+    }
+
+    public void setUbicacionOrigen(Ubicacion ubicacionOrigen) {
+        this.ubicacionOrigen = ubicacionOrigen;
+    }
+
+    public Ubicacion getUbicacionDestino() {
+        return ubicacionDestino;
+    }
+
+    public void setUbicacionDestino(Ubicacion ubicacionDestino) {
+        this.ubicacionDestino = ubicacionDestino;
+    }
+
+    public Ubicacion getUbicacionPivot() {
+        return ubicacionPivot;
+    }
+
+    public void setUbicacionPivot(Ubicacion ubicacionPivot) {
+        this.ubicacionPivot = ubicacionPivot;
     }
 
     public List<DetComprobanteStock> getDetalles() {

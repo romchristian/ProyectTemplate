@@ -11,6 +11,7 @@ import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.Existencia;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStock;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
+import com.ideaspymes.proyecttemplate.stock.model.Ubicacion;
 import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import java.util.Date;
 import javax.ejb.EJB;
@@ -38,19 +39,20 @@ public class MovimientoStockService implements IMovimientoStockService {
         Producto p = m.getProducto();
         abms.getEM().merge(m);
         System.out.println("Invoque creaMovimiento");
-        afectaStockExistencia(m.getDeposito(), p, m.cantidadAAfectar(), p.getUnidadMedidaBase());
+        afectaStockExistencia(m.getDeposito(),m.getUbicacion(), p, m.cantidadAAfectar(), p.getUnidadMedidaBase());
     }
 
-    private void afectaStockExistencia(Deposito d, Producto p, Double cantidadAAfectar, UnidadMedida um) {
+    private void afectaStockExistencia(Deposito d,Ubicacion u, Producto p, Double cantidadAAfectar, UnidadMedida um) {
         System.out.println("Invoque afectaExistencia :  Deposito: " + d + " Producto : " + p + " UnidadMedida: " + um + " Cantidad : " + cantidadAAfectar);
         if (p != null && d != null && cantidadAAfectar != null && um != null) {
             Existencia e = null;
             System.out.println("Estoy dentro");
             try {
-                e = (Existencia) abms.getEM().createQuery("Select e from Existencia e WHERE e.deposito= :deposito and e.producto= :producto and e.unidadMedida= :unidadmedida")
+                e = (Existencia) abms.getEM().createQuery("Select e from Existencia e WHERE e.deposito= :deposito and e.producto= :producto and e.unidadMedida= :unidadmedida AND e.ubicacion = :ubicacion")
                         .setParameter("producto", p)
                         .setParameter("deposito", d)
                         .setParameter("unidadmedida", um)
+                        .setParameter("ubicacion", u)
                         .getSingleResult();
 
             } catch (Exception ex) {
@@ -60,6 +62,7 @@ public class MovimientoStockService implements IMovimientoStockService {
             if (e == null) {
                 e = new Existencia();
                 e.setDeposito(d);
+                e.setUbicacion(u);
                 e.setProducto(p);
                 e.setCantidad(cantidadAAfectar);
                 e.setUnidadMedida(um);

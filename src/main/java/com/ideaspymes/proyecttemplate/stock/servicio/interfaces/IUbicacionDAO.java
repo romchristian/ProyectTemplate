@@ -7,8 +7,7 @@ package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
-import com.ideaspymes.proyecttemplate.stock.model.Existencia;
-import com.ideaspymes.proyecttemplate.stock.model.Producto;
+import com.ideaspymes.proyecttemplate.stock.model.Ubicacion;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -17,26 +16,24 @@ import javax.ejb.Local;
  * @author Acer
  */
 @Local
-public interface IProductoDAO extends AbstractDAO<Producto> {
+public interface IUbicacionDAO extends AbstractDAO<Ubicacion> {
 
     @Override
-    Producto create(Producto entity);
+    Ubicacion create(Ubicacion entity);
 
     @Override
-    Producto edit(Producto entity);
+    Ubicacion edit(Ubicacion entity);
 
     @Override
-    Producto find(Object id);
+    Ubicacion find(Object id);
 
     @Override
-    List<Producto> findAll();
+    List<Ubicacion> findAll();
 
     @Override
-    List<Producto> findAll(String query, QueryParameter params);
+    List<Ubicacion> findAll(String query, QueryParameter params);
 
     @Override
-    void remove(Producto entity);
-
-    List<Existencia> findExistenciasPorProducto(Producto p);
+    void remove(Ubicacion entity);
 
 }

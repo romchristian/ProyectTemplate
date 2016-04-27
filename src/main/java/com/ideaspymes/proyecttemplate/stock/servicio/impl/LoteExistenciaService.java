@@ -16,10 +16,14 @@ import com.ideaspymes.proyecttemplate.stock.model.MovimientoStock;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockCompra;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockConsumoInterno;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockEntradaAjuste;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockEntradaTrans;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockPerdida;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockSalidaAjuste;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockSalidaTrans;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockVenta;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.model.ProductoUnidadMedida;
+import com.ideaspymes.proyecttemplate.stock.model.Ubicacion;
 import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ILoteExistenciaService;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoUnidadMedidaDAO;
@@ -62,6 +66,7 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         l.setRefProveedor("Proveedor:0");
         l.setIngreso(d.getComprobanteStock().getFecha());
         l.setDeposito(d.getComprobanteStock().getDestino());
+        l.setUbicacion(d.getComprobanteStock().getUbicacionDestino());
         l.setProducto(d.getProducto());
         l.setUnidadMedida(d.getUnidadMedida());
         l.setCantidadIngresada(d.getCantidad());
@@ -86,16 +91,24 @@ public class LoteExistenciaService implements ILoteExistenciaService {
             case "Entrada por Ajuste":
                 m = new MovimientoStockEntradaAjuste();
                 break;
+            case "Transferencia":
+                m = new MovimientoStockEntradaTrans();
+                break;
         }
 
         m.setComprobanteStock(d.getComprobanteStock());
         m.setLoteExistencia(l);
 
         Deposito dp = d.getComprobanteStock().getDestino();
+        Ubicacion ub = d.getComprobanteStock().getUbicacionDestino();
         generaAuditoriaCreate(d);
 
         if (dp != null) {
             m.setDeposito(dp);
+        }
+
+        if (ub != null) {
+            m.setUbicacion(ub);
         }
         m.setFecha(new Date());
         m.setProducto(d.getProducto());
@@ -136,7 +149,9 @@ public class LoteExistenciaService implements ILoteExistenciaService {
 
         double cantidadPorMovimiento = calculaCantidadUMStock(d.getProducto(), d.getUnidadMedida(), d.getCantidad());
 
-        if (d.getProducto().getTieneVencimiento()) {
+        System.out.println("PRODUCTOOOOOO:  " + d.getProducto());
+        
+        if (d.getProducto().getTieneVencimiento() != null && d.getProducto().getTieneVencimiento()) {
 
             lotesAAfectar = getLotesExitenciaVencimientosMasProximos(d.getProducto(), cantidadPorMovimiento);
 
@@ -151,13 +166,14 @@ public class LoteExistenciaService implements ILoteExistenciaService {
             if (cantidadPorMovimiento > 0) {
 
                 Deposito dp = d.getComprobanteStock().getOrigen();
+                Ubicacion ub = d.getComprobanteStock().getUbicacionOrigen();
                 generaAuditoriaUpdate(d);
 
                 MovimientoStock m = new MovimientoStockVenta();
 
                 switch (d.getComprobanteStock().getTipoComprobanteStock().getNombre()) {
                     case "Salida por Ajuste":
-                        m = new MovimientoStockEntradaAjuste();
+                        m = new MovimientoStockSalidaAjuste();
                         break;
 
                     case "Salida por Consumo Interno":
@@ -167,6 +183,9 @@ public class LoteExistenciaService implements ILoteExistenciaService {
                     case "Salida por Perdida":
                         m = new MovimientoStockPerdida();
                         break;
+                    case "Transferencia":
+                        m = new MovimientoStockSalidaTrans();
+                        break;
                 }
 
                 m.setComprobanteStock(d.getComprobanteStock());
@@ -174,6 +193,10 @@ public class LoteExistenciaService implements ILoteExistenciaService {
 
                 if (dp != null) {
                     m.setDeposito(dp);
+                }
+
+                if (ub != null) {
+                    m.setUbicacion(ub);
                 }
                 m.setFecha(new Date());
                 m.setProducto(d.getProducto());

@@ -12,6 +12,7 @@ import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.FiltroGenerico;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
+import com.ideaspymes.proyecttemplate.generico.JsfUtil;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoDeposito;
 import java.io.Serializable;
@@ -21,6 +22,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.faces.model.SelectItem;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -142,6 +144,13 @@ public class Deposito implements Serializable, IAuditable, IConSucursal {
 
     public void setUbicaciones(List<Ubicacion> ubicaciones) {
         this.ubicaciones = ubicaciones;
+    }
+
+    public SelectItem[] getItemsUbicaciones() {
+        if (ubicaciones == null) {
+            ubicaciones = new ArrayList<>();
+        }
+        return JsfUtil.getSelectItems(ubicaciones, false);
     }
 
     public void addDetalle() {

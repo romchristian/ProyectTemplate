@@ -36,4 +36,6 @@ public interface ITipoComprobanteStockDAO extends AbstractDAO<TipoComprobanteSto
     @Override
     void remove(TipoComprobanteStock entity);
 
+    TipoComprobanteStock findPorNombre(String nombre);
+
 }

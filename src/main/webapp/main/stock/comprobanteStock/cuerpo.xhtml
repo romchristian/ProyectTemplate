@@ -17,7 +17,7 @@
         <p:growl id="mensajes" autoUpdate="true"/>
 
         <o:importConstants type="com.ideaspymes.proyecttemplate.stock.enums.EstadoComprobanteStock" var="Estado" />
-        
+
 
         <p:outputPanel id="panel">
             <h:outputText value="#{comprobanteStockBean.actual.estadoComprobate != null?comprobanteStockBean.actual.estadoComprobate.label:''}"
@@ -84,35 +84,80 @@
                 <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" >
 
 
-                    <p:outputLabel value="Depósito" for="depositoPivot" styleClass="FontVoltRegular depositos"/>
+                    <p:outputLabel value="Lugar" for="depositoPivot" styleClass="FontVoltRegular depositos"
+                                   rendered="#{not (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}"/>
                     <h:outputText value="#{comprobanteStockBean.actual.depositoPivot == null?'':comprobanteStockBean.actual.depositoPivot.nombre}" 
-                                  rendered="#{(contexto == 'vista')}" 
+                                  rendered="#{(contexto == 'vista') and not(comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}" 
                                   styleClass="FontVoltRegular depositos"/>
                     <p:selectOneMenu value="#{comprobanteStockBean.actual.depositoPivot}" styleClass="depositos"
-                                     id="depositoPivot" rendered="#{not(contexto == 'vista')}">
+                                     id="depositoPivot" rendered="#{not(contexto == 'vista') and not(comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
+                        <p:ajax event="change" process="@this" update="ubicacionPivot"/>
                         <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
                     </p:selectOneMenu>
 
 
-<!--                    <p:outputLabel value="Origen" for="origen" styleClass="FontVoltRegular depositos"
-                                   rendered="{comprobanteStockBean.actual.tipo == Tipo.TRANSFERENCIA_INTERNA}"/>
-                    <h:outputText value="{comprobanteStockBean.actual.origen == null?'':comprobanteStockBean.actual.origen.nombre}" 
-                                  rendered="{(contexto == 'vista') and (comprobanteStockBean.actual.tipo == Tipo.TRANSFERENCIA_INTERNA)}"
+                    <p:outputLabel value="Ubicación" for="ubicacionPivot" styleClass="FontVoltRegular depositos"
+                                   rendered="#{not (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}"/>
+                    <h:outputText value="#{comprobanteStockBean.actual.ubicacionPivot == null?'':comprobanteStockBean.actual.ubicacionPivot.nombre}" 
+                                  rendered="#{(contexto == 'vista')  and not(comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}" 
                                   styleClass="FontVoltRegular depositos"/>
-                    <p:selectOneMenu value="{comprobanteStockBean.actual.origen}" id="origen" styleClass="depositos"
-                                     rendered="{not(contexto == 'vista') and (comprobanteStockBean.actual.tipo == Tipo.TRANSFERENCIA_INTERNA)}">
-                        <f:selectItems value="{depositoBean.itemsAvailableSelectMany}"/>
+                    <p:selectOneMenu value="#{comprobanteStockBean.actual.ubicacionPivot}" styleClass="depositos"
+                                     id="ubicacionPivot" rendered="#{not(contexto == 'vista')  and not(comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
+                        <f:selectItems value="#{comprobanteStockBean.actual.depositoPivot.itemsUbicaciones}"/>
                     </p:selectOneMenu>
+                    
+                    
 
-                    <p:outputLabel value="Destino" for="destino" styleClass="FontVoltRegular depositos" 
-                                   rendered="{comprobanteStockBean.actual.tipo == Tipo.TRANSFERENCIA_INTERNA}"/>
-                    <h:outputText value="{comprobanteStockBean.actual.destino == null?'':comprobanteStockBean.actual.destino.nombre}"
-                                  rendered="{(contexto == 'vista') and (comprobanteStockBean.actual.tipo == Tipo.TRANSFERENCIA_INTERNA)}" 
+
+                    <p:outputLabel value="Lugar Origen" for="origen" styleClass="FontVoltRegular depositos"
+                                   rendered="#{comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia'}"/>
+                    <h:outputText value="#{comprobanteStockBean.actual.origen == null?'':comprobanteStockBean.actual.origen.nombre}" 
+                                  rendered="#{(contexto == 'vista') and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}"
                                   styleClass="FontVoltRegular depositos"/>
-                    <p:selectOneMenu value="{comprobanteStockBean.actual.destino}" id="destino" styleClass="depositos"
-                                     rendered="{not(contexto == 'vista') and (comprobanteStockBean.actual.tipo == Tipo.TRANSFERENCIA_INTERNA)}">
-                        <f:selectItems value="{depositoBean.itemsAvailableSelectMany}"/>
-                    </p:selectOneMenu>-->
+                    <p:selectOneMenu value="#{comprobanteStockBean.actual.origen}" id="origen" styleClass="depositos"
+                                     rendered="#{not(contexto == 'vista') and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
+                        <p:ajax event="change" process="@this" update="ubicacionOrigen"/>
+                        <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
+                    </p:selectOneMenu>
+                    
+                    
+                    
+                    <p:outputLabel value="Ubicación Origen" for="ubicacionOrigen" styleClass="FontVoltRegular depositos"
+                                   rendered="#{comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia'}"/>
+                    <h:outputText value="#{comprobanteStockBean.actual.ubicacionOrigen == null?'':comprobanteStockBean.actual.ubicacionOrigen.nombre}" 
+                                  rendered="#{(contexto == 'vista')  and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}" 
+                                  styleClass="FontVoltRegular depositos"/>
+                    <p:selectOneMenu value="#{comprobanteStockBean.actual.ubicacionOrigen}" styleClass="depositos"
+                                     id="ubicacionOrigen" rendered="#{not(contexto == 'vista')  and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
+                        <f:selectItems value="#{comprobanteStockBean.actual.origen.itemsUbicaciones}"/>
+                    </p:selectOneMenu>
+                    
+                    
+
+                    <p:outputLabel value="Lugar Destino" for="destino" styleClass="FontVoltRegular depositos" 
+                                   rendered="#{comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia'}"/>
+                    <h:outputText value="#{comprobanteStockBean.actual.destino == null?'':comprobanteStockBean.actual.destino.nombre}"
+                                  rendered="#{(contexto == 'vista') and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}" 
+                                  styleClass="FontVoltRegular depositos"/>
+                    <p:selectOneMenu value="#{comprobanteStockBean.actual.destino}" id="destino" styleClass="depositos"
+                                     rendered="#{not(contexto == 'vista') and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
+                        <p:ajax event="change" process="@this" update="ubicacionDestino"/>
+                        <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
+                    </p:selectOneMenu>
+                    
+                    
+                    
+                    
+                    <p:outputLabel value="Ubicación Destino" for="ubicacionDestino" styleClass="FontVoltRegular depositos"
+                                   rendered="#{comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia'}"/>
+                    <h:outputText value="#{comprobanteStockBean.actual.ubicacionDestino == null?'':comprobanteStockBean.actual.ubicacionDestino.nombre}" 
+                                  rendered="#{(contexto == 'vista')  and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}" 
+                                  styleClass="FontVoltRegular depositos"/>
+                    <p:selectOneMenu value="#{comprobanteStockBean.actual.ubicacionDestino}" styleClass="depositos"
+                                     id="ubicacionDestino" rendered="#{not(contexto == 'vista')  and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
+                        <f:selectItems value="#{comprobanteStockBean.actual.destino.itemsUbicaciones}"/>
+                    </p:selectOneMenu>
+                    
                 </p:panelGrid>
 
 
