@@ -316,12 +316,13 @@ SELECT pg_catalog.setval('usuario_id_seq', 1, true);
 --
 
 
-INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id) VALUES (1, 'ACTIVO', NULL, NULL, 'Entrada por Compra','ENTRADA', 1);
-INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id) VALUES (2, 'ACTIVO', NULL, NULL, 'Salida por Consumo Interno','SALIDA', 1);
-INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id) VALUES (3, 'ACTIVO', NULL, NULL, 'Salida por Venta','SALIDA', 1);
-INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id) VALUES (4, 'ACTIVO', NULL, NULL, 'Entrada por Ajuste','ENTRADA', 1);
-INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id) VALUES (5, 'ACTIVO', NULL, NULL, 'Salida por Ajuste','SALIDA', 1);
-INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id) VALUES (6, 'ACTIVO', NULL, NULL, 'Salida por Perdida','SALIDA', 1);
+INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id,mostrar) VALUES (1, 'ACTIVO', NULL, NULL, 'Entrada por Compra','ENTRADA', 1,true);
+INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id,mostrar) VALUES (2, 'ACTIVO', NULL, NULL, 'Salida por Consumo Interno','SALIDA', 1,false);
+INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id,mostrar) VALUES (3, 'ACTIVO', NULL, NULL, 'Salida por Venta','SALIDA', 1,false);
+INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id,mostrar) VALUES (4, 'ACTIVO', NULL, NULL, 'Entrada por Ajuste','ENTRADA', 1,true);
+INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id,mostrar) VALUES (5, 'ACTIVO', NULL, NULL, 'Salida por Ajuste','SALIDA', 1,false);
+INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id,mostrar) VALUES (6, 'ACTIVO', NULL, NULL, 'Salida por Perdida','SALIDA', 1,false);
+INSERT INTO tipocomprobantestock (id, estado, fecharegitro, fechaultimamodificacion, nombre,tipo, empresa_id,mostrar) VALUES (7, 'ACTIVO', NULL, NULL, 'Transferencia','SALIDA', 1,true);
 
 
 SELECT pg_catalog.setval('tipocomprobantestock_id_seq', 6, true);

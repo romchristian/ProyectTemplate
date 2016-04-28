@@ -5,12 +5,14 @@
 package com.ideaspymes.proyecttemplate.generico;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
-import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +40,8 @@ public abstract class BeanGenerico<T> implements Serializable {
 
     @Inject
     private Credencial credencial;
+    @Inject
+    private ImageCurrent imageCurrent;
     private long id;
 
     private T actual;
@@ -58,12 +62,20 @@ public abstract class BeanGenerico<T> implements Serializable {
 
     public void upload() {
 
-        if (croppedImage != null) {
+        if (imageCurrent.getPath() != null) {
             try {
 
                 if (getActual() instanceof IConImagen) {
-
-                    ((IConImagen) getActual()).setImagen(croppedImage.getBytes());
+                    
+                    String nombreImagen = imageCurrent.getPath();
+                    
+                    System.out.println("Nombre Imagen: " + nombreImagen);
+                    //FileImageOutputStream imageOutput = new FileImageOutputStream(imagen);
+                    Path path = Paths.get(imageCurrent.getPath());
+                    byte[] content = Files.readAllBytes(path);
+                    
+                    System.out.println("Contenido: " + content);
+                    ((IConImagen) getActual()).setImagen(content);
 
                     FacesContext aFacesContext = FacesContext.getCurrentInstance();
                     ServletContext context = (ServletContext) aFacesContext.getExternalContext().getContext();
@@ -284,8 +296,6 @@ public abstract class BeanGenerico<T> implements Serializable {
         setNewImageName(getRandomImageName());
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String newFileName = servletContext.getRealPath("") + File.separator + "imagens" + File.separator + "prof" + File.separator + getNewImageName() + ".jpg";
-        
-        
 
         FileImageOutputStream imageOutput;
 
@@ -293,13 +303,13 @@ public abstract class BeanGenerico<T> implements Serializable {
 
             File imagenCortada = new File(newFileName);
             System.out.println("Imagen Original: " + imagenCortada.getUsableSpace());
-            
-            Thumbnails.of(imagenCortada).size(100,100)
-                    .toFile(new File(newFileName+"optimizado.png"));
-            
-            File optimizado = new File(newFileName+"optimizado.png");
+
+            Thumbnails.of(imagenCortada).size(100, 100)
+                    .toFile(new File(newFileName + "optimizado.png"));
+
+            File optimizado = new File(newFileName + "optimizado.png");
             System.out.println("Imagen Optimizada: " + imagenCortada.getUsableSpace());
-            
+
             imageOutput = new FileImageOutputStream(optimizado);
             imageOutput.write(croppedImage.getBytes(), 0, croppedImage.getBytes().length);
             imageOutput.close();
