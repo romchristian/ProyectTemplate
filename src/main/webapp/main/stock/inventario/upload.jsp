@@ -2,11 +2,11 @@
 <html>
     <head>
         <title>test</title>
-        <link rel="stylesheet" type="text/css" href="plupload2/jquery.plupload.queue/css/jquery.plupload.queue.css" type="text/css" media="screen" />
-        <script type="text/javascript" src="js/jquery-1.6.2.min.js" ></script>
-        <script type="text/javascript" src="plupload2/plupload.full.js"></script>
-        <script type="text/javascript" src="plupload2/jquery.plupload.queue/jquery.plupload.queue.js"></script>
-        <script type="text/javascript" src="plupload2/i18n/cn.js"></script>
+        <link rel="stylesheet" type="text/css" href="/ProyectTemplate/plupload2/jquery.plupload.queue/css/jquery.plupload.queue.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="/ProyectTemplate/js/jquery-1.6.2.min.js" ></script>
+        <script type="text/javascript" src="/ProyectTemplate/plupload2/plupload.full.js"></script>
+        <script type="text/javascript" src="/ProyectTemplate/plupload2/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+        <script type="text/javascript" src="/ProyectTemplate/plupload2/i18n/cn.js"></script>
         <script type="text/javascript">
             /* Convert divs to queue widgets when the DOM is ready */
             $(function () {

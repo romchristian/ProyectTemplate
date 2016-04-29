@@ -39,6 +39,7 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     @Listado(descripcion = "Nombre", mostrar = true, link = true)
     @Filtro(descripcion = "Nombre", campo = "nombre", tipo = "like")
     private String nombre;
+    private String descripcion;
     @Enumerated(EnumType.STRING)
     private TipoProducto tipoProducto;
     @ManyToOne
@@ -132,6 +133,14 @@ public class Producto implements Serializable, IAuditable, IConImagen {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
