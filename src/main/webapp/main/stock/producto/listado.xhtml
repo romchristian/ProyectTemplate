@@ -7,16 +7,16 @@
         <ui:define name="content">
 
 
-            <ui:include src="/main/util/listadoGenerico.xhtml">
+            <!--            <ui:include src="/main/util/listadoGenerico.xhtml">
+                            <ui:param name="titulo" value="Listado de Productos"/>
+                            <ui:param name="bean" value="{productoConsultaBean}"/>
+                        </ui:include>-->
+
+
+            <ui:include src="listado2.xhtml">
                 <ui:param name="titulo" value="Listado de Productos"/>
                 <ui:param name="bean" value="#{productoConsultaBean}"/>
             </ui:include>
-
-
-<!--            <ui:include src="listado2.xhtml">
-                <ui:param name="titulo" value="Listado de Productos"/>
-                <ui:param name="bean" value="{productoConsultaBean}"/>
-            </ui:include>-->
 
 
 
