@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.3.final using JasperReports Library version 6.0.3  -->
+<!-- 2016-04-30T17:22:01 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ProducCatalog" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3bd4b10a-7c19-4c7a-b6a9-a786304249ac">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<subDataset name="ubacionDS" uuid="3c98af23-014c-4cf5-aacb-e76a000553d6">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="empresa" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="direccion" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="telefono" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="logo" class="java.lang.Object">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="responsable" class="java.lang.String"/>
+	<parameter name="contacto" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="deposito" class="java.lang.String"/>
+	<parameter name="tipo" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="email" class="java.lang.String"/>
+	<parameter name="estado" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="imagen" class="java.lang.Object"/>
+	<field name="producto" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="stock" class="java.lang.Long"/>
+	<field name="ubicaciones" class="java.util.ArrayList"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="91" width="80" height="15" uuid="86f4a065-dbd8-4365-8637-1c7145bf9837"/>
+				<text><![CDATA[Responsable:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="80" width="556" height="1" uuid="44d214a0-2773-49eb-b46d-30ba4ecc4c67">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="106" width="80" height="15" uuid="b0382f07-f964-42f4-ade1-c3e8421e181f"/>
+				<text><![CDATA[Depósito:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="121" width="80" height="15" uuid="7da99a5a-0ce5-4579-abf2-1d5deadbb45f"/>
+				<text><![CDATA[Contacto:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="10" width="50" height="20" uuid="29f54a81-54c1-42e4-b64c-72d6a6761409"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="465" y="10" width="84" height="20" uuid="cb765207-423a-4f84-8415-b72068218d9d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="5" width="204" height="20" uuid="ce6cceea-3dd6-4f56-9f33-4b1998186b3d"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="5" width="84" height="65" uuid="402a856d-8b41-440d-9941-b01cbbb8927d"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage((byte[])  $P{logo})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="95" y="25" width="204" height="14" uuid="302b2379-4034-4ca3-ab71-869765be3ff4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="95" y="39" width="204" height="16" uuid="6819be73-ae2c-4f2f-bdde-1dfdcf9cec11"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="91" width="250" height="15" uuid="59d8353a-9b2b-4cc0-b58a-0e2284ddb7a0"/>
+				<textFieldExpression><![CDATA[$P{responsable}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="106" width="250" height="15" uuid="e5044a14-3de8-49be-8d36-885797c99050"/>
+				<textFieldExpression><![CDATA[$P{deposito}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="121" width="250" height="15" uuid="65b0a836-8990-4fb1-853a-f56881348142"/>
+				<textFieldExpression><![CDATA[$P{contacto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="91" width="34" height="15" uuid="722a837b-fdd0-41da-94d5-3c7b08fae6f9"/>
+				<text><![CDATA[Tipo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="420" y="91" width="134" height="15" uuid="bc919eb5-d442-488f-81a3-c92d83a13d00"/>
+				<textFieldExpression><![CDATA[$P{tipo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="95" y="55" width="204" height="16" uuid="b4755487-d2b2-47c2-814f-6c01e6681904"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="107" width="34" height="15" uuid="cc58c206-9af5-45a7-adbb-a976f073e220"/>
+				<text><![CDATA[Estado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="420" y="107" width="134" height="15" uuid="83e9daf8-eecf-4f24-88a1-08e0ec1f513a"/>
+				<textFieldExpression><![CDATA[$P{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="39" width="84" height="20" uuid="3e072241-057f-4201-8fce-ba9cf089e73f"/>
+				<text><![CDATA[producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="449" y="39" width="100" height="20" uuid="71e7be13-c2d2-4123-a322-cd9da7efe4c2"/>
+				<text><![CDATA[stock]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="38" width="150" height="21" uuid="0ab992db-f6cc-4b0b-9109-66d866f892b7"/>
+				<text><![CDATA[ubicaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="39" width="185" height="21" uuid="4b4e9a90-948e-404e-95ec-7d06e5ad5cc7"/>
+				<text><![CDATA[descripcion]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="61" width="556" height="1" uuid="4dfe9e2c-28cb-4e12-aa77-b5fd32a63aba">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="95" height="90" uuid="ac412ff4-53e5-4a79-a75d-2649ce0ca2cc"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage((byte[])  $F{imagen})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="95" y="2" width="185" height="18" uuid="79c9edbf-7b2d-46cf-9d63-a8a08ba2c117"/>
+				<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="20" width="185" height="70" uuid="79a8ba06-3cd9-492f-b9c5-743bd45a9ac8"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="449" y="1" width="100" height="18" uuid="38a2312a-8f07-4e53-8c4d-bddd21696b2c"/>
+				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement stretchType="RelativeToTallestObject" x="290" y="0" width="150" height="90" uuid="1667482e-0996-4140-a381-874c20c0465f">
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="ubicacionList"/>
+					<printWhenExpression><![CDATA[$F{ubicaciones}]]></printWhenExpression>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="ubacionDS" uuid="7d067a3b-c0eb-497c-9340-d3c6441c866b"/>
+					<jr:listContents height="90" width="150"/>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
