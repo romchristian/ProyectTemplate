@@ -57,10 +57,10 @@ public class ReporteCatalogoProducto extends ReporteGenerico<CatalogoProductos>{
         for (Producto p : productos) {
             List<Existencia> existencias = dao.findExistenciasPorProducto(p);
             
-            ArrayList<String> ubicaciones = new ArrayList<>();
+           String ubicaciones = "";
             
             for (Existencia e : existencias) {
-                ubicaciones.add(e.getCantidad()+" "+ e.getUnidadMedida().getNombre()+" en "+e.getDeposito().getNombre()+" - "+e.getUbicacion().getNombre());
+                ubicaciones += e.getCantidad()+" "+ e.getUnidadMedida().getNombre()+" en "+e.getDeposito().getNombre()+" - "+e.getUbicacion().getNombre()+"\n";
             }
             detalles.add(new CatalogoProductos(p.getImagen(), p.getNombre(), p.getDescripcion(), ubicaciones, p.getStock()));
         }

@@ -7,13 +7,14 @@
     <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
         <ui:define name="content">
             <div class="Container100 Responsive100">
-                <p:breadCrumb homeDisplay="text">
-                    <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
-                    <p:menuitem  value="Catalogo de Productos"/>
-                   
+                <h:form>
+                    <p:breadCrumb homeDisplay="text">
+                        <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
+                        <p:menuitem  value="Catalogo de Productos"/>
 
-                    </p:menuitem>
-                </p:breadCrumb>
+                    </p:breadCrumb>
+                </h:form>
+
             </div>
             <div class="Container100 ui-fluid">
                 <div class="Card">

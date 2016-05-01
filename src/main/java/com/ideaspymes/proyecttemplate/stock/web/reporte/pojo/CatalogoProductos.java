@@ -12,22 +12,20 @@ import java.util.ArrayList;
  * @author Acer
  */
 public class CatalogoProductos {
-    
+
     private byte[] imagen;
     private String producto;
     private String descripcion;
-    private ArrayList<String> ubicaciones;
+    private String ubicaciones;
     private Double stock;
 
-    public CatalogoProductos(byte[] imagen, String producto, String descripcion, ArrayList<String> ubicaciones, Double stock) {
+    public CatalogoProductos(byte[] imagen, String producto, String descripcion, String ubicaciones, Double stock) {
         this.imagen = imagen;
         this.producto = producto;
         this.descripcion = descripcion;
         this.ubicaciones = ubicaciones;
         this.stock = stock;
     }
-    
-    
 
     public byte[] getImagen() {
         return imagen;
@@ -53,11 +51,11 @@ public class CatalogoProductos {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<String> getUbicaciones() {
+    public String getUbicaciones() {
         return ubicaciones;
     }
 
-    public void setUbicaciones(ArrayList<String> ubicaciones) {
+    public void setUbicaciones(String ubicaciones) {
         this.ubicaciones = ubicaciones;
     }
 
@@ -68,5 +66,5 @@ public class CatalogoProductos {
     public void setStock(Double stock) {
         this.stock = stock;
     }
- 
+
 }
