@@ -26,9 +26,9 @@
                     <p:inputText value="#{productoBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
 
 
-                    <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular" />
-                    <h:outputText value="#{productoBean.actual.codigo}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
-                    <p:inputText value="#{productoBean.actual.codigo}" id="codigo" rendered="#{not(contexto == 'vista')}"/>
+                    <p:outputLabel value="Descripción" for="descripcion" styleClass="FontVoltRegular" />
+                    <h:outputText value="#{productoBean.actual.descripcion}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
+                    <p:inputTextarea value="#{productoBean.actual.descripcion}" id="descripcion" rendered="#{not(contexto == 'vista')}" rows="3"/>
 
                     <p:outputLabel value="Unidad Medida Stock" for="unidadMedida" styleClass="FontVoltRegular" />
                     <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White"/>
@@ -42,13 +42,6 @@
                         <f:selectItems value="#{familiaBean.itemsAvailableSelectMany}"/>
                     </p:selectOneMenu>
 
-
-
-                    <p:spacer/>
-                    <p:outputPanel>
-                        <p:selectBooleanCheckbox value="#{productoBean.actual.inventariable}" itemLabel="¿Es Inventariable?" disabled="true"/>
-                        
-                    </p:outputPanel>
 
                 </p:panelGrid>
 

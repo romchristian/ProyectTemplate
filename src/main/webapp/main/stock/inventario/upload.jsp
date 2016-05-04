@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>test</title>
-        <link rel="stylesheet" type="text/css" href="/ProyectTemplate/plupload2/jquery.plupload.queue/css/jquery.plupload.queue.css" type="text/css" media="screen" />
+        
         <script type="text/javascript" src="/ProyectTemplate/js/jquery-1.6.2.min.js" ></script>
         <script type="text/javascript" src="/ProyectTemplate/plupload2/plupload.full.js"></script>
         <script type="text/javascript" src="/ProyectTemplate/plupload2/jquery.plupload.queue/jquery.plupload.queue.js"></script>

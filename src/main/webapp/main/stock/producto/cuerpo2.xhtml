@@ -17,35 +17,22 @@
 
             <div class="Container100 Responsive100">
                 <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-8" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;">
-
                     <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
                     <p:inputText value="#{productoBean.actual.nombre}" required="true" id="nombre"/>
                     
                     <p:outputLabel value="Descripción" for="descripion" styleClass="FontVoltRegular" />
                     <p:inputText value="#{productoBean.actual.nombre}" required="true" id="nombre"/>
-
+                    
                     <p:outputLabel value="Familia" for="familia" styleClass="FontVoltRegular" />
                     <p:selectOneMenu value="#{productoBean.actual.familia}" id="familia">
                         <f:selectItems value="#{familiaBean.itemsAvailableSelectMany}"/>
                     </p:selectOneMenu>
-
-
                 </p:panelGrid>
-
-
-
-
             </div>
 
             <div class="Container100 Responsive100">
                 <facilerp:botoneraABM bean="#{productoBean}" contexto="#{contexto}" entidad="producto" update=":formABM:panel" ajax="false"/>
             </div>
-
-
-
-
-
-
 
         </p:outputPanel>
 

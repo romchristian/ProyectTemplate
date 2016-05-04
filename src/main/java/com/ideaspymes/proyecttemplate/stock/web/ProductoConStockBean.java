@@ -6,6 +6,7 @@ package com.ideaspymes.proyecttemplate.stock.web;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.BeanGenerico;
+import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.Existencia;
 import com.ideaspymes.proyecttemplate.stock.web.converters.ProductoConverter;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
@@ -15,8 +16,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.convert.Converter;
-import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -24,15 +27,51 @@ import javax.inject.Named;
  * @author christian
  */
 @Named
-@ViewScoped
-public class ProductoBean extends BeanGenerico<Producto> implements Serializable {
+@ConversationScoped
+public class ProductoConStockBean extends BeanGenerico<Producto> implements Serializable {
 
     @EJB
     private IProductoDAO ejb;
     @EJB
     private ICostoService costoService;
-    
-    
+    @Inject
+    private Conversation conversation;
+
+    private Deposito depositoElegido;
+
+    public Deposito getDepositoElegido() {
+        return depositoElegido;
+    }
+
+    public void setDepositoElegido(Deposito depositoElegido) {
+        this.depositoElegido = depositoElegido;
+    }
+
+    public String preparaNuevo() {
+        beginConversation();
+        return "nuevo.xhtml";
+    }
+
+    public String navUpload() {
+        return "upload.jsp";
+    }
+
+    public String termina() {
+        endConversation();
+        return "listado.xhtml";
+    }
+
+    public void beginConversation() {
+        if (conversation.isTransient()) {
+            conversation.begin();
+        }
+    }
+
+    public void endConversation() {
+        if (!conversation.isTransient()) {
+            conversation.end();
+        }
+    }
 
     @Override
     public AbstractDAO<Producto> getEjb() {

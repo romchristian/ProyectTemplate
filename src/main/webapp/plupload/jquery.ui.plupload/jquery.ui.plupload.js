@@ -241,9 +241,9 @@ function renderUI(obj) {
 				'<tr>' +
 					'<td class="plupload_cell plupload_file_name">' +
 						'<div class="plupload_buttons"><!-- Visible -->' +
-							'<a class="plupload_button plupload_add">' + _("Add Files") + '</a>&nbsp;' +
-							'<a class="plupload_button plupload_start">' + _("Start Upload") + '</a>&nbsp;' +
-							'<a class="plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;' +
+							'<a class="plupload_add BlueButton">' + _("Add Files") + '</a>&nbsp;<br/>' +
+							'<a class="plupload_start BlueButton">' + _("Start Upload") + '</a>&nbsp;<br/>' +
+							'<a class="plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;<br/>' +
 						'</div>' +
 
 						'<div class="plupload_started plupload_hidden"><!-- Hidden -->' +

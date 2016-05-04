@@ -32,7 +32,7 @@
                         <p:outputLabel value="Lugar" for="lugar" styleClass="FontVoltRegular"/>
                         <p:selectOneMenu value="#{inventarioBean.actual.deposito}" styleClass="depositos" id="lugar">
                             <p:ajax event="change" process="@this" update="ubicacion"/>
-                            <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
+                            <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Ubicación" for="ubicacion" styleClass="FontVoltRegular"/>
