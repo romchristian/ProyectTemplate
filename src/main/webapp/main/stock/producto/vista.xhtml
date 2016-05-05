@@ -45,7 +45,7 @@
 
                                     <h:outputText value="Descripción"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.descripcion}" styleClass="FontVoltRegular White"/>
-                                    
+
 
                                     <h:outputText value="Código"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.codigo}" styleClass="FontVoltRegular White"/>
@@ -89,6 +89,11 @@
                                     </p:outputPanel>
                                 </ui:repeat>
 
+                                <div class="EmptyBox30"/>
+                                <div style="padding: 10px;background-color: white;width: 20%;text-align: center">
+                                    <p:barcode value="#{productoBean.actual.codigo}" type="ean13"/>
+                                </div>
+                                
                             </div>
                             <div class="Container30 Responsive100 TexAlCenter">
                                 <h:outputText value="#{productoBean.actual.nombre}"  styleClass="FontVoltRegular White Fs20 TexAlCenter"/>

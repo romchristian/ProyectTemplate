@@ -8,11 +8,19 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
+import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
+import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
+import com.ideaspymes.proyecttemplate.stock.model.DetInventario;
 import com.ideaspymes.proyecttemplate.stock.model.Inventario;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IInventarioDAO;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ITipoComprobanteStockDAO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -30,9 +38,57 @@ public class InventarioDAO implements IInventarioDAO {
     @EJB(beanName = "ABMServiceBean")
     private ABMService abmService;
 
+    @EJB
+    private IComprobanteStockDAO ejbComprobanteStockDAO;
+    @EJB
+    private ITipoComprobanteStockDAO ejbITipoComprobanteStockDAO;
+
     @Override
     public Inventario create(Inventario entity) {
         return abmService.create(entity);
+    }
+
+    @Override
+    public Inventario createInicial(Inventario entity) {
+        Inventario R = create(entity);
+        try {
+            
+            
+            ComprobanteStock c = new ComprobanteStock();
+            c.setTipoComprobanteStock(ejbITipoComprobanteStockDAO.findPorNombre("Entrada por Ajuste"));
+            c.setDepositoPivot(R.getDeposito());
+            c.setUbicacionPivot(R.getUbicacion());
+            c.setResposable(R.getResponsable());
+            c.setFecha(R.getFecha());
+            c.setDescripcion("Inventario Inicial Nro.: " + R.getId());
+            c.setDetalles(new ArrayList<DetComprobanteStock>());
+            int indice = 0;
+            
+            for(DetInventario di : R.getDetalles()){
+                indice++;
+                DetComprobanteStock d = new DetComprobanteStock();
+                d.setComprobanteStock(c);
+                d.setIndice(indice);
+                d.setProducto(di.getProducto());
+                d.setCantidad(di.getCantidad());
+                d.setUnidadMedida(di.getUnidadMedida());
+                d.setEstado(Estado.ACTIVO);
+                d.setValor(0d);
+                d.setTotal(0d);
+                c.getDetalles().add(d);
+            }
+            
+            
+            ComprobanteStock comp = ejbComprobanteStockDAO.create(c);
+            
+            ejbComprobanteStockDAO.confirmar(comp);
+            
+            
+        } catch (SinStockException ex) {
+            throw new RuntimeException(ex);
+        }
+        
+        return R;
     }
 
     @Override

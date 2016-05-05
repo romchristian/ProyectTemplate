@@ -6,7 +6,7 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <f:metadata>
-        <f:viewAction action="#{inventarioBean.preparaNuevo()}"/>
+        <f:viewAction action="#{inventarioInicialBean.preparaNuevo()}"/>
     </f:metadata>
 
     <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
@@ -27,20 +27,20 @@
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
                             <h:outputText value="Responsable"  styleClass="FontVoltRegular"/>
-                            <h:outputText value="#{inventarioBean.actual.responsable == null?'':inventarioBean.actual.responsable.nombre}" styleClass="FontVoltRegular"/>
+                            <h:outputText value="#{inventarioInicialBean.actual.responsable == null?'':inventarioInicialBean.actual.responsable.nombre}" styleClass="FontVoltRegular"/>
 
                             <p:outputLabel value="Fecha" for="fecha" styleClass="FontVoltRegular"/>
-                            <p:calendar value="#{inventarioBean.actual.fecha}" locale="es" pattern="#{formato.patronFecha}" id="fecha"/>
+                            <p:calendar value="#{inventarioInicialBean.actual.fecha}" locale="es" pattern="#{formato.patronFecha}" id="fecha"/>
 
                             <p:outputLabel value="Lugar" for="lugar" styleClass="FontVoltRegular"/>
-                            <p:selectOneMenu value="#{inventarioBean.actual.deposito}" styleClass="depositos" id="lugar">
+                            <p:selectOneMenu value="#{inventarioInicialBean.actual.deposito}" styleClass="depositos" id="lugar">
                                 <p:ajax event="change" process="@this" update="ubicacion"/>
                                 <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
 
                             <p:outputLabel value="Ubicación" for="ubicacion" styleClass="FontVoltRegular"/>
-                            <p:selectOneMenu value="#{inventarioBean.actual.ubicacion}" styleClass="depositos" id="ubicacion">
-                                <f:selectItems value="#{inventarioBean.actual.deposito.itemsUbicaciones}"/>
+                            <p:selectOneMenu value="#{inventarioInicialBean.actual.ubicacion}" styleClass="depositos" id="ubicacion">
+                                <f:selectItems value="#{inventarioInicialBean.actual.deposito.itemsUbicaciones}"/>
                             </p:selectOneMenu>
 
 
@@ -56,10 +56,10 @@
                                     </div>
 
                                     <div class="ui-grid-col-2">
-                                        <p:commandButton action="#{inventarioBean.termina()}" value="Cancelar" ajax="false"/>
+                                        <p:commandButton action="#{inventarioInicialBean.termina()}" value="Cancelar" ajax="false"/>
                                     </div>
                                     <div class="ui-grid-col-2">
-                                        <p:commandButton action="#{inventarioBean.navUpload()}" value="Siguiente" ajax="false"/>
+                                        <p:commandButton action="#{inventarioInicialBean.navUpload()}" value="Siguiente" ajax="false"/>
                                     </div>
 
                                 </div>

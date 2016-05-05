@@ -22,8 +22,28 @@
                 <div class="Container100 Responsive100">
                     <div class="Card">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+                            
+                            <p:outputLabel value="Familia" for="familia" styleClass="FontVoltRegular" />
+                            <p:selectOneMenu value="#{inventarioInicialBean.productoActual.familia}" id="familia">
+                                <f:selectItems value="#{familiaBean.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
+                            <p:inputText value="#{inventarioInicialBean.productoActual.nombre}" required="true" id="nombre"/>
 
+                            <p:outputLabel value="Descripción" for="descripcion" styleClass="FontVoltRegular" />
+                            <p:inputTextarea value="#{inventarioInicialBean.productoActual.descripcion}" id="descripcion" rows="3"/>
 
+                            
+                            <p:outputLabel value="Unidad Medida" for="unidadMedida" styleClass="FontVoltRegular" />
+                            <p:selectOneMenu value="#{inventarioInicialBean.unidadMedida}" required="true" id="unidadMedida">
+                                <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Cantidad" for="cantidad" styleClass="FontVoltRegular" />
+                            <p:inputText value="#{inventarioInicialBean.cantidadActual}" required="true" id="cantidad"/>
+
+                            
 
                         </p:panelGrid>
                         <div class="CardFooter">
@@ -33,22 +53,20 @@
                                         <p:spacer/>
                                     </div>
                                     <div class="ui-grid-col-2">
-                                        <p:commandButton action="#{inventarioBean.termina()}" value="Cancelar" styleClass="BlueButton" ajax="false"/>
+                                        <p:commandButton action="#{inventarioInicialBean.termina()}" value="Cancelar" styleClass="BlueButton" ajax="false"/>
                                     </div>
                                     <div class="ui-grid-col-2">
-                                        <p:commandButton action="#{inventarioBean.navUpload()}" value="Atras" ajax="false"/>
+                                        <p:commandButton action="#{inventarioInicialBean.navUpload()}" value="Atras" ajax="false"/>
                                     </div>
                                     <div class="ui-grid-col-2">
-                                        <p:commandButton action="#{inventarioBean.guardar()}" value="Cargar otro" styleClass="BlueButton" ajax="false"/>
+                                        <p:commandButton action="#{inventarioInicialBean.guardar()}" value="Cargar otro" styleClass="BlueButton" ajax="false"/>
                                     </div>
                                     <div class="ui-grid-col-2">
-                                        <p:commandButton action="#{inventarioBean.finalizar()}" value="Finalizar" styleClass="BlueButton" ajax="false"/>
+                                        <p:commandButton action="#{inventarioInicialBean.create()}" value="Finalizar" styleClass="BlueButton" ajax="false"/>
                                     </div>
 
                                 </div>
                             </div>
-
-
 
 
                         </div>

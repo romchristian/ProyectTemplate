@@ -35,6 +35,7 @@ public class DetInventario implements Serializable, IAuditable, IConSucursal {
     private Long id;
     @Version
     private Long version;
+    
     @ManyToOne
     private Inventario inventario;
     @ManyToOne

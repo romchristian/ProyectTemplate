@@ -5,8 +5,11 @@
 package com.ideaspymes.proyecttemplate.generico;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -25,5 +28,15 @@ public class ImageCurrent implements Serializable {
     public void setPath(String path) {
         this.path = path;
     }
+    
+     public void openUploader() {
+        Map<String,Object> options = new HashMap<String, Object>();
+        options.put("resizable", false);
+        RequestContext.getCurrentInstance().openDialog("/main/util/uploader", options, null);
+    }
 
+     
+     public void closeDialog() {
+        RequestContext.getCurrentInstance().closeDialog(path);
+    }
 }

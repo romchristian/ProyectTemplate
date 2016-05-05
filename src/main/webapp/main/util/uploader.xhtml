@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Subir Foto</title>
+
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" media="screen" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+        <!--        <script type="text/javascript" src="js/jquery-1.6.2.min.js" ></script>-->
+        <script type="text/javascript" src="#{request.contextPath}/plupload/plupload.full.min.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/plupload/jquery.ui.plupload/jquery.ui.plupload.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/plupload/i18n/es.js"></script>
+    </h:head>
+
+    <h:body>
+        <form id="formId" action="Submit.action" method="post" enctype="multipart/form-data">
+            <div class="ui-fluid">
+                <div id="uploader">
+                    <p> Flash, Silverlight, Gears, BrowserPlus  HTML5 .</p>
+                </div>
+            </div>
+
+        </form>
+
+        <h:form>
+            <p:commandButton value="Cerrar" actionListener="#{imageCurrent.closeDialog()}"/>
+        </h:form>
+
+        <script type="text/javascript">
+            // Initialize the widget when the DOM is ready
+            $(function () {
+                $("#uploader").plupload({
+                    // General settings
+                    runtimes: 'html5,flash,silverlight,html4',
+                    url: '#{request.contextPath}/servlet/fileUpload',
+                    max_file_size: '40mb',
+                    max_file_count: 1,
+                    // Maximum file size
+
+                    chunk_size: '2mb',
+                    // Resize images on clientside if we can
+                    resize: {
+                        width: 200,
+                        height: 200,
+                        quality: 90,
+                        crop: true // crop to exact dimensions
+                    },
+                    // Specify what files to browse for
+
+                    filters: [
+                        {title: "Image files", extensions: "jpg,gif,png,jpeg"},
+                        {title: "Zip files", extensions: "zip"}
+                    ],
+                    // Rename files by clicking on their titles
+                    rename: true,
+                    // Sort files
+                    sortable: true,
+                    // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+                    dragdrop: true,
+                    // Views to activate
+                    views: {
+                        list: false,
+                        thumbs: true, // Show thumbs
+                        active: 'thumbs'
+                    },
+                    // Flash settings
+                    flash_swf_url: '/plupload/Moxie.swf',
+                    // Silverlight settings
+                    silverlight_xap_url: '/plupload/Moxie.xap'
+                });
+            });
+        </script>
+    </h:body>
+
+</html>
+

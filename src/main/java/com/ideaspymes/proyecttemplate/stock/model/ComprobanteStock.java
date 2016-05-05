@@ -54,7 +54,7 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
     @Version
     private Long version;
 
-    @Listado(descripcion = "Tipo", campo = "tipoComprobanteStock", entidad = true, campoDescripcion = "nombre", modulo = "stock", outcome = "/main/stock/tipoComprobanteStock/vista")
+    @Listado(descripcion = "Tipo", campo = "tipoComprobanteStock", entidad = true, campoDescripcion = "nombre", modulo = "stock", outcome = "/main/stock/tipoComprobanteStock/vista",link = true)
     @Filtro(descripcion = "Tipo", campo = "tipoComprobanteStock", campoDescripcion = "nombre", tipo = FiltroGenerico.TIPO_SELECT_ONE)
     @ManyToOne
     private TipoComprobanteStock tipoComprobanteStock;

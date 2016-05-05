@@ -60,6 +60,16 @@ public abstract class BeanGenerico<T> implements Serializable {
     private String currentImageName;
     private String newImageName;
 
+    public ImageCurrent getImageCurrent() {
+        return imageCurrent;
+    }
+
+    public void setImageCurrent(ImageCurrent imageCurrent) {
+        this.imageCurrent = imageCurrent;
+    }
+
+    
+    
     public void upload() {
 
         if (imageCurrent.getPath() != null) {

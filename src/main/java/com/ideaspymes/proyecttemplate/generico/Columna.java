@@ -5,11 +5,13 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Christian
  */
-public class Columna {
+public class Columna implements Serializable{
 
     private String campo;
     private String descripcion;

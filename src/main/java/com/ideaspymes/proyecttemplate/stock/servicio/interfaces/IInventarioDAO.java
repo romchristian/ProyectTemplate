@@ -20,6 +20,9 @@ public interface IInventarioDAO extends AbstractDAO<Inventario> {
 
     @Override
     Inventario create(Inventario entity);
+    
+    
+    Inventario createInicial(Inventario entity);
 
     @Override
     Inventario edit(Inventario entity);

@@ -9,10 +9,13 @@ import com.ideaspymes.proyecttemplate.configuracion.model.*;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
+import com.ideaspymes.proyecttemplate.generico.FiltroGenerico;
 import com.ideaspymes.proyecttemplate.generico.IConSucursal;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +23,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -29,32 +33,39 @@ import javax.persistence.Temporal;
 @Entity
 public class Inventario implements Serializable, IConSucursal, IAuditable {
 
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Temporal(javax.persistence.TemporalType.DATE)
+    @Listado(descripcion = "Fecha", mostrar = true)
+    @Filtro(descripcion = "Fecha", campo = "fecha",tipo = FiltroGenerico.TIPO_RANGO_FECHA)
     private Date fecha;
+    @Listado(descripcion = "Responsable", mostrar = true,campo = "responsable",entidad = true,campoDescripcion = "nombre", modulo = "configuracion",outcome = "/main/configuracion/usuario/vista")
+    @Filtro(descripcion = "Responsable", campo = "responsable",tipo = FiltroGenerico.TIPO_AUTOCOMPLETE,campoDescripcion = "nombre")
     @ManyToOne
     private Usuario responsable;
+    @Listado(descripcion = "Supervisor", mostrar = true,campo = "Supervisor",entidad = true,campoDescripcion = "nombre", modulo = "configuracion",outcome = "/main/configuracion/usuario/vista")
     @ManyToOne
     private Usuario supervisor;
+    @Listado(descripcion = "Lugar", mostrar = true,campo = "deposito",entidad = true,campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/deposito/vista")
+    @Filtro(descripcion = "Lugar", campo = "deposito",tipo = FiltroGenerico.TIPO_SELECT_ONE,campoDescripcion = "nombre")
     @ManyToOne
     private Deposito deposito;
+    @Listado(descripcion = "Ubicación", mostrar = true,campo = "ubicacion",entidad = true,campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/ubicacion/vista")
     @ManyToOne
     private Ubicacion ubicacion;
 
-    //Informacion principal
-    @Listado(descripcion = "Nombre", mostrar = true, link = true)
-    @Filtro(descripcion = "Nombre", tipo = "like", campo = "nombre")
-    private String nombre;
+    @OneToMany(mappedBy = "inventario",cascade =CascadeType.ALL,orphanRemoval = true)
+    private List<DetInventario> detalles;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",outcome = "/main/configuracion/empresa/vista")
     private Empresa empresa;
 
     @ManyToOne
-    @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre")
+    @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre",outcome = "/main/configuracion/empresa/vista")
     private Sucursal sucursal;
 
     //Auditoria
@@ -66,6 +77,18 @@ public class Inventario implements Serializable, IConSucursal, IAuditable {
     private Date fechaUltimaModificacion;
     private String usuarioUltimaModificacion;
 
+    public List<DetInventario> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<DetInventario> detalles) {
+        this.detalles = detalles;
+    }
+
+    
+    
+    
+    
     @Override
     public Long getId() {
         return id;
@@ -75,13 +98,7 @@ public class Inventario implements Serializable, IConSucursal, IAuditable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+   
 
     @Override
     public Empresa getEmpresa() {
@@ -202,7 +219,7 @@ public class Inventario implements Serializable, IConSucursal, IAuditable {
 
     @Override
     public String toString() {
-        return nombre;
+        return "Inv Nro. "+ id;
     }
 
 }

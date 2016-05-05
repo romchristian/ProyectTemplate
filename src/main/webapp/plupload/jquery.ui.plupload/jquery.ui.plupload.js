@@ -212,7 +212,7 @@ function renderUI(obj) {
 			'<div class="ui-widget-content plupload_container">' +
 				'<div class="ui-state-default ui-widget-header plupload_header">' +
 					'<div class="plupload_header_content">' +
-						'<div class="plupload_logo plupload_add"> Agregar Foto</div>' +
+						'<div class="plupload_logo plupload_add" style="width:100%;"> Agregar Foto</div>' +
 						'<div class="plupload_header_title">' + _("Select files") + '</div>' +
 						'<div class="plupload_header_text">' + _("Add files to the upload queue and click the start button.") + '</div>' +
 						'<div class="plupload_view_switch">' +

@@ -18,6 +18,8 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.Query;
+import org.krysalis.barcode4j.impl.upcean.EAN13Bean;
+import org.primefaces.application.resource.barcode.EAN13Generator;
 
 /**
  *
@@ -32,7 +34,40 @@ public class ProductoDAO implements IProductoDAO {
 
     @Override
     public Producto create(Producto entity) {
-        return abmService.create(entity);
+        Producto R = abmService.create(entity);
+        R.setCodigo(generaCodigo(R.getId()));
+        edit(R);
+        return R;
+    }
+
+    private String generaCodigo(Long id) {
+        String R = "" + id;
+        int size = 12;
+        int res = size - R.length();
+        String ceros = "";
+        for (int i = 0; i < res; i++) {
+            ceros += "0";
+        }
+
+        R = ceros + R;
+
+        return R+""+calcChecksum(R);
+    }
+
+    private int calcChecksum(String first12digits) {
+        char[] char12digits = first12digits.toCharArray();
+        int[] ean13 = {1, 3};
+        int sum = 0;
+        for (int i = 0; i < char12digits.length; i++) {
+            sum += Character.getNumericValue(char12digits[i]) * ean13[i % 2];
+        }
+
+        int checksum = 10 - sum % 10;
+        if (checksum == 10) {
+            checksum = 0;
+        }
+
+        return checksum;
     }
 
     @Override
@@ -114,9 +149,8 @@ public class ProductoDAO implements IProductoDAO {
 
         return R;
     }
-    
-    
-    public List<Existencia> findExistenciasPorProducto(Producto p){
+
+    public List<Existencia> findExistenciasPorProducto(Producto p) {
         return abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.cantidad > 0 AND e.producto = :producto")
                 .setParameter("producto", p)
                 .getResultList();
