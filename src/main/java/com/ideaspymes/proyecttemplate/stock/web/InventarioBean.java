@@ -6,6 +6,7 @@ package com.ideaspymes.proyecttemplate.stock.web;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.BeanGenerico;
+import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.web.converters.InventarioConverter;
 import com.ideaspymes.proyecttemplate.stock.model.Inventario;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IInventarioDAO;
@@ -30,7 +31,8 @@ public class InventarioBean extends BeanGenerico<Inventario> implements Serializ
     private IInventarioDAO ejb;
     @Inject
     private Conversation conversation;
-
+    
+   
     @Override
     public AbstractDAO<Inventario> getEjb() {
         return ejb;
@@ -49,18 +51,33 @@ public class InventarioBean extends BeanGenerico<Inventario> implements Serializ
         return new InventarioConverter();
     }
 
-    public String preparaNuevo() {
+    public void preparaNuevo() {
         beginConversation();
-        return "nuevo.xhtml";
+        
     }
-
+    
+    
     public String navUpload() {
-        return "upload.jsp";
+        return "upload";
+    }
+    
+    public String navNuevoProducto() {
+        return "nuevoProducto";
     }
 
     public String termina() {
         endConversation();
-        return "listado.xhtml";
+        return "listado";
+    }
+    
+    public String finalizar() {
+        endConversation();
+        return "listado";
+    }
+    
+    public String guardar() {
+        System.out.println("Deposito: " + getActual().getDeposito());
+        return "upload";
     }
 
     public void beginConversation() {

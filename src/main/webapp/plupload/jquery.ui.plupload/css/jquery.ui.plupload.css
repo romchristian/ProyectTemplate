@@ -43,7 +43,6 @@
 .plupload_logo {
     width: 40px;
     height: 40px;
-    background: url('../img/plupload.png') no-repeat 0 0;
     position: absolute;
     top: 8px;
     left: 8px;
@@ -373,3 +372,7 @@
 .plupload .ui-sortable-placeholder {
     height:35px;
 }
+
+/*.ui-button.ui-state-hover, ui-buttonset .ui-state-hover .plupload_add{
+    background: none !important;
+}*/

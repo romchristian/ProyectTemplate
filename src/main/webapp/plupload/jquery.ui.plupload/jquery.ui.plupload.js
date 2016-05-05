@@ -212,7 +212,7 @@ function renderUI(obj) {
 			'<div class="ui-widget-content plupload_container">' +
 				'<div class="ui-state-default ui-widget-header plupload_header">' +
 					'<div class="plupload_header_content">' +
-						'<div class="plupload_logo"> </div>' +
+						'<div class="plupload_logo plupload_add"> Agregar Foto</div>' +
 						'<div class="plupload_header_title">' + _("Select files") + '</div>' +
 						'<div class="plupload_header_text">' + _("Add files to the upload queue and click the start button.") + '</div>' +
 						'<div class="plupload_view_switch">' +
@@ -241,8 +241,8 @@ function renderUI(obj) {
 				'<tr>' +
 					'<td class="plupload_cell plupload_file_name">' +
 						'<div class="plupload_buttons"><!-- Visible -->' +
-							'<a class="plupload_add BlueButton">' + _("Add Files") + '</a>&nbsp;<br/>' +
-							'<a class="plupload_start BlueButton">' + _("Start Upload") + '</a>&nbsp;<br/>' +
+							'<a class=" BlueButton plupload_hidden">' + _("Add Files") + '</a>&nbsp;<br/>' +
+							'<a class="plupload_start BlueButton plupload_hidden">' + _("Start Upload") + '</a>&nbsp;<br/>' +
 							'<a class="plupload_button plupload_stop plupload_hidden">'+_("Stop Upload") + '</a>&nbsp;<br/>' +
 						'</div>' +
 
@@ -295,12 +295,12 @@ $.widget("ui.plupload", {
 			remember: true // requires: https://github.com/carhartl/jquery-cookie, otherwise disabled even if set to true
 		},
 
-		thumb_width: 100,
-		thumb_height: 60,
+		thumb_width:300,
+		thumb_height: 180,
 
-		multiple_queues: true, // re-use widget by default
+		multiple_queues: false, // re-use widget by default
 		dragdrop : true, 
-		autostart: false,
+		autostart: true,
 		sortable: false,
 		rename: false
 	},
@@ -348,7 +348,7 @@ $.widget("ui.plupload", {
 		
 		if ($.ui.button) {
 			this.browse_button.button({
-				icons: { primary: 'ui-icon-circle-plus' },
+				icons: { primary: '' },
 				disabled: true
 			});
 			

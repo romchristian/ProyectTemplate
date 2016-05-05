@@ -5,71 +5,57 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    <f:metadata>
-        <f:viewAction action="#{inventarioBean.preparaNuevo()}"/>
-    </f:metadata>
 
     <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
         <ui:define name="content">
-            <div class="Container100 Responsive100">
-                <p:breadCrumb homeDisplay="text">
-                    <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
-                    <p:menuitem outcome="listado" value="Listado de Inventarios"/>
-
-                </p:breadCrumb>
-            </div>
-
-            <div class="Container100 Responsive100">
-                <div class="Card">
-                    <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
-
-                        <h:outputText value="Responsable"  styleClass="FontVoltRegular"/>
-                        <h:outputText value="#{inventarioBean.actual.responsable == null?'':inventarioBean.actual.responsable.nombre}" styleClass="FontVoltRegular"/>
-
-                        <p:outputLabel value="Fecha" for="fecha" styleClass="FontVoltRegular"/>
-                        <p:calendar value="#{inventarioBean.actual.fecha}" locale="es" pattern="#{formato.patronFecha}" id="fecha"/>
-
-                        <p:outputLabel value="Lugar" for="lugar" styleClass="FontVoltRegular"/>
-                        <p:selectOneMenu value="#{inventarioBean.actual.deposito}" styleClass="depositos" id="lugar">
-                            <p:ajax event="change" process="@this" update="ubicacion"/>
-                            <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
-                        </p:selectOneMenu>
-
-                        <p:outputLabel value="Ubicación" for="ubicacion" styleClass="FontVoltRegular"/>
-                        <p:selectOneMenu value="#{inventarioBean.actual.ubicacion}" styleClass="depositos" id="ubicacion">
-                            <f:selectItems value="#{inventarioBean.actual.deposito.itemsUbicaciones}"/>
-                        </p:selectOneMenu>
+            <h:form>
 
 
-                    </p:panelGrid>
+                <div class="Container100 Responsive100">
+                    <p:breadCrumb homeDisplay="text">
+                        <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
+                        <p:menuitem outcome="listado" value="Listado de Inventarios"/>
+
+                    </p:breadCrumb>
+                </div>
+
+                <div class="Container100 Responsive100">
+                    <div class="Card">
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
 
 
-                    <div class="CardFooter">
-                        <div class="ui-grid ui-grid-responsive">
-                            <div class="ui-grid-row">
-                                <div class="ui-grid-col-8">
-                                    <p:spacer/>
+                        </p:panelGrid>
+                        <div class="CardFooter">
+                            <div class="ui-grid ui-grid-responsive">
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-4">
+                                        <p:spacer/>
+                                    </div>
+                                    <div class="ui-grid-col-2">
+                                        <p:commandButton action="#{inventarioBean.termina()}" value="Cancelar" styleClass="BlueButton" ajax="false"/>
+                                    </div>
+                                    <div class="ui-grid-col-2">
+                                        <p:commandButton action="#{inventarioBean.navUpload()}" value="Atras" ajax="false"/>
+                                    </div>
+                                    <div class="ui-grid-col-2">
+                                        <p:commandButton action="#{inventarioBean.guardar()}" value="Cargar otro" styleClass="BlueButton" ajax="false"/>
+                                    </div>
+                                    <div class="ui-grid-col-2">
+                                        <p:commandButton action="#{inventarioBean.finalizar()}" value="Finalizar" styleClass="BlueButton" ajax="false"/>
+                                    </div>
+
                                 </div>
-
-                                <div class="ui-grid-col-2">
-                                    <p:commandButton action="#{inventarioBean.termina()}" value="Cancelar"/>
-                                </div>
-                                <div class="ui-grid-col-2">
-                                    <p:button href="/main/stock/inventario/upload.jsp" value="Siguiente" />
-                                </div>
-
                             </div>
+
+
+
+
                         </div>
 
-
-
-
                     </div>
-
                 </div>
-            </div>
-
+            </h:form>
 
         </ui:define>
     </ui:decorate>

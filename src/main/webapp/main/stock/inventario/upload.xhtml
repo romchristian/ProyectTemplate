@@ -8,7 +8,7 @@
     <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
         <ui:define name="content">
 
-            
+
             <link rel="stylesheet" type="text/css" href="#{request.contextPath}/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" media="screen" />
             <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
             <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
@@ -18,11 +18,13 @@
             <script type="text/javascript" src="#{request.contextPath}/plupload/i18n/es.js"></script>
 
             <div class="Container100 Responsive100">
-                <p:breadCrumb homeDisplay="text">
-                    <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
-                    <p:menuitem outcome="listado" value="Listado de Inventarios"/>
+                <h:form>
+                    <p:breadCrumb homeDisplay="text">
+                        <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
+                        <p:menuitem outcome="listado" value="Listado de Inventarios"/>
 
-                </p:breadCrumb>
+                    </p:breadCrumb>
+                </h:form>
             </div>
 
 
@@ -47,6 +49,7 @@
                                 runtimes: 'html5,flash,silverlight,html4',
                                 url: '#{request.contextPath}/servlet/fileUpload',
                                 max_file_size: '40mb',
+                                max_file_count:1,
                                 // Maximum file size
 
                                 chunk_size: '2mb',
@@ -82,26 +85,36 @@
                             });
                         });
                     </script>
-                
 
-                    <div class="CardFooter">
-                        <div class="ui-grid ui-grid-responsive">
-                            <div class="ui-grid-row">
-                                <div class="ui-grid-col-8">
-                                    <p:spacer/>
-                                </div>
 
-                                <div class="ui-grid-col-2">
-                                    <p:commandButton action="#{inventarioBean.termina()}" value="Cancelar" styleClass="BlueButton"/>
-                                </div>
-                                <div class="ui-grid-col-2">
-                                    <p:button  value="Siguiente" outcome="nuevoProducto"/>
-                                </div>
+                    <h:form>
 
+
+                        <div class="CardFooter">
+                            <div class="ui-grid ui-grid-responsive">
+                                <div class="ui-grid-row">
+                                    <div class="ui-grid-col-6">
+                                        <p:spacer/>
+                                    </div>
+                                    <div class="ui-grid-col-2">
+
+                                        <p:commandButton action="#{inventarioBean.termina()}" value="Cancelar" styleClass="BlueButton" ajax="false"/>
+
+
+                                    </div>
+                                    <div class="ui-grid-col-2">
+
+                                        <p:button  value="Atras" outcome="nuevo"/>
+                                    </div>
+                                    <div class="ui-grid-col-2">
+                                        <p:commandButton action="#{inventarioBean.navNuevoProducto()}" value="Siguiente" styleClass="BlueButton" ajax="false"/>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
+                    </h:form>
 
                 </div>
             </div>
