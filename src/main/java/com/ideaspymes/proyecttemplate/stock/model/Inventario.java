@@ -46,7 +46,7 @@ public class Inventario implements Serializable, IConSucursal, IAuditable {
     @Filtro(descripcion = "Responsable", campo = "responsable",tipo = FiltroGenerico.TIPO_AUTOCOMPLETE,campoDescripcion = "nombre")
     @ManyToOne
     private Usuario responsable;
-    @Listado(descripcion = "Supervisor", mostrar = true,campo = "Supervisor",entidad = true,campoDescripcion = "nombre", modulo = "configuracion",outcome = "/main/configuracion/usuario/vista")
+    @Listado(descripcion = "Supervisor", mostrar = true,campo = "supervisor",entidad = true,campoDescripcion = "nombre", modulo = "configuracion",outcome = "/main/configuracion/usuario/vista")
     @ManyToOne
     private Usuario supervisor;
     @Listado(descripcion = "Lugar", mostrar = true,campo = "deposito",entidad = true,campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/deposito/vista")
