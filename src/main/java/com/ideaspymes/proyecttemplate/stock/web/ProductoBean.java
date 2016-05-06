@@ -31,8 +31,15 @@ public class ProductoBean extends BeanGenerico<Producto> implements Serializable
     private IProductoDAO ejb;
     @EJB
     private ICostoService costoService;
-    
-    
+    private String codigo;
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
     @Override
     public AbstractDAO<Producto> getEjb() {
@@ -60,5 +67,19 @@ public class ProductoBean extends BeanGenerico<Producto> implements Serializable
             R = new ArrayList<>();
         }
         return R;
+    }
+
+    public String buscarPorCodigo() {
+        if (codigo == null) {
+            return null;
+        }
+
+        Producto p = ejb.findPorCodigo(codigo);
+
+        if (p == null) {
+            return null;
+        }
+
+        return "/main/stock/producto/vista.xhtml?id=" + p.getId() + "&faces-redirect=true";
     }
 }

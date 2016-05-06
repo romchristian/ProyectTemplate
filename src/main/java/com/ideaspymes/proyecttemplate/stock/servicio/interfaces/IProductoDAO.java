@@ -28,6 +28,8 @@ public interface IProductoDAO extends AbstractDAO<Producto> {
     @Override
     Producto find(Object id);
 
+    Producto findPorCodigo(String codigo);
+
     @Override
     List<Producto> findAll();
 

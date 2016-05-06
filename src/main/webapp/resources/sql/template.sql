@@ -208,10 +208,11 @@ INSERT INTO submenu (id, estado, fecharegitro, fechaultimamodificacion, icon, la
 -- Data for Name: menuitem; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/producto/listado.xhtml', 'Producto', 2, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (3, 'ACTIVO', NULL, NULL, 'fa fa-search', '/main/stock/home.xhtml', 'Buscar por Código', 2, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/producto/listado.xhtml', 'Producto', 2, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (1, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/empresa/listado.xhtml', 'Empresa', 1, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (2, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/sucursal/listado.xhtml', 'Sucursal', 1, NULL);
-INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (4, 'ACTIVO', NULL, NULL, 'fa fa-user', '/main/configuracion/contacto/listado.xhtml', 'Contacto', 2, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (5, 'ACTIVO', NULL, NULL, 'fa fa-user', '/main/configuracion/contacto/listado.xhtml', 'Contacto', 2, NULL);
 --INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (5, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/tipoContacto/listado.xhtml', 'Tipo Contacto', 3, NULL);
 --INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (6, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/tipoDocumento/listado.xhtml', 'Tipo Documento', 3, NULL);
 --INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (7, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/estadoCivil/listado.xhtml', 'Estado Civil', 3, NULL);

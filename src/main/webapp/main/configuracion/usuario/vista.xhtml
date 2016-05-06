@@ -5,13 +5,34 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
+    <f:metadata>
+        <f:viewParam name="id" value="#{usuarioBean.id}"/>
+        <f:viewAction action="#{usuarioBean.cargaDatos()}"/>
+    </f:metadata>
 
     <ui:decorate template="/main/util/cuerpoTemplate.xhtml">
         <ui:define name="content">
+            <div class="Container100 Responsive100">
+                <p:breadCrumb homeDisplay="text">
+                    <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
+                    <p:menuitem outcome="listado" value="Listado de Usuarios"/>
+                    <p:menuitem outcome="vista" value="#{usuarioBean.actual.toString()}">
+                        <f:param name="id" value="#{usuarioBean.actual.id}"/>
+                    </p:menuitem>
+                </p:breadCrumb>
+            </div>
+
+            <div class="Container100 Responsive100">
+                <div class="Card">
+                    <ui:include src="cuerpo.xhtml">
+                        <ui:param name="contexto" value="vista"/>
+                    </ui:include>
+                </div>
+            </div>
+
 
         </ui:define>
     </ui:decorate>
 
 
-    
 </ui:composition>

@@ -16,7 +16,7 @@
             <span class="DispInlBlock Fright" style="margin:10px 10px 0px 0px;">
                 <h:form styleClass="DispInline">
                     <p:splitButton value="Mi Cuenta" styleClass="White Fs14" appendTo="@this">
-
+                        <p:menuitem value="Cambiar clave" icon="fa fa-key" outcome="/main/public/cambiarClave"/>
                         <p:menuitem value="Salir"  icon="fa fa-power-off" action="#{autenticador.logout()}"/>
                     </p:splitButton>
                 </h:form>
@@ -48,7 +48,7 @@
 
                     <p:ajax listener="#{credencial.handleChange}" process="@this" event="change"/>
                     <f:selectItems value="#{empresaBean.itemsAvailableSelectOne}" />
-                    
+
                 </p:selectOneMenu>
             </h:form>
         </li>

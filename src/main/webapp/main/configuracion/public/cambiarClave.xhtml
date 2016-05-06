@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="subheader">
+        Inicio
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="Container100">
+            <div class="Card TexAlCenter ">
+                <div class="CardTopic Blue">
+                    <div class="Fleft"><p:link outcome="home"><i class="icon-arrow-left-thick Fs16" style="color:#29506b"></i><span><span class="Fs16 FontVoltSemiBold" style="color: #29506b">Atras</span></span></p:link></div>
+                    <span style="position: relative; left: -30px">Cambiar contraseña</span>
+                </div>
+                <div class="Separator"></div>
+                <h:form>
+                    <p:growl id="mensajes"/>
+                    <p:password value="#{usuarioBean.password1}" placeholder="Nueva contraseña" required="true"/>
+                    <div class="EmptyBox10"></div>
+                    <p:password value="#{usuarioBean.password2}" placeholder="Repetir contraseña" required="true"/>
+                    <div class="EmptyBox10"></div>
+                    <p:commandButton value="Confirmar" icon="fa fa-floppy-o" action="#{usuarioBean.cambiarClave()}" update="mensajes"/>
+                    <p:button value="Cancelar" icon="fa fa-ban" outcome="/main/home" styleClass="RedButton"/>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+
+</ui:composition>

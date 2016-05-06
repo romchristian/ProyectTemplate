@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
+
+
+
+
+
+    <h:form  id="formABM">
+        <p:growl id="mensajes" autoUpdate="true"/>
+        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+
+            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
+            <h:outputText value="#{usuarioBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{usuarioBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+
+            <p:outputLabel value="Usuario" for="usuario" styleClass="FontVoltRegular"/>
+            <h:outputText value="#{usuarioBean.actual.userName}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{usuarioBean.actual.userName}" required="true" id="usuario" rendered="#{not(contexto == 'vista')}"/>
+
+
+            <p:outputLabel for="pwd1" value="Clave:" rendered="#{not(contexto == 'creacion')}"/>
+            <p:password id="pwd1" value="#{usuarioBean.actual.password}" match="pwd2" required="true" rendered="#{not(contexto == 'creacion')}"/>
+            <p:outputLabel for="pwd2" value="Confirmar Clave:" rendered="#{not(contexto == 'creacion')}"/>
+            <p:password id="pwd2" value="#{usuarioBean.actual.password}" required="true" rendered="#{not(contexto == 'creacion')}"/>
+
+            <h:outputText value="Permisos:" rendered="#{not(contexto == 'creacion')}"/>
+            <p:selectManyCheckbox id="grid" value="#{usuarioBean.actual.grupos}" layout="grid" columns="2" converter="grupoConverter" rendered="#{not(contexto == 'creacion')}">
+                <f:selectItems value="#{grupoBean.itemsAvailableSelectMany}" var="g" itemLabel="#{g.nombre}" itemValue="#{g}"/>
+            </p:selectManyCheckbox>
+
+
+        </p:panelGrid>
+
+        <facilerp:botoneraABM bean="#{usuarioBean}" contexto="#{contexto}" entidad="usuario" update=":formABM:panel"/>
+
+    </h:form>
+
+
+
+</ui:composition>
+

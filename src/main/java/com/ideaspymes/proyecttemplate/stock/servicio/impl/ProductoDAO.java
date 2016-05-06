@@ -51,7 +51,7 @@ public class ProductoDAO implements IProductoDAO {
 
         R = ceros + R;
 
-        return R+""+calcChecksum(R);
+        return R + "" + calcChecksum(R);
     }
 
     private int calcChecksum(String first12digits) {
@@ -83,6 +83,20 @@ public class ProductoDAO implements IProductoDAO {
     @Override
     public Producto find(Object id) {
         return abmService.find(id, Producto.class);
+    }
+
+    @Override
+    public Producto findPorCodigo(String codigo) {
+        Producto R = null;
+        try {
+            R = (Producto) abmService.getEM().createQuery("select obj from Producto obj WHERE OBJ.estado = ?1 and OBJ.codigo = ?2")
+                    .setParameter(1, Estado.ACTIVO)
+                    .setParameter(2, codigo)
+                    .getSingleResult();
+        } catch (Exception e) {
+        }
+
+        return R;
     }
 
     @Override

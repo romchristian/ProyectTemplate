@@ -11,65 +11,15 @@
 
     <ui:decorate template="/main/util/principal.xhtml">
         <ui:define name="content">
-            <div class="Container20 Responsive100">
-
-            </div>
-            <div class="Container20 Responsive100">
-                <div class="NoIndent">
+            <div class="Container100 ui-fluid">
 
 
-                    <div class="Card TexAlCenter ">
-                        <div class="Blue FontVoltBold">Nuevo Comprobante</div>
-                        <div class="Separator"></div>
-
-
-
-                        <p:link outcome="/main/stock/comprobanteStock/nuevo">
-                            <div class="BordRad10 GreenBack PadWithBorder5">
-                                <i class="icon-document-add Fs100 White"></i>
-                            </div>
-                        </p:link>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="Container20 Responsive100">
-                <div class="NoIndent">
-                    <div class="Card TexAlCenter ">
-                        <div class="Blue FontVoltBold">Nuevo Producto</div>
-                        <div class="Separator"></div>
-
-
-                        <p:link outcome="/main/stock/producto/nuevo">
-                            <div class="BordRad10 OrangeBack PadWithBorder5">
-                                <i class="fa fa-database Fs100 White"></i>
-                            </div>
-                        </p:link>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="Container20 Responsive100">
-                <div class="NoIndent">
-                    <div class="Card TexAlCenter ">
-                        <div class="Blue FontVoltBold">Nuevo Contacto</div>
-                        <div class="Separator"></div>
-
-
-                        <p:link outcome="/main/configuracion/contacto/nuevo">
-                            <div class="BordRad10 PurpleBack PadWithBorder5">
-                                <i class="icon-user-add Fs100 White"></i>
-                            </div>
-                        </p:link>
-
-
-                    </div>
-                </div>
-            </div>
-            <div class="Container20 Responsive100">
-
+                <h:form>
+                    <p:panelGrid columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+                        <p:inputText value="#{productoBean.codigo}" placeholder="Ingresar código de producto"/>
+                        <p:commandButton icon="fa fa-search" action="#{productoBean.buscarPorCodigo()}"/>
+                    </p:panelGrid>
+                </h:form>
             </div>
         </ui:define>
 

@@ -92,7 +92,7 @@
                     <p:selectOneMenu value="#{comprobanteStockBean.actual.depositoPivot}" styleClass="depositos"
                                      id="depositoPivot" rendered="#{not(contexto == 'vista') and not(comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
                         <p:ajax event="change" process="@this" update="ubicacionPivot"/>
-                        <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
+                        <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
                     </p:selectOneMenu>
 
 
@@ -117,7 +117,7 @@
                     <p:selectOneMenu value="#{comprobanteStockBean.actual.origen}" id="origen" styleClass="depositos"
                                      rendered="#{not(contexto == 'vista') and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
                         <p:ajax event="change" process="@this" update="ubicacionOrigen"/>
-                        <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
+                        <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
                     </p:selectOneMenu>
                     
                     
@@ -142,7 +142,7 @@
                     <p:selectOneMenu value="#{comprobanteStockBean.actual.destino}" id="destino" styleClass="depositos"
                                      rendered="#{not(contexto == 'vista') and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
                         <p:ajax event="change" process="@this" update="ubicacionDestino"/>
-                        <f:selectItems value="#{depositoBean.itemsAvailableSelectMany}"/>
+                        <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
                     </p:selectOneMenu>
                     
                     
