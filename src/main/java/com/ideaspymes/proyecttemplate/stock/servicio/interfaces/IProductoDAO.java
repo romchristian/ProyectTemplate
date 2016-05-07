@@ -7,8 +7,10 @@ package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.Existencia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
+import com.ideaspymes.proyecttemplate.stock.model.Ubicacion;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -40,5 +42,7 @@ public interface IProductoDAO extends AbstractDAO<Producto> {
     void remove(Producto entity);
 
     List<Existencia> findExistenciasPorProducto(Producto p);
+
+    public List<Existencia> findExistenciaPorDeposito(Deposito d, Ubicacion u);
 
 }

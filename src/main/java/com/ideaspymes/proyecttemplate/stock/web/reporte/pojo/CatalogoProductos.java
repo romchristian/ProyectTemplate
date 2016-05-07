@@ -18,15 +18,25 @@ public class CatalogoProductos {
     private String descripcion;
     private String ubicaciones;
     private Double stock;
+    private String codigo;
 
-    public CatalogoProductos(byte[] imagen, String producto, String descripcion, String ubicaciones, Double stock) {
+    public CatalogoProductos(byte[] imagen, String producto, String descripcion, String ubicaciones, Double stock, String codigo) {
         this.imagen = imagen;
         this.producto = producto;
         this.descripcion = descripcion;
         this.ubicaciones = ubicaciones;
         this.stock = stock;
+        this.codigo = codigo;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+    
     public byte[] getImagen() {
         return imagen;
     }
