@@ -180,11 +180,11 @@ public class ProductoDAO implements IProductoDAO {
                 .setParameter("ubicacion", u)
                 .getResultList();
         }else if(d!=null){
-            result = abmService.getEM().createQuery("SELECT e FROM Existencia WHERE e.deposito = :deposito")
+            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito")
                     .setParameter("deposito", d)
                     .getResultList();
         }else{
-            result = abmService.getEM().createQuery("SELECT e FROM Existencia")
+            result = abmService.getEM().createQuery("SELECT e FROM Existencia e")
                     .getResultList();
         }
         return result;
