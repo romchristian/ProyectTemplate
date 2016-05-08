@@ -19,14 +19,16 @@ public class CatalogoProductos {
     private String ubicaciones;
     private Double stock;
     private String codigo;
+    public String familia;
 
-    public CatalogoProductos(byte[] imagen, String producto, String descripcion, String ubicaciones, Double stock, String codigo) {
+    public CatalogoProductos(byte[] imagen, String producto, String descripcion, String ubicaciones, Double stock, String codigo, String familia) {
         this.imagen = imagen;
         this.producto = producto;
         this.descripcion = descripcion;
         this.ubicaciones = ubicaciones;
         this.stock = stock;
         this.codigo = codigo;
+        this.familia = familia;
     }
 
     public String getCodigo() {
@@ -36,7 +38,7 @@ public class CatalogoProductos {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-    
+
     public byte[] getImagen() {
         return imagen;
     }
@@ -75,6 +77,14 @@ public class CatalogoProductos {
 
     public void setStock(Double stock) {
         this.stock = stock;
+    }
+
+    public String getFamilia() {
+        return familia;
+    }
+
+    public void setFamilia(String familia) {
+        this.familia = familia;
     }
 
 }
