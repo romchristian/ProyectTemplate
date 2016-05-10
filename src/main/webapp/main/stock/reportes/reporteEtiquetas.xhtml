@@ -59,7 +59,7 @@
                     <div class="Container70 Responsive100" style="padding: 0;margin: 0">
                         <p:breadCrumb  homeDisplay="text" style="border: none;width: 50%">
                             <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
-                            <p:menuitem outcome="listado" value="#{titulo}"/>
+                            <p:menuitem outcome="etiquetas" value="Etiquetas"/>
                         </p:breadCrumb>
                     </div>
                     <div class="Container30 Responsive100" style="padding: 0;margin: 0;">
@@ -72,29 +72,11 @@
 
 
 
-                            <p:link outcome="nuevo" title="Crear Nuevo" style="margin-left: 10px" rendered="#{sololectura == 'true'?false:true}"><i class="fa fa-plus btn btn-default Fs18"
-                                                                                                                                                    id="btn_plus"
-                                                                                                                                                    onmouseover="document.getElementById('btn_plus').setAttribute('style', 'color:#0277BD')"
-                                                                                                                                                    onmouseout="document.getElementById('btn_plus').setAttribute('style', '')"></i>
-                            </p:link>
-
                             <p:commandLink ajax="false" title="Imprimir"><i class="fa fa-print btn btn-default Fs18"
                                                                             id="btn_print"
                                                                             onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
                                                                             onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
                                 <p:dataExporter type="pdf" target="tabla" fileName="#{titulo}"/>
-                            </p:commandLink>
-                            <p:commandLink ajax="false" title="Descargar Excel"><i class="fa fa-download btn btn-default Fs18"
-                                                                                   id="btn_download"
-                                                                                   onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
-                                                                                   onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
-                                <p:dataExporter type="xls" target="tabla" fileName="#{titulo}"/>
-                            </p:commandLink>
-
-                            <p:commandLink id="toggler" title="Columnas"><i class="fa fa-list btn btn-default Fs18"
-                                                                            id="btn_columnas"
-                                                                            onmouseover="document.getElementById('btn_columnas').setAttribute('style', 'color:#0277BD')"
-                                                                            onmouseout="document.getElementById('btn_columnas').setAttribute('style', '')"></i>
                             </p:commandLink>
 
                             <p:commandLink onclick="PF('panelfiltro').toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
@@ -110,7 +92,7 @@
                         </div>
                     </div>
 
-                    <p:columnToggler datasource="tabla" trigger="toggler"/>
+
 
 
 
@@ -158,6 +140,7 @@
                             </div>
 
 
+                            
 
                             <div class="Container80 Responsive100 ">
 
@@ -165,8 +148,9 @@
                             <div class="Container20 Responsive100 ">
 
 
-                                <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla @(.panelProductos)" icon="fa fa-search" styleClass="BlueButton"/>
+                                <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla" icon="fa fa-search" styleClass="BlueButton"/>
 
+                                <p:commandButton value="Imprimir" action="#{bean.createPdf()}" update="tabla" icon="fa fa-print" ajax="false"/>
 
                             </div>
 
@@ -180,9 +164,6 @@
         </div>
 
 
-
-
-
         <div class="Container100 Responsive100 ui-fluid">
             <div class="NoIndent NoPadding">
 
@@ -191,54 +172,41 @@
 
 
 
+                    <p:dataTable id="tabla" var="o" value="#{bean}" reflow="true"
+                                 lazy="true" paginator="true" 
+                                 rows="10"
+                                 rowHover="true"
+                                 currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
+                                 resizableColumns="true"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="10,15,20,30"
+                                 paginatorPosition="top"
+                                 draggableColumns="true">
 
-                    <p:dataGrid id="tabla" var="p" value="#{bean}" layout="grid" columns="4"
-                                lazy="true" paginator="true" 
-                                rows="10"
-                                currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
-                                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                rowsPerPageTemplate="10,15,20,30"
-                                paginatorPosition="top">
-                        <p:outputPanel styleClass="panelProductos">
+                        <p:column>
+                            <f:facet name="header">
+                                <p:selectBooleanCheckbox value="false"/>    
+                            </f:facet>
 
-
-
-
-                            <div class="product-box">
-                                <div class="well">
-                                    <div class="edit-product">
-                                        <p:link outcome="vista">
-                                            <i class="icon-pencil"></i>
-                                            <f:param name="id" value="#{p.id}"/>
-                                        </p:link>
-                                    </div>
-
-                                    <div class="img-product">
-                                        <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE" style="min-width:  calc(100% - 40px);min-height: 100%;">
-                                            <f:param name="id" value="#{p.id}"/>
-                                            <f:param name="entidad" value="producto"/>
-                                        </p:graphicImage>
-
-                                    </div>
-
-                                    <div class="centered" >
-                                        <div class="EmptyBox10"></div>	
-                                        <span class="FontVoltSemiBold Fs16">#{p.nombre}</span>
-                                        <div class="EmptyBox10"></div>
-                                        <span class="FontVoltBold Fs14 TexAlLeft">#{p.familia != null?p.familia.nombre:''}</span>
-
-                                        <span class="FontVoltLight Fs14 TexAlLeft">#{p.descripcion}</span>
-                                        <div class="Separator"></div>
-                                        <span class="FontVoltBold Fs14 TexAlLeft">Stock: #{p.stock}</span>
-                                    </div>
-                                </div>
-
-                            </div>
+                            <p:selectBooleanCheckbox value="#{o['imprimirEtiqueta']}"/>
+                        </p:column>
 
 
-                        </p:outputPanel>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{o['nombre']}"/>
+                        </p:column>
 
-                    </p:dataGrid>
+                        <p:column headerText="Código">
+                            <h:outputText value="#{o['codigo']}"/>
+                        </p:column>
+
+                        <p:column headerText="Cantidad">
+                            <p:spinner value="#{o['cantidadEtiquetas']}"/>
+                        </p:column>
+
+
+                    </p:dataTable>
+
 
                 </div>
             </div>

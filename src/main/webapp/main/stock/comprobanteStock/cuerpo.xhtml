@@ -57,8 +57,8 @@
                 <p:outputLabel value="Tipo Comprobante" for="tipo" styleClass="FontVoltRegular" />
                 <h:outputText value="#{comprobanteStockBean.actual.tipoComprobanteStock == null?'':comprobanteStockBean.actual.tipoComprobanteStock.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
                 <p:selectOneMenu value="#{comprobanteStockBean.actual.tipoComprobanteStock}" id="tipo" rendered="#{not(contexto == 'vista')}">
-                    <p:ajax event="change" process="@this :formABM:depositos" update=":formABM:depositos"/>
-                    <f:selectItems value="#{tipoComprobanteStockBean.itemsAvailableSelectMany}"/>
+                    <p:ajax event="change" process="@this :formABM:depositos" update=":formABM:depositos @(.costo)"/>
+                    <f:selectItems value="#{tipoComprobanteStockBean.itemsAvailableSelectOne}"/>
                 </p:selectOneMenu>
 
 
@@ -105,8 +105,8 @@
                                      id="ubicacionPivot" rendered="#{not(contexto == 'vista')  and not(comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
                         <f:selectItems value="#{comprobanteStockBean.actual.depositoPivot.itemsUbicaciones}"/>
                     </p:selectOneMenu>
-                    
-                    
+
+
 
 
                     <p:outputLabel value="Lugar Origen" for="origen" styleClass="FontVoltRegular depositos"
@@ -119,9 +119,9 @@
                         <p:ajax event="change" process="@this" update="ubicacionOrigen"/>
                         <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
                     </p:selectOneMenu>
-                    
-                    
-                    
+
+
+
                     <p:outputLabel value="Ubicación Origen" for="ubicacionOrigen" styleClass="FontVoltRegular depositos"
                                    rendered="#{comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia'}"/>
                     <h:outputText value="#{comprobanteStockBean.actual.ubicacionOrigen == null?'':comprobanteStockBean.actual.ubicacionOrigen.nombre}" 
@@ -131,8 +131,8 @@
                                      id="ubicacionOrigen" rendered="#{not(contexto == 'vista')  and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
                         <f:selectItems value="#{comprobanteStockBean.actual.origen.itemsUbicaciones}"/>
                     </p:selectOneMenu>
-                    
-                    
+
+
 
                     <p:outputLabel value="Lugar Destino" for="destino" styleClass="FontVoltRegular depositos" 
                                    rendered="#{comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia'}"/>
@@ -144,10 +144,10 @@
                         <p:ajax event="change" process="@this" update="ubicacionDestino"/>
                         <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
                     </p:selectOneMenu>
-                    
-                    
-                    
-                    
+
+
+
+
                     <p:outputLabel value="Ubicación Destino" for="ubicacionDestino" styleClass="FontVoltRegular depositos"
                                    rendered="#{comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia'}"/>
                     <h:outputText value="#{comprobanteStockBean.actual.ubicacionDestino == null?'':comprobanteStockBean.actual.ubicacionDestino.nombre}" 
@@ -157,28 +157,13 @@
                                      id="ubicacionDestino" rendered="#{not(contexto == 'vista')  and (comprobanteStockBean.actual.tipoComprobanteStock == 'Transferencia')}">
                         <f:selectItems value="#{comprobanteStockBean.actual.destino.itemsUbicaciones}"/>
                     </p:selectOneMenu>
-                    
+
                 </p:panelGrid>
 
 
 
                 <div class="EmptyBox20"></div>
-                <!--
-                            <p:autoComplete value="{comprobanteStockBean.productoElegido}"
-                                            style="width: 100%"
-                                            completeMethod="{productoConsultaBean.completar}"
-                                            forceSelection="true" converter="productoConverter"
-                                            var="c" itemValue="{c}" itemLabel="{c.nombre}"
-                                            rendered="{not(contexto == 'vista')}">
-                
-                                <p:column style="width: 10%">
-                                    <facilerp:imagen value="{c}" entidad="producto"/>
-                                </p:column>
-                
-                                <p:column style="width: 90%">
-                                    <h:outputText value="{c.nombre}"/>
-                                </p:column>
-                            </p:autoComplete>-->
+
 
                 <div class="NoIndent NoPadding">
                     <p:dataTable value="#{comprobanteStockBean.actual.detalles}" var="d" id="detalles">
@@ -209,7 +194,9 @@
                             <h:outputText value="#{d.producto != null ? d.producto.nombre:''}" rendered="#{(contexto == 'vista')}"/>
                         </p:column>
                         <p:column headerText="Cantidad">
-                            <pe:inputNumber value="#{d.cantidad}" rendered="#{not(contexto == 'vista')}"/>
+                            <pe:inputNumber value="#{d.cantidad}" rendered="#{not(contexto == 'vista')}">
+                                <p:ajax event="blur" process=":formABM:detalles" update="@(.total)" listener="#{d.calculaTotal()}"/>
+                            </pe:inputNumber>
                             <h:outputText value="#{d.cantidad}" rendered="#{(contexto == 'vista')}"/>
                         </p:column>
                         <p:column headerText="U.M">
@@ -231,11 +218,17 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Costo">
-                            <pe:inputNumber value="#{d.valor}" rendered="#{not(contexto == 'vista')}"/>
+                            <p:outputPanel styleClass="costo">
+                                <pe:inputNumber value="#{d.valor}" rendered="#{not(contexto == 'vista') and (comprobanteStockBean.actual.tipoComprobanteStock == 'Entrada por Compra')}">
+                                    <p:ajax event="blur" process=":formABM:detalles" update="@(.total)" listener="#{d.calculaTotal()}"/>
+                                </pe:inputNumber>
+                            </p:outputPanel>
                             <h:outputText value="#{d.valor}" rendered="#{(contexto == 'vista')}"/>
                         </p:column>
                         <p:column headerText="Total">
-                            <pe:inputNumber value="#{d.total}" rendered="#{not(contexto == 'vista')}"/>
+                            <p:outputPanel styleClass="total costo">
+                                <pe:inputNumber value="#{d.total}"  rendered="#{not(contexto == 'vista') and  (comprobanteStockBean.actual.tipoComprobanteStock == 'Entrada por Compra')}" readonly="true"/>
+                            </p:outputPanel>
                             <h:outputText value="#{d.total}" rendered="#{(contexto == 'vista')}"/>
                         </p:column>
                         <p:column style="text-align: center;width: 4%" rendered="#{not(contexto == 'vista')}">

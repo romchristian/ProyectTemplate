@@ -4,7 +4,7 @@
     <jta-data-source>FacilERP2</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
+      
     </properties>
   </persistence-unit>
-  
 </persistence>

@@ -203,6 +203,12 @@ public class DetComprobanteStock implements Serializable, IAuditable, IConSucurs
         this.sucursal = sucursal;
     }
 
+    public void calculaTotal() {
+        if (cantidad != null && valor != null) {
+            total = cantidad * valor;
+        }
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

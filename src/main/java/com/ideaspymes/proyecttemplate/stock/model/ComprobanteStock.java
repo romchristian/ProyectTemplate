@@ -293,6 +293,8 @@ public class ComprobanteStock implements Serializable, IAuditable, IConSucursal 
         }
     }
 
+    
+    
     public void setDetalles(List<DetComprobanteStock> detalles) {
         this.detalles = detalles;
     }

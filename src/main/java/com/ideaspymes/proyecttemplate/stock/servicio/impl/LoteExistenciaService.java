@@ -37,6 +37,7 @@ import javax.ejb.TransactionAttributeType;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IMovimientoStockService;
+import java.math.BigDecimal;
 
 /**
  *
@@ -75,11 +76,14 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         l.setCantidadReservadaStock(0d);
         l.setCantidadSaldoStock(cantidadStock);
 
-        Double costoUnitario = d.getValor() / calculaCantidadUMStock(d.getProducto(), d.getUnidadMedida(), 1d);
-
-        l.setCostoUnitario(costoUnitario);
-
-        l.setCosto(d.getTotal());
+        if (d.getValor() != null) {
+            Double costoUnitario = d.getValor() / calculaCantidadUMStock(d.getProducto(), d.getUnidadMedida(), 1d);
+            l.setCostoUnitario(costoUnitario);
+            l.setCosto(d.getTotal());
+        } else {
+            l.setCostoUnitario(0d);
+            l.setCosto(0d);
+        }
 
         l.setElaboracion(d.getElaboracion());
         l.setVencimiento(d.getVencimiento());
@@ -150,7 +154,7 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         double cantidadPorMovimiento = calculaCantidadUMStock(d.getProducto(), d.getUnidadMedida(), d.getCantidad());
 
         System.out.println("PRODUCTOOOOOO:  " + d.getProducto());
-        
+
         if (d.getProducto().getTieneVencimiento() != null && d.getProducto().getTieneVencimiento()) {
 
             lotesAAfectar = getLotesExitenciaVencimientosMasProximos(d.getProducto(), cantidadPorMovimiento);

@@ -62,6 +62,8 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     private Double stockMinimo;
     @Listado(descripcion = "Stock", mostrar = true)
     private Double stock;
+    @Transient
+    private Integer cantidadEtiquetas;
 
     @ManyToOne
     private UnidadMedida unidadMedidaBase;
@@ -92,6 +94,9 @@ public class Producto implements Serializable, IAuditable, IConImagen {
 
     private String usuarioUltimaModificacion;
 
+    @Transient
+    private boolean imprimirEtiqueta;
+
     public Producto() {
         this.estado = Estado.ACTIVO;
     }
@@ -109,6 +114,25 @@ public class Producto implements Serializable, IAuditable, IConImagen {
         this.nombre = nombre;
         this.impuesto = iva;
         this.precioVenta = precioVenta;
+    }
+
+    public Integer getCantidadEtiquetas() {
+        if (cantidadEtiquetas == null) {
+            cantidadEtiquetas = stock != null ? stock.intValue() : 1;
+        }
+        return cantidadEtiquetas;
+    }
+
+    public void setCantidadEtiquetas(Integer cantidadEtiquetas) {
+        this.cantidadEtiquetas = cantidadEtiquetas;
+    }
+
+    public boolean isImprimirEtiqueta() {
+        return imprimirEtiqueta;
+    }
+
+    public void setImprimirEtiqueta(boolean imprimirEtiqueta) {
+        this.imprimirEtiqueta = imprimirEtiqueta;
     }
 
     public Long getVersion() {
