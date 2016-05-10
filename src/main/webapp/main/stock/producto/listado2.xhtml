@@ -191,54 +191,50 @@
 
 
 
+                    <p:dataTable id="tabla" var="p" value="#{bean}" reflow="true"
+                                 lazy="true" paginator="true" 
+                                 rows="10"
+                                 rowHover="true"
+                                 currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
+                                 resizableColumns="true"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="10,15,20,30"
+                                 paginatorPosition="top"
+                                 draggableColumns="true">  
 
-                    <p:dataGrid id="tabla" var="p" value="#{bean}" layout="grid" columns="4"
-                                lazy="true" paginator="true" 
-                                rows="10"
-                                currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
-                                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                rowsPerPageTemplate="10,15,20,30"
-                                paginatorPosition="top">
-                        <p:outputPanel styleClass="panelProductos">
+                        <p:column style="width: 10%">
+                            <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE" style="width: 100px;max-height: 100px;vertical-align: middle;z-index: 1;margin: 0 auto 0 auto;">
+                                <f:param name="id" value="#{p.id}"/>
+                                <f:param name="entidad" value="producto"/>
+                            </p:graphicImage>
+                        </p:column>
+                        <p:column headerText="Código">
+                            <p:link value="#{p.codigo}" outcome="vista">
+                                <f:param name="id" value="#{p.id}"/>
+                            </p:link>
+                        </p:column>
 
+                        <p:column headerText="Nombre">
+                            <p:link value="#{p.nombre}" outcome="vista">
+                                <f:param name="id" value="#{p.id}"/>
+                            </p:link>
+                        </p:column>
+                        <p:column headerText="Familia">
+                            <h:outputText value="#{p.familia != null ? p.familia.nombre:'No definido'}"/>
+                        </p:column>
+                        <p:column headerText="Stock">
+                            <h:outputText value="#{p.stock}"/>
+                        </p:column>
+                        <p:column headerText="Descripcion">
+                            <h:outputText value="#{p.descripcion}"/>
+                        </p:column>
 
-
-
-                            <div class="product-box">
-                                <div class="well">
-                                    <div class="edit-product">
-                                        <p:link outcome="vista">
-                                            <i class="icon-pencil"></i>
-                                            <f:param name="id" value="#{p.id}"/>
-                                        </p:link>
-                                    </div>
-
-                                    <div class="img-product">
-                                        <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE" style="min-width:  calc(100% - 40px);min-height: 100%;">
-                                            <f:param name="id" value="#{p.id}"/>
-                                            <f:param name="entidad" value="producto"/>
-                                        </p:graphicImage>
-
-                                    </div>
-
-                                    <div class="centered" >
-                                        <div class="EmptyBox10"></div>	
-                                        <span class="FontVoltSemiBold Fs16">#{p.nombre}</span>
-                                        <div class="EmptyBox10"></div>
-                                        <span class="FontVoltBold Fs14 TexAlLeft">#{p.familia != null?p.familia.nombre:''}</span>
-
-                                        <span class="FontVoltLight Fs14 TexAlLeft">#{p.descripcion}</span>
-                                        <div class="Separator"></div>
-                                        <span class="FontVoltBold Fs14 TexAlLeft">Stock: #{p.stock}</span>
-                                    </div>
-                                </div>
-
-                            </div>
+                    </p:dataTable>
 
 
-                        </p:outputPanel>
 
-                    </p:dataGrid>
+
+
 
                 </div>
             </div>

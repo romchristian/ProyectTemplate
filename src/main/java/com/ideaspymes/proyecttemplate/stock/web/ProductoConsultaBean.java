@@ -17,7 +17,10 @@ import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Rectangle;
+import com.lowagie.text.Utilities;
 import com.lowagie.text.pdf.Barcode;
+import com.lowagie.text.pdf.Barcode128;
+import com.lowagie.text.pdf.Barcode39;
 import com.lowagie.text.pdf.BarcodeEAN;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPCell;
@@ -65,8 +68,13 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             response.setContentType("application/x-pdf");
             response.setHeader("Content-Disposition", "attachment; filename=\"etiquetas.pdf\"");
 
+            float ancho = Utilities.millimetersToPoints(38);
+            System.out.println("Ancho: " + ancho);
+            float largo = Utilities.millimetersToPoints(12);
+            System.out.println("Largo: " + largo);
+            
             // step 1
-            Document document = new Document(new Rectangle(86, 35));
+            Document document = new Document(new Rectangle(ancho, largo));
             // step 2
 
             document.setMargins(0f, 0f, 0f, 0f);
@@ -81,14 +89,15 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             for (Producto p : getLista()) {
                 if (p.getCantidadEtiquetas() > 0) {
 
-                    BarcodeEAN codeEAN = new BarcodeEAN();
+                    Barcode39 codeEAN = new Barcode39();
                     codeEAN.setCode(p.getCodigo());
                     codeEAN.setCodeType(Barcode.EAN13);
-                    codeEAN.setBarHeight(10f);
+                    codeEAN.setBarHeight(20f);
                     codeEAN.setX(0.7f);
                     codeEAN.setSize(4f);
+                    codeEAN.setAltText("HC - Cuadro Mcal Lopez");
 
-                    NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("es", "py"));
+                    
                     Font fontbold = FontFactory.getFont("Times-Roman", 5, Font.NORMAL);
                     Chunk productTitle = new Chunk("HC - "+p.getNombre(), fontbold);
 
@@ -107,12 +116,12 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
 
                     table.addCell(cell);
 
-                    PdfPCell cell2 = new PdfPCell();
-                    cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    cell2.setBorder(Rectangle.NO_BORDER);
-                    cell2.addElement(pTitile);
-
-                    table.addCell(cell2);
+//                    PdfPCell cell2 = new PdfPCell();
+//                    cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
+//                    cell2.setBorder(Rectangle.NO_BORDER);
+//                    cell2.addElement(pTitile);
+//
+//                    table.addCell(cell2);
 
                     for (int i = 0; i < p.getCantidadEtiquetas(); i++) {
                         document.add(table);

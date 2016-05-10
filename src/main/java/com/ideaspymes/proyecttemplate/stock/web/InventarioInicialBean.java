@@ -207,9 +207,13 @@ public class InventarioInicialBean extends BeanGenerico<Inventario> implements S
                     System.out.println("No se borro");
                 }
 
+                
             } catch (Exception e) {
                 System.out.println("Exception-File Upload." + e.getMessage());
             }
+            
+           
         }
+        getImageCurrent().setPath(null);
     }
 }

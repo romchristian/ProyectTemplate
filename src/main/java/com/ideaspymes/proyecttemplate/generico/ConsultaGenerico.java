@@ -151,7 +151,24 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
     private String construyeCount() {
         String consulta = "SELECT count(*) FROM " + getClazz().getSimpleName().toLowerCase() + "  ";
         StringBuilder sb = new StringBuilder(consulta);
-        sb.append(" WHERE 1 = 1 ");
+        
+        boolean tieneCampoEmpresa = false;
+        for (Field f : getClazz().getDeclaredFields()) {
+            if (f.getName().compareToIgnoreCase("empresa") == 0) {
+                tieneCampoEmpresa = true;
+                break;
+            }
+        }
+
+        if (credencial.getEmpresa() != null && tieneCampoEmpresa) {
+            sb.append(" WHERE empresa_id =  ");
+            sb.append(credencial.getEmpresa().getId());
+            sb.append(" AND estado <> 'BORRADO' ");
+        } else {
+            sb.append(" WHERE estado <> 'BORRADO' ");
+        }
+        
+        
         for (FiltroGenerico f : filterOptions) {
             if (f.tieneValor()) {
                 sb.append(f.getCadenaFiltro());

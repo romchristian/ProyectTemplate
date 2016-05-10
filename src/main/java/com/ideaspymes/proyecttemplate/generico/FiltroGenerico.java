@@ -5,6 +5,7 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,15 +14,14 @@ import java.util.Date;
  *
  * @author Christian
  */
-public class FiltroGenerico {
+public class FiltroGenerico implements Serializable {
 
     public static final String TIPO_LIKE = "like";
     public static final String TIPO_RANGO_FECHA = "rangoFecha";
     public static final String TIPO_SELECT_ONE = "selectOne";
     public static final String TIPO_AUTOCOMPLETE = "autocomplete";
     public static final String TIPO_NUMERO = "numero";
-    
-    
+
     private String campo;
     private String descripcion;
     private String tipo;
@@ -183,15 +183,15 @@ public class FiltroGenerico {
             R = true;
         }
 
-        if (valorDouble != null  && valorDouble > 0) {
+        if (valorDouble != null && valorDouble > 0) {
             R = true;
         }
 
-        if (valorLong != null  && valorLong > 0) {
+        if (valorLong != null && valorLong > 0) {
             R = true;
         }
 
-        if (valorBigDecimal != null  && valorBigDecimal.compareTo(BigDecimal.ZERO) > 0) {
+        if (valorBigDecimal != null && valorBigDecimal.compareTo(BigDecimal.ZERO) > 0) {
             R = true;
         }
 

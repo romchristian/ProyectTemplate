@@ -8,8 +8,10 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.Existencia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
+import com.ideaspymes.proyecttemplate.stock.model.Ubicacion;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoDAO;
 import java.util.ArrayList;
 import java.util.List;
@@ -168,6 +170,24 @@ public class ProductoDAO implements IProductoDAO {
         return abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.cantidad > 0 AND e.producto = :producto")
                 .setParameter("producto", p)
                 .getResultList();
+    }
+    
+    public List<Existencia> findExistenciaPorDeposito(Deposito d,Ubicacion u){
+        List<Existencia> result=null;
+        if(d!=null&&u!=null){        
+            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito AND e.ubicacion = :ubicacion")
+                .setParameter("deposito", d)
+                .setParameter("ubicacion", u)
+                .getResultList();
+        }else if(d!=null){
+            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito")
+                    .setParameter("deposito", d)
+                    .getResultList();
+        }else{
+            result = abmService.getEM().createQuery("SELECT e FROM Existencia e")
+                    .getResultList();
+        }
+        return result;
     }
 
 }
