@@ -361,5 +361,3 @@ ALTER TABLE public.users
   OWNER TO postgres;
 
 
-
-  alter table etiquetaconf add column tamdescripcion  double precision;

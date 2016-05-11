@@ -72,12 +72,6 @@
 
 
 
-                            <p:commandLink ajax="false" title="Imprimir"><i class="fa fa-print btn btn-default Fs18"
-                                                                            id="btn_print"
-                                                                            onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
-                                                                            onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
-                                <p:dataExporter type="pdf" target="tabla" fileName="#{titulo}"/>
-                            </p:commandLink>
 
                             <p:commandLink onclick="PF('panelfiltro').toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
                                                                                                    id="btn_filter"
@@ -140,7 +134,7 @@
                             </div>
 
 
-                            
+
 
                             <div class="Container80 Responsive100 ">
 
@@ -150,7 +144,7 @@
 
                                 <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla" icon="fa fa-search" styleClass="BlueButton"/>
 
-                                <p:commandButton value="Imprimir" action="#{bean.createPdf()}" update="tabla" icon="fa fa-print" ajax="false"/>
+
 
                             </div>
 
@@ -183,14 +177,6 @@
                                  paginatorPosition="top"
                                  draggableColumns="true">
 
-                        <p:column>
-                            <f:facet name="header">
-                                <p:selectBooleanCheckbox value="false"/>    
-                            </f:facet>
-
-                            <p:selectBooleanCheckbox value="#{o['imprimirEtiqueta']}"/>
-                        </p:column>
-
 
                         <p:column headerText="Nombre">
                             <h:outputText value="#{o['nombre']}"/>
@@ -206,6 +192,11 @@
 
 
                     </p:dataTable>
+                    <div class="EmptyBox20"></div>
+                    <p:commandButton value="Imprimir" action="#{bean.createPdf()}" update="tabla" icon="fa fa-print" ajax="false"/>
+
+
+
 
 
                 </div>
