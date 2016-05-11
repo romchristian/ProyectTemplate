@@ -222,11 +222,16 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (9, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/unidadMedida/listado.xhtml', 'Unidad de Medida', 1, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (10, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/familia/listado.xhtml', 'Familia', 1, NULL);
+
+
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (12, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/comprobanteStock/listado.xhtml', 'Comprobante de Stock', 2, NULL);
 --INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (13, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/loteExistencia/listado.xhtml', 'Lote de Existencia', 5, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (14, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/deposito/listado.xhtml', 'Depósito', 1, NULL);
 --INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (15, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/cotizacion/listado.xhtml', 'Cotización', 4, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (16, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/productoUnidadMedida/listado.xhtml', 'Producto X U.M. Conf.', 1, NULL);
+INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (21, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/configuracion/etiquetaConf/listado.xhtml', 'Conf. Etiquetas', 1, NULL);
+
+
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (17, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/inventario/nuevo.xhtml', 'Inventario Inicial', 5, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (18, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/movimientoStock/listado.xhtml', 'Movimientos', 5, NULL);
 INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, url, valor, submenu_id, usuarioultimamodificacion) VALUES (19, 'ACTIVO', NULL, NULL, 'icon-uniE675', '/main/stock/reportes/etiquetas.xhtml', 'Etiquetas', 6, NULL);
@@ -239,7 +244,7 @@ INSERT INTO menuitem (id, estado, fecharegitro, fechaultimamodificacion, icon, u
 -- Name: menuitem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('menuitem_id_seq', 21, true);
+SELECT pg_catalog.setval('menuitem_id_seq', 22, true);
 
 
 --
@@ -354,3 +359,7 @@ ALTER TABLE public.groups
 
 ALTER TABLE public.users
   OWNER TO postgres;
+
+
+
+  alter table etiquetaconf add column tamdescripcion  double precision;

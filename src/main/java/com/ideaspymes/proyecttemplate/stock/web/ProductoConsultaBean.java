@@ -5,6 +5,8 @@
  */
 package com.ideaspymes.proyecttemplate.stock.web;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.EtiquetaConf;
+import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IEtiquetaConfDAO;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.ConsultaGenerico;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
@@ -47,6 +49,8 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
 
     @EJB
     private IProductoDAO ejb;
+    @EJB
+    private IEtiquetaConfDAO etiquetaConfDAO;
 
     @Override
     public Class<Producto> getClazz() {
@@ -60,7 +64,9 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
 
     public String createPdf() throws IOException, DocumentException {
 
-        if (hayParaImprimir()) {
+        EtiquetaConf conf = etiquetaConfDAO.getEtiquetaConfDefault();
+
+        if (hayParaImprimir() && conf != null) {
 
             HttpServletResponse response
                     = (HttpServletResponse) FacesContext.getCurrentInstance()
@@ -68,11 +74,11 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             response.setContentType("application/x-pdf");
             response.setHeader("Content-Disposition", "attachment; filename=\"etiquetas.pdf\"");
 
-            float ancho = Utilities.millimetersToPoints(38);
+            float ancho = Utilities.millimetersToPoints(conf.getAnchoHoja().floatValue());
             System.out.println("Ancho: " + ancho);
-            float largo = Utilities.millimetersToPoints(12);
-            System.out.println("Largo: " + largo);
-            
+            float largo = Utilities.millimetersToPoints(conf.getLargoHoja().floatValue());
+            System.out.println("Alto: " + largo);
+
             // step 1
             Document document = new Document(new Rectangle(ancho, largo));
             // step 2
@@ -89,30 +95,27 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             for (Producto p : getLista()) {
                 if (p.getCantidadEtiquetas() > 0) {
 
-                    Barcode39 codeEAN = new Barcode39();
-                    codeEAN.setCode(p.getCodigo());
-                    codeEAN.setCodeType(Barcode.EAN13);
-                    codeEAN.setBarHeight(20f);
-                    codeEAN.setX(0.7f);
-                    codeEAN.setSize(4f);
-                    codeEAN.setAltText("HC - Cuadro Mcal Lopez");
+                    Barcode39 code39 = new Barcode39();
+                    code39.setCode(p.getCodigo());
+                    code39.setCodeType(Barcode.EAN13);
+                    code39.setBarHeight(conf.getAltoCodBarra().floatValue());
+                    code39.setX(0.7f);
+                    code39.setSize(conf.getTamDescripcion().floatValue());
+                    code39.setAltText("HC - " + p.getNombre());
 
-                    
-                    Font fontbold = FontFactory.getFont("Times-Roman", 5, Font.NORMAL);
-                    Chunk productTitle = new Chunk("HC - "+p.getNombre(), fontbold);
-
+//                    Font fontbold = FontFactory.getFont("Times-Roman", 5, Font.NORMAL);
+//                    Chunk productTitle = new Chunk("HC - " + p.getNombre(), fontbold);
                     // EAN 13
-                    Paragraph pTitile = new Paragraph(productTitle);
-                    pTitile.setAlignment(Element.ALIGN_CENTER);
-                    pTitile.setLeading(0, 1);
-
+//                    Paragraph pTitile = new Paragraph(productTitle);
+//                    pTitile.setAlignment(Element.ALIGN_CENTER);
+//                    pTitile.setLeading(0, 1);
                     PdfPTable table = new PdfPTable(1);
 
                     table.setWidthPercentage(96);
                     PdfPCell cell = new PdfPCell();
                     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     cell.setBorder(Rectangle.NO_BORDER);
-                    cell.addElement(codeEAN.createImageWithBarcode(cb, null, Color.BLACK));
+                    cell.addElement(code39.createImageWithBarcode(cb, null, Color.BLACK));
 
                     table.addCell(cell);
 
@@ -122,7 +125,6 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
 //                    cell2.addElement(pTitile);
 //
 //                    table.addCell(cell2);
-
                     for (int i = 0; i < p.getCantidadEtiquetas(); i++) {
                         document.add(table);
                         document.newPage();

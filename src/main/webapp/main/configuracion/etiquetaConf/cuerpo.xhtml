@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+
+
+
+    <h:form  id="formABM">
+        <p:growl id="mensajes" autoUpdate="true"/>
+        <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
+
+
+            <h:outputText value="Empresa"  styleClass="FontVoltRegular"
+                          rendered="#{not(contexto == 'creacion')}"/>
+            <h:outputText value="#{etiquetaConfBean.actual.empresa == null?'':etiquetaConfBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
+                          rendered="#{not(contexto == 'creacion')}"/>
+
+            <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
+            <h:outputText value="#{etiquetaConfBean.actual.nombre}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{etiquetaConfBean.actual.nombre}" required="true" id="nombre" rendered="#{not(contexto == 'vista')}"/>
+            
+            <p:outputLabel value="Ancho Hoja" for="anchoHoja" styleClass="FontVoltRegular" />
+            <h:outputText value="#{etiquetaConfBean.actual.anchoHoja}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{etiquetaConfBean.actual.anchoHoja}" required="true" id="anchoHoja" rendered="#{not(contexto == 'vista')}"/>
+            
+            <p:outputLabel value="Alto Hoja" for="altoHoja" styleClass="FontVoltRegular" />
+            <h:outputText value="#{etiquetaConfBean.actual.largoHoja}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{etiquetaConfBean.actual.largoHoja}" required="true" id="altoHoja" rendered="#{not(contexto == 'vista')}"/>
+            
+            <p:outputLabel value="Alto Cod Barra" for="altoCodBarra" styleClass="FontVoltRegular" />
+            <h:outputText value="#{etiquetaConfBean.actual.altoCodBarra}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{etiquetaConfBean.actual.altoCodBarra}" required="true" id="altoCodBarra" rendered="#{not(contexto == 'vista')}"/>
+            
+            
+            <p:outputLabel value="Tamaño Letra" for="tamDescripcion" styleClass="FontVoltRegular" />
+            <h:outputText value="#{etiquetaConfBean.actual.tamDescripcion}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:inputText value="#{etiquetaConfBean.actual.tamDescripcion}" required="true" id="tamDescripcion" rendered="#{not(contexto == 'vista')}"/>
+            
+            <p:outputLabel value="Predeterminado" for="predeterminado" styleClass="FontVoltRegular"/>
+            <h:outputText value="#{etiquetaConfBean.actual.predeterminado == true ? 'SI':'NO'}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular"/>
+            <p:selectBooleanCheckbox value="#{etiquetaConfBean.actual.predeterminado}"  id="predeterminado" rendered="#{not(contexto == 'vista')}"/>
+
+
+        </p:panelGrid>
+
+        <facilerp:botoneraABM bean="#{etiquetaConfBean}" contexto="#{contexto}" entidad="etiquetaConf" update=":formABM:panel"/>
+
+    </h:form>
+
+
+
+</ui:composition>
+

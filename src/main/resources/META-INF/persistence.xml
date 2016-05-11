@@ -6,4 +6,5 @@
     <properties>
     </properties>
   </persistence-unit>
+  
 </persistence>
