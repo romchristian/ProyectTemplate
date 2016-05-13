@@ -95,13 +95,13 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             for (Producto p : getLista()) {
                 if (p.getCantidadEtiquetas() > 0) {
 
-                    Barcode39 code39 = new Barcode39();
-                    code39.setCode(p.getCodigo());
-                    code39.setCodeType(Barcode.EAN13);
-                    code39.setBarHeight(conf.getAltoCodBarra().floatValue());
-                    code39.setX(0.7f);
-                    code39.setSize(conf.getTamDescripcion().floatValue());
-                    code39.setAltText("HC - " + p.getNombre());
+                    BarcodeEAN codeEan = new BarcodeEAN();
+                    codeEan.setCode(p.getCodigo());
+                    codeEan.setCodeType(Barcode.EAN13);
+                    codeEan.setBarHeight(conf.getAltoCodBarra().floatValue());
+                    codeEan.setX(0.7f);
+                    codeEan.setSize(conf.getTamDescripcion().floatValue());
+                    //code39.setAltText("HC - " + p.getNombre());
 
 //                    Font fontbold = FontFactory.getFont("Times-Roman", 5, Font.NORMAL);
 //                    Chunk productTitle = new Chunk("HC - " + p.getNombre(), fontbold);
@@ -115,7 +115,7 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
                     PdfPCell cell = new PdfPCell();
                     cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                     cell.setBorder(Rectangle.NO_BORDER);
-                    cell.addElement(code39.createImageWithBarcode(cb, null, Color.BLACK));
+                    cell.addElement(codeEan.createImageWithBarcode(cb, null, Color.BLACK));
 
                     table.addCell(cell);
 

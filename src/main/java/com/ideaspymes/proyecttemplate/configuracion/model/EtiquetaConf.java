@@ -6,6 +6,7 @@
 package com.ideaspymes.proyecttemplate.configuracion.model;
 
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
+import com.ideaspymes.proyecttemplate.configuracion.model.enums.TipoEtiqueta;
 import com.ideaspymes.proyecttemplate.generico.Filtro;
 import com.ideaspymes.proyecttemplate.generico.IAuditable;
 import com.ideaspymes.proyecttemplate.generico.Listado;
@@ -46,6 +47,9 @@ public class EtiquetaConf implements Serializable, IAuditable {
     private Double tamDescripcion;
     @Listado(descripcion = "Predeterminado", mostrar = true)
     private Boolean predeterminado;
+    @Enumerated(EnumType.STRING)
+    private TipoEtiqueta tipoEtiqueta;
+    private Boolean mostrarNombre;
 
     @ManyToOne
     @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre", outcome = "/main/configuracion/empresa/vista")
@@ -68,6 +72,24 @@ public class EtiquetaConf implements Serializable, IAuditable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public TipoEtiqueta getTipoEtiqueta() {
+        return tipoEtiqueta;
+    }
+
+    public void setTipoEtiqueta(TipoEtiqueta tipoEtiqueta) {
+        this.tipoEtiqueta = tipoEtiqueta;
+    }
+
+    public Boolean getMostrarNombre() {
+        return mostrarNombre;
+    }
+
+    public void setMostrarNombre(Boolean mostrarNombre) {
+        this.mostrarNombre = mostrarNombre;
+    }
+    
+    
 
     public String getNombre() {
         return nombre;
