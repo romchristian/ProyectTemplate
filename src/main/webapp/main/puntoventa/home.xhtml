@@ -9,17 +9,124 @@
         <f:viewParam name="idMenu" value="#{menuController.idMenu}"/>
         <f:viewAction action="#{menuController.cargaModulos()}"/>
     </f:metadata>
-    
-    
+
+
     <ui:decorate template="/main/util/principal.xhtml">
         <ui:define name="content">
-            <div class="Container100">
-                <div class="Card TexAlCenter ">
-                    <div class="CardTopic Blue">Confirguración</div>
-                    <div class="Separator"></div>
-                    <br/>
+
+
+            <style type="text/css">
+                .btn{
+                    display: inline-block;
+
+                    margin-bottom: 0;
+                    font-weight: normal;
+                    text-align: center;
+                    vertical-align: middle;
+                    cursor: pointer;
+                    background-image: none;
+                    border: 1px solid transparent;
+                    white-space: nowrap;
+                    padding: 6px 12px;
+                    font-size: 12px;
+                    line-height: 1.42857143;
+                    border-radius: 2px;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    text-transform: uppercase; 
+                }
+
+                .btn-default{
+                    color: #a4b0b4;
+                    background-color: #ffffff;
+                    border-color: #dae2e5;
+                    text-shadow: none;
+                    box-sizing: border-box;
+                }
+
+            </style>
+
+
+            <script type="text/javascript">
+                function toggle() {
+                    var panel1 = document.getElementById("panel1");
+                    var panel2 = document.getElementById("panel2");
+
+
+
+
+                    if(panel2.getAttribute("class")=="Container70 Responsive100 BorderRight"){
+                       jQuery( "#panel1" ).slideToggle( "slow", function(){
+                           panel2.setAttribute("class","Container 100 Responsive100")
+                       } );
+                    }else{
+                        panel2.setAttribute("class","Container70 Responsive100 BorderRight")
+                         jQuery( "#panel1" ).slideToggle( "slow", function(){
+                       } );
+                       
+                    }
+                }
+
+            </script>
+
+            <h:form prependId="false">
+
+
+                <div class="ui-breadcrumb NoPadding NoIndent">
+
+                    <div class="Container100 Responsive100" style="padding: 0;margin: 0;">
+                        <div style="position: relative;
+                             display: inline-block;
+                             vertical-align: middle;
+                             float: right;
+                             box-sizing: border-box;
+                             padding-top: 5px;padding-right: 5px;padding-bottom: 5px">
+                            <p:commandLink onclick="toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
+                                                                                 id="btn_filter"
+                                                                                 onmouseover="document.getElementById('btn_filter').setAttribute('style', 'color:#0277BD')"
+                                                                                 onmouseout="document.getElementById('btn_filter').setAttribute('style', '')"></i>
+                            </p:commandLink>
+                        </div>
+
+
+
+                    </div>
+
+
+
                 </div>
-            </div>
+
+                <div class="EmptyBox20"/>
+
+
+
+                <div class="Card">
+
+                    <div class="Container70 Responsive100 BorderRight" id="panel2">
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                        <div class="EmptyBox100"></div>
+                    </div>
+
+                    <div class="Container30 Responsive100" id="panel1" style="background-color: gray">
+                        Filtros
+                        <div class="SeparatorFull"/>
+
+                        <p:selectOneMenu/>
+                        <p:commandButton value="buscar"/>
+                    </div>
+                </div>
+            </h:form>
         </ui:define>
 
     </ui:decorate>

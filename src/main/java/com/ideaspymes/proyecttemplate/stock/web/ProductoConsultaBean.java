@@ -20,18 +20,13 @@ import com.lowagie.text.FontFactory;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.Utilities;
-import com.lowagie.text.pdf.Barcode;
-import com.lowagie.text.pdf.Barcode128;
 import com.lowagie.text.pdf.Barcode39;
-import com.lowagie.text.pdf.BarcodeEAN;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.util.Locale;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -95,36 +90,54 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             for (Producto p : getLista()) {
                 if (p.getCantidadEtiquetas() > 0) {
 
-                    BarcodeEAN codeEan = new BarcodeEAN();
-                    codeEan.setCode(p.getCodigo());
-                    codeEan.setCodeType(Barcode.EAN13);
-                    codeEan.setBarHeight(conf.getAltoCodBarra().floatValue());
-                    codeEan.setX(0.7f);
-                    codeEan.setSize(conf.getTamDescripcion().floatValue());
-                    //code39.setAltText("HC - " + p.getNombre());
-
-//                    Font fontbold = FontFactory.getFont("Times-Roman", 5, Font.NORMAL);
-//                    Chunk productTitle = new Chunk("HC - " + p.getNombre(), fontbold);
-                    // EAN 13
-//                    Paragraph pTitile = new Paragraph(productTitle);
-//                    pTitile.setAlignment(Element.ALIGN_CENTER);
-//                    pTitile.setLeading(0, 1);
-                    PdfPTable table = new PdfPTable(1);
-
+                    PdfPTable table = new PdfPTable(2);
                     table.setWidthPercentage(96);
-                    PdfPCell cell = new PdfPCell();
-                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    cell.setBorder(Rectangle.NO_BORDER);
-                    cell.addElement(codeEan.createImageWithBarcode(cb, null, Color.BLACK));
 
-                    table.addCell(cell);
+                    
 
-//                    PdfPCell cell2 = new PdfPCell();
-//                    cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
-//                    cell2.setBorder(Rectangle.NO_BORDER);
-//                    cell2.addElement(pTitile);
-//
-//                    table.addCell(cell2);
+                    Font fontbold = FontFactory.getFont("Times-Roman", 8, Font.NORMAL);
+                    
+                    Chunk productTitle = new Chunk("HC", fontbold);
+
+                    Paragraph pTitile = new Paragraph(productTitle);
+                    pTitile.setAlignment(Element.ALIGN_LEFT);
+                    pTitile.setLeading(6, 0);
+
+                    PdfPCell cellTitle = new PdfPCell();
+                    cellTitle.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    cellTitle.setVerticalAlignment(Element.ALIGN_TOP);
+                    cellTitle.setBorder(Rectangle.NO_BORDER);
+                    cellTitle.addElement(pTitile);
+
+                    
+                    Font font2 = FontFactory.getFont("Times-Roman", conf.getTamDescripcion().floatValue(), Font.NORMAL);
+                    
+                    Chunk productName = new Chunk(p.getNombre(), font2);
+
+                    Paragraph pName = new Paragraph(productName);
+                    pName.setAlignment(Element.ALIGN_CENTER);
+                    //pTitile.setLeading(0, 1);
+
+                    cellTitle.addElement(pName);
+
+                    table.addCell(cellTitle);
+
+                    
+                    Barcode39 code39 = new Barcode39();
+                    code39.setCode(p.getCodigo());
+                    //code39.setCodeType(Barcode.EAN13);
+                    code39.setBarHeight(conf.getAltoCodBarra().floatValue());
+                    //codeEan.setX(0.7f);
+                    code39.setSize(conf.getTamDescripcion().floatValue());
+                    //code39.setAltText("HC - " + p.getNombre());
+                    
+                    PdfPCell cellBarcode = new PdfPCell();
+                    cellBarcode.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    cellBarcode.setBorder(Rectangle.NO_BORDER);
+                    cellBarcode.addElement(code39.createImageWithBarcode(cb, null, Color.BLACK));
+                    
+                    table.addCell(cellBarcode);
+
                     for (int i = 0; i < p.getCantidadEtiquetas(); i++) {
                         document.add(table);
                         document.newPage();

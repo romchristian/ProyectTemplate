@@ -37,12 +37,13 @@ public class ProductoDAO implements IProductoDAO {
     @Override
     public Producto create(Producto entity) {
         Producto R = abmService.create(entity);
-        R.setCodigo(generaCodigo(R.getId()));
+        //R.setCodigo(generaCodigoEAN13(R.getId()));
+        R.setCodigo(generaCodigoCode39(R.getId()));
         edit(R);
         return R;
     }
 
-    private String generaCodigo(Long id) {
+    private String generaCodigoEAN13(Long id) {
         String R = "" + id;
         int size = 12;
         int res = size - R.length();
@@ -54,6 +55,20 @@ public class ProductoDAO implements IProductoDAO {
         R = ceros + R;
 
         return R + "" + calcChecksum(R);
+    }
+
+    private String generaCodigoCode39(Long id) {
+        String R = "" + id;
+        int size = 3;
+        int res = size - R.length();
+        String ceros = "";
+        for (int i = 0; i < res; i++) {
+            ceros += "0";
+        }
+
+        R = ceros + R;
+
+        return R;
     }
 
     private int calcChecksum(String first12digits) {
@@ -171,19 +186,19 @@ public class ProductoDAO implements IProductoDAO {
                 .setParameter("producto", p)
                 .getResultList();
     }
-    
-    public List<Existencia> findExistenciaPorDeposito(Deposito d,Ubicacion u){
-        List<Existencia> result=null;
-        if(d!=null&&u!=null){        
+
+    public List<Existencia> findExistenciaPorDeposito(Deposito d, Ubicacion u) {
+        List<Existencia> result = null;
+        if (d != null && u != null) {
             result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito AND e.ubicacion = :ubicacion")
-                .setParameter("deposito", d)
-                .setParameter("ubicacion", u)
-                .getResultList();
-        }else if(d!=null){
+                    .setParameter("deposito", d)
+                    .setParameter("ubicacion", u)
+                    .getResultList();
+        } else if (d != null) {
             result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito")
                     .setParameter("deposito", d)
                     .getResultList();
-        }else{
+        } else {
             result = abmService.getEM().createQuery("SELECT e FROM Existencia e")
                     .getResultList();
         }
