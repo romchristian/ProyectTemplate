@@ -17,6 +17,8 @@ import com.ideaspymes.proyecttemplate.stock.web.reporte.pojo.CatalogoProductos;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +93,24 @@ public class ReporteCatalogoProducto extends ReporteGenerico<CatalogoProductos> 
             detalles.add(new CatalogoProductos(p.getImagen(), p.getNombre(), p.getDescripcion(), ubicaciones, stock, p.getCodigo(), p.getFamilia() != null ? p.getFamilia().getNombre() : "No definido"));
         }
 
-        System.out.println("Detalles:  " + detalles);
+        Comparator<CatalogoProductos> comp = new Comparator<CatalogoProductos>() {
+            @Override
+            public int compare(CatalogoProductos o1, CatalogoProductos o2) {
+                String x1 = o1.getFamilia();
+                String x2 = o2.getFamilia();
+                int sComp = x1.compareTo(x2);
+
+                if (sComp != 0) {
+                    return sComp;
+                } else {
+                    String y1 = o1.getProducto();
+                    String y2 = o2.getProducto();
+                    return y1.compareTo(y2);
+                }
+            }
+        };
+
+        Collections.sort(detalles, comp);
 
         return detalles;
     }
