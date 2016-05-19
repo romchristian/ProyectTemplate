@@ -1,0 +1,305 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+
+    <style type="text/css">
+        .btn{
+            display: inline-block;
+
+            margin-bottom: 0;
+            font-weight: normal;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            padding: 6px 12px;
+            font-size: 12px;
+            line-height: 1.42857143;
+            border-radius: 2px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            text-transform: uppercase; 
+        }
+
+        .btn-default{
+            color: #a4b0b4;
+            background-color: #ffffff;
+            border-color: #dae2e5;
+            text-shadow: none;
+            box-sizing: border-box;
+        }
+
+    </style>
+
+
+    <h:form id="formList">
+
+
+
+
+        <div class="Container100 Responsive100 ui-fluid">
+            <div class="NoIndent HeiAutoOnMobile">
+
+
+
+                <div class="ui-breadcrumb NoPadding NoIndent">
+
+
+                    <div class="Container70 Responsive100" style="padding: 0;margin: 0">
+                        <p:breadCrumb  homeDisplay="text" style="border: none;width: 50%">
+                            <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
+                            <p:menuitem outcome="listado" value="#{titulo}"/>
+                        </p:breadCrumb>
+                    </div>
+                    <div class="Container30 Responsive100" style="padding: 0;margin: 0;">
+                        <div style="position: relative;
+                             display: inline-block;
+                             vertical-align: middle;
+                             float: right;
+                             box-sizing: border-box;
+                             padding-top: 5px;padding-right: 5px;">
+
+
+
+                            <p:link outcome="nuevo" title="Crear Nuevo" style="margin-left: 10px" rendered="#{sololectura == 'true'?false:true}"><i class="fa fa-plus btn btn-default Fs18"
+                                                                                                                                                    id="btn_plus"
+                                                                                                                                                    onmouseover="document.getElementById('btn_plus').setAttribute('style', 'color:#0277BD')"
+                                                                                                                                                    onmouseout="document.getElementById('btn_plus').setAttribute('style', '')"></i>
+                            </p:link>
+
+                            <p:commandLink ajax="false" title="Imprimir"><i class="fa fa-print btn btn-default Fs18"
+                                                                            id="btn_print"
+                                                                            onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
+                                                                            onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
+                                <p:dataExporter type="pdf" target="tabla" fileName="#{titulo}"/>
+                            </p:commandLink>
+                            <p:commandLink ajax="false" title="Descargar Excel"><i class="fa fa-download btn btn-default Fs18"
+                                                                                   id="btn_download"
+                                                                                   onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
+                                                                                   onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
+                                <p:dataExporter type="xls" target="tabla" fileName="#{titulo}"/>
+                            </p:commandLink>
+
+                            <p:commandLink id="toggler" title="Columnas"><i class="fa fa-list btn btn-default Fs18"
+                                                                            id="btn_columnas"
+                                                                            onmouseover="document.getElementById('btn_columnas').setAttribute('style', 'color:#0277BD')"
+                                                                            onmouseout="document.getElementById('btn_columnas').setAttribute('style', '')"></i>
+                            </p:commandLink>
+
+                            <p:commandLink onclick="PF('panelfiltro').toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
+                                                                                                   id="btn_filter"
+                                                                                                   onmouseover="document.getElementById('btn_filter').setAttribute('style', 'color:#0277BD')"
+                                                                                                   onmouseout="document.getElementById('btn_filter').setAttribute('style', '')"></i>
+                            </p:commandLink>
+
+
+
+
+
+                        </div>
+                    </div>
+
+                    <p:columnToggler datasource="tabla" trigger="toggler"/>
+
+
+
+                    <div class="Container100 Responsive100" style="padding: 0;margin: 0">
+                        <p:panel collapsed="true" widgetVar="panelfiltro"  toggleable="true"
+                                 styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;padding: 0;margin: 0">
+
+                            <div class="Container100 Responsive100" style="margin: 0;padding: 0;border-top: 1px solid #cccccc;">
+                                <div class="EmptyBox10"></div>
+
+                                <ui:repeat value="#{bean.filterOptions}" var="f">
+                                    <div class="Container50 Responsive100 ui-fluid" style="margin: 0;padding: 0;">
+                                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;margin: 0"
+                                                     layout="grid">
+                                            <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha')}"/>
+
+
+
+                                            <p:inputText value="#{f.valorString}" rendered="#{f.tipo == 'like'}"/>
+                                            <p:inputText value="#{f.valorInteger}" rendered="#{f.tipoCampo == 'java.lang.Integer' and f.tipo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorLong}" rendered="#{f.tipoCampo == 'java.lang.Long'  and f.tipo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorDouble}" rendered="#{f.tipoCampo == 'java.lang.Double'  and f.tipo == 'numero'}"/>
+                                            <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipo == 'numero'}"/>
+
+                                            <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
+                                            <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
+                                            <h:outputText value="#{f.descripcion} hasta" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
+                                            <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
+                                            <p:selectOneMenu value="#{f.valorEntidadId}" rendered="#{f.tipo == 'selectOne'}" converter="#{bean.obtConverter(f.campo)}">
+                                                <f:selectItems value="#{bean.obtItemsAvailableSelectOne(f.campo)}"/>
+                                            </p:selectOneMenu>
+
+                                            <p:autoComplete value="#{f.valorEntidadId}"
+                                                            completeMethod="#{bean.obtConsultaBean(f.campo).completar}"
+                                                            forceSelection="true" converter="#{bean.obtConverter(f.campo)}"
+                                                            var="c" itemValue="#{c}" itemLabel="#{c[f.campoDescripcion]}"
+                                                            rendered="#{f.tipo == 'autocomplete'}"/>
+
+                                        </p:panelGrid>
+                                    </div>
+                                </ui:repeat>
+
+
+
+                            </div>
+
+
+
+                            <div class="Container80 Responsive100 ">
+
+                            </div>
+                            <div class="Container20 Responsive100 ">
+
+
+                                <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla" icon="fa fa-search" styleClass="BlueButton"/>
+
+
+                            </div>
+
+                        </p:panel>
+
+                    </div>
+
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+        <div class="Container100 Responsive100 ui-fluid">
+            <div class="NoIndent NoPadding">
+
+
+                <div class="ContainerIndent HeiAutoOnMobile" style="padding: 0;margin: 0;">
+
+                    <p:dataTable id="tabla" var="o" value="#{bean}" reflow="true"
+                                 lazy="true" paginator="true" 
+                                 rows="10"
+                                 rowHover="true"
+                                 currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
+                                 resizableColumns="true"
+                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                 rowsPerPageTemplate="10,15,20,30"
+                                 paginatorPosition="top"
+                                 draggableColumns="true">  
+
+
+
+                        <p:columns value="#{bean.columnas}" var="column" sortBy="#{o[column.campo]}" sortable="#{(column.entidad)?'false':'true'}"
+                                   style="#{( (column.tipo=='java.lang.Double' or column.tipo=='java.lang.Integer' or column.tipo=='java.lang.Long' or column.tipo=='java.math.BigDecimal' ) ?'text-align:right;':'')}">
+                            <f:facet name="header">
+                                <h:outputText value="#{column.descripcion}" />
+                            </f:facet>
+
+                            <h:outputText value="#{o[column.campo] == true?'SI':'NO'}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.lang.Boolean')}"/>
+
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.lang.String')}"/>
+
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.lang.Integer')}">
+                                <f:convertNumber locale="#{formato.locale}"/>
+                            </h:outputText>
+
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.lang.Double')}">
+                                <f:convertNumber locale="#{formato.locale}"/>
+                            </h:outputText>
+
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.lang.Long')}">
+                                <f:convertNumber locale="#{formato.locale}"/>
+                            </h:outputText>
+
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.math.BigDecimal')}">
+                                <f:convertNumber locale="#{formato.locale}"/>
+                            </h:outputText>
+
+                            <h:outputText value="#{o[column.campo]}" rendered="#{not (column.link) and not(column.entidad) and (column.tipo=='java.util.Date')}">
+                                <f:convertDateTime locale="#{formato.locale}"  pattern="dd/MM/yyyy HH:mm" timeZone="America/Asuncion"/>
+                            </h:outputText>
+
+                            <h:outputText value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.enumeracion)}"/>
+
+                            <p:link outcome="#{column.outcome}" value="#{o[column.campo][column.campoDescripcion]}" rendered="#{not(column.link) and (column.entidad)}">
+                                <f:param name="id" value="#{o[column.campo]['id']}"/>
+                            </p:link>
+
+                            <p:link outcome="vista" value="#{o[column.campo][column.campoDescripcion]}" rendered="#{(column.link) and (column.entidad)}">
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+
+                            <p:link outcome="vista" value="#{o[column.campo]}" rendered="#{(column.link) and (column.tipo=='java.lang.String')}">
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+
+                            <p:link outcome="vista" rendered="#{(column.link) and (column.tipo=='java.util.Date')}">
+
+                                <h:outputText value="#{o[column.campo]}">
+                                    <f:convertDateTime locale="#{formato.locale}" pattern="dd/MM/yyyy HH:mm" timeZone="America/Asuncion"/>
+                                </h:outputText>
+
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+
+
+                            <p:link outcome="vista" rendered="#{(column.link) and (column.tipo=='java.lang.Integer')}">
+
+                                <h:outputText value="#{o[column.campo]}">
+                                    <f:convertNumber locale="#{formato.locale}"/>
+                                </h:outputText>
+
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+
+                            <p:link outcome="vista" rendered="#{(column.link) and (column.tipo=='java.lang.Long')}">
+
+                                <h:outputText value="#{o[column.campo]}">
+                                    <f:convertNumber locale="#{formato.locale}"/>
+                                </h:outputText>
+
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+
+                            <p:link outcome="vista" rendered="#{(column.link) and (column.tipo=='java.lang.Double')}">
+
+                                <h:outputText value="#{o[column.campo]}">
+                                    <f:convertNumber locale="#{formato.locale}"/>
+                                </h:outputText>
+
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+
+                            <p:link outcome="vista" rendered="#{(column.link) and (column.tipo=='java.math.BigDecimal')}">
+
+                                <h:outputText value="#{o[column.campo]}">
+                                    <f:convertNumber locale="#{formato.locale}"/>
+                                </h:outputText>
+
+                                <f:param name="id" value="#{o['id']}"/>
+                            </p:link>
+
+                        </p:columns>
+                    </p:dataTable>
+
+                </div>
+            </div>
+        </div>
+
+    </h:form>
+
+</ui:composition>
