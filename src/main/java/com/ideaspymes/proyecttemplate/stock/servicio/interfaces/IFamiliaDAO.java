@@ -33,6 +33,10 @@ public interface IFamiliaDAO extends AbstractDAO<Familia> {
     @Override
     List<Familia> findAll(String query, QueryParameter params);
 
+    List<Familia> findHijos(Familia f);
+
+    List<Familia> findSinPadre();
+
     @Override
     void remove(Familia entity);
 

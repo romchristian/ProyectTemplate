@@ -180,38 +180,48 @@
             Filtros
             <div class="Separator"/>
 
-            <ui:repeat value="#{bean.filterOptions}" var="f">
-                <div class="Container100 Responsive100 ui-fluid" style="margin: 0;padding: 0;">
-                    <p:panelGrid columns="1" columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;margin: 0"
-                                 layout="grid">
-                        <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha')}"/>
+            <div class="Container100 Responsive100 ui-fluid" style="margin: 0;padding: 0;">
+                <p:panelGrid columns="1" columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;margin: 0"
+                             layout="grid">
 
-
-
-                        <p:inputText value="#{f.valorString}" rendered="#{f.tipo == 'like'}"/>
-                        <p:inputText value="#{f.valorInteger}" rendered="#{f.tipoCampo == 'java.lang.Integer' and f.tipo == 'numero'}"/>
-                        <p:inputText value="#{f.valorLong}" rendered="#{f.tipoCampo == 'java.lang.Long'  and f.tipo == 'numero'}"/>
-                        <p:inputText value="#{f.valorDouble}" rendered="#{f.tipoCampo == 'java.lang.Double'  and f.tipo == 'numero'}"/>
-                        <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipo == 'numero'}"/>
-
-                        <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
-                        <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
-                        <h:outputText value="#{f.descripcion} hasta" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
-                        <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
-                        <p:selectOneMenu value="#{f.valorEntidadId}" rendered="#{f.tipo == 'selectOne'}" converter="#{bean.obtConverter(f.campo)}">
-                            <f:selectItems value="#{bean.obtItemsAvailableSelectOne(f.campo)}"/>
-                        </p:selectOneMenu>
-
-                        <p:autoComplete value="#{f.valorEntidadId}"
-                                        completeMethod="#{bean.obtConsultaBean(f.campo).completar}"
-                                        forceSelection="true" converter="#{bean.obtConverter(f.campo)}"
-                                        var="c" itemValue="#{c}" itemLabel="#{c[f.campoDescripcion]}"
-                                        rendered="#{f.tipo == 'autocomplete'}"/>
-
-                    </p:panelGrid>
+                    <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular"/>
+                    <p:inputText value="#{productoConsultaBean.codigo}" id="codigo"/>
                     <div class="EmptyBox10"></div>
-                </div>
-            </ui:repeat>
+                    
+                    <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
+                    <p:inputText value="#{productoConsultaBean.nombre}" id="nombre"/>
+                    <div class="EmptyBox10"></div>
+
+
+                    <p:outputLabel value="Lugar" for="deposito" styleClass="FontVoltRegular"/>
+                    <p:selectOneMenu value="#{productoConsultaBean.deposito}" id="deposito">
+                        <p:ajax event="change" process="@this" update="ubicacion"/>
+                        <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <div class="EmptyBox10"></div>
+
+                    <p:outputLabel value="Ubicación" for="ubicacion" styleClass="FontVoltRegular depositos"/>
+                    <p:selectOneMenu value="#{productoConsultaBean.ubicacion}" id="ubicacion">
+                        <f:selectItems value="#{productoConsultaBean.deposito.itemsUbicaciones}"/>
+                    </p:selectOneMenu> 
+                    <div class="EmptyBox10"></div>
+
+                    <p:outputLabel value="Familia" for="familia" styleClass="FontVoltRegular"/>
+                    <div class="EmptyBox10"></div>
+
+                    <p:tree value="#{productoConsultaBean.rootNode}" var="f" id="familia"
+                            selectionMode="single" 
+                            selection="#{productoConsultaBean.selectedNode}">
+                        <p:treeNode>
+                            <h:outputText value="#{f.nombre}"/>
+                        </p:treeNode>
+                    </p:tree>
+
+
+                </p:panelGrid>
+                <div class="EmptyBox10"></div>
+            </div>
+
 
             <div class="EmptyBox20"></div>
             <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla" icon="fa fa-search" styleClass="BlueButton"/>

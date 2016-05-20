@@ -15,7 +15,6 @@
         <div class="Container70 Responsive100">
             <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
 
-
                 <h:outputText value="Empresa"  styleClass="FontVoltRegular"
                               rendered="#{not(contexto == 'creacion')}"/>
                 <h:outputText value="#{familiaBean.actual.empresa == null?'':familiaBean.actual.empresa.nombre}" styleClass="FontVoltRegular"
@@ -30,7 +29,6 @@
                 <p:selectOneMenu value="#{familiaBean.actual.padre}" id="padre" rendered="#{not(contexto == 'vista')}">
                     <f:selectItems value="#{familiaBean.itemsAvailableSelectOne}"/>
                 </p:selectOneMenu>
-
 
             </p:panelGrid>
         </div>

@@ -148,7 +148,7 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         return sb.toString();
     }
 
-    private String construyeCount() {
+    public String construyeCount() {
         String consulta = "SELECT count(*) FROM " + getClazz().getSimpleName().toLowerCase() + "  ";
         StringBuilder sb = new StringBuilder(consulta);
         

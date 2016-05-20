@@ -9,7 +9,6 @@ import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.stock.model.Familia;
-import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IFamiliaDAO;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +112,21 @@ public class FamiliaDAO implements IFamiliaDAO {
         }
 
         return R;
+    }
+
+    @Override
+    public List<Familia> findHijos(Familia f) {
+        return abmService.getEM().createQuery("SELECT f FROM Familia f WHERE f.estado = :estado AND f.padre  = :padre")
+                .setParameter("estado", Estado.ACTIVO)
+                .setParameter("padre", f)
+                .getResultList();
+    }
+
+    @Override
+    public List<Familia> findSinPadre() {
+                return abmService.getEM().createQuery("SELECT f FROM Familia f WHERE f.estado = :estado AND f.padre IS NULL")
+                .setParameter("estado", Estado.ACTIVO)
+                .getResultList();
     }
 
 }
