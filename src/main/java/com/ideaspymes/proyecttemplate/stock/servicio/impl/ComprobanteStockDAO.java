@@ -62,6 +62,7 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
         switch (entity.getTipoComprobanteStock().getNombre()) {
             case "Entrada por Compra":
             case "Entrada por Ajuste":
+            case "Entrada Regalo":
                 entity.setDestino(entity.getDepositoPivot());
                 entity.setUbicacionDestino(entity.getUbicacionPivot());
                 entity.setOrigen(iDepositoDAO.findPorTipo(TipoDeposito.COMPRA));
@@ -74,6 +75,7 @@ public class ComprobanteStockDAO implements IComprobanteStockDAO {
             case "Salida por Consumo Interno":
             case "Salida por Ajuste":
             case "Salida por Perdida":
+            case "Salida Regalo":
                 entity.setOrigen(entity.getDepositoPivot());
                 entity.setUbicacionOrigen(entity.getUbicacionPivot());
                 entity.setDestino(iDepositoDAO.findPorTipo(TipoDeposito.PERDIDA));

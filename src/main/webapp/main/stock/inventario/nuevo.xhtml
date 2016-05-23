@@ -43,6 +43,11 @@
                                 <f:selectItems value="#{inventarioInicialBean.actual.deposito.itemsUbicaciones}"/>
                             </p:selectOneMenu>
 
+                            <p:outputLabel value="Tipo Entrada" for="tipo" styleClass="FontVoltRegular"/>
+                            <p:selectOneMenu value="#{inventarioInicialBean.actual.tipoComprobanteStock}" styleClass="depositos" id="tipo">
+                                <f:selectItems value="#{tipoComprobanteStockBean.itemsEntradas}"/>
+                            </p:selectOneMenu>
+
 
                         </p:panelGrid>
 

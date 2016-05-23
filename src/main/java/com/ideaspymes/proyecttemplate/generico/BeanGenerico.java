@@ -377,7 +377,7 @@ public abstract class BeanGenerico<T> implements Serializable {
         this.file = file;
     }
     
-    public String toggleActivavion() {
+    public String toggleActivacion() {
         if (getActual() instanceof IAuditable) {
             if (((IAuditable) getActual()).getEstado() == Estado.ACTIVO) {
                 ((IAuditable) getActual()).setEstado(Estado.INACTIVO);

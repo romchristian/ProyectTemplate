@@ -7,6 +7,7 @@ package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoMovimientoStock;
 import com.ideaspymes.proyecttemplate.stock.model.TipoComprobanteStock;
 import java.util.List;
 import javax.ejb.Local;
@@ -37,5 +38,7 @@ public interface ITipoComprobanteStockDAO extends AbstractDAO<TipoComprobanteSto
     void remove(TipoComprobanteStock entity);
 
     TipoComprobanteStock findPorNombre(String nombre);
+
+    public List<TipoComprobanteStock> findAllPorTipo(TipoMovimientoStock tipo);
 
 }

@@ -41,4 +41,8 @@ public interface IProductoUnidadMedidaDAO extends AbstractDAO<ProductoUnidadMedi
     @Override
     void remove(ProductoUnidadMedida entity);
 
+    public Double calculaCantidadUMStock(Producto p, UnidadMedida unidadMedida, Double cantidad);
+
+    public Double calculaCantidadUMStockDesconversion(Producto p, UnidadMedida unidadMedida, Double cantidad);
+
 }

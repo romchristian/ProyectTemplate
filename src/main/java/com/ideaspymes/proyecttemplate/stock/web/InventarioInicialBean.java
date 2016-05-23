@@ -6,17 +6,14 @@ package com.ideaspymes.proyecttemplate.stock.web;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.BeanGenerico;
-import com.ideaspymes.proyecttemplate.generico.IConImagen;
 import com.ideaspymes.proyecttemplate.generico.JsfUtil;
 import com.ideaspymes.proyecttemplate.stock.model.DetInventario;
 import com.ideaspymes.proyecttemplate.stock.web.converters.InventarioConverter;
 import com.ideaspymes.proyecttemplate.stock.model.Inventario;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
-import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IInventarioDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoDAO;
-import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ITipoComprobanteStockDAO;
 import java.io.File;
 import java.io.Serializable;
 import java.nio.file.Files;
@@ -25,11 +22,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.ejb.EJB;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 
@@ -38,16 +33,13 @@ import javax.servlet.ServletContext;
  * @author christian
  */
 @Named
-@ConversationScoped
+@SessionScoped
 public class InventarioInicialBean extends BeanGenerico<Inventario> implements Serializable {
 
     @EJB
     private IInventarioDAO ejb;
     @EJB
     private IProductoDAO ejbProductoDAO;
-
-    @Inject
-    private Conversation conversation;
 
     private Producto productoActual;
     private Double cantidadActual = 0d;
@@ -99,7 +91,7 @@ public class InventarioInicialBean extends BeanGenerico<Inventario> implements S
     }
 
     public void preparaNuevo() {
-        beginConversation();
+        limpia();
 
     }
 
@@ -112,7 +104,7 @@ public class InventarioInicialBean extends BeanGenerico<Inventario> implements S
     }
 
     public String termina() {
-        endConversation();
+
         return "listado";
     }
 
@@ -124,8 +116,7 @@ public class InventarioInicialBean extends BeanGenerico<Inventario> implements S
         if (ejb.createInicial(getActual()) != null) {
 
             JsfUtil.addSuccessMessage("Se creó exitosamente!");
-            setActual(null);
-            endConversation();
+            limpia();
             return "listado.xhtml?faces-redirect=true";
         } else {
             return null;
@@ -139,8 +130,6 @@ public class InventarioInicialBean extends BeanGenerico<Inventario> implements S
         upload();
 
         Producto p = ejbProductoDAO.create(getProductoActual());
-
-       
 
         if (getActual().getDetalles() == null) {
             getActual().setDetalles(new ArrayList<DetInventario>());
@@ -160,18 +149,6 @@ public class InventarioInicialBean extends BeanGenerico<Inventario> implements S
         cantidadActual = 0D;
 
         return "upload";
-    }
-
-    public void beginConversation() {
-        if (conversation.isTransient()) {
-            conversation.begin();
-        }
-    }
-
-    public void endConversation() {
-        if (!conversation.isTransient()) {
-            conversation.end();
-        }
     }
 
     @Override
@@ -207,13 +184,18 @@ public class InventarioInicialBean extends BeanGenerico<Inventario> implements S
                     System.out.println("No se borro");
                 }
 
-                
             } catch (Exception e) {
                 System.out.println("Exception-File Upload." + e.getMessage());
             }
-            
-           
+
         }
         getImageCurrent().setPath(null);
+    }
+
+    private void limpia() {
+        setActual(null);
+        productoActual = null;
+        cantidadActual = 0d;
+        unidadMedida = null;
     }
 }

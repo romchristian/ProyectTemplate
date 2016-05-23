@@ -188,6 +188,23 @@ public class ProductoDAO implements IProductoDAO {
                 .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
+    
+    
+    @Override
+    public Existencia findExistenciasPorProductoUbicacion(Producto p,Deposito d, Ubicacion u) {
+        
+        Existencia R = null;
+        try {
+            R = (Existencia) abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.producto = :producto AND e.producto.estado = :estado AND e.deposito = :deposito AND e.ubicacion = :ubicacion ORDER BY e.producto.familia.nombre, e.producto.nombre")
+                .setParameter("producto", p)
+                .setParameter("deposito", d)
+                .setParameter("ubicacion", u)
+                .setParameter("estado", Estado.ACTIVO)
+                .getSingleResult();
+        } catch (Exception e) {
+        }
+        return R;
+    }
 
     @Override
     public List<Existencia> findExistenciaPorDeposito(Deposito d, Ubicacion u) {

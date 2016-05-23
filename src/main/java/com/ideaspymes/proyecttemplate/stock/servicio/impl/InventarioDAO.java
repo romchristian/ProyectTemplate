@@ -10,14 +10,23 @@ import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
 import com.ideaspymes.proyecttemplate.stock.exception.SinStockException;
 import com.ideaspymes.proyecttemplate.stock.model.ComprobanteStock;
+import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.DetComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.model.DetInventario;
+import com.ideaspymes.proyecttemplate.stock.model.Existencia;
 import com.ideaspymes.proyecttemplate.stock.model.Inventario;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
+import com.ideaspymes.proyecttemplate.stock.model.TipoComprobanteStock;
+import com.ideaspymes.proyecttemplate.stock.model.Ubicacion;
+import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IComprobanteStockDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IInventarioDAO;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ILoteExistenciaDAO;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoDAO;
+import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoUnidadMedidaDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ITipoComprobanteStockDAO;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +51,10 @@ public class InventarioDAO implements IInventarioDAO {
     private IComprobanteStockDAO ejbComprobanteStockDAO;
     @EJB
     private ITipoComprobanteStockDAO ejbITipoComprobanteStockDAO;
+    @EJB
+    private IProductoUnidadMedidaDAO productoUnidadMedidaDAO;
+    @EJB
+    private IProductoDAO productoDAO;
 
     @Override
     public Inventario create(Inventario entity) {
@@ -52,10 +65,14 @@ public class InventarioDAO implements IInventarioDAO {
     public Inventario createInicial(Inventario entity) {
         Inventario R = create(entity);
         try {
-            
-            
+
             ComprobanteStock c = new ComprobanteStock();
-            c.setTipoComprobanteStock(ejbITipoComprobanteStockDAO.findPorNombre("Entrada por Ajuste"));
+            if (entity.getTipoComprobanteStock() != null) {
+                c.setTipoComprobanteStock(entity.getTipoComprobanteStock());
+            } else {
+                c.setTipoComprobanteStock(ejbITipoComprobanteStockDAO.findPorNombre("Entrada por Ajuste"));
+            }
+
             c.setDepositoPivot(R.getDeposito());
             c.setUbicacionPivot(R.getUbicacion());
             c.setResposable(R.getResponsable());
@@ -63,8 +80,8 @@ public class InventarioDAO implements IInventarioDAO {
             c.setDescripcion("Inventario Inicial Nro.: " + R.getId());
             c.setDetalles(new ArrayList<DetComprobanteStock>());
             int indice = 0;
-            
-            for(DetInventario di : R.getDetalles()){
+
+            for (DetInventario di : R.getDetalles()) {
                 indice++;
                 DetComprobanteStock d = new DetComprobanteStock();
                 d.setComprobanteStock(c);
@@ -77,17 +94,77 @@ public class InventarioDAO implements IInventarioDAO {
                 d.setTotal(0d);
                 c.getDetalles().add(d);
             }
-            
-            
+
             ComprobanteStock comp = ejbComprobanteStockDAO.create(c);
-            
+
             ejbComprobanteStockDAO.confirmar(comp);
-            
-            
+
         } catch (SinStockException ex) {
             throw new RuntimeException(ex);
         }
-        
+
+        return R;
+    }
+
+    @Override
+    public Boolean actualizaInventario(Deposito d, Ubicacion u, UnidadMedida um, Producto p, Double cantidad) {
+
+        Boolean R = false;
+
+        try {
+
+            Existencia e = productoDAO.findExistenciasPorProductoUbicacion(p, d, u);
+
+            Double cantidadActual = 0d;
+
+            if (e != null) {
+                cantidadActual = e.getCantidad();
+            }
+
+            Double cantidadNecesaria = productoUnidadMedidaDAO.calculaCantidadUMStock(p, um, cantidad) - cantidadActual;
+            if (cantidadNecesaria == 0) {
+                //No hago nada
+                return R;
+            }
+
+            TipoComprobanteStock tipo;
+            if (cantidadNecesaria > 0) {
+                tipo = ejbITipoComprobanteStockDAO.findPorNombre("Entrada por Ajuste");
+            } else {
+                tipo = ejbITipoComprobanteStockDAO.findPorNombre("Salida por Ajuste");
+                cantidadNecesaria = cantidadNecesaria * -1;
+            }
+
+            ComprobanteStock c = new ComprobanteStock();
+            c.setTipoComprobanteStock(tipo);
+            c.setDepositoPivot(d);
+            c.setUbicacionPivot(u);
+            c.setResposable(abmService.getCredencial().getUsuario());
+            c.setFecha(new Date());
+            c.setDescripcion("Actualización Manual de Stock");
+            c.setDetalles(new ArrayList<DetComprobanteStock>());
+
+            DetComprobanteStock det = new DetComprobanteStock();
+            det.setComprobanteStock(c);
+            det.setIndice(1);
+            det.setProducto(p);
+            det.setCantidad(cantidadNecesaria);
+            det.setUnidadMedida(um);
+            det.setEstado(Estado.ACTIVO);
+            det.setValor(0d);
+            det.setTotal(0d);
+            c.getDetalles().add(det);
+
+            ComprobanteStock comp = ejbComprobanteStockDAO.create(c);
+
+            ejbComprobanteStockDAO.confirmar(comp);
+
+            R = true;
+
+        } catch (SinStockException ex) {
+            throw new RuntimeException(ex);
+        }
+
         return R;
     }
 

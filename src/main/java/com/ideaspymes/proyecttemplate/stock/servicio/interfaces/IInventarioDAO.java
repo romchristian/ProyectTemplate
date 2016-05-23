@@ -7,7 +7,11 @@ package com.ideaspymes.proyecttemplate.stock.servicio.interfaces;
 
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.Inventario;
+import com.ideaspymes.proyecttemplate.stock.model.Producto;
+import com.ideaspymes.proyecttemplate.stock.model.Ubicacion;
+import com.ideaspymes.proyecttemplate.stock.model.UnidadMedida;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -38,5 +42,7 @@ public interface IInventarioDAO extends AbstractDAO<Inventario> {
 
     @Override
     void remove(Inventario entity);
+
+    Boolean actualizaInventario(Deposito d, Ubicacion u, UnidadMedida um, Producto p, Double cantidad);
 
 }

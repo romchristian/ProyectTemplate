@@ -167,16 +167,16 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
     @Override
     public String construyeFilters(String sortField, SortOrder sortOrder) {
 
-        StringBuilder consulta = new StringBuilder("select * from producto WHERE estado <> 'BORRADO' ");
+        StringBuilder consulta = new StringBuilder("select * from producto WHERE estado = 'ACTIVO' ");
         if (getCredencial().getEmpresa() != null) {
             consulta.append(" and empresa_id = ").append(getCredencial().getEmpresa().getId());
         }
         if (codigo != null && codigo.length() > 0) {
-            consulta.append(" and codigo like '%").append(codigo).append("%'");
+            consulta.append(" and upper(codigo) like '%").append(codigo.toUpperCase()).append("%'");
         }
 
         if (nombre != null && nombre.length() > 0) {
-            consulta.append(" and nombre like '%").append(nombre).append("%'");
+            consulta.append(" and upper(nombre) like '%").append(nombre.toUpperCase()).append("%'");
         }
 
         if (selectedNode != null && selectedNode.getData() instanceof Familia && ((Familia) selectedNode.getData()).getId() != null) {

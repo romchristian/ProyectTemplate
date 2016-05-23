@@ -16,9 +16,11 @@ import com.ideaspymes.proyecttemplate.stock.model.MovimientoStock;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockCompra;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockConsumoInterno;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockEntradaAjuste;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockEntradaRegalo;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockEntradaTrans;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockPerdida;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockSalidaAjuste;
+import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockSalidaRegalo;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockSalidaTrans;
 import com.ideaspymes.proyecttemplate.stock.model.MovimientoStockVenta;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
@@ -94,6 +96,9 @@ public class LoteExistenciaService implements ILoteExistenciaService {
         switch (d.getComprobanteStock().getTipoComprobanteStock().getNombre()) {
             case "Entrada por Ajuste":
                 m = new MovimientoStockEntradaAjuste();
+                break;
+            case "Entrada Regalo":
+                m = new MovimientoStockEntradaRegalo();
                 break;
             case "Transferencia":
                 m = new MovimientoStockEntradaTrans();
@@ -186,6 +191,9 @@ public class LoteExistenciaService implements ILoteExistenciaService {
 
                     case "Salida por Perdida":
                         m = new MovimientoStockPerdida();
+                        break;
+                    case "Salida Regalo":
+                        m = new MovimientoStockSalidaRegalo();
                         break;
                     case "Transferencia":
                         m = new MovimientoStockSalidaTrans();
@@ -402,31 +410,11 @@ public class LoteExistenciaService implements ILoteExistenciaService {
     }
 
     private Double calculaCantidadUMStock(Producto p, UnidadMedida unidadMedida, Double cantidad) {
-        double R = cantidad;
-        try {
-            ProductoUnidadMedida pu = productoUnidadMedidaDAO.find(p, unidadMedida, p.getUnidadMedidaBase());
-            Expression e = new ExpressionBuilder(pu.getFormula())
-                    .variables("x")
-                    .build()
-                    .setVariable("x", cantidad);
-            R = e.evaluate();
-        } catch (Exception e) {
-        }
-        return R;
+        return productoUnidadMedidaDAO.calculaCantidadUMStock(p, unidadMedida, cantidad);
     }
 
     private Double calculaCantidadUMStockDesconversion(Producto p, UnidadMedida unidadMedida, Double cantidad) {
-        double R = cantidad;
-        try {
-            ProductoUnidadMedida pu = productoUnidadMedidaDAO.find(p, unidadMedida, p.getUnidadMedidaBase());
-            Expression e = new ExpressionBuilder(pu.getFormulaDescoversion())
-                    .variables("x")
-                    .build()
-                    .setVariable("x", cantidad);
-            R = e.evaluate();
-        } catch (Exception e) {
-        }
-        return R;
+        return productoUnidadMedidaDAO.calculaCantidadUMStockDesconversion(p, unidadMedida, cantidad);
     }
 
 }

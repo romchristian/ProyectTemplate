@@ -25,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -33,39 +34,38 @@ import javax.persistence.Temporal;
 @Entity
 public class Inventario implements Serializable, IConSucursal, IAuditable {
 
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Temporal(javax.persistence.TemporalType.DATE)
     @Listado(descripcion = "Fecha", mostrar = true)
-    @Filtro(descripcion = "Fecha", campo = "fecha",tipo = FiltroGenerico.TIPO_RANGO_FECHA)
+    @Filtro(descripcion = "Fecha", campo = "fecha", tipo = FiltroGenerico.TIPO_RANGO_FECHA)
     private Date fecha;
-    @Listado(descripcion = "Responsable", mostrar = true,campo = "responsable",entidad = true,campoDescripcion = "nombre", modulo = "configuracion",outcome = "/main/configuracion/usuario/vista")
-    @Filtro(descripcion = "Responsable", campo = "responsable",tipo = FiltroGenerico.TIPO_AUTOCOMPLETE,campoDescripcion = "nombre")
+    @Listado(descripcion = "Responsable", mostrar = true, campo = "responsable", entidad = true, campoDescripcion = "nombre", modulo = "configuracion", outcome = "/main/configuracion/usuario/vista")
+    @Filtro(descripcion = "Responsable", campo = "responsable", tipo = FiltroGenerico.TIPO_AUTOCOMPLETE, campoDescripcion = "nombre")
     @ManyToOne
     private Usuario responsable;
-    @Listado(descripcion = "Supervisor", mostrar = true,campo = "supervisor",entidad = true,campoDescripcion = "nombre", modulo = "configuracion",outcome = "/main/configuracion/usuario/vista")
+    @Listado(descripcion = "Supervisor", mostrar = true, campo = "supervisor", entidad = true, campoDescripcion = "nombre", modulo = "configuracion", outcome = "/main/configuracion/usuario/vista")
     @ManyToOne
     private Usuario supervisor;
-    @Listado(descripcion = "Lugar", mostrar = true,campo = "deposito",entidad = true,campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/deposito/vista")
-    @Filtro(descripcion = "Lugar", campo = "deposito",tipo = FiltroGenerico.TIPO_SELECT_ONE,campoDescripcion = "nombre")
+    @Listado(descripcion = "Lugar", mostrar = true, campo = "deposito", entidad = true, campoDescripcion = "nombre", modulo = "stock", outcome = "/main/stock/deposito/vista")
+    @Filtro(descripcion = "Lugar", campo = "deposito", tipo = FiltroGenerico.TIPO_SELECT_ONE, campoDescripcion = "nombre")
     @ManyToOne
     private Deposito deposito;
-    @Listado(descripcion = "Ubicación", mostrar = true,campo = "ubicacion",entidad = true,campoDescripcion = "nombre", modulo = "stock",outcome = "/main/stock/ubicacion/vista")
+    @Listado(descripcion = "Ubicación", mostrar = true, campo = "ubicacion", entidad = true, campoDescripcion = "nombre", modulo = "stock", outcome = "/main/stock/ubicacion/vista")
     @ManyToOne
     private Ubicacion ubicacion;
 
-    @OneToMany(mappedBy = "inventario",cascade =CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "inventario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetInventario> detalles;
 
     @ManyToOne
-    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre",outcome = "/main/configuracion/empresa/vista")
+    @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre", outcome = "/main/configuracion/empresa/vista")
     private Empresa empresa;
 
     @ManyToOne
-    @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre",outcome = "/main/configuracion/empresa/vista")
+    @Listado(descripcion = "Sucursal", mostrar = true, entidad = true, campoDescripcion = "nombre", outcome = "/main/configuracion/empresa/vista")
     private Sucursal sucursal;
 
     //Auditoria
@@ -76,6 +76,16 @@ public class Inventario implements Serializable, IConSucursal, IAuditable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
     private String usuarioUltimaModificacion;
+    @Transient
+    private TipoComprobanteStock tipoComprobanteStock;
+
+    public TipoComprobanteStock getTipoComprobanteStock() {
+        return tipoComprobanteStock;
+    }
+
+    public void setTipoComprobanteStock(TipoComprobanteStock tipoComprobanteStock) {
+        this.tipoComprobanteStock = tipoComprobanteStock;
+    }
 
     public List<DetInventario> getDetalles() {
         return detalles;
@@ -85,10 +95,6 @@ public class Inventario implements Serializable, IConSucursal, IAuditable {
         this.detalles = detalles;
     }
 
-    
-    
-    
-    
     @Override
     public Long getId() {
         return id;
@@ -97,8 +103,6 @@ public class Inventario implements Serializable, IConSucursal, IAuditable {
     public void setId(Long id) {
         this.id = id;
     }
-
-   
 
     @Override
     public Empresa getEmpresa() {
@@ -219,7 +223,7 @@ public class Inventario implements Serializable, IConSucursal, IAuditable {
 
     @Override
     public String toString() {
-        return "Inv Nro. "+ id;
+        return "Inv Nro. " + id;
     }
 
 }

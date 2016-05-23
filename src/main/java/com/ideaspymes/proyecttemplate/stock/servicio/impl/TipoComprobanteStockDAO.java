@@ -8,6 +8,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.generico.ABMService;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.QueryParameter;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoMovimientoStock;
 import com.ideaspymes.proyecttemplate.stock.model.TipoComprobanteStock;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.ITipoComprobanteStockDAO;
 import java.util.ArrayList;
@@ -61,6 +62,15 @@ public class TipoComprobanteStockDAO implements ITipoComprobanteStockDAO {
     public List<TipoComprobanteStock> findAll() {
         return abmService.getEM().createQuery("select obj from TipoComprobanteStock obj WHERE OBJ.estado = ?1 AND OBJ.mostrar = true")
                 .setParameter(1, Estado.ACTIVO)
+                .getResultList();
+    }
+    
+    
+    @Override
+    public List<TipoComprobanteStock> findAllPorTipo(TipoMovimientoStock tipo) {
+        return abmService.getEM().createQuery("select obj from TipoComprobanteStock obj WHERE OBJ.estado = ?1 AND OBJ.mostrar = true AND OBJ.tipo = ?2")
+                .setParameter(1, Estado.ACTIVO)
+                .setParameter(2, tipo)
                 .getResultList();
     }
     

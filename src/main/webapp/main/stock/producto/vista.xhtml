@@ -93,7 +93,7 @@
                                 <div style="padding: 10px;background-color: white;width: 20%;text-align: center">
                                     <p:barcode value="#{productoBean.actual.codigo}" type="code39"/>
                                 </div>
-                                
+
                             </div>
                             <div class="Container30 Responsive100 TexAlCenter">
                                 <h:outputText value="#{productoBean.actual.nombre}"  styleClass="FontVoltRegular White Fs20 TexAlCenter"/>
@@ -121,7 +121,11 @@
                                             </div>
 
                                             <div class="ui-grid-col-2">
-                                                <p:commandButton value="Activar/Inactivar" action="#{productoBean.toggleActivavion()}" styleClass="Fleft BlueButton" update=":formABM:panel">
+                                                <p:commandButton value="Actualizar Stock"  styleClass="Fleft BlueButton" onclick="PF('dialogStock').show()"/>
+                                            </div>
+
+                                            <div class="ui-grid-col-2">
+                                                <p:commandButton value="Activar/Inactivar" action="#{productoBean.toggleActivacion()}" styleClass="Fleft BlueButton" update=":formABM:panel">
                                                     <p:confirm header="Confirmar" message="#{productoBean.actual.estado == 'ACTIVO'?'¿Inactivar este producto?':'¿Activar este producto?'}" icon="ui-icon-alert" />
                                                 </p:commandButton>
                                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -129,28 +133,11 @@
                                                     <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                                 </p:confirmDialog>
                                             </div>
-
-                                            <div class="ui-grid-col-2">
-                                                <p:commandButton value="Eliminar" action="#{productoBean.remove()}" styleClass="Fleft BlueButton" update=":formABM:panel">
-                                                    <p:confirm header="Confirmar eliminación" message="¿Eliminar este registro?" icon="ui-icon-alert" />
-                                                </p:commandButton>
-                                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                    <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-                                                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                                </p:confirmDialog>
-                                            </div>
-
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
-
-
-
-
-
-
 
                         </p:outputPanel>
 
@@ -161,6 +148,48 @@
             </div>
 
 
+
+            <p:dialog widgetVar="dialogStock">
+                <p:outputPanel>
+                    <h:form>
+
+                        <p:outputLabel value="Lugar" for="lugar" styleClass="FontVoltRegular"/>
+                        <p:selectOneMenu value="#{productoBean.deposito}" styleClass="depositos" id="lugar">
+                            <p:ajax event="change" process="@this" update="ubicacion"/>
+                            <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Ubicación" for="ubicacion" styleClass="FontVoltRegular"/>
+                        <p:selectOneMenu value="#{productoBean.ubicacion}" styleClass="depositos" id="ubicacion">
+                            <f:selectItems value="#{productoBean.deposito.itemsUbicaciones}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Unidad Medida" for="unidad" styleClass="FontVoltRegular"/>
+                        <p:selectOneMenu value="#{productoBean.unidadMedida}" styleClass="depositos" id="unidad">
+                            <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectOne}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Cantidad" for="cantidad" styleClass="FontVoltRegular"/>
+                        <p:inputText value="#{productoBean.cantidad}" id="cantidad"/>
+
+                        <div class="EmptyBox20"></div>
+                        <div class="ui-grid ui-grid-responsive">
+                            <div class="ui-grid-row">
+                                <div class="ui-grid-col-2">
+                                    <p:commandButton value="Cancelar"  styleClass="Fleft" onclick="PF('dialogStock').hide()"/>
+                                </div>
+                                <div class="ui-grid-col-8">
+
+                                </div>
+                                <div class="ui-grid-col-2">
+                                    <p:commandButton value="Confirmar" action="#{productoBean.actualizarStock()}" styleClass="Rleft GreenButton"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </h:form>
+                </p:outputPanel>
+            </p:dialog>
         </ui:define>
     </ui:decorate>
 

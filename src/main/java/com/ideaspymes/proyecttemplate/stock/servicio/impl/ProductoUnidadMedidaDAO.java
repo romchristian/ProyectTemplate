@@ -19,6 +19,8 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.Query;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 /**
  *
@@ -125,6 +127,34 @@ public class ProductoUnidadMedidaDAO implements IProductoUnidadMedidaDAO {
                     .setParameter("umDe", umDe)
                     .setParameter("umA", umA)
                     .getSingleResult();
+        } catch (Exception e) {
+        }
+        return R;
+    }
+
+    public Double calculaCantidadUMStock(Producto p, UnidadMedida unidadMedida, Double cantidad) {
+        double R = cantidad;
+        try {
+            ProductoUnidadMedida pu = find(p, unidadMedida, p.getUnidadMedidaBase());
+            Expression e = new ExpressionBuilder(pu.getFormula())
+                    .variables("x")
+                    .build()
+                    .setVariable("x", cantidad);
+            R = e.evaluate();
+        } catch (Exception e) {
+        }
+        return R;
+    }
+
+    public Double calculaCantidadUMStockDesconversion(Producto p, UnidadMedida unidadMedida, Double cantidad) {
+        double R = cantidad;
+        try {
+            ProductoUnidadMedida pu = find(p, unidadMedida, p.getUnidadMedidaBase());
+            Expression e = new ExpressionBuilder(pu.getFormulaDescoversion())
+                    .variables("x")
+                    .build()
+                    .setVariable("x", cantidad);
+            R = e.evaluate();
         } catch (Exception e) {
         }
         return R;

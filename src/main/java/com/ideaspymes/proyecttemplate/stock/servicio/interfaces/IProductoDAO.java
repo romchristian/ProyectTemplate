@@ -45,4 +45,6 @@ public interface IProductoDAO extends AbstractDAO<Producto> {
 
     public List<Existencia> findExistenciaPorDeposito(Deposito d, Ubicacion u);
 
+    Existencia findExistenciasPorProductoUbicacion(Producto p, Deposito d, Ubicacion u);
+
 }
