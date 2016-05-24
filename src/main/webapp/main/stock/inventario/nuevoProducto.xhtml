@@ -22,28 +22,37 @@
                 <div class="Container100 Responsive100">
                     <div class="Card">
                         <p:panelGrid columns="2" columnClasses="ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank" style="border:0px none; background-color:transparent;" id="panel">
-                            
+
                             <p:outputLabel value="Familia" for="familia" styleClass="FontVoltRegular" />
                             <p:selectOneMenu value="#{inventarioInicialBean.productoActual.familia}" id="familia">
                                 <f:selectItems value="#{familiaBean.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
-                            
+
                             <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular" />
                             <p:inputText value="#{inventarioInicialBean.productoActual.nombre}" required="true" id="nombre"/>
 
                             <p:outputLabel value="Descripción" for="descripcion" styleClass="FontVoltRegular" />
                             <p:inputTextarea value="#{inventarioInicialBean.productoActual.descripcion}" id="descripcion" rows="3"/>
 
-                            
+
                             <p:outputLabel value="Unidad Medida" for="unidadMedida" styleClass="FontVoltRegular" />
                             <p:selectOneMenu value="#{inventarioInicialBean.unidadMedida}" required="true" id="unidadMedida">
                                 <f:selectItems value="#{unidadMedidaBean.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
-                            
+
+                            <p:selectBooleanCheckbox value="#{inventarioInicialBean.productoActual.esRegalo}" itemLabel="¿Es Regalo?">
+                                <p:ajax process="@this" update="panelTipoRegalo" event="change"/>
+                            </p:selectBooleanCheckbox>
+                            <p:outputPanel id="panelTipoRegalo">
+                                <p:selectOneMenu value="#{inventarioInicialBean.productoActual.tipoRegalo}" id="tipoRegalo" rendered="#{not(contexto == 'vista') and (inventarioInicialBean.productoActual.esRegalo == true)}">
+                                    <f:selectItems value="#{productorEnums.tiposRegalos}"/>
+                                </p:selectOneMenu>
+                            </p:outputPanel>
+
                             <p:outputLabel value="Cantidad" for="cantidad" styleClass="FontVoltRegular" />
                             <p:inputText value="#{inventarioInicialBean.cantidadActual}" required="true" id="cantidad"/>
 
-                            
+
 
                         </p:panelGrid>
                         <div class="CardFooter">

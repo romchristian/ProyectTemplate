@@ -56,13 +56,18 @@
 
 
 
+                                    <h:outputText value="¿Es Regalo?"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.esRegalo == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
 
+                                    <h:outputText value="Tipo Regalo"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.tipoRegalo}" styleClass="FontVoltRegular White"/>
 
-                                    <h:outputText value="¿Es Inventariable?"  styleClass="FontVoltRegular White"/>
-                                    <h:outputText value="#{productoBean.actual.inventariable == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
-                                    <h:outputText value="¿Tiene Vencimiento?"  styleClass="FontVoltRegular White"/>
-                                    <h:outputText value="#{productoBean.actual.tieneVencimiento == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
+                                    <!--                                    <h:outputText value="¿Es Inventariable?"  styleClass="FontVoltRegular White"/>
+                                                                        <h:outputText value="{productoBean.actual.inventariable == true?'Si':'No'}" styleClass="FontVoltRegular White"/>
+                                                                        <h:outputText value="¿Tiene Vencimiento?"  styleClass="FontVoltRegular White"/>
+                                                                        <h:outputText value="{productoBean.actual.tieneVencimiento == true?'Si':'No'}" styleClass="FontVoltRegular White"/>-->
 
+                                    <p:spacer/>
                                     <h:outputText value="Familia"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.familia != null?productoBean.actual.familia.nombre:''}" styleClass="FontVoltRegular White"/>
 

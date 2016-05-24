@@ -9,6 +9,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.EtiquetaConf;
 import com.ideaspymes.proyecttemplate.configuracion.servicio.interfaces.IEtiquetaConfDAO;
 import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.ConsultaGenerico;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoRegalo;
 import com.ideaspymes.proyecttemplate.stock.model.Deposito;
 import com.ideaspymes.proyecttemplate.stock.model.Familia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
@@ -65,6 +66,8 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
     private Familia familia;
     private Deposito deposito;
     private Ubicacion ubicacion;
+    private Boolean esRegalo;
+    private TipoRegalo tipoRegalo;
 
     private TreeNode rootNode;
     private TreeNode selectedNode;
@@ -98,6 +101,24 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
         return newNode;
     }
 
+    public Boolean getEsRegalo() {
+        return esRegalo;
+    }
+
+    public void setEsRegalo(Boolean esRegalo) {
+        this.esRegalo = esRegalo;
+    }
+
+    public TipoRegalo getTipoRegalo() {
+        return tipoRegalo;
+    }
+
+    public void setTipoRegalo(TipoRegalo tipoRegalo) {
+        this.tipoRegalo = tipoRegalo;
+    }
+
+    
+    
     public String getCodigo() {
         return codigo;
     }
@@ -178,6 +199,15 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
         if (nombre != null && nombre.length() > 0) {
             consulta.append(" and upper(nombre) like '%").append(nombre.toUpperCase()).append("%'");
         }
+        
+        
+        if (esRegalo != null && esRegalo) {
+            consulta.append(" and esregalo = true");
+        }
+        
+        if (esRegalo != null && esRegalo && tipoRegalo != null) {
+            consulta.append(" and tiporegalo = '").append(tipoRegalo.toString()).append("'");
+        }
 
         if (selectedNode != null && selectedNode.getData() instanceof Familia && ((Familia) selectedNode.getData()).getId() != null) {
             familia = (Familia) selectedNode.getData();
@@ -233,16 +263,25 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
 
     @Override
     public String construyeCount() {
-        StringBuilder consulta = new StringBuilder("select count(*) from producto WHERE estado <> 'BORRADO' ");
+          StringBuilder consulta = new StringBuilder("select count(*) from producto WHERE estado = 'ACTIVO' ");
         if (getCredencial().getEmpresa() != null) {
             consulta.append(" and empresa_id = ").append(getCredencial().getEmpresa().getId());
         }
         if (codigo != null && codigo.length() > 0) {
-            consulta.append(" and codigo like '%").append(codigo).append("%'");
+            consulta.append(" and upper(codigo) like '%").append(codigo.toUpperCase()).append("%'");
         }
 
         if (nombre != null && nombre.length() > 0) {
-            consulta.append(" and nombre like '%").append(nombre).append("%'");
+            consulta.append(" and upper(nombre) like '%").append(nombre.toUpperCase()).append("%'");
+        }
+        
+        
+        if (esRegalo != null && esRegalo) {
+            consulta.append(" and esregalo = true");
+        }
+        
+        if (esRegalo != null && esRegalo && tipoRegalo != null) {
+            consulta.append(" and tiporegalo = '").append(tipoRegalo.toString()).append("'");
         }
 
         if (selectedNode != null && selectedNode.getData() instanceof Familia && ((Familia) selectedNode.getData()).getId() != null) {

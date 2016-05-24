@@ -8,6 +8,7 @@ import com.ideaspymes.proyecttemplate.configuracion.model.enums.Estado;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.TipoCosteo;
 import com.ideaspymes.proyecttemplate.configuracion.model.enums.TipoEtiqueta;
 import com.ideaspymes.proyecttemplate.stock.enums.EstadoComprobanteStock;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoRegalo;
 import java.io.Serializable;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.model.SelectItem;
@@ -57,6 +58,10 @@ public class ProductorEnums implements Serializable {
 
     public TipoEtiqueta[] getTiposEtiquetas() {
         return TipoEtiqueta.values();
+    }
+
+    public TipoRegalo[] getTiposRegalos() {
+        return TipoRegalo.values();
     }
 }
 

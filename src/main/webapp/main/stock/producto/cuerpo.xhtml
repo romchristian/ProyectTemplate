@@ -42,6 +42,15 @@
                         <f:selectItems value="#{familiaBean.itemsAvailableSelectMany}"/>
                     </p:selectOneMenu>
 
+                    <p:selectBooleanCheckbox value="#{productoBean.actual.esRegalo}" itemLabel="¿Es Regalo?">
+                        <p:ajax process="@this" update="panelTipoRegalo" event="change"/>
+                    </p:selectBooleanCheckbox>
+                    <p:outputPanel id="panelTipoRegalo">
+                        <p:selectOneMenu value="#{productoBean.actual.tipoRegalo}" id="tipoRegalo" rendered="#{not(contexto == 'vista') and (productoBean.actual.esRegalo == true)}">
+                            <f:selectItems value="#{productorEnums.tiposRegalos}"/>
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+
 
                 </p:panelGrid>
 
@@ -69,7 +78,7 @@
     </h:form>
 
 
-   
+
 
 
 </ui:composition>

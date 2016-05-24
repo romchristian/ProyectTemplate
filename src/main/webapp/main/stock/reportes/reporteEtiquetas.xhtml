@@ -3,10 +3,7 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:facilerp="http://xmlns.jcp.org/jsf/composite/facilerp">
-
-
+    xmlns:p="http://primefaces.org/ui">
 
 
     <style type="text/css">
@@ -42,171 +39,182 @@
 
     </style>
 
-
-    <h:form id="formList">
-
-
-
-
-        <div class="Container100 Responsive100 ui-fluid">
-            <div class="NoIndent HeiAutoOnMobile">
-
-
-
-                <div class="ui-breadcrumb NoPadding NoIndent">
-
-
-                    <div class="Container70 Responsive100" style="padding: 0;margin: 0">
-                        <p:breadCrumb  homeDisplay="text" style="border: none;width: 50%">
-                            <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
-                            <p:menuitem outcome="etiquetas" value="Etiquetas"/>
-                        </p:breadCrumb>
-                    </div>
-                    <div class="Container30 Responsive100" style="padding: 0;margin: 0;">
-                        <div style="position: relative;
-                             display: inline-block;
-                             vertical-align: middle;
-                             float: right;
-                             box-sizing: border-box;
-                             padding-top: 5px;padding-right: 5px;">
+    <script type="text/javascript">
+        function toggle() {
+            var panel1 = document.getElementById("panel1");
+            var panel2 = document.getElementById("panel2");
 
 
 
 
-                            <p:commandLink onclick="PF('panelfiltro').toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
-                                                                                                   id="btn_filter"
-                                                                                                   onmouseover="document.getElementById('btn_filter').setAttribute('style', 'color:#0277BD')"
-                                                                                                   onmouseout="document.getElementById('btn_filter').setAttribute('style', '')"></i>
-                            </p:commandLink>
+            if (panel2.getAttribute("class") == "Container70 Responsive100 BorderRight") {
+                jQuery("#panel1").slideToggle("", function () {
+                    panel2.setAttribute("class", "Container 100 Responsive100")
+                });
+            } else {
+                panel2.setAttribute("class", "Container70 Responsive100 BorderRight")
+                jQuery("#panel1").slideToggle("", function () {
+                });
+
+            }
+        }
+
+    </script>
+
+    <h:form id="formList" prependId="false">
+
+
+        <div class="ui-breadcrumb NoPadding NoIndent">
+
+
+            <div class="Container70 Responsive100" style="padding: 0;margin: 0">
+                <p:breadCrumb  homeDisplay="text" style="border: none;width: 50%">
+                    <p:menuitem outcome="#{menuController.moduloActual.defaultpage}" value="#{menuController.moduloActual.nombre}"/>
+                    <p:menuitem outcome="etiquetas" value="Etiquetas"/>
+                </p:breadCrumb>
+            </div>
+
+            <div class="Container30 Responsive100" style="padding: 0;margin: 0;">
+                <div style="position: relative;
+                     display: inline-block;
+                     vertical-align: middle;
+                     float: right;
+                     box-sizing: border-box;
+                     padding-top: 5px;padding-right: 5px;padding-bottom: 5px">
 
 
 
 
-
-                        </div>
-                    </div>
-
-
-
-
-
-                    <div class="Container100 Responsive100" style="padding: 0;margin: 0">
-                        <p:panel collapsed="true" widgetVar="panelfiltro"  toggleable="true"
-                                 styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;padding: 0;margin: 0">
-
-                            <div class="Container100 Responsive100" style="margin: 0;padding: 0;border-top: 1px solid #cccccc;">
-                                <div class="EmptyBox10"></div>
-
-                                <ui:repeat value="#{bean.filterOptions}" var="f">
-                                    <div class="Container50 Responsive100 ui-fluid" style="margin: 0;padding: 0;">
-                                        <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;margin: 0"
-                                                     layout="grid">
-                                            <h:outputText value="#{f.descripcion}" rendered="#{not(f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha')}"/>
-
-
-
-                                            <p:inputText value="#{f.valorString}" rendered="#{f.tipo == 'like'}"/>
-                                            <p:inputText value="#{f.valorInteger}" rendered="#{f.tipoCampo == 'java.lang.Integer' and f.tipo == 'numero'}"/>
-                                            <p:inputText value="#{f.valorLong}" rendered="#{f.tipoCampo == 'java.lang.Long'  and f.tipo == 'numero'}"/>
-                                            <p:inputText value="#{f.valorDouble}" rendered="#{f.tipoCampo == 'java.lang.Double'  and f.tipo == 'numero'}"/>
-                                            <p:inputText value="#{f.valorBigDecimal}" rendered="#{f.tipoCampo == 'java.math.BigDecimal'  and f.tipo == 'numero'}"/>
-
-                                            <h:outputText value="#{f.descripcion} desde" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
-                                            <p:calendar value="#{f.valorDateInicio}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
-                                            <h:outputText value="#{f.descripcion} hasta" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
-                                            <p:calendar value="#{f.valorDateFin}" rendered="#{f.tipoCampo == 'java.util.Date' and f.tipo == 'rangoFecha'}"/>
-                                            <p:selectOneMenu value="#{f.valorEntidadId}" rendered="#{f.tipo == 'selectOne'}" converter="#{bean.obtConverter(f.campo)}">
-                                                <f:selectItems value="#{bean.obtItemsAvailableSelectOne(f.campo)}"/>
-                                            </p:selectOneMenu>
-
-                                            <p:autoComplete value="#{f.valorEntidadId}"
-                                                            completeMethod="#{bean.obtConsultaBean(f.campo).completar}"
-                                                            forceSelection="true" converter="#{bean.obtConverter(f.campo)}"
-                                                            var="c" itemValue="#{c}" itemLabel="#{c[f.campoDescripcion]}"
-                                                            rendered="#{f.tipo == 'autocomplete'}"/>
-
-                                        </p:panelGrid>
-                                    </div>
-                                </ui:repeat>
-
-
-
-                            </div>
-
-
-
-
-                            <div class="Container80 Responsive100 ">
-
-                            </div>
-                            <div class="Container20 Responsive100 ">
-
-
-                                <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla" icon="fa fa-search" styleClass="BlueButton"/>
-
-
-
-                            </div>
-
-                        </p:panel>
-
-                    </div>
+                    <p:commandLink onclick="toggle()" title="Filtros"><i class="fa fa-filter btn btn-default Fs18"
+                                                                         id="btn_filter"
+                                                                         onmouseover="document.getElementById('btn_filter').setAttribute('style', 'color:#0277BD')"
+                                                                         onmouseout="document.getElementById('btn_filter').setAttribute('style', '')"></i>
+                    </p:commandLink>
                 </div>
 
 
+
             </div>
+
+
+
         </div>
 
 
-        <div class="Container100 Responsive100 ui-fluid">
-            <div class="NoIndent NoPadding">
-
-
-                <div class="ContainerIndent HeiAutoOnMobile" style="padding: 0;margin: 0;">
-
-
-
-                    <p:dataTable id="tabla" var="o" value="#{bean}" reflow="true"
-                                 lazy="true" paginator="true" 
-                                 rows="10"
-                                 rowHover="true"
-                                 currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
-                                 resizableColumns="true"
-                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                 rowsPerPageTemplate="10,15,20,30"
-                                 paginatorPosition="top"
-                                 draggableColumns="true">
-
-
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{o['nombre']}"/>
-                        </p:column>
-
-                        <p:column headerText="Código">
-                            <h:outputText value="#{o['codigo']}"/>
-                        </p:column>
-
-                        <p:column headerText="Cantidad">
-                            <p:spinner value="#{o['cantidadEtiquetas']}"/>
-                        </p:column>
-
-
-                    </p:dataTable>
-                    <div class="EmptyBox20"></div>
-                    <p:commandButton value="Imprimir" action="#{bean.createPdf()}" update="tabla" icon="fa fa-print" ajax="false"/>
+        <div class="EmptyBox20"/>
 
 
 
 
 
-                </div>
-            </div>
+        <div class="Container70 Responsive100 BorderRight" id="panel2">
+
+            <p:dataTable id="tabla" var="o" value="#{bean}" reflow="true"
+                         lazy="true" paginator="true" 
+                         rows="10"
+                         rowHover="true"
+                         currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords} resultados"
+                         resizableColumns="true"
+                         paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="10,15,20,30"
+                         paginatorPosition="top"
+                         draggableColumns="true">
+
+
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{o['nombre']}"/>
+                </p:column>
+
+                <p:column headerText="Código">
+                    <h:outputText value="#{o['codigo']}"/>
+                </p:column>
+
+                <p:column headerText="Stock">
+                    <h:outputText value="#{o['stock']}"/>
+                </p:column>
+
+                <p:column headerText="Cantidad">
+                    <p:spinner value="#{o['cantidadEtiquetas']}"/>
+                </p:column>
+
+
+            </p:dataTable>
+            <div class="EmptyBox20"></div>
+            <p:commandButton value="Imprimir" action="#{bean.createPdf()}" update="tabla" icon="fa fa-print" ajax="false"/>
+
+
+
         </div>
+
+        <div class="Container30 Responsive100 BorderLeft" id="panel1">
+            Filtros
+            <div class="Separator"/>
+
+            <div class="Container100 Responsive100 ui-fluid" style="margin: 0;padding: 0;">
+                <p:panelGrid columns="1" columnClasses="ui-grid-col-12" styleClass="ui-panelgrid-blank Responsive100" style="border:0px none; background-color:transparent;margin: 0"
+                             layout="grid">
+
+                    <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular"/>
+                    <p:inputText value="#{productoConsultaBean.codigo}" id="codigo"/>
+                    <div class="EmptyBox10"></div>
+
+                    <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
+                    <p:inputText value="#{productoConsultaBean.nombre}" id="nombre"/>
+                    <div class="EmptyBox10"></div>
+
+
+                    <p:outputLabel value="Lugar" for="deposito" styleClass="FontVoltRegular"/>
+                    <p:selectOneMenu value="#{productoConsultaBean.deposito}" id="deposito">
+                        <p:ajax event="change" process="@this" update="ubicacion"/>
+                        <f:selectItems value="#{depositoBean.itemsAvailableSelectOne}"/>
+                    </p:selectOneMenu>
+                    <div class="EmptyBox10"></div>
+
+                    <p:outputLabel value="Ubicación" for="ubicacion" styleClass="FontVoltRegular depositos"/>
+                    <p:selectOneMenu value="#{productoConsultaBean.ubicacion}" id="ubicacion">
+                        <f:selectItems value="#{productoConsultaBean.deposito.itemsUbicaciones}"/>
+                    </p:selectOneMenu> 
+                    <div class="EmptyBox10"></div>
+
+
+                    <p:selectBooleanCheckbox value="#{productoConsultaBean.esRegalo}" itemLabel="¿Es Regalo?">
+                        <p:ajax process="@this" update="panelTipoRegalo" event="change"/>
+                    </p:selectBooleanCheckbox>
+                    <div class="EmptyBox10"/>
+                    <p:outputPanel id="panelTipoRegalo">
+                        <p:selectOneMenu value="#{productoConsultaBean.tipoRegalo}" id="tipoRegalo" rendered="#{productoConsultaBean.esRegalo == true}">
+                            <f:selectItem itemValue="" itemLabel="--"/>
+                            <f:selectItem itemValue="NACIONALES" itemLabel="NACIONALES"/>
+                            <f:selectItem itemValue="INTERNACIONALES" itemLabel="INTERNACIONALES"/>
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+
+                    <div class="EmptyBox10"/>
+
+                    <p:outputLabel value="Familia" for="familia" styleClass="FontVoltRegular"/>
+                    <div class="EmptyBox10"></div>
+
+                    <p:tree value="#{productoConsultaBean.rootNode}" var="f" id="familia"
+                            selectionMode="single" 
+                            selection="#{productoConsultaBean.selectedNode}">
+                        <p:treeNode>
+                            <h:outputText value="#{f.nombre}"/>
+                        </p:treeNode>
+                    </p:tree>
+
+
+                </p:panelGrid>
+                <div class="EmptyBox10"></div>
+            </div>
+
+
+            <div class="EmptyBox20"></div>
+            <p:commandButton value="Buscar" action="#{bean.buscar()}" update="tabla" icon="fa fa-search" styleClass="BlueButton"/>
+            <div class="EmptyBox20"></div>
+        </div>
+
+
 
     </h:form>
 
-
-
-
 </ui:composition>
-

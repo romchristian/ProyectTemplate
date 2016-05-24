@@ -14,6 +14,7 @@ import com.ideaspymes.proyecttemplate.generico.IConImagen;
 import com.ideaspymes.proyecttemplate.generico.Listado;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoCosto;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoProducto;
+import com.ideaspymes.proyecttemplate.stock.enums.TipoRegalo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -80,6 +81,11 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     @OneToMany(mappedBy = "productoPadre", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ingrediente> ingredientes;
 
+    //Campos especificos
+    private Boolean esRegalo;
+    @Enumerated(EnumType.STRING)
+    private TipoRegalo tipoRegalo;
+
     @ManyToOne
     @Listado(descripcion = "Empresa", mostrar = true, entidad = true, campoDescripcion = "nombre", modulo = "configuracion")
     private Empresa empresa;
@@ -116,9 +122,25 @@ public class Producto implements Serializable, IAuditable, IConImagen {
         this.precioVenta = precioVenta;
     }
 
+    public Boolean getEsRegalo() {
+        return esRegalo;
+    }
+
+    public void setEsRegalo(Boolean esRegalo) {
+        this.esRegalo = esRegalo;
+    }
+
+    public TipoRegalo getTipoRegalo() {
+        return tipoRegalo;
+    }
+
+    public void setTipoRegalo(TipoRegalo tipoRegalo) {
+        this.tipoRegalo = tipoRegalo;
+    }
+
     public Integer getCantidadEtiquetas() {
         if (cantidadEtiquetas == null) {
-            cantidadEtiquetas = stock != null ? stock.intValue() : 1;
+            cantidadEtiquetas = 1;
         }
         return cantidadEtiquetas;
     }

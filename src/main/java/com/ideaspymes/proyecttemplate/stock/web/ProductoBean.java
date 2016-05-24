@@ -166,10 +166,10 @@ public class ProductoBean extends BeanGenerico<Producto> implements Serializable
     @Override
     public String toggleActivacion() {
 
-        if (getActual().getEstado() == Estado.ACTIVO && getActual().getStock() > 0) {
+        if (getActual().getEstado() == Estado.ACTIVO && getActual().getStock() != null && getActual().getStock() > 0) {
             JsfUtil.addErrorMessage("Para Inactivar, primero debe dar de baja todo el stock");
             return null;
-        } else if (getActual().getEstado() == Estado.ACTIVO && getActual().getStock() == 0) {
+        } else if (getActual().getEstado() == Estado.ACTIVO && (getActual().getStock() == null || getActual().getStock() == 0)) {
             getActual().setEstado(Estado.INACTIVO);
             getEjb().edit(getActual());
         } else if (getActual().getEstado() == Estado.INACTIVO) {

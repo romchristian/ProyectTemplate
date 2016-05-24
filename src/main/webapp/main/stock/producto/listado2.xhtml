@@ -187,7 +187,7 @@
                     <p:outputLabel value="Código" for="codigo" styleClass="FontVoltRegular"/>
                     <p:inputText value="#{productoConsultaBean.codigo}" id="codigo"/>
                     <div class="EmptyBox10"></div>
-                    
+
                     <p:outputLabel value="Nombre" for="nombre" styleClass="FontVoltRegular"/>
                     <p:inputText value="#{productoConsultaBean.nombre}" id="nombre"/>
                     <div class="EmptyBox10"></div>
@@ -205,6 +205,22 @@
                         <f:selectItems value="#{productoConsultaBean.deposito.itemsUbicaciones}"/>
                     </p:selectOneMenu> 
                     <div class="EmptyBox10"></div>
+
+
+                    <p:selectBooleanCheckbox value="#{productoConsultaBean.esRegalo}" itemLabel="¿Es Regalo?">
+                        <p:ajax process="@this" update="panelTipoRegalo" event="change"/>
+                    </p:selectBooleanCheckbox>
+                    <div class="EmptyBox10"/>
+                    <p:outputPanel id="panelTipoRegalo">
+                        <p:selectOneMenu value="#{productoConsultaBean.tipoRegalo}" id="tipoRegalo" rendered="#{productoConsultaBean.esRegalo == true}">
+                            <f:selectItem itemValue="" itemLabel="--"/>
+                            <f:selectItem itemValue="NACIONALES" itemLabel="NACIONALES"/>
+                            <f:selectItem itemValue="INTERNACIONALES" itemLabel="INTERNACIONALES"/>
+                        </p:selectOneMenu>
+                    </p:outputPanel>
+
+                    <div class="EmptyBox10"/>
+
 
                     <p:outputLabel value="Familia" for="familia" styleClass="FontVoltRegular"/>
                     <div class="EmptyBox10"></div>
