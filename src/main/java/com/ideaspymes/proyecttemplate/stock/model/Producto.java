@@ -63,6 +63,9 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     private Double stockMinimo;
     @Listado(descripcion = "Stock", mostrar = true)
     private Double stock;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date FechaIngreso;
+
     @Transient
     private Integer cantidadEtiquetas;
 
@@ -171,6 +174,14 @@ public class Producto implements Serializable, IAuditable, IConImagen {
 
     public void setFamilia(Familia familia) {
         this.familia = familia;
+    }
+
+    public Date getFechaIngreso() {
+        return FechaIngreso;
+    }
+
+    public void setFechaIngreso(Date FechaIngreso) {
+        this.FechaIngreso = FechaIngreso;
     }
 
     public Estado getEstado() {
