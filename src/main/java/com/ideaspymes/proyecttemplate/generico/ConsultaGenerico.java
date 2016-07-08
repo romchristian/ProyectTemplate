@@ -5,15 +5,20 @@
  */
 package com.ideaspymes.proyecttemplate.generico;
 
+import com.ideaspymes.proyecttemplate.configuracion.model.Empresa;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -28,6 +33,9 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
     private List<FiltroGenerico> filterOptions;
     private List<Columna> columnas;
     private List<T> lista;
+    @Inject
+    private ReporteController reporteController;
+    private Map<String, Object> params;
 
     public List<T> getLista() {
         return lista;
@@ -151,7 +159,7 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
     public String construyeCount() {
         String consulta = "SELECT count(*) FROM " + getClazz().getSimpleName().toLowerCase() + "  ";
         StringBuilder sb = new StringBuilder(consulta);
-        
+
         boolean tieneCampoEmpresa = false;
         for (Field f : getClazz().getDeclaredFields()) {
             if (f.getName().compareToIgnoreCase("empresa") == 0) {
@@ -167,8 +175,7 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
         } else {
             sb.append(" WHERE estado <> 'BORRADO' ");
         }
-        
-        
+
         for (FiltroGenerico f : filterOptions) {
             if (f.tieneValor()) {
                 sb.append(f.getCadenaFiltro());
@@ -226,6 +233,50 @@ public abstract class ConsultaGenerico<T> extends LazyDataModel<T> implements Se
 
     public List<T> completar(String query) {
         return getEjb().completar(query);
+    }
+
+    public Map<String, Object> getParams() {
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        return params;
+    }
+
+    private void cargaParamsEmpresa() {
+        Empresa e = credencial.getEmpresa();
+        getParams().put("empresa", e.getNombre());
+        getParams().put("direccion", e.getContactoDireccion());
+        getParams().put("telefono", e.getContactoTelefono());
+        getParams().put("email", e.getContactoEmail());
+        getParams().put("logo", e.getImagen());
+        getParams().put("usuario", credencial.getUsuario().getUserName());
+    }
+    
+    
+    public abstract String getPath();
+    
+    public abstract String getNombreReporte();
+    
+    public Collection getDetalles(){
+        return lista;
+    }
+        
+    public abstract void cargaParams();
+
+    public void imprimir() {
+        cargaParamsEmpresa();
+        cargaParams();
+        reporteController.generaPDF(getParams(), getDetalles(), getPath(), getNombreReporte());
+    }
+    
+    public Workbook getWorkBook(){
+        return new HSSFWorkbook();
+    }
+    
+    public void imprimirExcel() {
+        cargaParamsEmpresa();
+        cargaParams();
+        reporteController.generaExcel(getWorkBook(), getNombreReporte());
     }
 
 }

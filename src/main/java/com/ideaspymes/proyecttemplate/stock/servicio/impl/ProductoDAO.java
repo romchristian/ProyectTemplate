@@ -188,19 +188,18 @@ public class ProductoDAO implements IProductoDAO {
                 .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
     }
-    
-    
+
     @Override
-    public Existencia findExistenciasPorProductoUbicacion(Producto p,Deposito d, Ubicacion u) {
-        
+    public Existencia findExistenciasPorProductoUbicacion(Producto p, Deposito d, Ubicacion u) {
+
         Existencia R = null;
         try {
             R = (Existencia) abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.producto = :producto AND e.producto.estado = :estado AND e.deposito = :deposito AND e.ubicacion = :ubicacion ORDER BY e.producto.familia.nombre, e.producto.nombre")
-                .setParameter("producto", p)
-                .setParameter("deposito", d)
-                .setParameter("ubicacion", u)
-                .setParameter("estado", Estado.ACTIVO)
-                .getSingleResult();
+                    .setParameter("producto", p)
+                    .setParameter("deposito", d)
+                    .setParameter("ubicacion", u)
+                    .setParameter("estado", Estado.ACTIVO)
+                    .getSingleResult();
         } catch (Exception e) {
         }
         return R;
@@ -227,5 +226,18 @@ public class ProductoDAO implements IProductoDAO {
         }
         return result;
     }
-    
+
+    @Override
+    public List<Producto> findFilterAll(String consulta) {
+        List<Producto> items = new ArrayList<>();
+        if (consulta != null) {
+            System.out.println("Consulta: " + consulta);
+            Query query = abmService.getEM().createNativeQuery(consulta, Producto.class);
+
+            items = (List<Producto>) query.getResultList();
+
+        }
+        return items;
+    }
+
 }

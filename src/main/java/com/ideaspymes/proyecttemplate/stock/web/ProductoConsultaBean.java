@@ -11,11 +11,13 @@ import com.ideaspymes.proyecttemplate.generico.AbstractDAO;
 import com.ideaspymes.proyecttemplate.generico.ConsultaGenerico;
 import com.ideaspymes.proyecttemplate.stock.enums.TipoRegalo;
 import com.ideaspymes.proyecttemplate.stock.model.Deposito;
+import com.ideaspymes.proyecttemplate.stock.model.Existencia;
 import com.ideaspymes.proyecttemplate.stock.model.Familia;
 import com.ideaspymes.proyecttemplate.stock.model.Producto;
 import com.ideaspymes.proyecttemplate.stock.model.Ubicacion;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IFamiliaDAO;
 import com.ideaspymes.proyecttemplate.stock.servicio.interfaces.IProductoDAO;
+import com.ideaspymes.proyecttemplate.stock.web.reporte.pojo.CatalogoProductos;
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -32,8 +34,14 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -41,6 +49,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.Picture;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.SortOrder;
 import org.primefaces.model.TreeNode;
@@ -117,8 +135,6 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
         this.tipoRegalo = tipoRegalo;
     }
 
-    
-    
     public String getCodigo() {
         return codigo;
     }
@@ -199,12 +215,11 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
         if (nombre != null && nombre.length() > 0) {
             consulta.append(" and upper(nombre) like '%").append(nombre.toUpperCase()).append("%'");
         }
-        
-        
+
         if (esRegalo != null && esRegalo) {
             consulta.append(" and esregalo = true");
         }
-        
+
         if (esRegalo != null && esRegalo && tipoRegalo != null) {
             consulta.append(" and tiporegalo = '").append(tipoRegalo.toString()).append("'");
         }
@@ -263,7 +278,7 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
 
     @Override
     public String construyeCount() {
-          StringBuilder consulta = new StringBuilder("select count(*) from producto WHERE estado = 'ACTIVO' ");
+        StringBuilder consulta = new StringBuilder("select count(*) from producto WHERE estado = 'ACTIVO' ");
         if (getCredencial().getEmpresa() != null) {
             consulta.append(" and empresa_id = ").append(getCredencial().getEmpresa().getId());
         }
@@ -274,12 +289,11 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
         if (nombre != null && nombre.length() > 0) {
             consulta.append(" and upper(nombre) like '%").append(nombre.toUpperCase()).append("%'");
         }
-        
-        
+
         if (esRegalo != null && esRegalo) {
             consulta.append(" and esregalo = true");
         }
-        
+
         if (esRegalo != null && esRegalo && tipoRegalo != null) {
             consulta.append(" and tiporegalo = '").append(tipoRegalo.toString()).append("'");
         }
@@ -418,4 +432,134 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
         }
         return R;
     }
+
+    @Override
+    public String getPath() {
+        return "reportes/stock/CatalogoProducto.jasper";
+    }
+
+    @Override
+    public String getNombreReporte() {
+        return "catalogo";
+    }
+
+    @Override
+    public Collection getDetalles() {
+
+        ArrayList<CatalogoProductos> detalles = new ArrayList<>();
+
+        List<Producto> lista = ejb.findFilterAll(construyeFilters("nombre", SortOrder.ASCENDING));
+
+        for (Producto p : lista) {
+
+            String ubicaciones = "";
+            double stock = 0;
+            for (Existencia e : ejb.findExistenciasPorProducto(p)) {
+                ubicaciones += e.getCantidad() + " " + e.getUnidadMedida().getNombre() + " en " + e.getDeposito().getNombre() + " - " + (e.getUbicacion() == null ? "" : e.getUbicacion().getNombre()) + "\n";
+                stock += e.getCantidad();
+            }
+
+            detalles.add(new CatalogoProductos(p.getImagen(),
+                    p.getNombre(),
+                    p.getDescripcion(),
+                    ubicaciones,
+                    stock,
+                    p.getCodigo(),
+                    p.getFamilia() != null ? p.getFamilia().getNombre() : "No definido",
+                    (p.getEsRegalo() == null ? false : p.getEsRegalo())
+            ));
+        }
+
+        Comparator<CatalogoProductos> comp = new Comparator<CatalogoProductos>() {
+            @Override
+            public int compare(CatalogoProductos o1, CatalogoProductos o2) {
+                String x1 = o1.getFamilia();
+                String x2 = o2.getFamilia();
+                int sComp = x1.compareTo(x2);
+
+                if (sComp != 0) {
+                    return sComp;
+                } else {
+                    String y1 = o1.getProducto();
+                    String y2 = o2.getProducto();
+                    return y1.compareTo(y2);
+                }
+            }
+        };
+
+        Collections.sort(detalles, comp);
+
+        return detalles;
+    }
+
+    @Override
+    public void cargaParams() {
+        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy", new Locale("es", "PY"));
+
+        getParams().put("fecha", date.format(new Date()));
+        getParams().put("ubicacion", (ubicacion != null ? ubicacion.getNombre() : "todos"));
+        getParams().put("deposito", (deposito != null ? deposito.getNombre() : "todos"));
+
+    }
+
+    @Override
+    public Workbook getWorkBook() {
+        Workbook wb = new XSSFWorkbook();
+        Sheet sheet = wb.createSheet("My Sample Excel");
+        List<CatalogoProductos> lista = (List<CatalogoProductos>) getDetalles();
+
+        sheet.setDefaultRowHeight((short) (sheet.getDefaultRowHeight() * new Short("6")));
+
+        int i = 0;
+        for (CatalogoProductos cp : lista) {
+
+            int indexFila = i + 1;
+            int pictureIdx = wb.addPicture(cp.getImagen(), Workbook.PICTURE_TYPE_PNG);
+            CreationHelper helper = wb.getCreationHelper();
+
+            //Creates the top-level drawing patriarch.
+            Drawing drawing = sheet.createDrawingPatriarch();
+
+            //Create an anchor that is attached to the worksheet
+            ClientAnchor anchor = helper.createClientAnchor();
+            //set top-left corner for the image
+            anchor.setCol1(1);
+            anchor.setRow1(indexFila);
+
+            //Creates a picture
+            Picture pict = drawing.createPicture(anchor, pictureIdx);
+            //Reset the image to the original size
+            pict.resize(0.4);
+
+            Row row1 = sheet.createRow(indexFila);
+            Cell cellCol1 = row1.createCell(3);
+            cellCol1.setCellValue(cp.getProducto());
+            
+            Cell cellCol2 = row1.createCell(4);
+            cellCol2.setCellValue(cp.getCodigo());
+            
+            
+            Cell cellCol3 = row1.createCell(5);
+            cellCol3.setCellValue(cp.getDescripcion());
+            
+            
+            Cell cellCol4 = row1.createCell(6);
+            cellCol4.setCellValue(cp.isEsRegalo()?"SI":"NO");
+            
+            Cell cellCol5 = row1.createCell(7);
+            cellCol5.setCellValue(cp.getFamilia());
+            
+            Cell cellCol6 = row1.createCell(8);
+            cellCol6.setCellValue(cp.getUbicaciones());
+            
+            Cell cellCol7 = row1.createCell(9);
+            cellCol7.setCellValue(cp.getStock());
+
+            i++;
+
+        }
+
+        return wb;
+    }
+
 }

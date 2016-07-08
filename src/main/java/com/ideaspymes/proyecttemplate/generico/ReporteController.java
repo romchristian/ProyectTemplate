@@ -126,7 +126,7 @@ public class ReporteController implements Serializable{
             init(parametros, detalles, archivoPath, context);
 
             HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-            response.setHeader("Content-Disposition", "attachment;filename=" + nombre + ".xlsx");
+            response.setHeader("Content-Disposition", "attachment;filename=" + nombre + ".xls");
             ServletOutputStream outputStream = response.getOutputStream();
             JasperExportManager.exportReportToXmlStream(jasperPrint, outputStream);
             context.responseComplete();

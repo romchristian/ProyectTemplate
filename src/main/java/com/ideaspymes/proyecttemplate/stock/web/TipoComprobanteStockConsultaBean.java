@@ -34,4 +34,19 @@ public class TipoComprobanteStockConsultaBean extends ConsultaGenerico<TipoCompr
         return ejb;
     }
 
+    @Override
+    public String getPath() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getNombreReporte() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void cargaParams() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

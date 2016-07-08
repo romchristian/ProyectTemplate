@@ -88,17 +88,17 @@
                                                                                                                                             onmouseout="document.getElementById('btn_plus').setAttribute('style', '')"></i>
                     </p:link>
 
-                    <p:commandLink ajax="false" title="Imprimir"><i class="fa fa-print btn btn-default Fs18"
+                    <p:commandLink ajax="false" title="Imprimir" action="#{bean.imprimir}"><i class="fa fa-print btn btn-default Fs18"
                                                                     id="btn_print"
                                                                     onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
                                                                     onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
-                        <p:dataExporter type="pdf" target="tabla" fileName="#{titulo}"/>
+                        
                     </p:commandLink>
-                    <p:commandLink ajax="false" title="Descargar Excel"><i class="fa fa-download btn btn-default Fs18"
+                    <p:commandLink ajax="false" title="Descargar Excel" action="#{bean.imprimirExcel}"><i class="fa fa-download btn btn-default Fs18"
                                                                            id="btn_download"
                                                                            onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
                                                                            onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
-                        <p:dataExporter type="xls" target="tabla" fileName="#{titulo}"/>
+                        
                     </p:commandLink>
 
                     <p:commandLink id="toggler" title="Columnas"><i class="fa fa-list btn btn-default Fs18"

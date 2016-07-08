@@ -5,8 +5,6 @@
  */
 package com.ideaspymes.proyecttemplate.stock.web.reporte.pojo;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Acer
@@ -16,12 +14,13 @@ public class CatalogoProductos {
     private byte[] imagen;
     private String producto;
     private String descripcion;
+    private boolean esRegalo;
     private String ubicaciones;
     private Double stock;
     private String codigo;
     public String familia;
 
-    public CatalogoProductos(byte[] imagen, String producto, String descripcion, String ubicaciones, Double stock, String codigo, String familia) {
+    public CatalogoProductos(byte[] imagen, String producto, String descripcion, String ubicaciones, Double stock, String codigo, String familia, boolean esRegalo) {
         this.imagen = imagen;
         this.producto = producto;
         this.descripcion = descripcion;
@@ -29,6 +28,7 @@ public class CatalogoProductos {
         this.stock = stock;
         this.codigo = codigo;
         this.familia = familia;
+        this.esRegalo = esRegalo;
     }
 
     public String getCodigo() {
@@ -85,6 +85,14 @@ public class CatalogoProductos {
 
     public void setFamilia(String familia) {
         this.familia = familia;
+    }
+
+    public boolean isEsRegalo() {
+        return esRegalo;
+    }
+
+    public void setEsRegalo(boolean esRegalo) {
+        this.esRegalo = esRegalo;
     }
 
 }

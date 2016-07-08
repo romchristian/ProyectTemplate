@@ -42,6 +42,8 @@ public interface IProductoDAO extends AbstractDAO<Producto> {
     void remove(Producto entity);
 
     List<Existencia> findExistenciasPorProducto(Producto p);
+    
+    List<Producto> findFilterAll(String query);    
 
     public List<Existencia> findExistenciaPorDeposito(Deposito d, Ubicacion u);
 
