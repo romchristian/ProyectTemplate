@@ -49,11 +49,16 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -86,6 +91,10 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
     private Ubicacion ubicacion;
     private Boolean esRegalo;
     private TipoRegalo tipoRegalo;
+    private Date fechaIngresoInicio;
+    private Date fechaIngresoFin;
+    private Date fechaCargaInicio;
+    private Date fechaCargaFin;
 
     private TreeNode rootNode;
     private TreeNode selectedNode;
@@ -117,6 +126,38 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
         }
 
         return newNode;
+    }
+
+    public Date getFechaIngresoInicio() {
+        return fechaIngresoInicio;
+    }
+
+    public void setFechaIngresoInicio(Date fechaIngresoInicio) {
+        this.fechaIngresoInicio = fechaIngresoInicio;
+    }
+
+    public Date getFechaIngresoFin() {
+        return fechaIngresoFin;
+    }
+
+    public void setFechaIngresoFin(Date fechaIngresoFin) {
+        this.fechaIngresoFin = fechaIngresoFin;
+    }
+
+    public Date getFechaCargaInicio() {
+        return fechaCargaInicio;
+    }
+
+    public void setFechaCargaInicio(Date fechaCargaInicio) {
+        this.fechaCargaInicio = fechaCargaInicio;
+    }
+
+    public Date getFechaCargaFin() {
+        return fechaCargaFin;
+    }
+
+    public void setFechaCargaFin(Date fechaCargaFin) {
+        this.fechaCargaFin = fechaCargaFin;
     }
 
     public Boolean getEsRegalo() {
@@ -230,6 +271,19 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             familia = null;
         }
 
+        if (fechaIngresoInicio != null && fechaIngresoFin != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String R = " AND fechaingreso  between '" + sdf.format(fechaIngresoInicio) + "' AND '" + sdf.format(fechaIngresoFin) + "' ";
+            consulta.append(R);
+        }
+        
+        
+        if (fechaCargaInicio != null && fechaCargaFin != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String R = " AND fecharegitro  between '" + sdf.format(fechaCargaInicio) + "' AND '" + sdf.format(fechaCargaFin) + "' ";
+            consulta.append(R);
+        }
+
         if (familia != null) {
             consulta.append(" and familia_id in (");
             List<Familia> lista = creaFiltroFamilia(familia, null);
@@ -302,6 +356,19 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             familia = (Familia) selectedNode.getData();
         } else {
             familia = null;
+        }
+        
+        if (fechaIngresoInicio != null && fechaIngresoFin != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String R = " AND fechaingreso  between '" + sdf.format(fechaIngresoInicio) + "' AND '" + sdf.format(fechaIngresoFin) + "' ";
+            consulta.append(R);
+        }
+        
+        
+        if (fechaCargaInicio != null && fechaCargaFin != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String R = " AND fecharegitro  between '" + sdf.format(fechaCargaInicio) + "' AND '" + sdf.format(fechaCargaFin) + "' ";
+            consulta.append(R);
         }
 
         if (familia != null) {
@@ -460,6 +527,8 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
             }
 
             detalles.add(new CatalogoProductos(p.getImagen(),
+                    p.getFechaIngreso(),
+                    p.getFechaRegitro(),
                     p.getNombre(),
                     p.getDescripcion(),
                     ubicaciones,
@@ -510,54 +579,195 @@ public class ProductoConsultaBean extends ConsultaGenerico<Producto> {
 
         sheet.setDefaultRowHeight((short) (sheet.getDefaultRowHeight() * new Short("6")));
 
-        int i = 0;
+        org.apache.poi.ss.usermodel.Font fontTitulo = wb.createFont();
+        fontTitulo.setFontHeightInPoints((short) 12);
+        fontTitulo.setBoldweight(org.apache.poi.ss.usermodel.Font.BOLDWEIGHT_BOLD);
+
+        org.apache.poi.ss.usermodel.Font fontTituloPricipal = wb.createFont();
+        fontTituloPricipal.setFontHeightInPoints((short) 22);
+        fontTituloPricipal.setBoldweight(org.apache.poi.ss.usermodel.Font.BOLDWEIGHT_BOLD);
+
+        DataFormat format = wb.createDataFormat();
+
+        CellStyle styleTituloPrincipal = wb.createCellStyle();
+        styleTituloPrincipal.setFont(fontTituloPricipal);
+        styleTituloPrincipal.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        styleTituloPrincipal.setAlignment(CellStyle.ALIGN_CENTER);
+
+        CellStyle styleTitulo = wb.createCellStyle();
+        styleTitulo.setFont(fontTitulo);
+        styleTitulo.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        styleTitulo.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
+        styleTitulo.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        styleTitulo.setWrapText(true);
+
+        CellStyle styleNumero = wb.createCellStyle();
+        styleNumero.setDataFormat(format.getFormat("#,##0"));
+        styleNumero.setWrapText(true);
+        styleNumero.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        styleNumero.setAlignment(CellStyle.ALIGN_CENTER);
+
+        CellStyle styleFecha = wb.createCellStyle();
+        styleFecha.setDataFormat(format.getFormat("dd/MM/yyyy"));
+        styleFecha.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        styleFecha.setAlignment(CellStyle.ALIGN_CENTER);
+
+        CellStyle style = wb.createCellStyle();
+        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        style.setWrapText(true);
+
+        CellStyle styleCenter = wb.createCellStyle();
+        styleCenter.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        styleCenter.setAlignment(CellStyle.ALIGN_CENTER);
+        styleCenter.setWrapText(true);
+
+        Row rowTitle = sheet.createRow(0);
+        Cell cellTitle = rowTitle.createCell(1);
+        cellTitle.setCellStyle(styleTituloPrincipal);
+
+        sheet.addMergedRegion(new CellRangeAddress(
+                0, //first row (0-based)
+                1, //last row  (0-based)
+                1, //first column (0-based)
+                11 //last column  (0-based)
+        ));
+
+        cellTitle.setCellValue("Listado de Activos");
+
+        int i = 2;
+
+        Row row0 = sheet.createRow(i);
+        row0.setHeight((short) 500);
+
+        Cell cell1 = row0.createCell(1);
+        cell1.setCellValue("Foto");
+        cell1.setCellStyle(styleTitulo);
+
+        Cell cellFecha = row0.createCell(3);
+        cellFecha.setCellValue("Fecha Ingreso");
+        cellFecha.setCellStyle(styleTitulo);
+
+        Cell cellFechaCarga = row0.createCell(4);
+        cellFechaCarga.setCellValue("Fecha Carga");
+        cellFechaCarga.setCellStyle(styleTitulo);
+
+        Cell cell3 = row0.createCell(5);
+        cell3.setCellValue("Nombre");
+        cell3.setCellStyle(styleTitulo);
+
+        Cell cell4 = row0.createCell(6);
+        cell4.setCellValue("Código");
+        cell4.setCellStyle(styleTitulo);
+
+        Cell cell5 = row0.createCell(7);
+        cell5.setCellValue("Descripción");
+        cell5.setCellStyle(styleTitulo);
+
+        Cell cell6 = row0.createCell(8);
+        cell6.setCellValue("¿Es Regalo?");
+        cell6.setCellStyle(styleTitulo);
+
+        Cell cell7 = row0.createCell(9);
+        cell7.setCellValue("Familia");
+        cell7.setCellStyle(styleTitulo);
+
+        Cell cell8 = row0.createCell(10);
+        cell8.setCellValue("Ubicaciones");
+        cell8.setCellStyle(styleTitulo);
+
+        Cell cell9 = row0.createCell(11);
+        cell9.setCellValue("Stock");
+        cell9.setCellStyle(styleTitulo);
+
         for (CatalogoProductos cp : lista) {
 
             int indexFila = i + 1;
-            int pictureIdx = wb.addPicture(cp.getImagen(), Workbook.PICTURE_TYPE_PNG);
-            CreationHelper helper = wb.getCreationHelper();
+            if (cp.getImagen() != null) {
+                int pictureIdx = wb.addPicture(cp.getImagen(), Workbook.PICTURE_TYPE_PNG);
+                CreationHelper helper = wb.getCreationHelper();
 
-            //Creates the top-level drawing patriarch.
-            Drawing drawing = sheet.createDrawingPatriarch();
+                //Creates the top-level drawing patriarch.
+                Drawing drawing = sheet.createDrawingPatriarch();
 
-            //Create an anchor that is attached to the worksheet
-            ClientAnchor anchor = helper.createClientAnchor();
-            //set top-left corner for the image
-            anchor.setCol1(1);
-            anchor.setRow1(indexFila);
+                //Create an anchor that is attached to the worksheet
+                ClientAnchor anchor = helper.createClientAnchor();
+                //set top-left corner for the image
+                anchor.setCol1(1);
+                anchor.setRow1(indexFila);
 
-            //Creates a picture
-            Picture pict = drawing.createPicture(anchor, pictureIdx);
-            //Reset the image to the original size
-            pict.resize(0.4);
-
+                //Creates a picture
+                Picture pict = drawing.createPicture(anchor, pictureIdx);
+                //Reset the image to the original size
+                pict.resize(0.4);
+            }
             Row row1 = sheet.createRow(indexFila);
-            Cell cellCol1 = row1.createCell(3);
+            row1.setHeightInPoints(80f);
+
+            Cell cellColFecha = row1.createCell(3);
+
+            if (cp.getFecha() != null) {
+                cellColFecha.setCellValue(cp.getFecha());
+                cellColFecha.setCellStyle(styleFecha);
+
+            } else {
+                cellColFecha.setCellValue("");
+                cellColFecha.setCellStyle(styleFecha);
+            }
+
+            Cell cellColFechaCarga = row1.createCell(4);
+
+            if (cp.getFechaCarga() != null) {
+                cellColFechaCarga.setCellValue(cp.getFechaCarga());
+                cellColFechaCarga.setCellStyle(styleFecha);
+
+            } else {
+                cellColFechaCarga.setCellValue("");
+                cellColFechaCarga.setCellStyle(styleFecha);
+            }
+
+            Cell cellCol1 = row1.createCell(5);
             cellCol1.setCellValue(cp.getProducto());
-            
-            Cell cellCol2 = row1.createCell(4);
+            cellCol1.setCellStyle(style);
+
+            Cell cellCol2 = row1.createCell(6);
             cellCol2.setCellValue(cp.getCodigo());
-            
-            
-            Cell cellCol3 = row1.createCell(5);
+            cellCol2.setCellStyle(styleNumero);
+
+            Cell cellCol3 = row1.createCell(7);
             cellCol3.setCellValue(cp.getDescripcion());
-            
-            
-            Cell cellCol4 = row1.createCell(6);
-            cellCol4.setCellValue(cp.isEsRegalo()?"SI":"NO");
-            
-            Cell cellCol5 = row1.createCell(7);
+            cellCol3.setCellStyle(style);
+
+            Cell cellCol4 = row1.createCell(8);
+            cellCol4.setCellValue(cp.isEsRegalo() ? "SI" : "NO");
+            cellCol4.setCellStyle(styleCenter);
+
+            Cell cellCol5 = row1.createCell(9);
             cellCol5.setCellValue(cp.getFamilia());
-            
-            Cell cellCol6 = row1.createCell(8);
+            cellCol5.setCellStyle(style);
+
+            Cell cellCol6 = row1.createCell(10);
             cellCol6.setCellValue(cp.getUbicaciones());
-            
-            Cell cellCol7 = row1.createCell(9);
+            cellCol6.setCellStyle(style);
+
+            Cell cellCol7 = row1.createCell(11);
             cellCol7.setCellValue(cp.getStock());
+            cellCol7.setCellStyle(styleNumero);
 
             i++;
 
         }
+
+        sheet.setColumnWidth(1, 4000);
+        sheet.setColumnWidth(2, 0);
+        sheet.setColumnWidth(3, 4000);
+        sheet.setColumnWidth(4, 4000);
+        sheet.setColumnWidth(5, 10000);
+        sheet.setColumnWidth(6, 3000);
+        sheet.setColumnWidth(7, 10000);
+        sheet.setColumnWidth(8, 3500);
+        sheet.setColumnWidth(9, 6000);
+        sheet.setColumnWidth(10, 10000);
+        sheet.setColumnWidth(11, 2000);
 
         return wb;
     }

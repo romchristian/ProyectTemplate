@@ -88,17 +88,17 @@
                                                                                                                                             onmouseout="document.getElementById('btn_plus').setAttribute('style', '')"></i>
                     </p:link>
 
-                    <p:commandLink ajax="false" title="Imprimir" action="#{bean.imprimir}"><i class="fa fa-print btn btn-default Fs18"
-                                                                    id="btn_print"
-                                                                    onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
-                                                                    onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
-                        
+                    <p:commandLink ajax="false" title="Imprimir" action="#{bean.imprimir}"><i class="fa fa-file-pdf-o btn btn-default Fs18"
+                                                                                              id="btn_print"
+                                                                                              onmouseover="document.getElementById('btn_print').setAttribute('style', 'color:#0277BD')"
+                                                                                              onmouseout="document.getElementById('btn_print').setAttribute('style', '')"></i>
+
                     </p:commandLink>
-                    <p:commandLink ajax="false" title="Descargar Excel" action="#{bean.imprimirExcel}"><i class="fa fa-download btn btn-default Fs18"
-                                                                           id="btn_download"
-                                                                           onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
-                                                                           onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
-                        
+                    <p:commandLink ajax="false" title="Descargar Excel" action="#{bean.imprimirExcel}"><i class="fa fa-file-excel-o btn btn-default Fs18"
+                                                                                                          id="btn_download"
+                                                                                                          onmouseover="document.getElementById('btn_download').setAttribute('style', 'color:#0277BD')"
+                                                                                                          onmouseout="document.getElementById('btn_download').setAttribute('style', '')"></i>
+
                     </p:commandLink>
 
                     <p:commandLink id="toggler" title="Columnas"><i class="fa fa-list btn btn-default Fs18"
@@ -143,6 +143,7 @@
                          paginatorPosition="top"
                          draggableColumns="true">  
 
+                
                 <p:column style="width: 10%">
                     <p:graphicImage  value="#{imageResolutor.streamedImageById}" cache="FALSE" style="width: 100px;max-height: 100px;vertical-align: middle;z-index: 1;margin: 0 auto 0 auto;">
                         <f:param name="id" value="#{p.id}"/>
@@ -154,12 +155,23 @@
                         <f:param name="id" value="#{p.id}"/>
                     </p:link>
                 </p:column>
-
                 <p:column headerText="Nombre">
                     <p:link value="#{p.nombre}" outcome="vista">
                         <f:param name="id" value="#{p.id}"/>
                     </p:link>
                 </p:column>
+                <p:column headerText="Fecha Ingreso">
+                    <h:outputText value="#{p.fechaIngreso}">
+                        <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}" timeZone="America/Asuncion"/>    
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Fecha Carga">
+                    <h:outputText value="#{p.fechaRegitro}">
+                        <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}" timeZone="America/Asuncion"/>    
+                    </h:outputText>
+                </p:column>
+                
+                
                 <p:column headerText="Familia">
                     <h:outputText value="#{p.familia != null ? p.familia.nombre:'No definido'}"/>
                 </p:column>
@@ -192,6 +204,19 @@
                     <p:inputText value="#{productoConsultaBean.nombre}" id="nombre"/>
                     <div class="EmptyBox10"></div>
 
+                    <h:outputText value="Fecha Ingreso Desde" />
+                    <p:calendar value="#{productoConsultaBean.fechaIngresoInicio}" locale="es" pattern="#{formato.patronFecha}"/>
+                    <div class="EmptyBox10"></div>
+                    <h:outputText value="Fecha Ingreso Hasta" />
+                    <p:calendar value="#{productoConsultaBean.fechaIngresoFin}" locale="es" pattern="#{formato.patronFecha}"/>
+                    <div class="EmptyBox10"></div>
+
+                    <h:outputText value="Fecha Carga Desde" />
+                    <p:calendar value="#{productoConsultaBean.fechaCargaInicio}" locale="es" pattern="#{formato.patronFecha}"/>
+                    <div class="EmptyBox10"></div>
+                    <h:outputText value="Fecha Carga Hasta" />
+                    <p:calendar value="#{productoConsultaBean.fechaCargaFin}" locale="es" pattern="#{formato.patronFecha}"/>
+                    <div class="EmptyBox10"></div>
 
                     <p:outputLabel value="Lugar" for="deposito" styleClass="FontVoltRegular"/>
                     <p:selectOneMenu value="#{productoConsultaBean.deposito}" id="deposito">

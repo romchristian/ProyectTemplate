@@ -167,8 +167,18 @@ public class ProductoBean extends BeanGenerico<Producto> implements Serializable
     public String toggleActivacion() {
 
         if (getActual().getEstado() == Estado.ACTIVO && getActual().getStock() != null && getActual().getStock() > 0) {
-            JsfUtil.addErrorMessage("Para Inactivar, primero debe dar de baja todo el stock");
-            return null;
+            //JsfUtil.addErrorMessage("Para Inactivar, primero debe dar de baja todo el stock");
+            List<Existencia> existencias = ejb.findExistenciasPorProducto(getActual());
+            for(Existencia e: existencias){
+                inventarioDAO.bajaInventario(e.getDeposito(), e.getUbicacion(), e.getUnidadMedida(), getActual(), e.getCantidad());
+            }
+            JsfUtil.addSuccessMessage("Se dió de baja el stock del producto");
+            
+            Producto productoResfresh = ejb.find(getActual().getId());
+            productoResfresh.setEstado(Estado.INACTIVO);
+            getEjb().edit(productoResfresh);
+            
+            return "listado.xhtml";
         } else if (getActual().getEstado() == Estado.ACTIVO && (getActual().getStock() == null || getActual().getStock() == 0)) {
             getActual().setEstado(Estado.INACTIVO);
             getEjb().edit(getActual());

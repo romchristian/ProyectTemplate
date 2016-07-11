@@ -5,6 +5,8 @@
  */
 package com.ideaspymes.proyecttemplate.stock.web.reporte.pojo;
 
+import java.util.Date;
+
 /**
  *
  * @author Acer
@@ -13,6 +15,8 @@ public class CatalogoProductos {
 
     private byte[] imagen;
     private String producto;
+    private Date fecha;
+    private Date fechaCarga;
     private String descripcion;
     private boolean esRegalo;
     private String ubicaciones;
@@ -20,7 +24,7 @@ public class CatalogoProductos {
     private String codigo;
     public String familia;
 
-    public CatalogoProductos(byte[] imagen, String producto, String descripcion, String ubicaciones, Double stock, String codigo, String familia, boolean esRegalo) {
+    public CatalogoProductos(byte[] imagen, Date fecha, Date fechaCarga,String producto, String descripcion, String ubicaciones, Double stock, String codigo, String familia, boolean esRegalo) {
         this.imagen = imagen;
         this.producto = producto;
         this.descripcion = descripcion;
@@ -29,6 +33,9 @@ public class CatalogoProductos {
         this.codigo = codigo;
         this.familia = familia;
         this.esRegalo = esRegalo;
+        this.fecha = fecha;
+        this.fechaCarga = fechaCarga;
+        
     }
 
     public String getCodigo() {
@@ -45,6 +52,22 @@ public class CatalogoProductos {
 
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Date getFechaCarga() {
+        return fechaCarga;
+    }
+
+    public void setFechaCarga(Date fechaCarga) {
+        this.fechaCarga = fechaCarga;
     }
 
     public String getProducto() {

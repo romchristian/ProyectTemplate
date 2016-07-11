@@ -44,5 +44,7 @@ public interface IInventarioDAO extends AbstractDAO<Inventario> {
     void remove(Inventario entity);
 
     Boolean actualizaInventario(Deposito d, Ubicacion u, UnidadMedida um, Producto p, Double cantidad);
+    
+    Boolean bajaInventario(Deposito d, Ubicacion u, UnidadMedida um, Producto p, Double cantidad);
 
 }

@@ -90,7 +90,7 @@ public class ReporteCatalogoProducto extends ReporteGenerico<CatalogoProductos> 
                 ubicaciones += e.getCantidad() + " " + e.getUnidadMedida().getNombre() + " en " + e.getDeposito().getNombre() + " - " + e.getUbicacion().getNombre() + "\n";
                 stock += e.getCantidad();
             }
-            detalles.add(new CatalogoProductos(p.getImagen(), p.getNombre(), p.getDescripcion(), ubicaciones, stock, p.getCodigo(), p.getFamilia() != null ? p.getFamilia().getNombre() : "No definido",p.getEsRegalo()));
+            detalles.add(new CatalogoProductos(p.getImagen(), p.getFechaIngreso(),p.getFechaRegitro(),p.getNombre(), p.getDescripcion(), ubicaciones, stock, p.getCodigo(), p.getFamilia() != null ? p.getFamilia().getNombre() : "No definido",p.getEsRegalo()));
         }
 
         Comparator<CatalogoProductos> comp = new Comparator<CatalogoProductos>() {

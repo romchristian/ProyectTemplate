@@ -167,6 +167,54 @@ public class InventarioDAO implements IInventarioDAO {
 
         return R;
     }
+    
+    
+    
+    
+    @Override
+    public Boolean bajaInventario(Deposito d, Ubicacion u, UnidadMedida um, Producto p, Double cantidad) {
+
+        Boolean R = false;
+
+        try {
+
+            
+
+            TipoComprobanteStock tipo = ejbITipoComprobanteStockDAO.findPorNombre("Salida por Ajuste");
+            
+
+            ComprobanteStock c = new ComprobanteStock();
+            c.setTipoComprobanteStock(tipo);
+            c.setDepositoPivot(d);
+            c.setUbicacionPivot(u);
+            c.setResposable(abmService.getCredencial().getUsuario());
+            c.setFecha(new Date());
+            c.setDescripcion("Actualización Manual de Stock");
+            c.setDetalles(new ArrayList<DetComprobanteStock>());
+
+            DetComprobanteStock det = new DetComprobanteStock();
+            det.setComprobanteStock(c);
+            det.setIndice(1);
+            det.setProducto(p);
+            det.setCantidad(cantidad);
+            det.setUnidadMedida(um);
+            det.setEstado(Estado.ACTIVO);
+            det.setValor(0d);
+            det.setTotal(0d);
+            c.getDetalles().add(det);
+
+            ComprobanteStock comp = ejbComprobanteStockDAO.create(c);
+
+            ejbComprobanteStockDAO.confirmar(comp);
+
+            R = true;
+
+        } catch (SinStockException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return R;
+    }
 
     @Override
     public Inventario edit(Inventario entity) {

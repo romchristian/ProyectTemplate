@@ -34,12 +34,24 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     private Long id;
     @Version
     private Long version;
+
+    @Listado(descripcion = "Fecha Ingreso", mostrar = true, campo = "fechaIngreso")
+    @Filtro(descripcion = "Fecha Ingreso", campo = "fechaIngreso", tipo = FiltroGenerico.TIPO_RANGO_FECHA)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date FechaIngreso;
+
+    @Listado(descripcion = "Fecha Carga", mostrar = true, campo = "fechaRegistro")
+    @Filtro(descripcion = "Fecha Carga", campo = "fechaRegistro", tipo = FiltroGenerico.TIPO_RANGO_FECHA)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date fechaRegitro;
+
     @Listado(descripcion = "Código", mostrar = true, link = true)
     @Filtro(descripcion = "Código", campo = "codigo", tipo = "like")
     private String codigo;
     @Listado(descripcion = "Nombre", mostrar = true, link = true)
     @Filtro(descripcion = "Nombre", campo = "nombre", tipo = "like")
     private String nombre;
+
     private String descripcion;
     @Enumerated(EnumType.STRING)
     private TipoProducto tipoProducto;
@@ -63,8 +75,6 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     private Double stockMinimo;
     @Listado(descripcion = "Stock", mostrar = true)
     private Double stock;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date FechaIngreso;
 
     @Transient
     private Integer cantidadEtiquetas;
@@ -96,8 +106,7 @@ public class Producto implements Serializable, IAuditable, IConImagen {
     //Auditoria
     @Enumerated(EnumType.STRING)
     private Estado estado;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date fechaRegitro;
+
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fechaUltimaModificacion;
 

@@ -50,7 +50,12 @@
                             <f:selectItems value="#{productorEnums.tiposRegalos}"/>
                         </p:selectOneMenu>
                     </p:outputPanel>
-
+                    
+                    <p:outputLabel value="Fecha Ingreso" for="fechaIngreso" styleClass="FontVoltRegular" />
+                    <h:outputText value="#{productoBean.actual.fechaIngreso}" rendered="#{(contexto == 'vista')}" styleClass="FontVoltRegular White">
+                        <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}" timeZone="America/Asuncion"/>    
+                    </h:outputText>                    
+                    <p:calendar value="#{productoBean.actual.fechaIngreso}"  id="fechaIngreso" rendered="#{not(contexto == 'vista')}" timeZone="America/Asuncion" locale="es" pattern="#{formato.patronFecha}"/>
 
                 </p:panelGrid>
 

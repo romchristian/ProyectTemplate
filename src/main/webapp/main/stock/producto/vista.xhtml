@@ -50,6 +50,16 @@
                                     <h:outputText value="Código"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.codigo}" styleClass="FontVoltRegular White"/>
 
+                                    <h:outputText value="Fecha Ingreso"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.fechaIngreso}" styleClass="FontVoltRegular White">
+                                        <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}" timeZone="America/Asuncion"/>    
+                                    </h:outputText>                    
+
+                                    <h:outputText value="Fecha Carga"  styleClass="FontVoltRegular White"/>
+                                    <h:outputText value="#{productoBean.actual.fechaRegitro}" styleClass="FontVoltRegular White">
+                                        <f:convertDateTime locale="#{formato.locale}" pattern="#{formato.patronFecha}" timeZone="America/Asuncion"/>    
+                                    </h:outputText>                    
+
 
                                     <h:outputText value="U.M. Stock"  styleClass="FontVoltRegular White"/>
                                     <h:outputText value="#{productoBean.actual.unidadMedidaBase != null?productoBean.actual.unidadMedidaBase.nombre:''}" styleClass="FontVoltRegular White"/>

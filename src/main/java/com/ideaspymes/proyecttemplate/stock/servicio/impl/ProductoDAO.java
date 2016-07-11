@@ -183,7 +183,7 @@ public class ProductoDAO implements IProductoDAO {
 
     @Override
     public List<Existencia> findExistenciasPorProducto(Producto p) {
-        return abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.cantidad > 0 AND e.producto = :producto AND e.producto.estado = :estado ORDER BY e.producto.familia.nombre, e.producto.nombre")
+        return abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.cantidad > 0 AND e.producto = :producto AND e.producto.estado = :estado  AND e.cantidad > 0 ORDER BY e.producto.familia.nombre, e.producto.nombre")
                 .setParameter("producto", p)
                 .setParameter("estado", Estado.ACTIVO)
                 .getResultList();
@@ -209,18 +209,18 @@ public class ProductoDAO implements IProductoDAO {
     public List<Existencia> findExistenciaPorDeposito(Deposito d, Ubicacion u) {
         List<Existencia> result;
         if (d != null && u != null) {
-            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito AND e.ubicacion = :ubicacion AND e.producto.estado = :estado ORDER BY e.producto.familia.nombre, e.producto.nombre")
+            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito AND e.ubicacion = :ubicacion AND e.producto.estado = :estado AND e.cantidad > 0  ORDER BY e.producto.familia.nombre, e.producto.nombre")
                     .setParameter("deposito", d)
                     .setParameter("ubicacion", u)
                     .setParameter("estado", Estado.ACTIVO)
                     .getResultList();
         } else if (d != null) {
-            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito AND e.producto.estado = :estado ORDER BY e.producto.familia.nombre, e.producto.nombre")
+            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.deposito = :deposito AND e.producto.estado = :estado AND e.cantidad > 0 ORDER BY e.producto.familia.nombre, e.producto.nombre")
                     .setParameter("deposito", d)
                     .setParameter("estado", Estado.ACTIVO)
                     .getResultList();
         } else {
-            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.producto.estado = :estado ORDER BY e.producto.familia.nombre, e.producto.nombre")
+            result = abmService.getEM().createQuery("SELECT e FROM Existencia e WHERE e.producto.estado = :estado  AND e.cantidad > 0 ORDER BY e.producto.familia.nombre, e.producto.nombre")
                     .setParameter("estado", Estado.ACTIVO)
                     .getResultList();
         }
