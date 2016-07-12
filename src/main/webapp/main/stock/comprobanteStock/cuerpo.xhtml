@@ -179,7 +179,7 @@
                             <p:autoComplete value="#{d.producto}"
                                             completeMethod="#{productoConsultaBean.completar}"
                                             forceSelection="true" converter="productoConverter"
-                                            var="c" itemValue="#{c}" itemLabel="#{c.nombre}"
+                                            var="c" itemValue="#{c}" itemLabel="#{c.codigo}  #{c.nombre}"
                                             rendered="#{not(contexto == 'vista')}">
 
                                 <p:column style="width: 40%">
@@ -187,11 +187,11 @@
                                 </p:column>
 
                                 <p:column style="width: 60%">
-                                    <h:outputText value="#{c.nombre}"/>
+                                    <h:outputText value="#{c.codigo} - #{c.nombre}"/>
                                 </p:column>
                             </p:autoComplete>
 
-                            <h:outputText value="#{d.producto != null ? d.producto.nombre:''}" rendered="#{(contexto == 'vista')}"/>
+                            <h:outputText value="#{d.producto != null ? d.producto.codigo:''} - #{d.producto != null ? d.producto.nombre:''}" rendered="#{(contexto == 'vista')}"/>
                         </p:column>
                         <p:column headerText="Cantidad">
                             <pe:inputNumber value="#{d.cantidad}" rendered="#{not(contexto == 'vista')}">

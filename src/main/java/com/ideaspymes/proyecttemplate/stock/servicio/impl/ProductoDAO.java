@@ -158,7 +158,7 @@ public class ProductoDAO implements IProductoDAO {
         List<Producto> sugerencias = new ArrayList<>();
 
         if (matchText != null && matchText.length() > 0) {
-            String consulta = "select * from producto where estado = 'ACTIVO' and upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
+            String consulta = "select * from producto where estado = 'ACTIVO' and upper(codigo)||upper(nombre) like '%" + matchText.toUpperCase().trim() + "%' order by nombre";
             Query query = abmService.getEM().createNativeQuery(consulta, Producto.class);
             query.setMaxResults(AbstractDAO.AUTOCOMPLETE_MAX_RESULS);
             sugerencias = query.getResultList();
